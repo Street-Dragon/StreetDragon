@@ -1,0 +1,11 @@
+# Arquivos e diretórios gerados pelo compilador
+/bin/
+/target/
+
+# Arquivos de configuração de IDE
+/.idea/
+/*.iml
+
+# Arquivos temporários
+*.log
+*.tmp
