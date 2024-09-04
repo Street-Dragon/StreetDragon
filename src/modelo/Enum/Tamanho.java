@@ -1,4 +1,4 @@
-package modelo;
+package modelo.Enum;
 
 public enum Tamanho {
     PP,
