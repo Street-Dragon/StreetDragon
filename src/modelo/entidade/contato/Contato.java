@@ -1,4 +1,4 @@
-package modelo.Contato;
+package modelo.entidade.contato;
 
 public class Contato  {
 	
