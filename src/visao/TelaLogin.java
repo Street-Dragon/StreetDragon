@@ -45,26 +45,25 @@ public class TelaLogin extends JFrame {
         contentPane.setBackground(new Color(250, 188, 188)); // Fundo rosa
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
-        contentPane.setLayout(new MigLayout("", "[grow][grow][grow][grow][grow]", "[grow][grow]"));
+        contentPane.setLayout(new MigLayout("", "[grow]", "[grow]"));
 
         JPanel panel = new JPanel();
         panel.setBackground(new Color(246, 233, 233));
-        contentPane.add(panel, "cell 1 0 3 2,grow");
-        panel.setLayout(new MigLayout("", "[grow][grow][grow]", "[grow][grow][grow][grow][][grow][][grow][grow]"));
+        contentPane.add(panel, "cell 0 0,grow");
+        panel.setLayout(new MigLayout("", "[grow]", "[grow][grow][grow][grow][grow][grow][grow][grow][grow]"));
 
         JLabel lblLogin = new JLabel("Login");
         lblLogin.setFont(new Font("Tahoma", Font.PLAIN, 15));
         lblLogin.setHorizontalAlignment(SwingConstants.CENTER);
-        panel.add(lblLogin, "cell 0 0 3 1,grow");
+        panel.add(lblLogin, "cell 0 0,grow");
 
-
-     // Painel da imagem:
+        // Painel da imagem:
         JPanel panelImage = new JPanel();
         panelImage.setBackground(new Color(246, 233, 233));
-        panel.add(panelImage, "cell 1 1,grow");
+        panel.add(panelImage, "cell 0 1,alignx center,aligny center");
 
         // Verificação do caminho da imagem
-        java.net.URL imageURL = getClass().getResource("src/resources/images/logo.jpg");
+        java.net.URL imageURL = getClass().getResource("/resources/images/logo.jpg");
         if (imageURL == null) {
             System.out.println("Imagem não encontrada. Verifique o caminho");
         } else {
@@ -72,44 +71,30 @@ public class TelaLogin extends JFrame {
             JLabel imageLabel = new JLabel(imageIcon);
             panelImage.add(imageLabel);
         }
-        
-        
+
         JLabel lblStreetdragon = new JLabel("StreetDragon");
         lblStreetdragon.setHorizontalAlignment(SwingConstants.CENTER);
         lblStreetdragon.setFont(new Font("Tahoma", Font.PLAIN, 15));
-        panel.add(lblStreetdragon, "cell 1 2,grow");
-        
-        JLabel lblNewLabel_1 = new JLabel("CPF");
-        lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
-        panel.add(lblNewLabel_1, "cell 1 4,grow");
-        
+        panel.add(lblStreetdragon, "cell 0 2,grow");
+
+        JLabel lblCpf = new JLabel("CPF");
+        lblCpf.setFont(new Font("Tahoma", Font.PLAIN, 15));
+        panel.add(lblCpf, "cell 0 3,grow");
+
         txtCpfLogin = new JTextField();
-        panel.add(txtCpfLogin, "cell 1 5,grow");
         txtCpfLogin.setColumns(10);
-        
-        JLabel lblNewLabel_2 = new JLabel("Senha");
-        panel.add(lblNewLabel_2, "cell 1 6,grow");
-        
-        lblNewLabel_2.setFont(new Font("Dialog", Font.PLAIN, 15));
-        
-        
-        
-        
-        
-        
+        panel.add(txtCpfLogin, "cell 0 4,grow");
+
+        JLabel lblSenha = new JLabel("Senha");
+        lblSenha.setFont(new Font("Tahoma", Font.PLAIN, 15));
+        panel.add(lblSenha, "cell 0 5,grow");
+
         txtSenhaLogin = new JTextField();
-        panel.add(txtSenhaLogin, "cell 1 7,grow");
         txtSenhaLogin.setColumns(10);
-        
+        panel.add(txtSenhaLogin, "cell 0 6,grow");
+
         JButton btnContinuar = new JButton("Continuar");
         btnContinuar.setFont(new Font("Tahoma", Font.PLAIN, 13));
-        panel.add(btnContinuar, "cell 1 8,alignx center,aligny center");
-		
-		
-		
-		
-		
-		
-	}
-
+        panel.add(btnContinuar, "cell 0 7,grow");
+    }
 }
