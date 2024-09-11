@@ -1,21 +1,21 @@
 package modelo.entidade.pessoa.fornecedor;
 
 public class Fornecedor {
-	
-	private Integer cpnj;
-	private Integer cep;
+	private int cpnj;
+	private int cep;
 	private String rua;
-	private Integer numero;
-	public Integer getCpnj() {
+	private int numero;
+	
+	public int getCpnj() {
 		return cpnj;
 	}
-	public void setCpnj(Integer cpnj) {
+	public void setCpnj(int cpnj) {
 		this.cpnj = cpnj;
 	}
-	public Integer getCep() {
+	public int getCep() {
 		return cep;
 	}
-	public void setCep(Integer cep) {
+	public void setCep(int cep) {
 		this.cep = cep;
 	}
 	public String getRua() {
@@ -24,10 +24,10 @@ public class Fornecedor {
 	public void setRua(String rua) {
 		this.rua = rua;
 	}
-	public Integer getNumero() {
+	public int getNumero() {
 		return numero;
 	}
-	public void setNumero(Integer numero) {
+	public void setNumero(int numero) {
 		this.numero = numero;
 	}
 	
