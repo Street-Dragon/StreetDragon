@@ -1,7 +1,7 @@
 package modelo.entidade.Cliente;
 
-public class Cliente extends Pessoa {
-	String cpf;
+public  class Cliente extends Pessoa {
+	private String cpf;
 
 	public String getCpf() {
 		return cpf;
