@@ -2,14 +2,14 @@ package modelo.entidade.item;
 
 public class Item {
 	
-	private Produto produo;
+	private Produto produto;
 	private int quantidade;
 	private Promocao promocao;
-	public Produto getProduo() {
-		return produo;
+	public Produto getProduto() {
+		return produto;
 	}
-	public void setProduo(Produto produo) {
-		this.produo = produo;
+	public void setProduo(Produto produto) {
+		this.produto = produto;
 	}
 	public int getQuantidade() {
 		return quantidade;
