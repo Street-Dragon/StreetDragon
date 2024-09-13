@@ -1,10 +1,17 @@
-package modelo.entidade.Venda;
+package modelo.entidade.venda;
 
 import modelo.entidade.pessoa.funcionario.Funcionario;
+
+import java.util.List;
+
 import modelo.entidade.item.Item;
 
 public class Venda {
-	Funcionario funcionario;
+	private Funcionario funcionario;
+	private boolean cliente;
+	private float precoTotal;
+	private List<Item> itens;
+	
 	public Funcionario getFuncionario() {
 		return funcionario;
 	}
@@ -29,7 +36,5 @@ public class Venda {
 	public void setItens(List<Item> itens) {
 		this.itens = itens;
 	}
-	boolean cliente;
-	float precoTotal;
-	List<Item> itens;
+
 }
