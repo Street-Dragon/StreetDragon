@@ -15,9 +15,9 @@ import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import javax.swing.JTextPane;
 import javax.swing.BoxLayout;
-<<<<<<< HEAD
+
 import java.awt.Font;
-=======
+
 import javax.swing.ImageIcon;
 
 import java.awt.Component;
@@ -33,17 +33,17 @@ import java.awt.event.FocusEvent;
 import javax.swing.JComboBox;
 import java.awt.Window.Type;
 import java.awt.FlowLayout;
->>>>>>> origin/trf-2.3
+
 
 public class PaginaEditarProduto extends JFrame {
 
 	private JPanel contentPane;
-<<<<<<< HEAD
+
 	private JTextField textNomeProduto;
 	private JTextField textPrecoProduto;
 	private JTextField textCategoriaProduto;
 	private JTextField textField_3;
-=======
+
 	private JTextField txtFieldNome;
 	private JTextField txtFieldPreco;
 	private JButton btnVoltar;
@@ -53,7 +53,7 @@ public class PaginaEditarProduto extends JFrame {
 	private JLabel txtLabeleditarimagen;
 	private JTextField txtFieldCategoria;
 	private JPanel panelimage;
->>>>>>> origin/trf-2.3
+
 
 	/**
 	 * Launch the application.
@@ -139,7 +139,7 @@ public class PaginaEditarProduto extends JFrame {
 		txtFieldPreco.setBackground(new Color(246, 233, 233));
 		contentPane.add(txtFieldPreco, "cell 0 3,grow");
 		txtFieldPreco.setColumns(10);
->>>>>>> origin/trf-2.3
+
 		
 		btnConfirmar = new JButton("Confirmar");
 		btnConfirmar.setForeground(Color.WHITE);
