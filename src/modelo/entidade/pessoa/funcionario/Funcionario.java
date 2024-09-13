@@ -1,4 +1,4 @@
-package modelo.entidade.funcionario;
+package modelo.entidade.pessoa.funcionario;
 import modelo.entidade.pessoa.Pessoa;
 
 public class Funcionario  extends Pessoa{
