@@ -36,11 +36,11 @@ public class PaginaEditarProduto extends JFrame {
 	private JPanel contentPane;
 	private JTextField txtFieldNome;
 	private JTextField txtFieldPreco;
-	private JButton btnBotaoVoltar;
-	private JButton btnBotaoConfirmar;
+	private JButton btnVoltar;
+	private JButton btnConfirmar;
 	private JButton btnDeletar;
-	private JLabel lblNewLabel_1;
-	private JLabel lblNewLabel_2;
+	private JLabel txtLabel;
+	private JLabel txtLabeleditarimagen;
 	private JTextField txtFieldCategoria;
 	private JPanel panelimage;
 
@@ -73,29 +73,29 @@ public class PaginaEditarProduto extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[grow][grow][grow]", "[grow][grow][grow][grow][grow][grow][grow]"));
+		contentPane.setLayout(new MigLayout("", "[grow][grow][::200px,grow]", "[grow][grow][grow][grow][grow][grow][grow]"));
 		
-		btnBotaoVoltar = new JButton("Voltar");
-		btnBotaoVoltar.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnBotaoVoltar.setForeground(new Color(0, 0, 0));
-		btnBotaoVoltar.setBackground(new Color(246, 233, 233));
-		btnBotaoVoltar.addActionListener(new ActionListener() {
+		btnVoltar = new JButton("Voltar");
+		btnVoltar.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnVoltar.setForeground(new Color(0, 0, 0));
+		btnVoltar.setBackground(new Color(246, 233, 233));
+		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//mudar depois?
 				dispose();
 			}
 		});
-		contentPane.add(btnBotaoVoltar, "cell 0 0,growy");
+		contentPane.add(btnVoltar, "cell 0 0,growy");
 		
-		lblNewLabel_1 = new JLabel("Editar Produto");
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		contentPane.add(lblNewLabel_1, "cell 1 0,growx");
+		txtLabel = new JLabel("Editar Produto");
+		txtLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
+		txtLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		contentPane.add(txtLabel, "cell 1 0,growx");
 		
-		lblNewLabel_2 = new JLabel("Editar Imagen");
-		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
-		contentPane.add(lblNewLabel_2, "cell 2 1,growx");
+		txtLabeleditarimagen = new JLabel("Editar Imagen");
+		txtLabeleditarimagen.setFont(new Font("Tahoma", Font.BOLD, 11));
+		txtLabeleditarimagen.setHorizontalAlignment(SwingConstants.CENTER);
+		contentPane.add(txtLabeleditarimagen, "cell 2 1,growx");
 		
 		txtFieldNome = new JTextField();
 		txtFieldNome.addFocusListener(new FocusAdapter() {
@@ -129,21 +129,13 @@ public class PaginaEditarProduto extends JFrame {
 		contentPane.add(txtFieldPreco, "cell 0 3,grow");
 		txtFieldPreco.setColumns(10);
 		
-		btnBotaoConfirmar = new JButton("Confirmar");
-		btnBotaoConfirmar.setForeground(Color.WHITE);
-		btnBotaoConfirmar.setBackground(new Color(114, 148, 235));
-		btnBotaoConfirmar.addActionListener(new ActionListener() {
+		btnConfirmar = new JButton("Confirmar");
+		btnConfirmar.setForeground(Color.WHITE);
+		btnConfirmar.setBackground(new Color(114, 148, 235));
+		btnConfirmar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		java.net.URL imageURL = getClass().getResource("/resources/images/default.png");
-        if (imageURL == null) {
-            System.out.println("Imagem não encontrada. Verifique o caminho");
-        } else {
-            ImageIcon imageIcon = new ImageIcon(imageURL);
-            JLabel imageLabel = new JLabel(imageIcon);
-            panelimage.add(imageLabel);
-        }
 		
 		txtFieldCategoria = new JTextField();
 		txtFieldCategoria.setToolTipText("Categoria");
@@ -165,7 +157,16 @@ public class PaginaEditarProduto extends JFrame {
 		contentPane.add(txtFieldCategoria, "cell 0 4,grow");
 		txtFieldCategoria.setColumns(10);
 		
-		contentPane.add(btnBotaoConfirmar, "cell 0 6,grow");
+		java.net.URL imageURL = getClass().getResource("/resources/images/default.png");
+        if (imageURL == null) {
+            System.out.println("Imagem não encontrada. Verifique o caminho");
+        } else {
+            ImageIcon imageIcon = new ImageIcon(imageURL);
+            JLabel imageLabel = new JLabel(imageIcon);
+            panelimage.add(imageLabel);
+        }
+		
+		contentPane.add(btnConfirmar, "cell 0 6,grow");
 		
 		btnDeletar = new JButton("Deletar");
 		btnDeletar.addActionListener(new ActionListener() {
