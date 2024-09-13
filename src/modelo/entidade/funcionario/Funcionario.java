@@ -1,10 +1,10 @@
 package modelo.entidade.funcionario;
+import modelo.entidade.pessoa.Pessoa;
 
-public class Funcionario {
+public class Funcionario  extends Pessoa{
 	private String senhaFuncionario;
 	private String cpf;
-	private Boolean adm;
-	
+	private boolean adm;
 	
 	public String getSenhaFuncionario() {
 		return senhaFuncionario;
@@ -18,10 +18,10 @@ public class Funcionario {
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
-	public Boolean getAdm() {
+	public boolean isAdm() {
 		return adm;
 	}
-	public void setAdm(Boolean adm) {
+	public void setAdm(boolean adm) {
 		this.adm = adm;
 	}
 	
