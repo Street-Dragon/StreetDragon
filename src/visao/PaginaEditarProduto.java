@@ -15,20 +15,20 @@ import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import javax.swing.JTextPane;
 import javax.swing.BoxLayout;
+import java.awt.Font;
 
 public class PaginaEditarProduto extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
+	private JTextField textNomeProduto;
+	private JTextField textPrecoProduto;
+	private JTextField textCategoriaProduto;
 	private JTextField textField_3;
 	private JButton btnBotaoVoltar;
 	private JLabel lblNewLabel;
 	private JButton btnBotaoConfirmar;
 	private JButton btnDeletar;
-	private JPanel panel;
-	private JTextField textField_4;
+	private JLabel lblNewLabel_1;
 
 	/**
 	 * Launch the application.
@@ -51,7 +51,7 @@ public class PaginaEditarProduto extends JFrame {
 	 */
 	public PaginaEditarProduto() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 573, 353);
+		setBounds(100, 100, 587, 405);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(250, 187, 187));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -60,41 +60,37 @@ public class PaginaEditarProduto extends JFrame {
 		contentPane.setLayout(new MigLayout("", "[grow][grow][grow]", "[grow][grow][grow][grow][grow][grow][grow]"));
 		
 		btnBotaoVoltar = new JButton("Voltar");
+		btnBotaoVoltar.setFont(new Font("Arial", Font.PLAIN, 11));
 		btnBotaoVoltar.setBackground(new Color(246, 233, 233));
 		btnBotaoVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		contentPane.add(btnBotaoVoltar, "cell 0 0,growy");
+		contentPane.add(btnBotaoVoltar, "cell 0 0,alignx left,aligny top");
 		
 		lblNewLabel = new JLabel("Editar Produto");
+		lblNewLabel.setFont(new Font("Arial", Font.PLAIN, 15));
 		lblNewLabel.setBackground(new Color(255, 0, 0));
 		contentPane.add(lblNewLabel, "cell 1 0,alignx center,growy");
 		
-		panel = new JPanel();
-		panel.setBackground(new Color(246, 233, 233));
-		panel.setForeground(new Color(246, 233, 233));
-		contentPane.add(panel, "cell 2 1,grow");
-		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+		lblNewLabel_1 = new JLabel("Inserir Imagem");
+		lblNewLabel_1.setFont(new Font("Arial", Font.PLAIN, 15));
+		contentPane.add(lblNewLabel_1, "cell 2 1,alignx center");
 		
-		textField_4 = new JTextField();
-		panel.add(textField_4);
-		textField_4.setColumns(10);
+		textNomeProduto = new JTextField();
+		textNomeProduto.setBackground(new Color(246, 233, 233));
+		contentPane.add(textNomeProduto, "cell 0 2,grow");
+		textNomeProduto.setColumns(10);
 		
-		textField = new JTextField();
-		textField.setBackground(new Color(246, 233, 233));
-		contentPane.add(textField, "cell 0 2,grow");
-		textField.setColumns(10);
+		textPrecoProduto = new JTextField();
+		textPrecoProduto.setBackground(new Color(246, 233, 233));
+		contentPane.add(textPrecoProduto, "cell 0 3,grow");
+		textPrecoProduto.setColumns(10);
 		
-		textField_1 = new JTextField();
-		textField_1.setBackground(new Color(246, 233, 233));
-		contentPane.add(textField_1, "cell 0 3,grow");
-		textField_1.setColumns(10);
-		
-		textField_2 = new JTextField();
-		textField_2.setBackground(new Color(246, 233, 233));
-		contentPane.add(textField_2, "cell 0 4,grow");
-		textField_2.setColumns(10);
+		textCategoriaProduto = new JTextField();
+		textCategoriaProduto.setBackground(new Color(246, 233, 233));
+		contentPane.add(textCategoriaProduto, "cell 0 4,grow");
+		textCategoriaProduto.setColumns(10);
 		
 		textField_3 = new JTextField();
 		textField_3.setBackground(new Color(246, 233, 233));
