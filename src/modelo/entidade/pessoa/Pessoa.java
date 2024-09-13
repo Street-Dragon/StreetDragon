@@ -1,8 +1,8 @@
-package modelo.entidade.pessoa.fornecedor;
+package modelo.entidade.pessoa;
 
 import modelo.entidade.contato.Contato;
 
-abstract class Pessoa {
+public abstract class Pessoa {
 	private int id;
 	private String nome;
 	private Contato contato;

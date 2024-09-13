@@ -1,10 +1,10 @@
 package modelo.entidade.produto;
 
-import modelo.entidade.tamanho.Tamanho;
+
 import modelo.entidade.pessoa.fornecedor.Fornecedor;
+import modelo.enumeracao.tamanho.Tamanho;
 
 public class Produto {
-	
 	private int idProduto;
 	private String nomeProduto;
 	private String material;
