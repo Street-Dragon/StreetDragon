@@ -24,7 +24,7 @@ public class ConexaoBD {
 		String serverName = "localhost";
 
 		// Nome do seu banco de dados
-		String mydatabase = "teste";
+		String mydatabase = "mydb";
 
 		// String de Conexão.
 		String url = "jdbc:mysql://" + serverName + "/" + mydatabase;

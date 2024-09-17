@@ -1,5 +1,7 @@
 package controle;
 
-public class ConexaoBDDAO {
+import modelo.entidade.IConexaoBDDAO.IConexaoBDDAO;
+
+public class ConexaoBDDAO implements IConexaoBDDAO{
 
 }
