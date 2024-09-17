@@ -1,5 +1,8 @@
 package modelo.entidade.item;
 
+import modelo.entidade.produto.Produto;
+import modelo.entidade.promocao.Promocao;
+
 public class Item {
 	
 	private Produto produto;

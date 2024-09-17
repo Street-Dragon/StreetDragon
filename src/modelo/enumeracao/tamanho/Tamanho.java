@@ -1,4 +1,4 @@
-package modelo.Enum;
+package modelo.enumeracao.tamanho;
 
 public enum Tamanho {
     PP,
