@@ -1,6 +1,7 @@
 package modelo.entidade.contato;
 
-public class Contato {
+public class Contato  {
+  
 	private  String email;
 	private Long telefone;
 	
