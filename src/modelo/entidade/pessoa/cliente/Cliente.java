@@ -1,4 +1,4 @@
-package modelo.entidade.cliente;
+package modelo.entidade.pessoa.cliente;
 
 import modelo.entidade.pessoa.Pessoa;
 
