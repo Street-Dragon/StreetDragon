@@ -23,6 +23,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
+import javax.swing.JScrollBar;
 
 public class TelaCadastroFuncionario extends JFrame {
 
@@ -64,13 +65,13 @@ public class TelaCadastroFuncionario extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		loadCustomFont();
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[grow][grow][grow][grow][]", "[grow 80][grow 20][grow 40][grow]"));
+		contentPane.setLayout(new MigLayout("", "[grow][grow][grow][grow][]", "[grow][grow]"));
 		
 		JPanel panel = new JPanel();
-		panel.setBorder(new LineBorder(new Color(250, 187, 187)));
+		panel.setBorder(null);
 		panel.setBackground(new Color(255, 255, 255));
-		contentPane.add(panel, "cell 0 0 5 2,grow");
-		panel.setLayout(new MigLayout("", "[grow 20][grow 20][grow 20][grow][grow]", "[grow][grow][grow][grow]"));
+		contentPane.add(panel, "cell 0 0 3 1,grow");
+		panel.setLayout(new MigLayout("", "[grow][grow][grow][grow]", "[grow][grow][grow][grow]"));
 		
 		JLabel lblId = new JLabel("Id");
 		lblId.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -100,40 +101,6 @@ public class TelaCadastroFuncionario extends JFrame {
 		lbltelefone.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel.add(lbltelefone, "cell 2 1,alignx left");
 		
-		JPanel panel_1 = new JPanel();
-		panel_1.setBorder(new LineBorder(new Color(246, 233, 233), 5));
-		panel_1.setBackground(new Color(255, 255, 255));
-		panel.add(panel_1, "cell 4 0 1 4,grow");
-		panel_1.setLayout(null);
-		//Botão Cadastrar
-		JButton btnNewButton = new JButton("Cadasrar");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-			}
-		});
-		btnNewButton.setBackground(new Color(114, 148, 235));
-		btnNewButton.setBounds(10, 11, 143, 28);
-		panel_1.add(btnNewButton);
-		//Botão Ecluir
-		JButton btnEditarFuncionario = new JButton("Excluir Funcionario");
-		btnEditarFuncionario.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnEditarFuncionario.setBackground(new Color(250, 187, 187));
-		btnEditarFuncionario.setBounds(10, 131, 143, 28);
-		panel_1.add(btnEditarFuncionario);
-		//Botâo Editar
-		JButton btnEditarFuncionrio = new JButton("Editar Funcionrio");
-		btnEditarFuncionrio.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnEditarFuncionrio.setBackground(new Color(226, 61, 40));
-		btnEditarFuncionrio.setBounds(10, 67, 143, 28);
-		panel_1.add(btnEditarFuncionrio);
-		
 		textTelefone = new JTextField();
 		panel.add(textTelefone, "cell 3 1,alignx left");
 		textTelefone.setColumns(10);
@@ -152,34 +119,57 @@ public class TelaCadastroFuncionario extends JFrame {
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBackground(new Color(255, 255, 255));
-		panel.add(panel_2, "cell 3 2,grow");
-		panel_2.setLayout(null);
+		panel.add(panel_2, "cell 3 2");
+		panel_2.setLayout(new MigLayout("", "[115px]", "[20px]"));
 		
 		passwordField = new JPasswordField();
-		passwordField.setBounds(0, 23, 115, 20);
-		panel_2.add(passwordField);
+		panel_2.add(passwordField, "cell 0 0,grow");
 		
 		JCheckBox chckbxNewCheckBox = new JCheckBox("Adminstrador");
 		chckbxNewCheckBox.setBackground(new Color(255, 255, 255));
 		chckbxNewCheckBox.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		panel.add(chckbxNewCheckBox, "cell 0 3,alignx center");
+		panel.add(chckbxNewCheckBox, "cell 1 3,alignx center");
 		
 		JCheckBox chckbxNewCheckBox_1 = new JCheckBox("Ver senha");
 		chckbxNewCheckBox_1.setBackground(new Color(255, 255, 255));
 		chckbxNewCheckBox_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		panel.add(chckbxNewCheckBox_1, "cell 2 3");
+		panel.add(chckbxNewCheckBox_1, "cell 3 3");
+		
+		JPanel panel_1 = new JPanel();
+		contentPane.add(panel_1, "cell 3 0,grow");
+		panel_1.setBorder(new LineBorder(new Color(246, 233, 233), 5));
+		panel_1.setBackground(new Color(255, 255, 255));
+		//Botão Cadastrar
+		JButton btnNewButton = new JButton("Cadasrar");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		panel_1.setLayout(new MigLayout("", "[grow]", "[grow][grow][grow]"));
+		btnNewButton.setBackground(new Color(114, 148, 235));
+		panel_1.add(btnNewButton, "cell 0 0,grow");
+		//Botão Ecluir
+		JButton btnEditarFuncionario = new JButton("Excluir Funcionario");
+		btnEditarFuncionario.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnEditarFuncionario.setBackground(new Color(250, 187, 187));
+		panel_1.add(btnEditarFuncionario, "cell 0 2,grow");
+		//Botâo Editar
+		JButton btnEditarFuncionrio = new JButton("Editar Funcionrio");
+		btnEditarFuncionrio.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnEditarFuncionrio.setBackground(new Color(226, 61, 40));
+		panel_1.add(btnEditarFuncionrio, "cell 0 1,grow");
 		
 		JScrollPane scrollPane = new JScrollPane();
-		contentPane.add(scrollPane, "cell 0 2 4 2,grow");
-		//tabela
+		contentPane.add(scrollPane, "cell 0 1 4 1,grow");
+		
 		table = new JTable();
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-				"Id", "Nome", "Cpf", "Administrador"
-			}
-		));
 		scrollPane.setViewportView(table);
 	}
 	 private void loadCustomFont() {
