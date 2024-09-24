@@ -1,20 +1,39 @@
 package controle.entidade.funcionariocontrole;
 
 import modelo.dao.funcionario.FuncionarioDAO;
+import visao.TelaLogin;
+//import visao.pagina.Principal;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JOptionPane;
 
 public class FuncionarioControle {
-	// Dentro do evento do botão de login
-	String username = campoUsername.getText();
-	String password = campoPassword.getText();
+    private TelaLogin telaLogin;
 
-	FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
-		if (funcionarioDAO.login(username, password)) {
-		    // Login bem-sucedido
-		    System.out.println("Login bem-sucedido!");
-		} else {
-		    // Falha no login
-		    System.out.println("Login falhou! Verifique suas credenciais.");
-		}
+    public void setTelaLogin(TelaLogin telaLogin) {
+        this.telaLogin = telaLogin;
 
-	}
+        telaLogin.getBtnContinuar().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                realizarLogin();
+            }
+        });
+    }
+
+    private void realizarLogin() {
+        String username = telaLogin.getCampoUsername();
+        String password = telaLogin.getCampoPassword();
+
+        FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
+        if (funcionarioDAO.login(username, password)) {
+          /*  Principal telaPrincipal = new Principal();
+            telaPrincipal.setVisible(true); 
+            telaLogin.dispose();*/
+        } else {
+        	JOptionPane.showMessageDialog(telaLogin, "Credenciais inválidas. Tente novamente.", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 }
