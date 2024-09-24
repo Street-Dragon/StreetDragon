@@ -6,7 +6,6 @@ import java.sql.SQLException;
 
 public class ConexaoBD {
 	public static Connection getConexaoMySQL() {
-
 		// Atributo do tipo Connection
 		Connection connection = null;
 
@@ -28,7 +27,7 @@ public class ConexaoBD {
 
 		// String de Conexão.
 		String url = "jdbc:mysql://" + serverName + "/" + mydatabase;
-
+		
 		// Nome de um usuário de seu BD
 		String username = "root";
 
@@ -45,5 +44,6 @@ public class ConexaoBD {
 
 		return connection;
 	}
+
 
 }

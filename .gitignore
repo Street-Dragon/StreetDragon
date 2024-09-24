@@ -12,5 +12,5 @@
 
 # Arquivos desnecessarios
 .classpath
-.settings
+/settings
 .project
