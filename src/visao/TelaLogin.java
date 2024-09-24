@@ -20,6 +20,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JCheckBox;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
+import utils.Utils;
 
 public class TelaLogin extends JFrame {
 
@@ -59,7 +60,10 @@ public class TelaLogin extends JFrame {
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
         contentPane.setLayout(new MigLayout("", "[grow][grow][grow]", "[grow]"));
-        loadCustomFont();
+
+        // Chama o método de utilidades para carregar a fonte
+        hkGrotesk = Utils.loadCustomFont();
+        
         JPanel panel = new JPanel();
         panel.setBackground(new Color(246, 233, 233));
         contentPane.add(panel, "cell 1 0,grow");
@@ -128,20 +132,5 @@ public class TelaLogin extends JFrame {
         btnContinuar.setBackground(new Color(250, 187, 187));
         btnContinuar.setFont(hkGrotesk);
         panel.add(btnContinuar, "cell 1 8,grow");
-    }
-
-    // Carregar a fonte personalizada
-    private void loadCustomFont() {
-        try {
-    		hkGrotesk = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/resources/fontes/HankenGrotesk-VariableFont_wght.ttf")).deriveFont(20f);
-    		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-            ge.registerFont(hkGrotesk);
-    	} catch (FontFormatException e) {
-            System.err.println("Formato de fonte inválido: " + e.getMessage());
-            e.printStackTrace();
-        } catch (IOException e) {
-            System.err.println("Erro ao ler o arquivo da fonte: " + e.getMessage());
-            e.printStackTrace();
-        }
     }
 }
