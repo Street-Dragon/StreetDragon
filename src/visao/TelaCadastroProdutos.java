@@ -45,6 +45,7 @@ public class TelaCadastroProdutos extends JFrame {
 	 * Create the frame.
 	 */
 	public TelaCadastroProdutos() {
+		setTitle("Cadastrar Produto");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 672, 540);
 		contentPane = new JPanel();
@@ -59,6 +60,7 @@ public class TelaCadastroProdutos extends JFrame {
 		contentPane.add(lblId, "cell 0 0,growx");
 		
 		textFieldId = new JTextField();
+		textFieldId.setEditable(false);
 		textFieldId.setBackground(new Color(246, 233, 233));
 		contentPane.add(textFieldId, "cell 1 0,growx");
 		textFieldId.setColumns(10);
@@ -146,7 +148,7 @@ public class TelaCadastroProdutos extends JFrame {
 		btnCancelar.setBackground(new Color(226, 61, 40));
 		contentPane.add(btnCancelar, "cell 3 8 2 1,growx");
 		
-		java.net.URL imageURL = getClass().getResource("/resources/imagens/logo.png");
+		java.net.URL imageURL = getClass().getResource("/resources/imagens/default.png");
         if (imageURL == null) {
             System.out.println("Imagem não encontrada. Verifique o caminho");
         } else {
