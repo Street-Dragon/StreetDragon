@@ -10,8 +10,8 @@ public class Funcionario  extends Pessoa{
 	public String getSenhaFuncionario() {
 		return senhaFuncionario;
 	}
-	public void setSenhaFuncionario(String senhaFuncionario) {
-		this.senhaFuncionario = senhaFuncionario;
+	public void setSenhaFuncionario(String senha) {
+		this.senhaFuncionario = senha;
 	}
 	public String getCpf() {
 		return cpf;

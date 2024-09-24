@@ -28,11 +28,11 @@ public class TelaLogin extends JFrame {
     private JButton btnContinuar;
     private Font hkGrotesk;
 
-    public String getCampoUsername() {
+    public String getCampoCpf() {
         return txtCpfLogin.getText();
     }
 
-    public String getCampoPassword() {
+    public String getCampoSenha() {
         return txtSenhaLogin.getText();
     }
     

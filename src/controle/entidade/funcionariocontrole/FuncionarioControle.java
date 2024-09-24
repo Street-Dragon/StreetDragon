@@ -1,6 +1,7 @@
 package controle.entidade.funcionariocontrole;
 
 import modelo.dao.funcionario.FuncionarioDAO;
+import modelo.entidade.pessoa.funcionario.Funcionario;
 import visao.TelaCadastroFuncionario;
 import visao.TelaLogin;
 //import visao.pagina.Principal;
@@ -13,6 +14,7 @@ import javax.swing.JOptionPane;
 public class FuncionarioControle {
     private TelaLogin telaLogin;
 	private TelaCadastroFuncionario cadastroFuncionario;
+	private FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
 
     public void setTelaLogin(TelaLogin telaLogin) {
         this.telaLogin = telaLogin;
@@ -28,7 +30,7 @@ public class FuncionarioControle {
     public void setCadastroFuncionario(TelaCadastroFuncionario cadastroFuncionario) {
         this.cadastroFuncionario = cadastroFuncionario;
 
-        cadastroFuncionario.getBtnContinuar().addActionListener(new ActionListener() {
+        cadastroFuncionario.getBtnCadastrarFuncionario().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 cadastrarFuncionario();
@@ -37,11 +39,10 @@ public class FuncionarioControle {
     }   
 
     private void realizarLogin() {
-        String username = telaLogin.getCampoUsername();
-        String password = telaLogin.getCampoPassword();
+        String cpf = telaLogin.getCampoCpf();
+        String senha = telaLogin.getCampoSenha();
 
-        FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
-        if (funcionarioDAO.login(username, password)) {
+        if (funcionarioDAO.login(cpf, senha)) {
           /*  Principal telaPrincipal = new Principal();
             telaPrincipal.setVisible(true); 
             telaLogin.dispose();*/
@@ -51,16 +52,30 @@ public class FuncionarioControle {
     }
     
     private void cadastrarFuncionario() {
-        String username = telaLogin.getCampoUsername();
-        String password = telaLogin.getCampoPassword();
-
-        FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
-        if (funcionarioDAO.login(username, password)) {
-          /*  Principal telaPrincipal = new Principal();
-            telaPrincipal.setVisible(true); 
-            telaLogin.dispose();*/
+        String nome = cadastroFuncionario.getTextNome();
+        char[] senhaArray = cadastroFuncionario.getPasswordField();
+        String cpf = cadastroFuncionario.getTextCpf();
+        boolean isAdm = cadastroFuncionario.getChckbxAdm();
+    
+        String senha = new String(senhaArray);
+     
+        if (nome.isEmpty() || cpf.isEmpty() || senha.isEmpty()) {
+            JOptionPane.showMessageDialog(cadastroFuncionario, "Preencha todos os campos obrigatórios.", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        Funcionario funcionario = new Funcionario();
+        funcionario.setNome(nome);
+        funcionario.setCpf(cpf);
+        funcionario.setSenhaFuncionario(senha);
+        funcionario.setAdm(isAdm);
+        
+        
+        if (funcionarioDAO.cadastrarFuncionario(funcionario)) {
+            JOptionPane.showMessageDialog(cadastroFuncionario, "Funcionário cadastrado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+           
         } else {
-        	JOptionPane.showMessageDialog(telaLogin, "Credenciais inválidas. Tente novamente.", "Erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(cadastroFuncionario, "Erro ao cadastrar funcionário.", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
     
