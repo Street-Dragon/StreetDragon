@@ -1,7 +1,7 @@
 package modelo.entidade.contato;
 
 public class Contato  {
-  
+
 	private  String email;
 	private String telefone;
 	

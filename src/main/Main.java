@@ -8,26 +8,25 @@ import visao.TelaCadastroFuncionario;
 
 public class Main {
     public static void main(String[] args) {
-    	// Criação do banco de dados e tabela
+    	// Cria o banco
         ConexaoBD.criarBancoDeDadosETabela(); 
 
-        // Inicialização das telas
+        // Inicialização as telas
         TelaLogin telaLogin = new TelaLogin(); 
         TelaCadastroFuncionario telaCadastroFuncionario = new TelaCadastroFuncionario();
 
-        // Inicialização do controlador
+        // Instancia o controle
         FuncionarioControle funcionarioControle = new FuncionarioControle();
 
-        // Conectando as telas ao controlador
+        // Conecta as telas ao controle
         funcionarioControle.setTelaLogin(telaLogin); 
         funcionarioControle.setCadastroFuncionario(telaCadastroFuncionario);
 
-        // Exibindo a tela de login
+        // Exibe a tela de login
         telaLogin.setVisible(true);
 
-        // Exibindo a tela de cadastro de funcionários (opcional)
-        // Se quiser que a tela de cadastro de funcionários abra em outro momento,
-        // você pode chamar este método mais tarde, ou com base em uma ação.
+        // Exibe a tela de cadastro
+        // no primeiro momento, apenas exibe sem logica
         telaCadastroFuncionario.setVisible(true);
     }
 }

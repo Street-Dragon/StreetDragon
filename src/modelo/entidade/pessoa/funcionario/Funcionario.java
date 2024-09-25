@@ -3,6 +3,7 @@ package modelo.entidade.pessoa.funcionario;
 import modelo.entidade.pessoa.Pessoa;
 
 public class Funcionario  extends Pessoa{
+	
 	private String senhaFuncionario;
 	private String cpf;
 	private boolean adm;

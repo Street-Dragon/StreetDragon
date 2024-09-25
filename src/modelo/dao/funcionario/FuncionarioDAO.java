@@ -8,14 +8,14 @@ import controle.entidade.conexao.ConexaoBD;
 import modelo.entidade.pessoa.funcionario.Funcionario;
 
 public class FuncionarioDAO {
-    public boolean login(String username, String password) {
-        String sql = "SELECT * FROM funcionarios WHERE username = ? AND password = ?";
+    public boolean login(String cpf, String senha) {
+        String sql = "SELECT * FROM funcionarios WHERE cpf = ? AND senha = ?";
         
         try (Connection conn = ConexaoBD.getConexaoMySQL();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
              
-            stmt.setString(1, username);
-            stmt.setString(2, password);
+            stmt.setString(1, cpf);
+            stmt.setString(2, senha);
             
             ResultSet rs = stmt.executeQuery();
             return rs.next(); // Retorna true se houver um funcionário com as credenciais corretas

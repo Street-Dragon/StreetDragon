@@ -31,18 +31,25 @@ public class ConexaoBD {
              Statement stmt = conn.createStatement()) {
 
             // Criar banco de dados
+        	
             stmt.executeUpdate("CREATE DATABASE IF NOT EXISTS streetdragon");
             System.out.println("Banco de dados criado ou já existe!");
 
             // Usar o banco de dados
             stmt.executeUpdate("USE streetdragon");
-
+            stmt.executeUpdate("DROP TABLE IF EXISTS funcionarios");
+            // Criar tabela
             // Criar tabela
             String sql = "CREATE TABLE IF NOT EXISTS funcionarios (" +
-                         "id INT AUTO_INCREMENT PRIMARY KEY," +
-                         "username VARCHAR(255) NOT NULL," +
-                         "password VARCHAR(255) NOT NULL)";
-                         
+                         "id INT AUTO_INCREMENT PRIMARY KEY, " +
+                         "nome VARCHAR(45) NOT NULL, " +
+                         "cpf VARCHAR(11) NOT NULL, " +
+                         "email VARCHAR(50) NOT NULL, " + 
+                         "telefone VARCHAR(255) NOT NULL, " +
+                         "senha VARCHAR(25) NOT NULL, " +
+                         "adm BOOLEAN DEFAULT FALSE" + 
+                         ")"; 
+            
             stmt.executeUpdate(sql);
             System.out.println("Tabela criada ou já existe!");
 

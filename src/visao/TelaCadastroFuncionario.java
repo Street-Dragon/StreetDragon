@@ -99,7 +99,7 @@ public class TelaCadastroFuncionario extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(246, 233, 233));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		loadCustomFont();
+		//loadCustomFont();
 		setContentPane(contentPane);
 		contentPane.setLayout(new MigLayout("", "[grow][grow][grow][grow][]", "[grow][grow][grow][grow]"));
 		
@@ -205,11 +205,10 @@ public class TelaCadastroFuncionario extends JFrame {
 		panel_1.setBorder(new LineBorder(new Color(246, 233, 233), 5));
 		panel_1.setBackground(new Color(255, 255, 255));
 		//Botão Cadastrar
-		JButton btnCadastrarFuncionario = new JButton("Cadastrar");
+		btnCadastrarFuncionario = new JButton("Cadastrar");
 		btnCadastrarFuncionario.setForeground(new Color(255, 255, 255));
 		btnCadastrarFuncionario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
 				
 			}
 		});
@@ -249,6 +248,7 @@ public class TelaCadastroFuncionario extends JFrame {
 		));
 		scrollPane.setViewportView(table);
 	}
+	/*
 	 private void loadCustomFont() {
 	        try {
 	    		Font hkGrotesk = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/resources/fontes/HankenGrotesk-VariableFont_wght.ttf")).deriveFont(20f);
@@ -264,7 +264,7 @@ public class TelaCadastroFuncionario extends JFrame {
 	    }
 
 
-
+*/
 
 
 }
