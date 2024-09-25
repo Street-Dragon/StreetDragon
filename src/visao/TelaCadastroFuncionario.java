@@ -115,6 +115,7 @@ public class TelaCadastroFuncionario extends JFrame {
 		
 		textId = new JTextField();
 		panel.add(textId, "cell 1 0,alignx left,aligny center");
+		textId.setEditable(false);
 		textId.setColumns(10);
 		
 		JLabel lblemail = new JLabel("Email");
