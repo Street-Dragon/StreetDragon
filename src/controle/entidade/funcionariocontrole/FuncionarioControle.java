@@ -3,6 +3,7 @@ package controle.entidade.funcionariocontrole;
 import modelo.dao.funcionario.FuncionarioDAO;
 import modelo.entidade.contato.Contato;
 import modelo.entidade.pessoa.funcionario.Funcionario;
+import visao.Principal;
 import visao.TelaCadastroFuncionario;
 import visao.TelaLogin;
 //import visao.pagina.Principal;
@@ -44,9 +45,9 @@ public class FuncionarioControle {
         String senha = telaLogin.getCampoSenha();
 
         if (funcionarioDAO.login(cpf, senha)) {
-          /*  Principal telaPrincipal = new Principal();
+          Principal telaPrincipal = new Principal();
             telaPrincipal.setVisible(true); 
-            telaLogin.dispose();*/
+            telaLogin.dispose();
         } else {
         	JOptionPane.showMessageDialog(telaLogin, "Credenciais inválidas. Tente novamente.", "Erro", JOptionPane.ERROR_MESSAGE);
         }

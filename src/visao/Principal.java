@@ -1,4 +1,4 @@
-package visao.pagina;
+package visao;
 
 import java.awt.EventQueue;
 import java.awt.Font;
