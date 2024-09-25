@@ -43,7 +43,6 @@ public class TelaLogin extends JFrame {
     public JButton getBtnContinuar() {
 		return btnContinuar;
     }
-
     /**
      * Launch the application.
      */
@@ -141,7 +140,6 @@ public class TelaLogin extends JFrame {
          ckboxMotrarSenha.setBackground(new Color(246, 233, 233));
          panel.add(ckboxMotrarSenha, "cell 1 7,alignx left");    
         
-
         btnContinuar = new JButton("Continuar");
         btnContinuar.setBackground(new Color(250, 187, 187));
         btnContinuar.setFont(hkGrotesk);
