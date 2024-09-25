@@ -29,7 +29,20 @@ public class TelaLogin extends JFrame {
     private JTextField txtCpfLogin;
     private Font hkGrotesk;
     private JPasswordField txtSenhaLogin;
+    private JButton btnContinuar;
+    
+    public String getCampoCpf() {
+        return txtCpfLogin.getText();
+    }
 
+    public String getCampoSenha() {
+        return new String(txtSenhaLogin.getPassword());
+    }
+    
+    
+    public JButton getBtnContinuar() {
+		return btnContinuar;
+    }
     /**
      * Launch the application.
      */
@@ -127,8 +140,7 @@ public class TelaLogin extends JFrame {
          ckboxMotrarSenha.setBackground(new Color(246, 233, 233));
          panel.add(ckboxMotrarSenha, "cell 1 7,alignx left");    
         
-
-        JButton btnContinuar = new JButton("Continuar");
+        btnContinuar = new JButton("Continuar");
         btnContinuar.setBackground(new Color(250, 187, 187));
         btnContinuar.setFont(hkGrotesk);
         panel.add(btnContinuar, "cell 1 8,grow");

@@ -3,9 +3,15 @@ package modelo.entidade.pessoa;
 import modelo.entidade.contato.Contato;
 
 public abstract class Pessoa {
+	
 	private int id;
 	private String nome;
 	private Contato contato;
+	
+    public Pessoa() {
+        this.contato = new Contato();
+    }
+    
 	public int getId() {
 		return id;
 	}

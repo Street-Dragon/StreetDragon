@@ -1,9 +1,9 @@
 package modelo.entidade.contato;
 
 public class Contato  {
-  
+
 	private  String email;
-	private Long telefone;
+	private String telefone;
 	
 	public String getEmail() {
 		return email;
@@ -11,10 +11,10 @@ public class Contato  {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public Long getTelefone() {
+	public String getTelefone() {
 		return telefone;
 	}
-	public void setTelefone(Long telefone) {
+	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	} 
 
