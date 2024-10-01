@@ -31,26 +31,37 @@ public class ConexaoBD {
              Statement stmt = conn.createStatement()) {
 
             // Criar banco de dados
-        	
+            stmt.executeUpdate("DROP DATABASE IF EXISTS streetdragon");
             stmt.executeUpdate("CREATE DATABASE IF NOT EXISTS streetdragon");
             System.out.println("Banco de dados criado ou já existe!");
 
             // Usar o banco de dados
             stmt.executeUpdate("USE streetdragon");
+            stmt.executeUpdate("DROP TABLE IF EXISTS contato");
             stmt.executeUpdate("DROP TABLE IF EXISTS funcionarios");
-            // Criar tabela
-            // Criar tabela
-            String sql = "CREATE TABLE IF NOT EXISTS funcionarios (" +
-                         "id INT AUTO_INCREMENT PRIMARY KEY, " +
-                         "nome VARCHAR(45) NOT NULL, " +
-                         "cpf VARCHAR(11) NOT NULL, " +
-                         "email VARCHAR(50) NOT NULL, " + 
-                         "telefone VARCHAR(255) NOT NULL, " +
-                         "senha VARCHAR(25) NOT NULL, " +
-                         "adm BOOLEAN DEFAULT FALSE" + 
-                         ")"; 
             
-            stmt.executeUpdate(sql);
+            // Cria tabela contato 
+            String sqlContato = "CREATE TABLE IF NOT EXISTS contato (" +
+                                "id_contato INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
+                                "email VARCHAR(45) NOT NULL, " + 
+                                "telefone VARCHAR(45) NOT NULL" +
+                                ") ENGINE = InnoDB;";
+            
+            // Cria tabela funcionarios
+            String sqlFuncionario = "CREATE TABLE IF NOT EXISTS funcionarios (" +
+            	    "cpf INT NOT NULL, " +
+            	    "senha VARCHAR(45) NOT NULL, " +
+            	    "nome VARCHAR(45) NOT NULL, " +
+            	    "contato_id INT NOT NULL, " + // 
+            	    "PRIMARY KEY (cpf), " +
+            	    "FOREIGN KEY (contato_id) REFERENCES contato(id_contato) " + // 
+            	    "ON DELETE NO ACTION " +
+            	    "ON UPDATE NO ACTION" +
+            	    ") ENGINE = InnoDB;";
+
+	            
+            stmt.executeUpdate(sqlContato);
+            stmt.executeUpdate(sqlFuncionario);
             System.out.println("Tabela criada ou já existe!");
 
         } catch (SQLException e) {
