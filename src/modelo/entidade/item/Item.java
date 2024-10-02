@@ -4,10 +4,11 @@ import modelo.entidade.produto.Produto;
 import modelo.entidade.promocao.Promocao;
 
 public class Item {
-	
+
 	private Produto produto;
 	private int quantidade;
 	private Promocao promocao;
+
 	public Produto getProduto() {
 		return produto;
 	}
