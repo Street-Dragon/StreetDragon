@@ -19,7 +19,7 @@ import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.BoxLayout;
 
-public class Principal extends JFrame {
+public class TelaPrincipal extends JFrame {
 
 	private JPanel contentPane;
 	private JTable table;
@@ -28,7 +28,12 @@ public class Principal extends JFrame {
 	private JTextField txtQuantidade;
 	private JTextField txtValor;
 	private Font hkGrotesk;
-
+	private JButton btnDeslogar;
+	
+	public JButton getBtnDeslogar() {
+		return btnDeslogar;
+    }
+	
 	/**
 	 * Launch the application.
 	 */
@@ -36,7 +41,7 @@ public class Principal extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Principal frame = new Principal();
+					TelaPrincipal frame = new TelaPrincipal();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -48,7 +53,7 @@ public class Principal extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Principal() {
+	public TelaPrincipal() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 926, 569);
 		contentPane = new JPanel();
