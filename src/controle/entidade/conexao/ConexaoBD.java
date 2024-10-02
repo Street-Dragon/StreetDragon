@@ -39,6 +39,7 @@ public class ConexaoBD {
             stmt.executeUpdate("USE streetdragon");
             stmt.executeUpdate("DROP TABLE IF EXISTS contato");
             stmt.executeUpdate("DROP TABLE IF EXISTS funcionarios");
+            stmt.executeUpdate("DROP TABLE IF EXISTS clientes");
             
             // Cria tabela contato 
             String sqlContato = "CREATE TABLE IF NOT EXISTS contato (" +
@@ -58,10 +59,24 @@ public class ConexaoBD {
             	    "ON DELETE NO ACTION " +
             	    "ON UPDATE NO ACTION" +
             	    ") ENGINE = InnoDB;";
+            
+            String sqlClientes = "CREATE TABLE IF NOT EXISTS clientes (" +
+                    "cpf INT NOT NULL AUTO_INCREMENT, " +
+                    "nome VARCHAR(45) NOT NULL, " +
+                    "contato_id INT NOT NULL, " +
+                    "PRIMARY KEY (cpf), " +
+                    "INDEX fk_Clientes_Contato1_idx (contato_id ASC), " +
+                    "CONSTRAINT fk_Clientes_Contato1 " +
+                    "FOREIGN KEY (contato_id) " +
+                    "REFERENCES contato(id_contato) " +
+                    "ON DELETE NO ACTION " +
+                    "ON UPDATE NO ACTION " +
+                    ") ENGINE = InnoDB;";
 
 	            
             stmt.executeUpdate(sqlContato);
             stmt.executeUpdate(sqlFuncionario);
+            stmt.executeUpdate(sqlClientes);
             System.out.println("Tabela criada ou já existe!");
 
         } catch (SQLException e) {
