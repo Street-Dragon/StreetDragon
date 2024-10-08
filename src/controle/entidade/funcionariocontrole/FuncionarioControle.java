@@ -68,6 +68,12 @@ public class FuncionarioControle {
             telaPrincipal.getLblFuncionario().setText("Funcionario: "+funcionarioDAO.nomeFuncionario(cpfUsuarioLogado));
             telaPrincipal.setVisible(true);
             telaLogin.dispose();
+            
+            //limpa os campos e checkbox
+            telaLogin.getTxtCpf().setText("");
+            telaLogin.getTxtSenha().setText("");
+            telaLogin.getCkboxMotrarSenha().setSelected(false);
+            
         } else {
             JOptionPane.showMessageDialog(telaLogin, "Credenciais inválidas. Tente novamente.", "Erro", JOptionPane.ERROR_MESSAGE);
         }
