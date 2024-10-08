@@ -40,6 +40,7 @@ public class ConexaoBD {
             stmt.executeUpdate("DROP TABLE IF EXISTS contato");
             stmt.executeUpdate("DROP TABLE IF EXISTS funcionarios");
             stmt.executeUpdate("DROP TABLE IF EXISTS clientes");
+            stmt.executeUpdate("DROP TABLE IF EXISTS fornecedores");
             
             // Cria tabela contato 
             String sqlContato = "CREATE TABLE IF NOT EXISTS contato (" +
@@ -72,11 +73,34 @@ public class ConexaoBD {
                     "ON DELETE NO ACTION " +
                     "ON UPDATE NO ACTION " +
                     ") ENGINE = InnoDB;";
+            
+            		//Cria tabela Fornecedores
+            
+            String sqlFornecedores = "CREATE TABLE IF NOT EXISTS fornecedores (" +
+            		  "idFornecedores` INT NOT NULL AUTO_INCREMENT, " +
+            		  "nome` VARCHAR(45) NOT NULL, " +
+            		  "endereco_CEP INT NOT NULL, " +
+            		  "produtos_idProdutos INT NOT NULL, " + //
+            		  "PRIMARY KEY (idFornecedores), " + 
+            		  "INDEX fk_Fornecedores_Endereço1_idx (Endereco_cep ASC), " +
+            		  "INDEX fk_Fornecedores_Produtos1_idx (Produtos_idProdutos ASC), "  +
+            		  "CONSTRAINT fk_Fornecedores_Endereço1 " + 
+            		    "FOREIGN KEY (Endereco_cep) " +
+            		    "REFERENCES Endereco (cep) " +
+            		    "ON DELETE NO ACTION " +
+            		    "ON UPDATE NO ACTION " +
+            		  "CONSTRAINT fk_Fornecedores_Produtos1 " +
+            		    "FOREIGN KEY (Produtos_idProdutos) " +
+            		    "REFERENCES Produtos (idProdutos) " +
+            		    "ON DELETE NO ACTION " +
+            		    "ON UPDATE NO ACTION) " +
+            		    ") ENGINE = InnoDB;";
 
 	            
             stmt.executeUpdate(sqlContato);
             stmt.executeUpdate(sqlFuncionario);
             stmt.executeUpdate(sqlClientes);
+            stmt.executeUpdate(sqlFornecedores);
             System.out.println("Tabela criada ou já existe!");
 
         } catch (SQLException e) {
