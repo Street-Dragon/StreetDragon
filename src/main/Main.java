@@ -3,6 +3,7 @@ package main;
 import controle.entidade.conexao.ConexaoBD;
 import controle.entidade.funcionariocontrole.FuncionarioControle;
 import visao.TelaLogin;
+import visao.TelaPrincipal;
 import visao.TelaCadastroFuncionario;
 
 
@@ -13,6 +14,7 @@ public class Main {
 
         // Inicialização as telas
         TelaLogin telaLogin = new TelaLogin(); 
+        TelaPrincipal telaPrincipal = new TelaPrincipal(); 
         TelaCadastroFuncionario telaCadastroFuncionario = new TelaCadastroFuncionario();
 
         // Instancia o controle
@@ -21,7 +23,7 @@ public class Main {
         // Conecta as telas ao controle
         funcionarioControle.setTelaLogin(telaLogin); 
         funcionarioControle.setCadastroFuncionario(telaCadastroFuncionario);
-
+        funcionarioControle.setTelaPrincipal(telaPrincipal);
         // Exibe a tela de login
         telaLogin.setVisible(true);
 

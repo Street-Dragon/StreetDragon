@@ -27,6 +27,27 @@ public class FuncionarioDAO {
         }
     }
     
+    public String nomeFuncionario(String cpf) {
+    	String sqlNome = "SELECT nome FROM funcionarios WHERE cpf = ?";
+    	
+    	try (Connection conn = ConexaoBD.getConexaoMySQL();
+    			PreparedStatement stmt = conn.prepareStatement(sqlNome)) {
+                
+               stmt.setString(1, cpf);
+               
+               ResultSet rs = stmt.executeQuery(); 
+               if (rs.next()) {		// se tiver um funcionario com esse cpf,
+                   return rs.getString("nome"); // retorna o nome do funcionario
+               } else {
+                   return "Nenhum"; // não retorna nada
+               }
+               
+           } catch (SQLException e) {
+               e.printStackTrace();
+               return "Erro ao consultar";
+           }
+    }
+    
     
     public boolean cadastrarFuncionario(Funcionario funcionario) {
         String sqlContato = "INSERT INTO contato (email, telefone) VALUES (?, ?)";

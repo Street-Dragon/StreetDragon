@@ -27,7 +27,8 @@ public class TelaLogin extends JFrame {
     private Font hkGrotesk;
     private JPasswordField txtSenhaLogin;
     private JButton btnContinuar;
-    
+    private JCheckBox ckboxMotrarSenha;
+
     public String getCampoCpf() {
         return txtCpfLogin.getText();
     }
@@ -36,6 +37,17 @@ public class TelaLogin extends JFrame {
         return new String(txtSenhaLogin.getPassword());
     }
     
+    public JPasswordField getTxtSenha() {
+        return txtSenhaLogin;
+    }
+    
+    public JCheckBox getCkboxMotrarSenha() {
+        return ckboxMotrarSenha; 
+    }
+    
+    public JTextField getTxtCpf() {
+        return txtCpfLogin;
+    }
     
     public JButton getBtnContinuar() {
 		return btnContinuar;
@@ -124,7 +136,7 @@ public class TelaLogin extends JFrame {
         txtSenhaLogin = new JPasswordField();
         panel.add(txtSenhaLogin, "cell 1 6,grow");
         
-         JCheckBox ckboxMotrarSenha = new JCheckBox("Motrar Senha");
+         ckboxMotrarSenha = new JCheckBox("Motrar Senha");
          ckboxMotrarSenha.addChangeListener(new ChangeListener() {
          	public void stateChanged(ChangeEvent e) {
          		if (ckboxMotrarSenha.isSelected()) {
