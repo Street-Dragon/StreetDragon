@@ -16,8 +16,9 @@ public class FuncionarioControle {
     private TelaLogin telaLogin;
 	private TelaCadastroFuncionario cadastroFuncionario;
 	private FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
-	private TelaPrincipal telaPrincipal;
-
+	private TelaPrincipal telaPrincipal; 
+    private String  cpfUsuarioLogado;
+    
     public void setTelaLogin(TelaLogin telaLogin) {
         this.telaLogin = telaLogin;
 
@@ -31,10 +32,12 @@ public class FuncionarioControle {
     
     public void setTelaPrincipal(TelaPrincipal telaPrincipal) {
         this.telaPrincipal = telaPrincipal;
-
+        System.out.println("setTelaPrincipal chamada"); 
+        
         telaPrincipal.getBtnDeslogar().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                System.out.println("Botão clicado");
                 realizarLogout();
             }
         });
@@ -50,27 +53,34 @@ public class FuncionarioControle {
             }
         });
     }   
-    private String  cpfUsuarioLogado;
+
     private void realizarLogin() {
         String cpf = telaLogin.getCampoCpf();
         String senha = telaLogin.getCampoSenha();
-
+        
         if (funcionarioDAO.login(cpf, senha)) {
-          TelaPrincipal telaPrincipal = new TelaPrincipal();
-          cpfUsuarioLogado = cpf;
-            telaPrincipal.setVisible(true); 
+            
+            if (telaPrincipal == null) {
+                telaPrincipal = new TelaPrincipal();
+                setTelaPrincipal(telaPrincipal); // Configuração da tela principal
+            }
+            cpfUsuarioLogado = cpf;
+            telaPrincipal.getLblFuncionario().setText("Funcionario: "+funcionarioDAO.nomeFuncionario(cpfUsuarioLogado));
+            telaPrincipal.setVisible(true);
             telaLogin.dispose();
         } else {
-        	JOptionPane.showMessageDialog(telaLogin, "Credenciais inválidas. Tente novamente.", "Erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(telaLogin, "Credenciais inválidas. Tente novamente.", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
     
     private void realizarLogout() {
+        System.out.println("Função chamada");
         int confirmar = JOptionPane.showConfirmDialog(telaPrincipal, "Deseja realmente deslogar?", "Confirmação", JOptionPane.YES_NO_OPTION);
-        if (confirmar == JOptionPane.YES_OPTION||cpfUsuarioLogado!=null) {
-        	cpfUsuarioLogado = null;
-            telaPrincipal.dispose(); 
-            telaLogin.setVisible(true); 
+        if (confirmar == JOptionPane.YES_OPTION || cpfUsuarioLogado != null) {
+            System.out.println("Usuário deslogado");
+            cpfUsuarioLogado = null;
+            telaPrincipal.dispose(); // Fecha a tela principal
+            telaLogin.setVisible(true); // Mostra a tela de login novamente
         }
     }
 

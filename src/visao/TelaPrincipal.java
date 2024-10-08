@@ -29,10 +29,14 @@ public class TelaPrincipal extends JFrame {
 	private JTextField txtValor;
 	private Font hkGrotesk;
 	private JButton btnDeslogar;
+	private JLabel lblFuncionario;
 	
 	public JButton getBtnDeslogar() {
 		return btnDeslogar;
     }
+	public JLabel getLblFuncionario() {
+		return lblFuncionario;
+	}
 	
 	/**
 	 * Launch the application.
@@ -59,18 +63,23 @@ public class TelaPrincipal extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(246, 233, 233));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-
+		hkGrotesk = Utils.loadCustomFont();
 		setContentPane(contentPane);
 		contentPane.setLayout(new MigLayout("", "[grow][grow][grow][grow]", "[][grow][grow]"));
 		
-		JButton btnDeslogar = new JButton("Deslogar");
+		btnDeslogar = new JButton("Deslogar");
 		btnDeslogar.setFont(hkGrotesk);
 		btnDeslogar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
+		
+		lblFuncionario = new JLabel("Funcionario: Nenhum");
+		lblFuncionario.setFont(hkGrotesk);
+		contentPane.add(lblFuncionario, "cell 0 0");
 		contentPane.add(btnDeslogar, "cell 3 0,alignx right");
-		hkGrotesk = Utils.loadCustomFont();
+		
+		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(255, 255, 255));
 		contentPane.add(panel, "cell 0 1 3 1,grow");
