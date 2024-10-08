@@ -77,8 +77,8 @@ public class ConexaoBD {
             		//Cria tabela Fornecedores
             
             String sqlFornecedores = "CREATE TABLE IF NOT EXISTS fornecedores (" +
-            		  "idFornecedores` INT NOT NULL AUTO_INCREMENT, " +
-            		  "nome` VARCHAR(45) NOT NULL, " +
+            		  "idFornecedores INT NOT NULL AUTO_INCREMENT, " +
+            		  "nome VARCHAR(45) NOT NULL, " +
             		  "endereco_CEP INT NOT NULL, " +
             		  "produtos_idProdutos INT NOT NULL, " + //
             		  "PRIMARY KEY (idFornecedores), " + 
