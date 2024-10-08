@@ -42,6 +42,7 @@ public class ConexaoBD {
 			stmt.executeUpdate("DROP TABLE IF EXISTS funcionarios");
 			stmt.executeUpdate("DROP TABLE IF EXISTS clientes");
 			stmt.executeUpdate("DROP TABLE IF EXISTS endereco");
+			stmt.executeUpdate("DROP TABLE IF EXISTS vendas");
 
 			// Cria tabela contato
 			String sqlContato = "CREATE TABLE IF NOT EXISTS contato (" +
@@ -85,10 +86,30 @@ public class ConexaoBD {
 			                     ") ENGINE = InnoDB;";
 
 
+			// Cria tabela vendas
+			String sqlVendas = "CREATE TABLE IF NOT EXISTS vendas (" +
+			                   "idVendas INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
+			                   "Funcionarios_cpf INT NOT NULL, " +
+			                   "Clientes_cpf INT NOT NULL, " +
+			                   "INDEX fk_Vendas_Funcionarios1_idx (Funcionarios_cpf ASC), " +
+			                   "INDEX fk_Vendas_Clientes1_idx (Clientes_cpf ASC), " +
+			                   "CONSTRAINT fk_Vendas_Funcionarios1 " +
+			                   "FOREIGN KEY (Funcionarios_cpf) " +
+			                   "REFERENCES funcionarios (cpf) " +
+			                   "ON DELETE NO ACTION " +
+			                   "ON UPDATE NO ACTION, " +
+			                   "CONSTRAINT fk_Vendas_Clientes1 " +
+			                   "FOREIGN KEY (Clientes_cpf) " +
+			                   "REFERENCES clientes (cpf) " + 
+			                   "ON DELETE NO ACTION " +
+			                   "ON UPDATE NO ACTION " +
+			                   ") ENGINE = InnoDB;";
+			
 			stmt.executeUpdate(sqlContato);
 			stmt.executeUpdate(sqlEndereco);
 			stmt.executeUpdate(sqlFuncionario);
 			stmt.executeUpdate(sqlClientes);
+			stmt.executeUpdate(sqlVendas);
 			System.out.println("Tabela criada ou já existe!");
 
 		} catch (SQLException e) {
