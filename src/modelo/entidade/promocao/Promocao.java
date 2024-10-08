@@ -1,9 +1,8 @@
 package modelo.entidade.promocao;
 
 import java.util.List;
-import java.util.Objects;
+import modelo.entidade.produto.Produto;
 
-import modelo.entidade.produto.Produto.java;
 
 public class Promocao {
 	private int idPromocao;

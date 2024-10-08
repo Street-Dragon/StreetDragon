@@ -30,7 +30,5 @@ public class Fornecedor {
 	public void setNumero(int numero) {
 		this.numero = numero;
 	}
-	
-	
 
 }
