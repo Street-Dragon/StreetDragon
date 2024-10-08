@@ -43,6 +43,7 @@ public class ConexaoBD {
 			stmt.executeUpdate("DROP TABLE IF EXISTS clientes");
 			stmt.executeUpdate("DROP TABLE IF EXISTS endereco");
 			stmt.executeUpdate("DROP TABLE IF EXISTS vendas");
+			stmt.executeUpdate("DROP TABLE IF EXISTS promocao");
 
 			// Cria tabela contato
 			String sqlContato = "CREATE TABLE IF NOT EXISTS contato (" +
@@ -105,11 +106,46 @@ public class ConexaoBD {
 			                   "ON UPDATE NO ACTION " +
 			                   ") ENGINE = InnoDB;";
 			
+			// Cria tabela Promocoes
+			String sqlPromocao = "CREATE TABLE IF NOT EXISTS promocao (" +
+			                      "idPromocoes INT NOT NULL AUTO_INCREMENT, " +
+			                      "desconto FLOAT NOT NULL, " +
+			                      "Produtos_idProdutos INT NOT NULL, " +
+			                      "PRIMARY KEY (idPromocoes), " +
+			                      "INDEX fk_Promocoes_Produtos1_idx (Produtos_idProdutos ASC), " +
+			                      "CONSTRAINT fk_Promocoes_Produtos1 " +
+			                      "FOREIGN KEY (Produtos_idProdutos) " +
+			                      "REFERENCES Produtos (idProdutos) " +
+			                      "ON DELETE NO ACTION " +
+			                      "ON UPDATE NO ACTION " +
+			                      ") ENGINE = InnoDB;";
+			
+			String sqlPromocoesHasClientes = "CREATE TABLE IF NOT EXISTS Promocoes_has_Clientes (" +
+						                    "Promocoes_idPromocoes INT NOT NULL, " +
+						                    "Clientes_cpf INT NOT NULL, " +
+						                    "idPromocoesCliente INT NOT NULL, " +
+						                    "PRIMARY KEY (idPromocoesCliente), " +
+						                    "INDEX fk_Promocoes_has_Clientes_Clientes1_idx (Clientes_cpf ASC), " +
+						                    "INDEX fk_Promocoes_has_Clientes_Promocoes1_idx (Promocoes_idPromocoes ASC), "+
+						                    "CONSTRAINT fk_Promocoes_has_Clientes_Promocoes1 " +
+						                    "FOREIGN KEY (Promocoes_idPromocoes) " +
+						                    "REFERENCES Promocoes (idPromocoes) " +
+						                    "ON DELETE NO ACTION " +
+						                    "ON UPDATE NO ACTION, " +
+						                    "CONSTRAINT fk_Promocoes_has_Clientes_Clientes1 " +
+						                    "FOREIGN KEY (Clientes_cpf) " +
+						                    "REFERENCES Clientes (cpf) " + 
+						                    "ON DELETE NO ACTION " +
+						                    "ON UPDATE NO ACTION" +
+						                    ") ENGINE = InnoDB;";
+
 			stmt.executeUpdate(sqlContato);
 			stmt.executeUpdate(sqlEndereco);
 			stmt.executeUpdate(sqlFuncionario);
 			stmt.executeUpdate(sqlClientes);
 			stmt.executeUpdate(sqlVendas);
+			stmt.executeUpdate(sqlPromocao);
+			stmt.executeUpdate(sqlPromocoesHasClientes);
 			System.out.println("Tabela criada ou já existe!");
 
 		} catch (SQLException e) {
