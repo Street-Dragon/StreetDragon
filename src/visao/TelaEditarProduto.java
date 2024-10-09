@@ -36,7 +36,7 @@ import java.awt.Window.Type;
 import java.awt.FlowLayout;
 
 
-public class PaginaEditarProduto extends JFrame {
+public class TelaEditarProduto extends JFrame {
 
 	private JPanel contentPane;
 
@@ -44,9 +44,8 @@ public class PaginaEditarProduto extends JFrame {
 	private JTextField textPrecoProduto;
 	private JTextField textCategoriaProduto;
 	private JTextField textField_3;
-	private JButton btnVoltar;
 	private JButton btnConfirmar;
-	private JButton btnDeletar;
+	private JButton btnCancelar;
 	private JLabel txtLabel;
 	private JLabel txtLabeleditarimagen;
 	private JPanel panelimage;
@@ -77,7 +76,7 @@ public class PaginaEditarProduto extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					PaginaEditarProduto frame = new PaginaEditarProduto();
+					TelaEditarProduto frame = new TelaEditarProduto();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -89,7 +88,7 @@ public class PaginaEditarProduto extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public PaginaEditarProduto() {
+	public TelaEditarProduto() {
 		setTitle("EdItar Produto");
 		setAlwaysOnTop(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -100,18 +99,6 @@ public class PaginaEditarProduto extends JFrame {
 
 		setContentPane(contentPane);
 		contentPane.setLayout(new MigLayout("", "[grow][grow][][grow][grow]", "[grow][grow][grow][grow][grow][grow][grow][grow][grow][][grow]"));
-		
-		btnVoltar = new JButton("Voltar");
-		btnVoltar.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnVoltar.setForeground(new Color(0, 0, 0));
-		btnVoltar.setBackground(new Color(246, 233, 233));
-		btnVoltar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				//mudar depois?
-				dispose();
-			}
-		});
-		contentPane.add(btnVoltar, "cell 0 0,growy");
 		
 		txtLabel = new JLabel("Editar Produto");
 		txtLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
@@ -220,8 +207,8 @@ public class PaginaEditarProduto extends JFrame {
 				
 				contentPane.add(btnConfirmar, "cell 0 10 2 1,grow");
 		
-		btnDeletar = new JButton("Deletar");
-		btnDeletar.addActionListener(new ActionListener() {
+		btnCancelar = new JButton("Cancelar");
+		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				textFieldNome.setText(null);
 				textFieldVariacao.setText(null);
@@ -234,8 +221,8 @@ public class PaginaEditarProduto extends JFrame {
 				
 			}
 		});
-		btnDeletar.setForeground(Color.WHITE);
-		btnDeletar.setBackground(Color.RED);
-		contentPane.add(btnDeletar, "cell 3 10 2 1,grow");
+		btnCancelar.setForeground(Color.WHITE);
+		btnCancelar.setBackground(Color.RED);
+		contentPane.add(btnCancelar, "cell 3 10 2 1,grow");
 	}
 }
