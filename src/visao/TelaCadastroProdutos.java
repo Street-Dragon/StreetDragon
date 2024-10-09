@@ -18,6 +18,7 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
 
 public class TelaCadastroProdutos extends JFrame {
 
@@ -55,7 +56,7 @@ public class TelaCadastroProdutos extends JFrame {
 		setBounds(100, 100, 672, 540);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(255, 255, 255));
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setBorder(new LineBorder(new Color(246, 233, 233), 10));
 		
 		loadCustomFont();
 

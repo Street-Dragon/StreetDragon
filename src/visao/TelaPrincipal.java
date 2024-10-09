@@ -58,6 +58,7 @@ public class TelaPrincipal extends JFrame {
 	 * Create the frame.
 	 */
 	public TelaPrincipal() {
+		setTitle("Tela Principal");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 926, 569);
 		contentPane = new JPanel();
@@ -68,6 +69,7 @@ public class TelaPrincipal extends JFrame {
 		contentPane.setLayout(new MigLayout("", "[grow][grow][grow][grow]", "[][grow][grow]"));
 		
 		btnDeslogar = new JButton("Deslogar");
+		btnDeslogar.setBackground(new Color(238, 238, 238));
 		btnDeslogar.setFont(hkGrotesk);
 		btnDeslogar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

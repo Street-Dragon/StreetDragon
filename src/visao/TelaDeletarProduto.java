@@ -15,6 +15,7 @@ import java.awt.Font;
 import java.awt.Image;
 
 import javax.swing.JButton;
+import javax.swing.border.LineBorder;
 
 public class TelaDeletarProduto extends JFrame {
 
@@ -40,21 +41,34 @@ public class TelaDeletarProduto extends JFrame {
 	 * Create the frame.
 	 */
 	public TelaDeletarProduto() {
+		setTitle("Deletar Produto");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 622, 405);
 		contentPane = new JPanel();
-		contentPane.setBackground(new Color(250, 187, 187));
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setBackground(new Color(255, 255, 255));
+		contentPane.setBorder(new LineBorder(new Color(246, 233, 233), 10));
 
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[grow][grow][grow][grow]", "[grow][grow][grow][][grow][grow][grow][grow][grow]"));
+		contentPane.setLayout(new MigLayout("", "[grow][grow][grow][grow][grow]", "[grow][grow][grow][grow][grow][grow][grow]"));
 		
 		JLabel lblNewLabel = new JLabel("Deletar Produto");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 27));
-		contentPane.add(lblNewLabel, "cell 1 0,alignx center,aligny center");
+		contentPane.add(lblNewLabel, "cell 1 0 3 1,alignx center,aligny center");
+		
+		JPanel panel_1 = new JPanel();
+		panel_1.setBackground(new Color(246, 233, 233));
+		contentPane.add(panel_1, "cell 0 1 2 1,growx");
+		panel_1.setLayout(new MigLayout("", "[grow]", "[grow][grow]"));
+		
+		JLabel lblCategoria = new JLabel("\"Categoria\"");
+		lblCategoria.setFont(new Font("Tahoma", Font.BOLD, 11));
+		panel_1.add(lblCategoria, "cell 0 0");
+		
+		JLabel lblNome = new JLabel("\"Nome\"");
+		panel_1.add(lblNome, "cell 0 1");
 		
 		JPanel panel = new JPanel();
-		contentPane.add(panel, "cell 2 1 2 6,grow");
+		contentPane.add(panel, "cell 3 1 2 4,grow");
 		
 		// Painel da imagem:
         JPanel panelImage = new JPanel();
@@ -75,40 +89,35 @@ public class TelaDeletarProduto extends JFrame {
             panelImage.add(imageLabel);
         }
 		
-		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(new Color(246, 233, 233));
-		contentPane.add(panel_1, "cell 0 1 1 3,grow");
-		panel_1.setLayout(new MigLayout("", "[grow]", "[grow]"));
-		
-		JLabel lblNomeProduto = new JLabel("New label");
-		panel_1.add(lblNomeProduto, "cell 0 0,alignx center,aligny center");
-		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBackground(new Color(246, 233, 233));
-		contentPane.add(panel_2, "cell 0 4,grow");
-		panel_2.setLayout(new MigLayout("", "[grow][]", "[grow][]"));
+		contentPane.add(panel_2, "cell 0 2 2 1,growx");
+		panel_2.setLayout(new MigLayout("", "[grow]", "[grow][grow]"));
 		
-		JLabel lblNewLabel_1 = new JLabel("New label");
-		panel_2.add(lblNewLabel_1, "cell 0 0 2 2,alignx center,aligny center");
+		JLabel lblCor = new JLabel("Cor: \"Cor\"");
+		panel_2.add(lblCor, "cell 0 0");
+		
+		JLabel lblTamanho = new JLabel("Tamanho: \"Tamanho\"");
+		panel_2.add(lblTamanho, "cell 0 1");
 		
 		JPanel panel_3 = new JPanel();
 		panel_3.setBackground(new Color(246, 233, 233));
-		contentPane.add(panel_3, "cell 0 5,grow");
-		panel_3.setLayout(new MigLayout("", "[grow][]", "[grow][]"));
+		contentPane.add(panel_3, "cell 0 3 2 1,growx");
+		panel_3.setLayout(new MigLayout("", "[grow][]", "[grow][][grow]"));
 		
-		JLabel lblNewLabel_2 = new JLabel("New label");
-		panel_3.add(lblNewLabel_2, "cell 0 0 2 2,alignx center,aligny center");
+		JLabel lblCodigo = new JLabel("Codigo: \"Codigo\"");
+		panel_3.add(lblCodigo, "cell 0 1");
 		
 		JButton btnConfirmar = new JButton("Confirmar");
 		btnConfirmar.setForeground(new Color(255, 255, 255));
 		btnConfirmar.setBackground(new Color(114, 148, 235));
 		btnConfirmar.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		contentPane.add(btnConfirmar, "cell 0 8,grow");
+		contentPane.add(btnConfirmar, "cell 0 6 2 1,growx");
 		
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.setBackground(new Color(226, 61, 40));
 		btnCancelar.setForeground(new Color(255, 255, 255));
 		btnCancelar.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		contentPane.add(btnCancelar, "cell 2 8 2 1,grow");
+		contentPane.add(btnCancelar, "cell 3 6 2 1,growx");
 	}
 }
