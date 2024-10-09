@@ -35,11 +35,11 @@ public class TelaCadastroFuncionario extends JFrame {
 	 private JTextField textCpf;
 	 private JTextField textEmail;
 	 private JTextField textTelefone;
-	 private JPasswordField passwordField;
 	 private JButton btnCadastrarFuncionario;
 	 private JCheckBox chckbxVerSenha;
 	 private JCheckBox chckbxAdm;
 	 private JTable table;
+	 private JPasswordField textSenha;
 	
 	public String getTextId() {
 		return textId.getText();
@@ -62,7 +62,7 @@ public class TelaCadastroFuncionario extends JFrame {
 	}
 
 	public char[] getPasswordField() {
-		return passwordField.getPassword();
+		return textSenha.getPassword();
 	}
 		
 	public JButton getBtnCadastrarFuncionario() {
@@ -107,23 +107,23 @@ public class TelaCadastroFuncionario extends JFrame {
 		panel.setBorder(null);
 		panel.setBackground(new Color(255, 255, 255));
 		contentPane.add(panel, "cell 0 0 3 1,grow");
-		panel.setLayout(new MigLayout("", "[grow][grow][grow][grow]", "[grow][grow][grow][grow]"));
+		panel.setLayout(new MigLayout("", "[grow][grow][grow][grow][grow][grow]", "[grow][grow][grow][grow]"));
 		
 		JLabel lblId = new JLabel("Id");
 		lblId.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel.add(lblId, "cell 0 0,alignx center,growy");
 		
 		textId = new JTextField();
-		panel.add(textId, "cell 1 0,alignx left,aligny center");
+		panel.add(textId, "cell 1 0,growx,aligny center");
 		textId.setEditable(false);
 		textId.setColumns(10);
 		
 		JLabel lblemail = new JLabel("Email");
 		lblemail.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		panel.add(lblemail, "cell 2 0,alignx left");
+		panel.add(lblemail, "cell 3 0,alignx left");
 		
 		textEmail = new JTextField();
-		panel.add(textEmail, "cell 3 0,alignx left");
+		panel.add(textEmail, "cell 4 0,growx");
 		textEmail.setColumns(10);
 		
 		JLabel lblnome = new JLabel("Nome");
@@ -132,14 +132,14 @@ public class TelaCadastroFuncionario extends JFrame {
 		
 		textNome = new JTextField();
 		textNome.setColumns(10);
-		panel.add(textNome, "cell 1 1,alignx left,aligny center");
+		panel.add(textNome, "cell 1 1,growx,aligny center");
 		
 		JLabel lbltelefone = new JLabel("Telefone");
 		lbltelefone.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		panel.add(lbltelefone, "cell 2 1,alignx left");
+		panel.add(lbltelefone, "cell 3 1,alignx left");
 		
 		textTelefone = new JTextField();
-		panel.add(textTelefone, "cell 3 1,alignx left");
+		panel.add(textTelefone, "cell 4 1,growx");
 		textTelefone.setColumns(10);
 		
 		JLabel lblcpf = new JLabel("Cpf");
@@ -148,35 +148,30 @@ public class TelaCadastroFuncionario extends JFrame {
 		
 		textCpf = new JTextField();
 		textCpf.setColumns(10);
-		panel.add(textCpf, "cell 1 2,alignx left,aligny center");
+		panel.add(textCpf, "cell 1 2,growx,aligny center");
 		
 		JLabel lblsenha = new JLabel("Senha");
 		lblsenha.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		panel.add(lblsenha, "cell 2 2,alignx left,aligny center");
-		
-		JPanel panel_2 = new JPanel();
-		panel_2.setBackground(new Color(255, 255, 255));
-		panel.add(panel_2, "cell 3 2");
-		panel_2.setLayout(new MigLayout("", "[115px]", "[20px]"));
-		
-		passwordField = new JPasswordField();
-		panel_2.add(passwordField, "cell 0 0,grow");
+		panel.add(lblsenha, "cell 3 2,alignx left,aligny center");
 		
 		chckbxVerSenha = new JCheckBox("Ver senha");
 		chckbxVerSenha.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 				if (chckbxVerSenha.isSelected()) {
-                    passwordField.setEchoChar((char) 0);
+                    textSenha.setEchoChar((char) 0);
                 } else {
-                    passwordField.setEchoChar('•');
+                    textSenha.setEchoChar('•');
                 }
 				
 			}
 		});
+		
+		textSenha = new JPasswordField();
+		panel.add(textSenha, "cell 4 2,growx");
 		chckbxVerSenha.setBackground(new Color(255, 255, 255));
 		chckbxVerSenha.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		panel.add(chckbxVerSenha, "cell 3 3");
+		panel.add(chckbxVerSenha, "cell 4 3 2 1");
 		
 		chckbxAdm = new JCheckBox("Adminstrador");
 		chckbxAdm.addActionListener(new ActionListener() {
@@ -198,7 +193,7 @@ public class TelaCadastroFuncionario extends JFrame {
 		});
 		chckbxAdm.setBackground(new Color(255, 255, 255));
 		chckbxAdm.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		panel.add(chckbxAdm, "cell 1 3,alignx center");
+		panel.add(chckbxAdm, "cell 1 3 2 1,alignx left");
 				
 		
 		JPanel panel_1 = new JPanel();
