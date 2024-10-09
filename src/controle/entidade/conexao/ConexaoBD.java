@@ -30,123 +30,122 @@ public class ConexaoBD {
 		try (Connection conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
 				Statement stmt = conn.createStatement()) {
 
-			// Criar banco de dados
-			stmt.executeUpdate("DROP DATABASE IF EXISTS streetdragon");
-			stmt.executeUpdate("CREATE DATABASE IF NOT EXISTS streetdragon");
-			System.out.println("Banco de dados criado ou já existe!");
+            stmt.executeUpdate("DROP DATABASE IF EXISTS streetdragon");
+            stmt.executeUpdate("CREATE DATABASE IF NOT EXISTS streetdragon");
+            System.out.println("Banco de dados criado ou já existe!");
+            stmt.executeUpdate("USE streetdragon");
 
-			// Usar o banco de dados
-			stmt.executeUpdate("USE streetdragon");
-
-			stmt.executeUpdate("DROP TABLE IF EXISTS contato");
-			stmt.executeUpdate("DROP TABLE IF EXISTS funcionarios");
-			stmt.executeUpdate("DROP TABLE IF EXISTS clientes");
-			stmt.executeUpdate("DROP TABLE IF EXISTS endereco");
-			stmt.executeUpdate("DROP TABLE IF EXISTS vendas");
-			stmt.executeUpdate("DROP TABLE IF EXISTS promocao");
-
-			// Cria tabela contato
-			String sqlContato = "CREATE TABLE IF NOT EXISTS contato (" +
+            String sqlContato = "CREATE TABLE IF NOT EXISTS contato (" +
 			                    "id_contato INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
 			                    "email VARCHAR(45) NOT NULL, " +
 			                    "telefone VARCHAR(45) NOT NULL" +
 			                    ") ENGINE = InnoDB;";
 
-			// Cria tabela funcionarios
-			String sqlFuncionario = "CREATE TABLE IF NOT EXISTS funcionarios (" +
-			                        "cpf INT NOT NULL, " +
-			                        "senha VARCHAR(45) NOT NULL, " +
-			                        "nome VARCHAR(45) NOT NULL, " +
-			                        "contato_id INT NOT NULL, " +
-			                        "PRIMARY KEY (cpf), " +
-			                        "FOREIGN KEY (contato_id) REFERENCES contato(id_contato) " +
-			                        "ON DELETE NO ACTION " +
-			                        "ON UPDATE NO ACTION" +
-			                        ") ENGINE = InnoDB;";
-
-			// Cria tabela clientes
-			String sqlClientes = "CREATE TABLE IF NOT EXISTS clientes (" +
-			                     "cpf INT NOT NULL, " + 
-			                     "nome VARCHAR(45) NOT NULL, " +
-			                     "contato_id INT NOT NULL, " +
-			                     "PRIMARY KEY (cpf), " +
-			                     "INDEX fk_Clientes_Contato1_idx (contato_id ASC), " +
-			                     "CONSTRAINT fk_Clientes_Contato1 " +
-			                     "FOREIGN KEY (contato_id) " +
-			                     "REFERENCES contato(id_contato) " +
-			                     "ON DELETE NO ACTION " +
-			                     "ON UPDATE NO ACTION " +
-			                     ") ENGINE = InnoDB;";
-
-			// Cria tabela endereco
-			String sqlEndereco = "CREATE TABLE IF NOT EXISTS endereco (" + 
-			                     "cep INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " + 
+			String sqlEndereco = "CREATE TABLE IF NOT EXISTS endereco (" +
+			                     "cep INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
 			                     "rua VARCHAR(45) NOT NULL, " +
 			                     "bairro VARCHAR(45) NOT NULL, " +
 			                     "complemento VARCHAR(45) NOT NULL " +
 			                     ") ENGINE = InnoDB;";
-
-
-			// Cria tabela vendas
-			String sqlVendas = "CREATE TABLE IF NOT EXISTS vendas (" +
-			                   "idVendas INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
-			                   "Funcionarios_cpf INT NOT NULL, " +
-			                   "Clientes_cpf INT NOT NULL, " +
-			                   "INDEX fk_Vendas_Funcionarios1_idx (Funcionarios_cpf ASC), " +
-			                   "INDEX fk_Vendas_Clientes1_idx (Clientes_cpf ASC), " +
-			                   "CONSTRAINT fk_Vendas_Funcionarios1 " +
-			                   "FOREIGN KEY (Funcionarios_cpf) " +
-			                   "REFERENCES funcionarios (cpf) " +
-			                   "ON DELETE NO ACTION " +
-			                   "ON UPDATE NO ACTION, " +
-			                   "CONSTRAINT fk_Vendas_Clientes1 " +
-			                   "FOREIGN KEY (Clientes_cpf) " +
-			                   "REFERENCES clientes (cpf) " + 
-			                   "ON DELETE NO ACTION " +
-			                   "ON UPDATE NO ACTION " +
-			                   ") ENGINE = InnoDB;";
 			
-			// Cria tabela Promocoes
+			String sqlProduto = "CREATE TABLE IF NOT EXISTS produto (" +
+			                    "idProduto INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
+			                    "nome VARCHAR(45) NOT NULL, " +
+			                    "material VARCHAR(45) NOT NULL, " +
+			                    "categoria VARCHAR(45) NOT NULL, " +
+			                    "valor FLOAT NOT NULL, " +
+			                    "estoque INT NOT NULL, " +
+			                    "tamanho VARCHAR(45) NOT NULL, " +
+			                    "variacao VARCHAR(45) NULL" +
+			                    ") ENGINE = InnoDB;";
+			
 			String sqlPromocao = "CREATE TABLE IF NOT EXISTS promocao (" +
-			                      "idPromocoes INT NOT NULL AUTO_INCREMENT, " +
-			                      "desconto FLOAT NOT NULL, " +
-			                      "Produtos_idProdutos INT NOT NULL, " +
-			                      "PRIMARY KEY (idPromocoes), " +
-			                      "INDEX fk_Promocoes_Produtos1_idx (Produtos_idProdutos ASC), " +
-			                      "CONSTRAINT fk_Promocoes_Produtos1 " +
-			                      "FOREIGN KEY (Produtos_idProdutos) " +
-			                      "REFERENCES Produtos (idProdutos) " +
-			                      "ON DELETE NO ACTION " +
-			                      "ON UPDATE NO ACTION " +
-			                      ") ENGINE = InnoDB;";
+			                     "idPromocao INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
+			                     "desconto FLOAT NOT NULL" +
+			                     ") ENGINE = InnoDB;";
 			
-			String sqlPromocoesHasClientes = "CREATE TABLE IF NOT EXISTS Promocoes_has_Clientes (" +
-						                    "Promocoes_idPromocoes INT NOT NULL, " +
-						                    "Clientes_cpf INT NOT NULL, " +
-						                    "idPromocoesCliente INT NOT NULL, " +
-						                    "PRIMARY KEY (idPromocoesCliente), " +
-						                    "INDEX fk_Promocoes_has_Clientes_Clientes1_idx (Clientes_cpf ASC), " +
-						                    "INDEX fk_Promocoes_has_Clientes_Promocoes1_idx (Promocoes_idPromocoes ASC), "+
-						                    "CONSTRAINT fk_Promocoes_has_Clientes_Promocoes1 " +
-						                    "FOREIGN KEY (Promocoes_idPromocoes) " +
-						                    "REFERENCES Promocoes (idPromocoes) " +
-						                    "ON DELETE NO ACTION " +
-						                    "ON UPDATE NO ACTION, " +
-						                    "CONSTRAINT fk_Promocoes_has_Clientes_Clientes1 " +
-						                    "FOREIGN KEY (Clientes_cpf) " +
-						                    "REFERENCES Clientes (cpf) " + 
-						                    "ON DELETE NO ACTION " +
-						                    "ON UPDATE NO ACTION" +
-						                    ") ENGINE = InnoDB;";
-
+			String sqlFuncionario = "CREATE TABLE IF NOT EXISTS funcionario (" +
+			                        "cpf INT NOT NULL PRIMARY KEY, " +
+			                        "senha VARCHAR(45) NOT NULL, " +
+			                        "nome VARCHAR(45) NOT NULL, " +
+			                        "contato_id INT NOT NULL, " +
+			                        "adm BOOLEAN NOT NULL DEFAULT FALSE, " +
+			                        "FOREIGN KEY (contato_id) REFERENCES contato(id_contato) " +
+			                        "ON DELETE NO ACTION " +
+			                        "ON UPDATE NO ACTION) ENGINE = InnoDB;";
+			
+			String sqlCliente = "CREATE TABLE IF NOT EXISTS cliente (" +
+			                    "cpf INT NOT NULL PRIMARY KEY, " +
+			                    "nome VARCHAR(45) NOT NULL, " +
+			                    "contato_id INT NOT NULL, " +
+			                    "FOREIGN KEY (contato_id) REFERENCES contato(id_contato) " +
+			                    "ON DELETE NO ACTION " +
+			                    "ON UPDATE NO ACTION) ENGINE = InnoDB;";
+			
+			String sqlItem = "CREATE TABLE IF NOT EXISTS item (" +
+			                 "idItem INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
+			                 "quantidade INT NOT NULL, " +
+			                 "produto_idProduto INT NOT NULL, " +
+			                 "promocao_idPromocao INT NULL, " +
+			                 "FOREIGN KEY (produto_idProduto) REFERENCES produto(idProduto) " +
+			                 "ON DELETE NO ACTION " +
+			                 "ON UPDATE NO ACTION, " +
+			                 "FOREIGN KEY (promocao_idPromocao) REFERENCES promocao(idPromocao) " +
+			                 "ON DELETE NO ACTION " +
+			                 "ON UPDATE NO ACTION) ENGINE = InnoDB;";
+			
+			String sqlVenda = "CREATE TABLE IF NOT EXISTS venda (" +
+			                  "idVenda INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
+			                  "funcionario_cpf INT NOT NULL, " +
+			                  "cliente_cpf INT NOT NULL, " +
+			                  "precoTotal FLOAT NOT NULL, " +
+			                  "item_idItem INT NOT NULL, " +
+			                  "FOREIGN KEY (funcionario_cpf) REFERENCES funcionario(cpf) " +
+			                  "ON DELETE NO ACTION " +
+			                  "ON UPDATE NO ACTION, " +
+			                  "FOREIGN KEY (cliente_cpf) REFERENCES cliente(cpf) " +
+			                  "ON DELETE NO ACTION " +
+			                  "ON UPDATE NO ACTION, " +
+			                  "FOREIGN KEY (item_idItem) REFERENCES item(idItem) " +
+			                  "ON DELETE NO ACTION " +
+			                  "ON UPDATE NO ACTION) ENGINE = InnoDB;";
+			
+			String sqlPromocaoCliente = "CREATE TABLE IF NOT EXISTS promocao_cliente (" +
+			                             "promocao_idPromocao INT NOT NULL, " +
+			                             "cliente_cpf INT NOT NULL, " +
+			                             "idPromocaoCliente INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
+			                             "FOREIGN KEY (promocao_idPromocao) REFERENCES promocao(idPromocao) " +
+			                             "ON DELETE NO ACTION " +
+			                             "ON UPDATE NO ACTION, " +
+			                             "FOREIGN KEY (cliente_cpf) REFERENCES cliente(cpf) " +
+			                             "ON DELETE NO ACTION " +
+			                             "ON UPDATE NO ACTION) ENGINE = InnoDB;";
+			
+			String sqlFornecedor = "CREATE TABLE IF NOT EXISTS fornecedor (" +
+							        "idFornecedores INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
+							        "nome VARCHAR(45) NOT NULL, " +
+							        "endereco_CEP INT NOT NULL, " +
+							        "produtos_idProdutos INT NOT NULL, " +
+							        "FOREIGN KEY (endereco_CEP) REFERENCES endereco(cep) " +
+							        "ON DELETE NO ACTION " +
+							        "ON UPDATE NO ACTION, " +
+							        "FOREIGN KEY (produtos_idProdutos) REFERENCES produto(idProduto) " +
+							        "ON DELETE NO ACTION " +
+							        "ON UPDATE NO ACTION) ENGINE = InnoDB;";
+			
+			// Executa a criação das tabelas
 			stmt.executeUpdate(sqlContato);
 			stmt.executeUpdate(sqlEndereco);
-			stmt.executeUpdate(sqlFuncionario);
-			stmt.executeUpdate(sqlClientes);
-			stmt.executeUpdate(sqlVendas);
+			stmt.executeUpdate(sqlProduto);
 			stmt.executeUpdate(sqlPromocao);
-			stmt.executeUpdate(sqlPromocoesHasClientes);
-			System.out.println("Tabela criada ou já existe!");
+			stmt.executeUpdate(sqlFuncionario);
+			stmt.executeUpdate(sqlCliente);
+			stmt.executeUpdate(sqlItem);
+			stmt.executeUpdate(sqlVenda);
+			stmt.executeUpdate(sqlPromocaoCliente);
+			stmt.executeUpdate(sqlFornecedor);
+
+            System.out.println("Tabelas criadas ou já existem!");
 
 		} catch (SQLException e) {
 			e.printStackTrace();
