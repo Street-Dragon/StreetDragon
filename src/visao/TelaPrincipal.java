@@ -92,9 +92,11 @@ public class TelaPrincipal extends JFrame {
 		lblNewLabel.setFont(hkGrotesk);
 		
 		txtCodigo = new JTextField();
+		txtCodigo.setFont(new Font("Dialog", Font.PLAIN, 15));
 		panel.add(txtCodigo, "cell 1 0,grow");
 		txtCodigo.setColumns(10);
 		txtNome = new JTextField();
+		txtNome.setFont(new Font("Dialog", Font.PLAIN, 15));
 		panel.add(txtNome, "cell 1 1,grow");
 		txtNome.setEditable(false);
 		txtNome.setColumns(10);
@@ -115,6 +117,7 @@ public class TelaPrincipal extends JFrame {
 		lblNewLabel_1.setFont(hkGrotesk);
 		
 		txtQuantidade = new JTextField();
+		txtQuantidade.setFont(new Font("Dialog", Font.PLAIN, 15));
 		panel.add(txtQuantidade, "cell 1 2,grow");
 		txtQuantidade.setColumns(10);
 		
@@ -124,6 +127,7 @@ public class TelaPrincipal extends JFrame {
 		lblNewLabel_2.setFont(hkGrotesk);
 		
 		txtValor = new JTextField();
+		txtValor.setFont(new Font("Dialog", Font.PLAIN, 15));
 		panel.add(txtValor, "cell 1 3,grow");
 		txtValor.setEditable(false);
 		txtValor.setColumns(10);
