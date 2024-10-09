@@ -10,6 +10,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class MenuLateral extends JFrame {
 
@@ -40,19 +42,18 @@ public class MenuLateral extends JFrame {
 	 * Create the frame.
 	 */
     public MenuLateral() {
-        setTitle("Aplicação com CardLayout");
+        setTitle("StreetDragon");
         setSize(600, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new BorderLayout());
+        getContentPane().setLayout(new BorderLayout());
 
         cardLayout = new CardLayout();
         mainPanel = new JPanel(cardLayout);
 
         // Adiciona os painéis
         mainPanel.add(new TelaPrincipal(this), "TelaPrincipal");
-        // Adicione outros painéis aqui, por exemplo:
-        // mainPanel.add(new TelaCadastro(this), "TelaCadastro");
-        // mainPanel.add(new TelaPrincipal(this), "TelaPrincipal");
+        mainPanel.add(new TelaCadastroProdutos(this), "TelaCadastroProdutos");
+        mainPanel.add(new TelaHistoricoVenda(this), "TelaHistoricoVenda");
 
         // Painel do menu lateral
         JPanel menuPanel = new JPanel();
@@ -60,17 +61,26 @@ public class MenuLateral extends JFrame {
         menuPanel.setBackground(new Color(250, 188, 188));
         //menuPanel.setPreferredSize(new Dimension(150, 0));
 
-        JButton buttonLogin = new JButton("Tela Principal");
-        //new JButton("Tela de Cadastro");
-        //new JButton("Tela Principal");
-
+        JButton btnPrincipal = new JButton("Tela Principal");
+        menuPanel.add(btnPrincipal);
+        getContentPane().add(mainPanel, BorderLayout.CENTER);
         
-        menuPanel.add(buttonLogin);
-        // menuPanel.add(buttonCadastro);
-        // menuPanel.add(buttonPrincipal);
+        JButton btnProdutos = new JButton("Produtos");
+        btnProdutos.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        	}
+        });
+        menuPanel.add(btnProdutos);
+        getContentPane().add(mainPanel, BorderLayout.CENTER);
+        
+        JButton btnHistorico = new JButton("Histórico de vendas");
+        menuPanel.add(btnHistorico);
+        getContentPane().add(mainPanel, BorderLayout.CENTER);
+        
 
         // Adicionando os painéis à janela principal
-        add(menuPanel, BorderLayout.WEST);
-        add(mainPanel, BorderLayout.CENTER);
+        getContentPane().add(menuPanel, BorderLayout.WEST);
+        
+        
     }
 }

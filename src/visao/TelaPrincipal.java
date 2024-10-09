@@ -19,9 +19,12 @@ import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.BoxLayout;
 
-public class TelaPrincipal extends JFrame {
+public class TelaPrincipal extends JPanel { //mudado para jpanel ao invés de jframe
 
-	private JPanel contentPane;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JTable table;
 	private JTextField txtCodigo;
 	private JTextField txtNome;
@@ -37,35 +40,13 @@ public class TelaPrincipal extends JFrame {
 	public JLabel getLblFuncionario() {
 		return lblFuncionario;
 	}
-	
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					TelaPrincipal frame = new TelaPrincipal();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
 	 */
-	public TelaPrincipal() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 926, 569);
-		contentPane = new JPanel();
-		contentPane.setBackground(new Color(246, 233, 233));
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+	public TelaPrincipal(MenuLateral menuLateral) { // editado para poder ser chamada no menu
 		hkGrotesk = Utils.loadCustomFont();
-		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[grow][grow][grow][grow]", "[][grow][grow]"));
+		setLayout(new MigLayout("", "[grow][grow][grow][grow]", "[][grow][grow]"));
 		
 		btnDeslogar = new JButton("Deslogar");
 		btnDeslogar.setFont(hkGrotesk);
@@ -76,13 +57,13 @@ public class TelaPrincipal extends JFrame {
 		
 		lblFuncionario = new JLabel("Funcionario: Nenhum");
 		lblFuncionario.setFont(hkGrotesk);
-		contentPane.add(lblFuncionario, "cell 0 0");
-		contentPane.add(btnDeslogar, "cell 3 0,alignx right");
+		add(lblFuncionario, "cell 0 0");
+		add(btnDeslogar, "cell 3 0,alignx right");
 		
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(255, 255, 255));
-		contentPane.add(panel, "cell 0 1 3 1,grow");
+		add(panel, "cell 0 1 3 1,grow");
 		panel.setLayout(new MigLayout("", "[grow][grow][grow]", "[grow][grow][grow][grow][grow]"));
 		
 		JLabel lblNewLabel = new JLabel("Código:");
@@ -144,7 +125,7 @@ public class TelaPrincipal extends JFrame {
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(new Color(255, 255, 255));
-		contentPane.add(panel_1, "cell 3 1,grow");
+		add(panel_1, "cell 3 1,grow");
 		panel_1.setLayout(new MigLayout("", "[grow]", "[grow][::50px,grow 50][::50px,grow 50]"));
 		
 		JLabel lblTotal = new JLabel("Total: 123 R$");
@@ -166,7 +147,7 @@ public class TelaPrincipal extends JFrame {
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBackground(new Color(255, 255, 255));
-		contentPane.add(panel_2, "cell 0 2 4 1,grow");
+		add(panel_2, "cell 0 2 4 1,grow");
 
 		// Definição das colunas da tabela
 		String[] colunas = {"Nome", "Código", "Quantidade", "Valor"};
