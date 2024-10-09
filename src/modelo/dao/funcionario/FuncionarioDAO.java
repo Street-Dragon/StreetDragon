@@ -4,6 +4,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import controle.entidade.conexao.ConexaoBD;
 import modelo.entidade.pessoa.funcionario.Funcionario;
@@ -27,6 +29,8 @@ public class FuncionarioDAO {
         }
     }
     
+    
+    // Mano pra que q serve isso?
     public String nomeFuncionario(String cpf) {
     	String sqlNome = "SELECT nome FROM funcionarios WHERE cpf = ?";
     	
@@ -76,6 +80,26 @@ public class FuncionarioDAO {
             e.printStackTrace();
             return false;
         }
+    }
+    //Falta os outros conteúdos eu tô com preguiça mi deixa
+    public  List<Funcionario> listarFuncionarios()throws Exception{
+    	List<Funcionario> funcionarios = new ArrayList();
+    	String sql = "SELECT * FROM Funcionarios";
+    	try (Connection conn = ConexaoBD.getConexaoMySQL();
+    	PreparedStatement stmt = conn.prepareStatement(sql);
+    	ResultSet rs = stmt.executeQuery()) {
+    		while (rs.next()) {
+    			Funcionario funcionario = new Funcionario();
+    			funcionario.setId(rs.getInt("id"));
+    			funcionario.setNome(rs.getString("nome"));
+    			funcionario.setCpf(rs.getString("cpf"));
+    			funcionario.setAdm(rs.getBoolean("adm"));
+    			funcionarios.add(funcionario);
+    		}
+    	}
+    			
+		return funcionarios;
+    	
     }
 
     

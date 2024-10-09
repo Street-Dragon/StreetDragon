@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.GraphicsEnvironment;
 import java.io.IOException;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -20,6 +21,9 @@ import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
+import modelo.entidade.pessoa.funcionario.Funcionario;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
@@ -39,6 +43,7 @@ public class TelaCadastroFuncionario extends JFrame {
 	 private JCheckBox chckbxVerSenha;
 	 private JCheckBox chckbxAdm;
 	 private JTable table;
+	 private static DefaultTableModel tableModel;
 	 private JPasswordField textSenha;
 	
 	public String getTextId() {
@@ -261,6 +266,17 @@ public class TelaCadastroFuncionario extends JFrame {
 
 
 */
+	
+	
+	//Eu acho que isso não devia tá aqui mas eu tô com preguiça
+	
+	public static void atualizarTabela(List<Funcionario> funcionarios) {
+		tableModel.setRowCount(0);
+		for(Funcionario funcionario : funcionarios) {
+			tableModel.addRow(new Object[] {funcionario.getNome(), funcionario.getCpf(), funcionario.isAdm()});
+		}
+ 		
+	}
 
 
 }

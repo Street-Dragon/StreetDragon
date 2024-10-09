@@ -9,6 +9,7 @@ import visao.TelaLogin;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 
@@ -123,6 +124,15 @@ public class FuncionarioControle {
             JOptionPane.showMessageDialog(cadastroFuncionario, "Erro ao cadastrar funcionário.", "Erro", JOptionPane.ERROR_MESSAGE);
         }
         return;
+    }
+    
+    public void atualizarTabela() {
+        try {
+            List<Funcionario> funcionarios = funcionarioDAO.listarFuncionarios();
+            TelaCadastroFuncionario.atualizarTabela(funcionarios);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     
 }
