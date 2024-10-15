@@ -28,6 +28,7 @@ public class TelaPrincipal extends JFrame {
 	private JLabel lblLogo;
 	private JLabel lblFuncionario;
 	private JButton btnDeslogar;
+	private JButton btnFuncionarios;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(() -> {
@@ -55,27 +56,32 @@ public class TelaPrincipal extends JFrame {
 		// Criando instâncias das telas
 		TelaVenda telaVenda = new TelaVenda(this);
 		TelaHistoricoVenda telaHistoricoVenda = new TelaHistoricoVenda(this);
-
+		TelaCadastroFuncionario telaCadastroFuncionario = new TelaCadastroFuncionario(this);
+		
 		// Adiciona os painéis
 		mainPanel.add(telaVenda, "TelaVenda");
 		mainPanel.add(telaHistoricoVenda, "TelaHistoricoVenda");
+		mainPanel.add(telaCadastroFuncionario, "TelaCadastroFuncionario");
 
 		// Painel do menu lateral
 		JPanel menuPanel = new JPanel();
 		menuPanel.setBackground(new Color(246, 233, 233));
-		menuPanel.setLayout(new MigLayout("", "[grow]", "[grow][grow][grow]"));
+		menuPanel.setLayout(new MigLayout("", "[grow]", "[grow][grow][grow][grow]"));
 
-		btnVenda = new JButton("Tela de venda");
-		menuPanel.add(btnVenda, "cell 0 0,growx,aligny top");
-
-		btnProdutos = new JButton("Produtos");
-		menuPanel.add(btnProdutos, "cell 0 1,growx,aligny top");
+		btnVenda = new JButton("Venda");
+		menuPanel.add(btnVenda, "cell 0 0,grow");
 
 		btnHistorico = new JButton("Histórico de vendas");
-		menuPanel.add(btnHistorico, "cell 0 2,growx,aligny top");
+		menuPanel.add(btnHistorico, "cell 0 1,grow");
+
+		btnProdutos = new JButton("Produtos");
+		menuPanel.add(btnProdutos, "cell 0 2,grow");
 
 		// Adicionando os painéis à janela principal
 		getContentPane().add(menuPanel, BorderLayout.WEST);
+
+		btnFuncionarios = new JButton("Funcionários");
+		menuPanel.add(btnFuncionarios, "cell 0 3,grow");
 
 		panel = new JPanel();
 		panel.setBackground(new Color(246, 233, 233));
@@ -112,6 +118,10 @@ public class TelaPrincipal extends JFrame {
 
 	public JButton getBtnHistorico() {
 		return btnHistorico;
+	}
+
+	public JButton getBtnFuncionarios() {
+		return btnFuncionarios;
 	}
 
 	public JButton getBtnDeslogar() {
