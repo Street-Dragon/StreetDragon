@@ -89,8 +89,6 @@ public class FuncionarioControle {
             telaLogin.setVisible(true); // Mostra a tela de login novamente
         }
     }
-	
-	
 
 private void cadastrarFuncionario() {
         String nome = cadastroFuncionario.getTextNome();
@@ -110,7 +108,12 @@ private void cadastrarFuncionario() {
         // Tira oq não é numero antes de começar a validação
         cpf = cpf.replaceAll("[^0-9]", ""); 
         telefone = telefone.replaceAll("[^0-9]", ""); // 
-
+        
+        if (funcionarioDAO.verificaCpfExistente(cpf)) {
+            JOptionPane.showMessageDialog(cadastroFuncionario, "CPF já cadastrado. Tente outro.", "Erro", JOptionPane.ERROR_MESSAGE);
+            return; // Interrompe o cadastro
+        }
+        
         if (!Utils.isValidCPF(cpf)) {
             JOptionPane.showMessageDialog(cadastroFuncionario, "O CPF informado é inválido.", "Erro",
                     JOptionPane.ERROR_MESSAGE);
