@@ -204,11 +204,11 @@ public class TelaCadastroFuncionario extends JPanel { // jpanel ao invés de jfr
 		btnCadastrarFuncionario = new JButton("Cadastrar");
 		btnCadastrarFuncionario.setForeground(new Color(255, 255, 255));
 		btnCadastrarFuncionario.setFont(hkGrotesk);
-		btnCadastrarFuncionario.addActionListener(new ActionListener() {
+		/*btnCadastrarFuncionario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
 			}
-		});
+		});*/
 		panel_1.setLayout(new MigLayout("", "[grow]", "[grow][grow][grow]"));
 		btnCadastrarFuncionario.setBackground(new Color(114, 148, 235));
 		panel_1.add(btnCadastrarFuncionario, "cell 0 0,grow");

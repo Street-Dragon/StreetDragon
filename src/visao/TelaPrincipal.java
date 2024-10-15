@@ -9,6 +9,8 @@ import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import controle.entidade.funcionariocontrole.FuncionarioControle;
 import controle.entidade.funcionariocontrole.TelaPrincipalControle;
 
 import net.miginfocom.swing.MigLayout;
@@ -57,11 +59,7 @@ public class TelaPrincipal extends JFrame {
 		TelaVenda telaVenda = new TelaVenda(this);
 		TelaHistoricoVenda telaHistoricoVenda = new TelaHistoricoVenda(this);
 		TelaCadastroFuncionario telaCadastroFuncionario = new TelaCadastroFuncionario(this);
-		
-		// Adiciona os painéis
-		mainPanel.add(telaVenda, "TelaVenda");
-		mainPanel.add(telaHistoricoVenda, "TelaHistoricoVenda");
-		mainPanel.add(telaCadastroFuncionario, "TelaCadastroFuncionario");
+	
 
 		// Painel do menu lateral
 		JPanel menuPanel = new JPanel();
@@ -100,6 +98,19 @@ public class TelaPrincipal extends JFrame {
 		panel.add(btnDeslogar, "cell 12 0,alignx right,growy");
 
 		new TelaPrincipalControle(this);
+		
+		
+		
+		FuncionarioControle funcionarioControle = new FuncionarioControle();
+		funcionarioControle.setTelaPrincipal(this);
+		funcionarioControle.setCadastroFuncionario(telaCadastroFuncionario);
+		
+		// Adiciona os painéis
+		mainPanel.add(telaVenda, "TelaVenda");
+		mainPanel.add(telaHistoricoVenda, "TelaHistoricoVenda");
+		mainPanel.add(telaCadastroFuncionario, "TelaCadastroFuncionario");
+		
+		
 	}
 
 	// getters e setters
