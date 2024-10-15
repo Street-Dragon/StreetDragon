@@ -27,6 +27,7 @@ public class FuncionarioControle {
             @Override
             public void actionPerformed(ActionEvent e) {
                 realizarLogin();
+                
             }
         });
     }
@@ -51,6 +52,7 @@ public class FuncionarioControle {
             @Override
             public void actionPerformed(ActionEvent e) {
                 cadastrarFuncionario();
+                atualizarTabela();
             }
         });
     }   

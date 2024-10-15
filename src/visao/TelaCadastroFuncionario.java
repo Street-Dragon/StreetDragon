@@ -239,14 +239,10 @@ public class TelaCadastroFuncionario extends JFrame {
 		JScrollPane scrollPane = new JScrollPane();
 		contentPane.add(scrollPane, "cell 0 1 4 3,grow");
 		
-		table = new JTable();
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-				"Nome", "Cpf", "Administrador"
-			}
-		));
+		tableModel = new DefaultTableModel(new Object[] {"Nome", "Cpf", "Administrador"}, 0); 
+
+	        table = new JTable(tableModel);
+		
 		scrollPane.setViewportView(table);
 	}
 	/*
@@ -267,8 +263,6 @@ public class TelaCadastroFuncionario extends JFrame {
 
 */
 	
-	
-	//Eu acho que isso não devia tá aqui mas eu tô com preguiça
 	
 	public static void atualizarTabela(List<Funcionario> funcionarios) {
 		tableModel.setRowCount(0);
