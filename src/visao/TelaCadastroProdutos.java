@@ -11,6 +11,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import modelo.dao.produto.ProdutoDAO;
+import modelo.entidade.contato.Contato;
+import modelo.entidade.pessoa.fornecedor.Fornecedor;
 import modelo.entidade.produto.Produto;
 import modelo.enumeracao.tamanho.Tamanho;
 import net.miginfocom.swing.MigLayout;
@@ -174,7 +176,22 @@ public class TelaCadastroProdutos extends JFrame {
 		JButton btnCadastrarProduto = new JButton("Cadastrar Produto");
 		btnCadastrarProduto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				// Test pra ver se ta funcionando----------------------
 				Produto produto = new Produto();
+				Fornecedor fornecedor = new Fornecedor();
+				Contato contato = new Contato();
+				
+				contato.setEmail("SEEEEEEEEX");
+				contato.setTelefone("6969696");
+				
+				fornecedor.setCep(4958546);
+				fornecedor.setContato(contato);
+				fornecedor.setCpnj(4354);
+				fornecedor.setId(1);
+				fornecedor.setNome("nice");
+				fornecedor.setNumero(1);
+				
 				ProdutoDAO produtoDAO = new ProdutoDAO();
 				produto.setNomeProduto("Ass");
 	            produto.setMaterial("Asss");
@@ -183,8 +200,9 @@ public class TelaCadastroProdutos extends JFrame {
 	            produto.setValor(300);
 	            produto.setQuantEstoque(2);
 	            produto.setTamanho(Tamanho.G);
-	            produto.setFornecedor(1);
+	            produto.setFornecedor(fornecedor);
 				produtoDAO.cadastrarProduto(produto);
+				//------------------------------------------------------
 	            
 			}
 		});

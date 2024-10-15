@@ -34,18 +34,19 @@ public class ProdutoDAO {
     
     public boolean cadastrarProduto(Produto produto) {
     	String sqlFornecedor = "SELECT nome FROM Fornecedor WHERE nome = ?";
-        String sqlProduto= "INSERT INTO produto (nomeProduto, material, categoria, variacao, valor, quantEstoque, tamanho, fornecedor) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String sqlProduto= "INSERT INTO produto (nome, material, categoria, variacao, valor, estoque, tamanho) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = ConexaoBD.getConexaoMySQL();
         		
              PreparedStatement stmtProduto = conn.prepareStatement(sqlProduto);
-        	 PreparedStatement stmtFornecedor = conn.prepareStatement(sqlFornecedor, Statement.RETURN_GENERATED_KEYS)){
+        	 PreparedStatement stmtFornecedor = conn.prepareStatement(sqlFornecedor)){
         	
-        	stmtFornecedor.setString(1, produto.getFornecedor().getNome());
-        	stmtFornecedor.executeUpdate();
-	        ResultSet generatedKeys = stmtFornecedor.getGeneratedKeys();
-            int fornecedorId = generatedKeys.getInt(1);
-            
+        	/*stmtFornecedor.setString(1, produto.getFornecedor().getNome());
+	        ResultSet rs = stmtFornecedor.executeQuery();
+	        
+	        if(rs.next()) {
+            int fornecedorId = rs.getInt(1);
+            */
             stmtProduto.setString(1, produto.getNomeProduto());
             stmtProduto.setString(2, produto.getMaterial());
             stmtProduto.setString(3, produto.getCategoria());
@@ -53,13 +54,20 @@ public class ProdutoDAO {
             stmtProduto.setFloat(5, produto.getValor());
             stmtProduto.setInt(6, produto.getQuantEstoque());
             stmtProduto.setString(7, String.valueOf(produto.getTamanho()));
-            stmtProduto.setInt (8, fornecedorId);
+            
             stmtProduto.executeUpdate();
             return true;
+	        /*} else {
+	        	System.out.println("deu merda aqui");
+	        	return false;	        			
+	        }*/
         } catch (SQLException e) {
+        	System.out.println("VAI TOMA NO CUUUUUUUUUUUUUUUUUUUUU");
             e.printStackTrace();
             return false;
         }
+        
+        
     }
 
 }
