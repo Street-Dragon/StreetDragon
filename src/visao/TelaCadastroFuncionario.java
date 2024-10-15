@@ -10,6 +10,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import net.miginfocom.swing.MigLayout;
+import utils.Utils;
+
 import javax.swing.JLabel;
 import java.awt.Color;
 import javax.swing.border.LineBorder;
@@ -92,6 +94,7 @@ public class TelaCadastroFuncionario extends JFrame {
 	 * Create the frame.
 	 */
 	public TelaCadastroFuncionario() {
+		setTitle("Cadastrar Funcionario");
 		
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -99,9 +102,11 @@ public class TelaCadastroFuncionario extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(246, 233, 233));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		//loadCustomFont();
+		
+		hkGrotesk = Utils.loadCustomFont();
+		
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[grow][grow][grow][grow][]", "[grow][grow][grow][grow]"));
+		contentPane.setLayout(new MigLayout("", "[grow][grow][grow][grow]", "[grow][grow][grow][grow]"));
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(null);
@@ -110,48 +115,55 @@ public class TelaCadastroFuncionario extends JFrame {
 		panel.setLayout(new MigLayout("", "[grow][grow][grow][grow][grow][grow]", "[grow][grow][grow][grow]"));
 		
 		JLabel lblId = new JLabel("Id");
-		lblId.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblId.setFont(hkGrotesk);
 		panel.add(lblId, "cell 0 0,alignx center,growy");
+		lblId.setFont(hkGrotesk);
 		
 		textId = new JTextField();
+		textId.setFont(new Font("Dialog", Font.PLAIN, 15));
 		panel.add(textId, "cell 1 0,growx,aligny center");
 		textId.setEditable(false);
 		textId.setColumns(10);
 		
 		JLabel lblemail = new JLabel("Email");
-		lblemail.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblemail.setFont(hkGrotesk);
 		panel.add(lblemail, "cell 3 0,alignx left");
 		
 		textEmail = new JTextField();
+		textEmail.setFont(new Font("Dialog", Font.PLAIN, 15));
 		panel.add(textEmail, "cell 4 0,growx");
 		textEmail.setColumns(10);
 		
 		JLabel lblnome = new JLabel("Nome");
-		lblnome.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblnome.setFont(hkGrotesk);
 		panel.add(lblnome, "cell 0 1,alignx center,aligny center");
 		
+		
 		textNome = new JTextField();
+		textNome.setFont(new Font("Dialog", Font.PLAIN, 15));
 		textNome.setColumns(10);
 		panel.add(textNome, "cell 1 1,growx,aligny center");
 		
 		JLabel lbltelefone = new JLabel("Telefone");
-		lbltelefone.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lbltelefone.setFont(hkGrotesk);
 		panel.add(lbltelefone, "cell 3 1,alignx left");
 		
 		textTelefone = new JTextField();
+		textTelefone.setFont(new Font("Dialog", Font.PLAIN, 15));
 		panel.add(textTelefone, "cell 4 1,growx");
 		textTelefone.setColumns(10);
 		
 		JLabel lblcpf = new JLabel("Cpf");
-		lblcpf.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblcpf.setFont(hkGrotesk);
 		panel.add(lblcpf, "cell 0 2,alignx center,aligny center");
 		
 		textCpf = new JTextField();
+		textCpf.setFont(new Font("Dialog", Font.PLAIN, 15));
 		textCpf.setColumns(10);
 		panel.add(textCpf, "cell 1 2,growx,aligny center");
 		
 		JLabel lblsenha = new JLabel("Senha");
-		lblsenha.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblsenha.setFont(hkGrotesk);
 		panel.add(lblsenha, "cell 3 2,alignx left,aligny center");
 		
 		chckbxVerSenha = new JCheckBox("Ver senha");
@@ -168,9 +180,10 @@ public class TelaCadastroFuncionario extends JFrame {
 		});
 		
 		textSenha = new JPasswordField();
+		textSenha.setFont(new Font("Dialog", Font.PLAIN, 15));
 		panel.add(textSenha, "cell 4 2,growx");
 		chckbxVerSenha.setBackground(new Color(255, 255, 255));
-		chckbxVerSenha.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		chckbxVerSenha.setFont(new Font("Dialog", Font.PLAIN, 15));
 		panel.add(chckbxVerSenha, "cell 4 3 2 1");
 		
 		chckbxAdm = new JCheckBox("Adminstrador");
@@ -192,7 +205,7 @@ public class TelaCadastroFuncionario extends JFrame {
 			}
 		});
 		chckbxAdm.setBackground(new Color(255, 255, 255));
-		chckbxAdm.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		chckbxAdm.setFont(new Font("Dialog", Font.PLAIN, 15));
 		panel.add(chckbxAdm, "cell 1 3 2 1,alignx left");
 				
 		
@@ -203,6 +216,7 @@ public class TelaCadastroFuncionario extends JFrame {
 		//Botão Cadastrar
 		btnCadastrarFuncionario = new JButton("Cadastrar");
 		btnCadastrarFuncionario.setForeground(new Color(255, 255, 255));
+		btnCadastrarFuncionario.setFont(hkGrotesk);
 		btnCadastrarFuncionario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -214,6 +228,7 @@ public class TelaCadastroFuncionario extends JFrame {
 		//Botão Ecluir
 		JButton btnDeletarFuncionario = new JButton("Excluir Funcionario");
 		btnDeletarFuncionario.setForeground(new Color(255, 255, 255));
+		btnDeletarFuncionario.setFont(hkGrotesk);
 		btnDeletarFuncionario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -223,6 +238,7 @@ public class TelaCadastroFuncionario extends JFrame {
 		//Botâo Editar
 		JButton btnEditarFuncionario = new JButton("Editar Funcionrio");
 		btnEditarFuncionario.setForeground(new Color(255, 255, 255));
+		btnEditarFuncionario.setFont(hkGrotesk);
 		btnEditarFuncionario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			
@@ -235,6 +251,7 @@ public class TelaCadastroFuncionario extends JFrame {
 		contentPane.add(scrollPane, "cell 0 1 4 3,grow");
 		
 		table = new JTable();
+		table.setFont(new Font("Dialog", Font.PLAIN, 15));
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
@@ -244,23 +261,4 @@ public class TelaCadastroFuncionario extends JFrame {
 		));
 		scrollPane.setViewportView(table);
 	}
-	/*
-	 private void loadCustomFont() {
-	        try {
-	    		Font hkGrotesk = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/resources/fontes/HankenGrotesk-VariableFont_wght.ttf")).deriveFont(20f);
-	    		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-	            ge.registerFont(hkGrotesk);
-	    	} catch (FontFormatException e) {
-	            System.err.println("Formato de fonte inválido: " + e.getMessage());
-	            e.printStackTrace();
-	        } catch (IOException e) {
-	            System.err.println("Erro ao ler o arquivo da fonte: " + e.getMessage());
-	            e.printStackTrace();
-	        }
-	    }
-
-
-*/
-
-
 }

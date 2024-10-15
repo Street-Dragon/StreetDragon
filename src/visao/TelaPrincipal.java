@@ -58,6 +58,7 @@ public class TelaPrincipal extends JFrame {
 	 * Create the frame.
 	 */
 	public TelaPrincipal() {
+		setTitle("Tela Principal");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 926, 569);
 		contentPane = new JPanel();
@@ -68,6 +69,7 @@ public class TelaPrincipal extends JFrame {
 		contentPane.setLayout(new MigLayout("", "[grow][grow][grow][grow]", "[][grow][grow]"));
 		
 		btnDeslogar = new JButton("Deslogar");
+		btnDeslogar.setBackground(new Color(238, 238, 238));
 		btnDeslogar.setFont(hkGrotesk);
 		btnDeslogar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -90,9 +92,11 @@ public class TelaPrincipal extends JFrame {
 		lblNewLabel.setFont(hkGrotesk);
 		
 		txtCodigo = new JTextField();
+		txtCodigo.setFont(new Font("Dialog", Font.PLAIN, 15));
 		panel.add(txtCodigo, "cell 1 0,grow");
 		txtCodigo.setColumns(10);
 		txtNome = new JTextField();
+		txtNome.setFont(new Font("Dialog", Font.PLAIN, 15));
 		panel.add(txtNome, "cell 1 1,grow");
 		txtNome.setEditable(false);
 		txtNome.setColumns(10);
@@ -113,6 +117,7 @@ public class TelaPrincipal extends JFrame {
 		lblNewLabel_1.setFont(hkGrotesk);
 		
 		txtQuantidade = new JTextField();
+		txtQuantidade.setFont(new Font("Dialog", Font.PLAIN, 15));
 		panel.add(txtQuantidade, "cell 1 2,grow");
 		txtQuantidade.setColumns(10);
 		
@@ -122,6 +127,7 @@ public class TelaPrincipal extends JFrame {
 		lblNewLabel_2.setFont(hkGrotesk);
 		
 		txtValor = new JTextField();
+		txtValor.setFont(new Font("Dialog", Font.PLAIN, 15));
 		panel.add(txtValor, "cell 1 3,grow");
 		txtValor.setEditable(false);
 		txtValor.setColumns(10);
