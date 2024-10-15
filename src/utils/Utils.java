@@ -24,4 +24,126 @@ public class Utils {
         }
         return customFont;
     }
+    
+    // Enum para tipos de documento
+    public enum TipoDocumento {
+        CPF, CNPJ, TELEFONE
+    }
+
+    public static String formatarDocumentos(String documento, TipoDocumento tipo) {
+        switch (tipo) {
+            case CPF:
+                if (documento.length() != 11) {
+                    throw new IllegalArgumentException("CPF deve ter 11 dígitos.");
+                }
+                return String.format("%s.%s.%s-%s",
+                        documento.substring(0, 3),
+                        documento.substring(3, 6),
+                        documento.substring(6, 9),
+                        documento.substring(9, 11));
+                
+            case CNPJ:
+                if (documento.length() != 14) {
+                    throw new IllegalArgumentException("CNPJ deve ter 14 dígitos.");
+                }
+                return String.format("%s.%s.%s/%s-%s",
+                        documento.substring(0, 2),
+                        documento.substring(2, 5),
+                        documento.substring(5, 8),
+                        documento.substring(8, 12),
+                        documento.substring(12, 14));
+                
+            case TELEFONE:
+                if (documento.length() != 10 && documento.length() != 11) {
+                    throw new IllegalArgumentException("Telefone deve ter 10 ou 11 dígitos.");
+                }
+                if (documento.length() == 10) {
+                    return String.format("(%s) %s-%s",
+                            documento.substring(0, 2),
+                            documento.substring(2, 6),
+                            documento.substring(6, 10));
+                } else {
+                    return String.format("(%s) %s-%s",
+                            documento.substring(0, 2),
+                            documento.substring(2, 7),
+                            documento.substring(7, 11));
+                }
+                
+            default:
+                throw new IllegalArgumentException("Tipo de documento não reconhecido.");
+        }
+    }
+
+    public static boolean isValidCPF(String cpf) {
+        // Remove caracteres não numéricos
+        cpf = cpf.replaceAll("[^0-9]", "");
+
+        if (cpf.length() != 11 || cpf.matches("(\\d)\\1{10}")) {
+            return false; // Verifica se o CPF possui 11 dígitos e não é uma sequência repetida
+        }
+
+        // Cálculo do primeiro dígito verificador
+        int soma = 0;
+        for (int i = 0; i < 9; i++) {
+            soma += (Character.getNumericValue(cpf.charAt(i)) * (10 - i));
+        }
+        int primeiroDV = 11 - (soma % 11);
+        if (primeiroDV >= 10) primeiroDV = 0;
+
+        // Cálculo do segundo dígito verificador
+        soma = 0;
+        for (int i = 0; i < 10; i++) {
+            soma += (Character.getNumericValue(cpf.charAt(i)) * (11 - i));
+        }
+        int segundoDV = 11 - (soma % 11);
+        if (segundoDV >= 10) segundoDV = 0;
+
+        return (primeiroDV == Character.getNumericValue(cpf.charAt(9))) &&
+               (segundoDV == Character.getNumericValue(cpf.charAt(10)));
+    }
+
+    public static boolean isValidCNPJ(String cnpj) {
+        // Remove caracteres não numéricos
+        cnpj = cnpj.replaceAll("[^0-9]", "");
+
+        if (cnpj.length() != 14 || cnpj.matches("(\\d)\\1{13}")) {
+            return false; // Verifica se o CNPJ possui 14 dígitos e não é uma sequência repetida
+        }
+
+        int[] pesos1 = {5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2};
+        int[] pesos2 = {6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2};
+
+        // Cálculo do primeiro dígito verificador
+        int soma = 0;
+        for (int i = 0; i < 12; i++) {
+            soma += Character.getNumericValue(cnpj.charAt(i)) * pesos1[i];
+        }
+        int primeiroDV = 11 - (soma % 11);
+        if (primeiroDV >= 10) primeiroDV = 0;
+
+        // Cálculo do segundo dígito verificador
+        soma = 0;
+        for (int i = 0; i < 13; i++) {
+            soma += Character.getNumericValue(cnpj.charAt(i)) * pesos2[i];
+        }
+        int segundoDV = 11 - (soma % 11);
+        if (segundoDV >= 10) segundoDV = 0;
+
+        return (primeiroDV == Character.getNumericValue(cnpj.charAt(12))) &&
+               (segundoDV == Character.getNumericValue(cnpj.charAt(13)));
+    }
+
+    public static boolean isValidTelefone(String telefone) {
+        // Remove caracteres não numéricos
+        telefone = telefone.replaceAll("[^0-9]", "");
+
+        if (telefone.length() != 10 && telefone.length() != 11) {
+            return false; // Verifica se o telefone possui 10 ou 11 dígitos
+        }
+
+        // Prefixos válidos para celulares
+        String prefixoCelular = telefone.substring(2, 3);
+        return prefixoCelular.equals("9") || prefixoCelular.equals("8") || prefixoCelular.equals("7");
+    }
+    
 }

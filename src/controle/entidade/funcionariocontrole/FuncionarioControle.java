@@ -3,6 +3,7 @@ package controle.entidade.funcionariocontrole;
 import modelo.dao.funcionario.FuncionarioDAO;
 import modelo.entidade.contato.Contato;
 import modelo.entidade.pessoa.funcionario.Funcionario;
+import utils.Utils;
 import visao.TelaPrincipal;
 import visao.TelaCadastroFuncionario;
 import visao.TelaLogin;
@@ -91,20 +92,39 @@ public class FuncionarioControle {
 	
 	
 
-	private void cadastrarFuncionario() {
-		String nome = cadastroFuncionario.getTextNome();
-		char[] senhaArray = cadastroFuncionario.getPasswordField();
-		String cpf = cadastroFuncionario.getTextCpf();
-		boolean isAdm = cadastroFuncionario.getChckbxAdm();
-		String email = cadastroFuncionario.getTextEmail();
-		String senha = new String(senhaArray);
-		String telefone = cadastroFuncionario.getTextTelefone();
+private void cadastrarFuncionario() {
+        String nome = cadastroFuncionario.getTextNome();
+        char[] senhaArray = cadastroFuncionario.getPasswordField();
+        String cpf = cadastroFuncionario.getTextCpf();
+        boolean isAdm = cadastroFuncionario.getChckbxAdm();
+        String email = cadastroFuncionario.getTextEmail();
+        String senha = new String(senhaArray);
+        String telefone = cadastroFuncionario.getTextTelefone();
 
-		if (nome.isEmpty() || cpf.isEmpty() || senha.isEmpty()) {
-			JOptionPane.showMessageDialog(cadastroFuncionario, "Preencha todos os campos obrigatórios.", "Erro",
-					JOptionPane.ERROR_MESSAGE);
-			return;
-		}
+        if (nome.isBlank() || cpf.isBlank() || senha.isBlank() || email.isBlank() || telefone.isBlank()) {
+            JOptionPane.showMessageDialog(cadastroFuncionario, "Preencha todos os campos.", "Erro",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Tira oq não é numero antes de começar a validação
+        cpf = cpf.replaceAll("[^0-9]", ""); 
+        telefone = telefone.replaceAll("[^0-9]", ""); // 
+
+        if (!Utils.isValidCPF(cpf)) {
+            JOptionPane.showMessageDialog(cadastroFuncionario, "O CPF informado é inválido.", "Erro",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (!Utils.isValidTelefone(telefone)) {
+            JOptionPane.showMessageDialog(cadastroFuncionario, "O telefone informado é inválido.", "Erro",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        cpf = Utils.formatarDocumentos(cpf, Utils.TipoDocumento.CPF);
+        telefone = Utils.formatarDocumentos(telefone, Utils.TipoDocumento.TELEFONE);
 
 		Funcionario funcionario = new Funcionario();
 		funcionario.setNome(nome);
