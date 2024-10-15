@@ -33,14 +33,6 @@ public class FuncionarioControle {
     public void setTelaPrincipal(TelaPrincipal telaPrincipal) {
         this.telaPrincipal = telaPrincipal;
         System.out.println("setTelaPrincipal chamada"); 
-        
-        telaPrincipal.getBtnDeslogar().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("Botão clicado");
-                realizarLogout();
-            }
-        });
     }
     
     public void setCadastroFuncionario(TelaCadastroFuncionario cadastroFuncionario) {
@@ -65,7 +57,7 @@ public class FuncionarioControle {
                 setTelaPrincipal(telaPrincipal); // Configuração da tela principal
             }
             cpfUsuarioLogado = cpf;
-            telaPrincipal.getLblFuncionario().setText("Funcionario: "+funcionarioDAO.nomeFuncionario(cpfUsuarioLogado));
+            //telaPrincipal.getLblFuncionario().setText("Funcionario: "+funcionarioDAO.nomeFuncionario(cpfUsuarioLogado));
             telaPrincipal.setVisible(true);
             telaLogin.dispose();
             

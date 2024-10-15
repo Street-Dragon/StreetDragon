@@ -37,12 +37,11 @@ public class TelaHistoricoVenda extends JPanel {
 	 */
 	public TelaHistoricoVenda(TelaPrincipal telaPrincipal) {
 		setBounds(100, 100, 568, 398);
-	    contentPane = new JPanel();
-	    contentPane.setBackground(new Color(255, 255, 255));
-	    contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-	    
-	    contentPane.setLayout(new MigLayout("", "[grow 5][grow][grow 5]", "[grow 5][][grow][grow 5]"));
+		contentPane = new JPanel();
+		contentPane.setBackground(new Color(255, 255, 255));
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
+		contentPane.setLayout(new MigLayout("", "[grow 5][grow][grow 5]", "[grow 5][][grow][grow 5]"));
 
 		panel = new Panel();
 		panel.setBackground(new Color(255, 255, 255));
