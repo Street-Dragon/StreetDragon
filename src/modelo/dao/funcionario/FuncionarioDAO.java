@@ -10,7 +10,7 @@ import modelo.entidade.pessoa.funcionario.Funcionario;
 
 public class FuncionarioDAO {
     public boolean login(String cpf, String senha) {
-        String sql = "SELECT * FROM funcionarios WHERE cpf = ? AND senha = ?";
+        String sql = "SELECT * FROM funcionario WHERE cpf = ? AND senha = ?";
         
         try (Connection conn = ConexaoBD.getConexaoMySQL();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -28,7 +28,7 @@ public class FuncionarioDAO {
     }
     
     public String nomeFuncionario(String cpf) {
-    	String sqlNome = "SELECT nome FROM funcionarios WHERE cpf = ?";
+    	String sqlNome = "SELECT nome FROM funcionario WHERE cpf = ?";
     	
     	try (Connection conn = ConexaoBD.getConexaoMySQL();
     			PreparedStatement stmt = conn.prepareStatement(sqlNome)) {
@@ -51,7 +51,7 @@ public class FuncionarioDAO {
     
     public boolean cadastrarFuncionario(Funcionario funcionario) {
         String sqlContato = "INSERT INTO contato (email, telefone) VALUES (?, ?)";
-        String sqlFuncionario = "INSERT INTO funcionarios (cpf, senha, nome, contato_id) VALUES (?, ?, ?, ?)";
+        String sqlFuncionario = "INSERT INTO funcionario (cpf, senha, nome, contato_id) VALUES (?, ?, ?, ?)";
 
         try (Connection conn = ConexaoBD.getConexaoMySQL();
              PreparedStatement stmtContato = conn.prepareStatement(sqlContato, Statement.RETURN_GENERATED_KEYS);
