@@ -113,13 +113,12 @@ public class TelaPrincipal extends JFrame {
 	public JButton getBtnHistorico() {
 		return btnHistorico;
 	}
-	
+
 	public JButton getBtnDeslogar() {
 		return btnDeslogar;
 	}
-
-	// Método para trocar de tela que provavelmente deveria estar no controle
-	public void trocarTela(String tela) {
-		cardLayout.show(mainPanel, tela);
-	}
+	/*
+	 * Método para trocar de tela que provavelmente deveria estar no controle public
+	 * void trocarTela(String tela) { cardLayout.show(mainPanel, tela); }
+	 */
 }

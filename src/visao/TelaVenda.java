@@ -19,15 +19,13 @@ import javax.swing.BoxLayout;
 
 public class TelaVenda extends JPanel { // mudado para jpanel ao invés de jframe
 
-	private static final long serialVersionUID = 920078857881218580L;
+	private static final long serialVersionUID = 1L;
 	private JTable table;
 	private JTextField txtCodigo;
 	private JTextField txtNome;
 	private JTextField txtQuantidade;
 	private JTextField txtValor;
 	private Font hkGrotesk;
-	private JButton btnDeslogar;
-	private JLabel lblFuncionario;
 
 	/**
 	 * Create the frame.
@@ -36,18 +34,6 @@ public class TelaVenda extends JPanel { // mudado para jpanel ao invés de jfram
 		setBackground(new Color(246, 233, 233));
 		hkGrotesk = Utils.loadCustomFont();
 		setLayout(new MigLayout("", "[grow][grow][grow][grow]", "[][grow][grow]"));
-
-		btnDeslogar = new JButton("Deslogar");
-		btnDeslogar.setFont(hkGrotesk);
-		btnDeslogar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-
-		lblFuncionario = new JLabel("Funcionario: Nenhum");
-		lblFuncionario.setFont(hkGrotesk);
-		add(lblFuncionario, "cell 0 0");
-		add(btnDeslogar, "cell 3 0,alignx right");
 
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(255, 255, 255));
@@ -153,13 +139,4 @@ public class TelaVenda extends JPanel { // mudado para jpanel ao invés de jfram
 	public void setTable(JTable table) {
 		this.table = table;
 	}
-
-	public JButton getBtnDeslogar() {
-		return btnDeslogar;
-	}
-
-	public JLabel getLblFuncionario() {
-		return lblFuncionario;
-	}
-
 }

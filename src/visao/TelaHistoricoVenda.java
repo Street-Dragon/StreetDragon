@@ -20,7 +20,7 @@ import javax.swing.border.LineBorder;
 
 public class TelaHistoricoVenda extends JPanel {
 
-	private static final long serialVersionUID = -3640785439074453803L;
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JScrollPane scrollPane;
 	private JTable table;
@@ -37,15 +37,15 @@ public class TelaHistoricoVenda extends JPanel {
 	 */
 	public TelaHistoricoVenda(TelaPrincipal telaPrincipal) {
 		setBounds(100, 100, 568, 398);
-		contentPane = new JPanel();
-		contentPane.setBackground(new Color(255, 255, 255));
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		// contentPane = new JPanel();
+		setBackground(new Color(255, 255, 255));
+		setBorder(new EmptyBorder(5, 5, 5, 5));
 
-		contentPane.setLayout(new MigLayout("", "[grow 5][grow][grow 5]", "[grow 5][][grow][grow 5]"));
+		setLayout(new MigLayout("", "[grow 5][grow][grow 5]", "[grow 5][][grow][grow 5]"));
 
 		panel = new Panel();
 		panel.setBackground(new Color(255, 255, 255));
-		contentPane.add(panel, "cell 1 1,grow");
+		add(panel, "cell 1 1,grow");
 		panel.setLayout(new MigLayout("", "[grow 10][grow 40][grow 10]", "[][]"));
 
 		lblNewLabel = new JLabel("Consultar");
@@ -75,7 +75,7 @@ public class TelaHistoricoVenda extends JPanel {
 		panel.add(rdbtnnData, "cell 2 0,alignx right");
 
 		scrollPane = new JScrollPane();
-		contentPane.add(scrollPane, "cell 1 2,grow");
+		add(scrollPane, "cell 1 2,grow");
 
 		table = new JTable();
 		table.setBorder(new LineBorder(new Color(250, 187, 187), 2));

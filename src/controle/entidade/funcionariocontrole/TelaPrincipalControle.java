@@ -1,6 +1,8 @@
 package controle.entidade.funcionariocontrole;
 
 import visao.TelaPrincipal;
+
+import java.awt.CardLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -14,16 +16,14 @@ public class TelaPrincipalControle {
 		this.telaPrincipal.getBtnVenda().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				telaPrincipal.trocarTela("TelaVenda");
-				System.out.println("trocou para a tela de venda");
+				trocarTela("TelaVenda");
 			}
 		});
 
 		this.telaPrincipal.getBtnHistorico().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				telaPrincipal.trocarTela("TelaHistoricoVenda");
-				System.out.println("Trocou para a tela de historico");
+				trocarTela("TelaHistoricoVenda");
 			}
 		});
 
@@ -33,5 +33,11 @@ public class TelaPrincipalControle {
 				System.out.println("btn deslogar pressionado");
 			}
 		});
+	}
+
+	private void trocarTela(String nomeTela) {
+		// Controlador agora faz a troca de telas diretamente
+		CardLayout cardLayout = (CardLayout) telaPrincipal.getMainPanel().getLayout();
+		cardLayout.show(telaPrincipal.getMainPanel(), nomeTela);
 	}
 }
