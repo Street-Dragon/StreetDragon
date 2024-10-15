@@ -129,7 +129,7 @@ public class TelaEditarProduto extends JFrame {
 		FlowLayout flowLayout = (FlowLayout) panelimage.getLayout();
 		contentPane.add(panelimage, "cell 3 1 2 5,grow");
 		
-		java.net.URL imageURL = getClass().getResource("/resources/images/default.png");
+		java.net.URL imageURL = getClass().getResource("/resources/imagens/default.png");
         if (imageURL == null) {
             System.out.println("Imagem não encontrada. Verifique o caminho");
         } else {
