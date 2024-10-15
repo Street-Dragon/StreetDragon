@@ -26,6 +26,13 @@ public class TelaPrincipalControle {
 				trocarTela("TelaHistoricoVenda");
 			}
 		});
+
+		this.telaPrincipal.getBtnFuncionarios().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				trocarTela("TelaCadastroFuncionario");
+			}
+		});
 	}
 
 	// método para trocar o jpanel atual

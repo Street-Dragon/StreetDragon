@@ -15,7 +15,7 @@ public class Main {
 		// Inicialização as telas
 		TelaLogin telaLogin = new TelaLogin();
 		TelaPrincipal telaPrincipal = new TelaPrincipal();
-		TelaCadastroFuncionario telaCadastroFuncionario = new TelaCadastroFuncionario();
+		TelaCadastroFuncionario telaCadastroFuncionario = new TelaCadastroFuncionario(telaPrincipal);
 
 		// Instancia o controle
 		FuncionarioControle funcionarioControle = new FuncionarioControle();
