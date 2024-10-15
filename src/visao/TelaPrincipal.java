@@ -117,8 +117,8 @@ public class TelaPrincipal extends JFrame {
 	public JButton getBtnDeslogar() {
 		return btnDeslogar;
 	}
-	/*
-	 * Método para trocar de tela que provavelmente deveria estar no controle public
-	 * void trocarTela(String tela) { cardLayout.show(mainPanel, tela); }
-	 */
+
+	public JLabel getLblFuncionario() {
+		return lblFuncionario;
+	}
 }

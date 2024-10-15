@@ -26,17 +26,10 @@ public class TelaPrincipalControle {
 				trocarTela("TelaHistoricoVenda");
 			}
 		});
-
-		telaPrincipal.getBtnDeslogar().addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				System.out.println("btn deslogar pressionado");
-			}
-		});
 	}
 
+	// método para trocar o jpanel atual
 	private void trocarTela(String nomeTela) {
-		// Controlador agora faz a troca de telas diretamente
 		CardLayout cardLayout = (CardLayout) telaPrincipal.getMainPanel().getLayout();
 		cardLayout.show(telaPrincipal.getMainPanel(), nomeTela);
 	}
