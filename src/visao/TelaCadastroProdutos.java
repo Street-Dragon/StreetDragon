@@ -9,6 +9,10 @@ import java.io.IOException;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import modelo.dao.produto.ProdutoDAO;
+import modelo.entidade.produto.Produto;
+import modelo.enumeracao.tamanho.Tamanho;
 import net.miginfocom.swing.MigLayout;
 import java.awt.Color;
 import javax.swing.JLabel;
@@ -18,6 +22,8 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class TelaCadastroProdutos extends JFrame {
 
@@ -166,6 +172,22 @@ public class TelaCadastroProdutos extends JFrame {
 		textFieldQntEstoque.setFont(new Font("Dialog", Font.PLAIN, 15));
 		
 		JButton btnCadastrarProduto = new JButton("Cadastrar Produto");
+		btnCadastrarProduto.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Produto produto = new Produto();
+				ProdutoDAO produtoDAO = new ProdutoDAO();
+				produto.setNomeProduto("Ass");
+	            produto.setMaterial("Asss");
+	            produto.setCategoria("asss");
+	            produto.setVariacao("asss");
+	            produto.setValor(300);
+	            produto.setQuantEstoque(2);
+	            produto.setTamanho(Tamanho.G);
+	            produto.setFornecedor(1);
+				produtoDAO.cadastrarProduto(produto);
+	            
+			}
+		});
 		btnCadastrarProduto.setForeground(new Color(255, 255, 255));
 		btnCadastrarProduto.setBackground(new Color(100, 149, 255));
 		contentPane.add(btnCadastrarProduto, "cell 0 8 2 1,growx");
