@@ -2,6 +2,7 @@ package visao;
 
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Image;
 
 import javax.swing.JPanel;
 import net.miginfocom.swing.MigLayout;
@@ -16,6 +17,8 @@ import utils.Utils;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.BoxLayout;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 
 public class TelaVenda extends JPanel { // mudado para jpanel ao invés de jframe
 
@@ -45,10 +48,10 @@ public class TelaVenda extends JPanel { // mudado para jpanel ao invés de jfram
 		lblNewLabel.setFont(hkGrotesk);
 
 		txtCodigo = new JTextField();
-		panel.add(txtCodigo, "cell 1 0,grow");
+		panel.add(txtCodigo, "cell 1 0,growx,aligny center");
 		txtCodigo.setColumns(10);
 		txtNome = new JTextField();
-		panel.add(txtNome, "cell 1 1,grow");
+		panel.add(txtNome, "cell 1 1,growx,aligny center");
 		txtNome.setEditable(false);
 		txtNome.setColumns(10);
 
@@ -68,7 +71,7 @@ public class TelaVenda extends JPanel { // mudado para jpanel ao invés de jfram
 		lblNewLabel_1.setFont(hkGrotesk);
 
 		txtQuantidade = new JTextField();
-		panel.add(txtQuantidade, "cell 1 2,grow");
+		panel.add(txtQuantidade, "cell 1 2,growx,aligny center");
 		txtQuantidade.setColumns(10);
 
 		JLabel lblNewLabel_2 = new JLabel("Valor:");
@@ -76,7 +79,7 @@ public class TelaVenda extends JPanel { // mudado para jpanel ao invés de jfram
 		lblNewLabel_2.setFont(hkGrotesk);
 
 		txtValor = new JTextField();
-		panel.add(txtValor, "cell 1 3,grow");
+		panel.add(txtValor, "cell 1 3,growx,aligny center");
 		txtValor.setEditable(false);
 		txtValor.setColumns(10);
 
@@ -117,6 +120,11 @@ public class TelaVenda extends JPanel { // mudado para jpanel ao invés de jfram
 
 		btnLimparCarrinho.setFont(new Font("Hanken Grotesk", Font.PLAIN, 24));
 		btnRealizarCompra.setFont(new Font("Hanken Grotesk", Font.PLAIN, 24));
+
+		//
+		
+		btnRealizarCompra.setIcon(Utils.carregarIcone("carrinho.png", 30, 30));
+		btnLimparCarrinho.setIcon(Utils.carregarIcone("lixo.png", 30, 30));
 
 		JPanel panel_2 = new JPanel();
 		panel_2.setBackground(new Color(255, 255, 255));
