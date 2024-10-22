@@ -12,12 +12,14 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 public class FuncionarioControle {
     private TelaLogin telaLogin;
 	private TelaCadastroFuncionario cadastroFuncionario;
 	private FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
 	private TelaPrincipal telaPrincipal; 
+	
     private String  cpfUsuarioLogado;
     
     public void setTelaLogin(TelaLogin telaLogin) {
@@ -129,12 +131,19 @@ public class FuncionarioControle {
     }
     
     public void atualizarTabela() {
-        try {
+    
             List<Funcionario> funcionarios = funcionarioDAO.listarFuncionarios();
-            TelaCadastroFuncionario.atualizarTabela(funcionarios);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            DefaultTableModel tableModel = cadastroFuncionario.getTableModel();
+            tableModel.setRowCount(0); // Limpa a tabela
+            String confirm = " ";
+          for(Funcionario funcionario : funcionarios) {
+			if(funcionario.isAdm()) {
+				 confirm = "Sim";
+			} else {
+				 confirm = "Não";
+			}
+			tableModel.addRow(new Object[] {funcionario.getNome(), funcionario.getCpf(), confirm});
+		}
     }
     
 }

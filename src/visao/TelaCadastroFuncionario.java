@@ -264,19 +264,29 @@ public class TelaCadastroFuncionario extends JFrame {
 */
 	
 	
-	public static void atualizarTabela(List<Funcionario> funcionarios) {
-		tableModel.setRowCount(0);
-		String confirm = " ";
-		for(Funcionario funcionario : funcionarios) {
-			if(funcionario.isAdm()) {
-				 confirm = "Sim";
-			} else {
-				 confirm = "Não";
-			}
-			tableModel.addRow(new Object[] {funcionario.getNome(), funcionario.getCpf(), confirm});
-		}
+	//public static void atualizarTabela(List<Funcionario> funcionarios) {
+		//tableModel.setRowCount(0);
+		//String confirm = " ";
+		//for(Funcionario funcionario : funcionarios) {
+			//if(funcionario.isAdm()) {
+			//	 confirm = "Sim";
+			//} else {
+			//	 confirm = "Não";
+			//}
+			//tableModel.addRow(new Object[] {funcionario.getNome(), funcionario.getCpf(), confirm});
+		//}
  		
-	}
+	//}
+	
+	   public JTable getTable() {
+	        return table;
+	    }
+
+
+		public DefaultTableModel getTableModel() {
+			// TODO Auto-generated method stub
+			return tableModel;
+		}
 
 
 }
