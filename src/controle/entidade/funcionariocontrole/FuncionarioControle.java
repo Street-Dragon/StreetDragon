@@ -19,6 +19,7 @@ public class FuncionarioControle {
 	private TelaCadastroFuncionario cadastroFuncionario;
 	private FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
 	private TelaPrincipal telaPrincipal; 
+	//cadastroFuncionario.addTableClickListener(this::selecionarFuncionario);
 	
     private String  cpfUsuarioLogado;
     
@@ -55,6 +56,7 @@ public class FuncionarioControle {
             public void actionPerformed(ActionEvent e) {
                 cadastrarFuncionario();
                 atualizarTabela();
+                cadastroFuncionario.limparCampos();
             }
         });
     }   
@@ -145,5 +147,14 @@ public class FuncionarioControle {
 			tableModel.addRow(new Object[] {funcionario.getNome(), funcionario.getCpf(), confirm});
 		}
     }
+    
+    /*public void selecionarFuncionario(int id) {
+        Funcionario funcionario = funcionarioDAO.getFuncionario(id);
+        if (funcionario != null) {
+            view.setFuncionario(funcionario);
+        } else {
+            JOptionPane.showMessageDialog(view, "Funcionário não encontrado");
+        }
+    }*/
     
 }

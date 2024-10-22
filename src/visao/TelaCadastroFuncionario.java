@@ -25,6 +25,8 @@ import javax.swing.table.DefaultTableModel;
 import modelo.entidade.pessoa.funcionario.Funcionario;
 
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 import javax.swing.JScrollBar;
@@ -244,6 +246,19 @@ public class TelaCadastroFuncionario extends JFrame {
 	        table = new JTable(tableModel);
 		
 		scrollPane.setViewportView(table);
+		
+        table.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 1) {
+                    int selectedRow = table.getSelectedRow();
+                    if (selectedRow != -1) {
+                        int id = (int) tableModel.getValueAt(selectedRow, 0);
+                       
+                    }
+                }
+            }
+        });
+		
 	}
 	/*
 	 private void loadCustomFont() {
@@ -282,6 +297,32 @@ public class TelaCadastroFuncionario extends JFrame {
 			// TODO Auto-generated method stub
 			return tableModel;
 		}
+		
+		
+		  public JTextField getTextFieldId() {
+		        return textId;
+		    }
+
+		    public JTextField getTextFieldNome() {
+		        return textNome;
+		    }
+
+		    public JTextField getTextFieldCpf() {
+		        return textCpf;
+		    }
+
+		    public JTextField getTextFieldEmail() {
+		        return textEmail;
+		    }
+
+		    public JTextField getTextFieldTelefone() {
+		        return textTelefone;
+		    }
+
+		    public JPasswordField getTextFieldSenha() {
+		        return textSenha;
+		    }
+		
 
 
 }
