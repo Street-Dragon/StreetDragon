@@ -27,7 +27,6 @@ public class TelaPrincipal extends JFrame {
 	private JButton btnHistorico;
 	private JPanel panel;
 	private Font hkGrotesk;
-	private JLabel lblLogo;
 	private JLabel lblFuncionario;
 	private JButton btnDeslogar;
 	private JButton btnFuncionarios;
@@ -46,7 +45,7 @@ public class TelaPrincipal extends JFrame {
 	public TelaPrincipal() {
 		hkGrotesk = Utils.loadCustomFont();
 		setTitle("StreetDragon");
-		setSize(600, 400);
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(new BorderLayout());
 		setBackground(new Color(246, 233, 233));
@@ -84,18 +83,19 @@ public class TelaPrincipal extends JFrame {
 		panel = new JPanel();
 		panel.setBackground(new Color(246, 233, 233));
 		getContentPane().add(panel, BorderLayout.NORTH);
-		panel.setLayout(new MigLayout("", "[grow][][][grow][grow][][][][][][][][grow]", "[grow]"));
-
-		lblLogo = new JLabel("StreetDragon");
-		panel.add(lblLogo, "cell 0 0,grow");
+		panel.setLayout(new MigLayout("", "[grow][grow][grow][grow][grow]", "[grow]"));
 
 		lblFuncionario = new JLabel("Funcionário: Nenhum");
 		lblFuncionario.setFont(hkGrotesk);
-		panel.add(lblFuncionario, "cell 3 0");
+		panel.add(lblFuncionario, "cell 1 0,alignx left,growy");
 
 		btnDeslogar = new JButton("Deslogar");
-		btnDeslogar.setFont(hkGrotesk);
-		panel.add(btnDeslogar, "cell 12 0,alignx right,growy");
+		btnDeslogar.setBackground(new Color(255, 149, 149));
+		btnDeslogar.setFont(new Font("Hanken Grotesk", Font.BOLD, 20));
+		btnDeslogar.setForeground(Color.WHITE);
+		btnDeslogar.setIcon(Utils.carregarIcone("logout.png", 30, 30));
+		
+		panel.add(btnDeslogar, "cell 4 0,alignx right,growy");
 
 		config(btnHistorico);
 		config(btnProdutos);
@@ -107,7 +107,7 @@ public class TelaPrincipal extends JFrame {
 		FuncionarioControle funcionarioControle = new FuncionarioControle();
 		funcionarioControle.setTelaPrincipal(this);
 		funcionarioControle.setCadastroFuncionario(telaCadastroFuncionario);
-
+		
 		// Adiciona os painéis
 		mainPanel.add(telaVenda, "TelaVenda");
 		mainPanel.add(telaHistoricoVenda, "TelaHistoricoVenda");

@@ -34,7 +34,7 @@ public class TelaVenda extends JPanel { // mudado para jpanel ao invés de jfram
 	 * Create the frame.
 	 */
 	public TelaVenda(TelaPrincipal telaPrincipal) { // editado para poder ser chamada no menu
-		setBackground(new Color(246, 233, 233));
+		setBackground(Color.WHITE);
 		hkGrotesk = Utils.loadCustomFont();
 		setLayout(new MigLayout("", "[grow][grow][grow][grow]", "[][grow][grow]"));
 
@@ -48,12 +48,15 @@ public class TelaVenda extends JPanel { // mudado para jpanel ao invés de jfram
 		lblNewLabel.setFont(hkGrotesk);
 
 		txtCodigo = new JTextField();
+		txtCodigo.setFont(hkGrotesk);
 		panel.add(txtCodigo, "cell 1 0,growx,aligny center");
 		txtCodigo.setColumns(10);
+		
 		txtNome = new JTextField();
 		panel.add(txtNome, "cell 1 1,growx,aligny center");
 		txtNome.setEditable(false);
 		txtNome.setColumns(10);
+		txtNome.setFont(hkGrotesk);
 
 		JPanel panelImagem = new JPanel();
 		panel.add(panelImagem, "cell 2 1 1 4,growx,aligny top");
@@ -73,20 +76,22 @@ public class TelaVenda extends JPanel { // mudado para jpanel ao invés de jfram
 		txtQuantidade = new JTextField();
 		panel.add(txtQuantidade, "cell 1 2,growx,aligny center");
 		txtQuantidade.setColumns(10);
+		txtQuantidade.setFont(hkGrotesk);
 
 		JLabel lblNewLabel_2 = new JLabel("Valor:");
 		panel.add(lblNewLabel_2, "cell 0 3,alignx center");
 		lblNewLabel_2.setFont(hkGrotesk);
 
 		txtValor = new JTextField();
-		panel.add(txtValor, "cell 1 3,growx,aligny center");
 		txtValor.setEditable(false);
+		panel.add(txtValor, "cell 1 3,growx,aligny center");
 		txtValor.setColumns(10);
+		txtValor.setFont(hkGrotesk);
 
 		JButton btnRemoverProduto = new JButton("Remover produto");
 		btnRemoverProduto.setForeground(new Color(255, 255, 255));
 		btnRemoverProduto.setBackground(new Color(226, 61, 40));
-		btnRemoverProduto.setFont(hkGrotesk);
+		btnRemoverProduto.setFont(new Font("Hanken Grotesk", Font.BOLD, 24));
 		btnRemoverProduto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -96,7 +101,7 @@ public class TelaVenda extends JPanel { // mudado para jpanel ao invés de jfram
 		JButton btnAdicionarProduto = new JButton("Adicionar produto");
 		btnAdicionarProduto.setForeground(new Color(255, 255, 255));
 		btnAdicionarProduto.setBackground(new Color(114, 148, 235));
-		btnAdicionarProduto.setFont(new Font("Hanken Grotesk", Font.PLAIN, 20));
+		btnAdicionarProduto.setFont(new Font("Hanken Grotesk", Font.BOLD, 24));
 		panel.add(btnAdicionarProduto, "cell 1 4,grow");
 
 		JPanel panel_1 = new JPanel();
@@ -105,7 +110,7 @@ public class TelaVenda extends JPanel { // mudado para jpanel ao invés de jfram
 		panel_1.setLayout(new MigLayout("", "[grow]", "[grow][::50px,grow 50][::50px,grow 50]"));
 
 		JLabel lblTotal = new JLabel("Total: 123 R$");
-		lblTotal.setFont(new Font("Hanken Grotesk", Font.PLAIN, 25));
+		lblTotal.setFont(new Font("Hanken Grotesk", Font.PLAIN, 29));
 		panel_1.add(lblTotal, "cell 0 0,alignx center,aligny center");
 
 		JButton btnRealizarCompra = new JButton("Realizar Compra");
@@ -118,11 +123,11 @@ public class TelaVenda extends JPanel { // mudado para jpanel ao invés de jfram
 		btnLimparCarrinho.setBackground(new Color(226, 61, 40));
 		panel_1.add(btnLimparCarrinho, "cell 0 2,grow");
 
-		btnLimparCarrinho.setFont(new Font("Hanken Grotesk", Font.PLAIN, 24));
-		btnRealizarCompra.setFont(new Font("Hanken Grotesk", Font.PLAIN, 24));
+		btnLimparCarrinho.setFont(new Font("Hanken Grotesk", Font.BOLD, 24));
+		btnRealizarCompra.setFont(new Font("Hanken Grotesk", Font.BOLD, 24));
 
 		//
-		
+
 		btnRealizarCompra.setIcon(Utils.carregarIcone("carrinho.png", 30, 30));
 		btnLimparCarrinho.setIcon(Utils.carregarIcone("lixo.png", 30, 30));
 

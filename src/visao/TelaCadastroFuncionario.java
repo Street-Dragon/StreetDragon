@@ -91,7 +91,7 @@ public class TelaCadastroFuncionario extends JPanel { // jpanel ao invés de jfr
 		// "add"
 
 		setBounds(100, 100, 926, 526);
-		setBackground(new Color(246, 233, 233));
+		setBackground(Color.WHITE);
 		setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		hkGrotesk = Utils.loadCustomFont();
