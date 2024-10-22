@@ -9,25 +9,30 @@ import controle.entidade.conexao.ConexaoBD;
 import modelo.entidade.produto.Produto;
 
 public class ProdutoDAO {
-	  public String nomeProduto(String nomeProduto) {
+	  public Produto[] consultar() {
 		  
-    	String sqlNomeP = "SELECT nome FROM produto WHERE nomeProduto = ?";
+    	String sqlP = "select * from produto";
+    	Produto[] produto = null;
     	
     	try (Connection conn = ConexaoBD.getConexaoMySQL();
-    			PreparedStatement stmt = conn.prepareStatement(sqlNomeP)) {
-                
-               stmt.setString(1, nomeProduto);
-               
-               ResultSet rs = stmt.executeQuery(); 
-               if (rs.next()) {		// se tiver um produto com esse nome,
-                   return rs.getString("nomeProduto"); // retorna o nome do produto
-               } else {
-                   return "Nenhum"; // não retorna nada
+    			PreparedStatement stmt = conn.prepareStatement(sqlP)) {               
+                ResultSet rs = stmt.executeQuery(); 
+               for (int i = 0;rs.next();i++) {		// enquando tiver produtos
+                   produto[i].setIdProduto(rs.getInt("idProduto"));
+                   produto[i].setNomeProduto(rs.getString("nome"));
+                   produto[i].setMaterial(rs.getString("caterial"));
+                   produto[i].setCategoria(rs.getString("categoria"));
+                   produto[i].setValor(rs.getFloat("valor"));
+                   produto[i].setQuantEstoque(rs.getInt("estoque"));
+                   produto[i].setTamanho(rs.getString("tamanho"));
+                   produto[i].setVariacao(rs.getString("variacao"));
+                   System.out.println(produto[i].getNomeProduto());
                }
+               return produto;
                
            } catch (SQLException e) {
                e.printStackTrace();
-               return "Erro ao consultar";
+               return produto;
            }
     }
     
@@ -58,6 +63,34 @@ public class ProdutoDAO {
         }
         
         
+    }
+    public boolean deletarProduto(Produto produto) {
+    	String sqlP = "DELETE FROM produto WHERE idProduto = ?";
+    	
+    	try(Connection conn = ConexaoBD.getConexaoMySQL();
+    		PreparedStatement stmt = conn.prepareStatement(sqlP)){
+    		stmt.setInt(1, produto.getIdProduto());
+    		stmt.executeUpdate();
+    		return true;
+    		
+    	}  catch (SQLException e) {
+    		System.out.println(e);
+    		return false;
+    	}
+    }
+    public int Idshow() {
+    	String sql = "SELECT COUNT(*) FROM produto";
+    	
+    	try(Connection conn = ConexaoBD.getConexaoMySQL();
+    		PreparedStatement stmt = conn.prepareStatement(sql)){
+    		ResultSet rs = stmt.executeQuery();
+    		rs.next();
+    		int id = rs.getInt(1)+1;;
+    		return id;
+    	} catch (SQLException e) {
+    		System.out.println(e);
+    		return 0;
+    	}
     }
 
 }

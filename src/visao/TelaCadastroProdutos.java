@@ -62,6 +62,9 @@ public class TelaCadastroProdutos extends JFrame {
 	 * Create the frame.
 	 */
 	public TelaCadastroProdutos() {
+		ProdutoDAO produtoDAO = new ProdutoDAO();
+
+		
 		setTitle("Cadastrar Produto");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 672, 540);
@@ -79,7 +82,8 @@ public class TelaCadastroProdutos extends JFrame {
 		contentPane.add(lblId, "cell 0 0,growx");
 		lblId.setFont(hkGrotesk);
 		
-		textFieldId = new JTextField();
+		textFieldId = new JTextField(String.valueOf(produtoDAO.Idshow()));
+		textFieldId.setHorizontalAlignment(SwingConstants.CENTER);
 		textFieldId.setFont(new Font("Dialog", Font.PLAIN, 15));
 		textFieldId.setEditable(false);
 		textFieldId.setBackground(new Color(246, 233, 233));
