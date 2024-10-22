@@ -40,29 +40,19 @@ public class ProdutoDAO {
         		
              PreparedStatement stmtProduto = conn.prepareStatement(sqlProduto);
         	 PreparedStatement stmtFornecedor = conn.prepareStatement(sqlFornecedor)){
-        	
-        	/*stmtFornecedor.setString(1, produto.getFornecedor().getNome());
-	        ResultSet rs = stmtFornecedor.executeQuery();
-	        
-	        if(rs.next()) {
-            int fornecedorId = rs.getInt(1);
-            */
             stmtProduto.setString(1, produto.getNomeProduto());
             stmtProduto.setString(2, produto.getMaterial());
             stmtProduto.setString(3, produto.getCategoria());
             stmtProduto.setString(4, produto.getVariacao());
             stmtProduto.setFloat(5, produto.getValor());
             stmtProduto.setInt(6, produto.getQuantEstoque());
-            stmtProduto.setString(7, String.valueOf(produto.getTamanho()));
+            stmtProduto.setString(7, produto.getTamanho());
             
             stmtProduto.executeUpdate();
             return true;
-	        /*} else {
-	        	System.out.println("deu merda aqui");
-	        	return false;	        			
-	        }*/
+            
         } catch (SQLException e) {
-        	System.out.println("VAI TOMA NO CUUUUUUUUUUUUUUUUUUUUU");
+        	System.out.println("Erro ao adicionar ao banco de dados");
             e.printStackTrace();
             return false;
         }
