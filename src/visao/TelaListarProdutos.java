@@ -2,6 +2,7 @@ package visao;
 
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.util.Vector;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -15,6 +16,10 @@ import javax.swing.JTable;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.table.DefaultTableModel;
+
+import modelo.dao.produto.ProdutoDAO;
+import modelo.entidade.produto.Produto;
 
 public class TelaListarProdutos extends JFrame {
 
@@ -41,7 +46,8 @@ public class TelaListarProdutos extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public TelaListarProdutos() {
+	public TelaListarProdutos() {		
+		
 		setTitle("Lista de Produtos");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 672, 540);
@@ -72,7 +78,31 @@ public class TelaListarProdutos extends JFrame {
 		contentPane.add(scrollPane, "cell 0 1,grow");
 		
 		table = new JTable();
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"Id", "Nome", "Valor", "Qnt estoque"
+			}
+		));
+		table.setFillsViewportHeight(true);
 		scrollPane.setViewportView(table);
+		LoadTable();
+	}
+
+	private void LoadTable() {
+		// TODO Auto-generated method stub
+		DefaultTableModel model = (DefaultTableModel) table.getModel();
+		ProdutoDAO dao = new ProdutoDAO();
+		Produto[] produto = dao.consultar();
+		for(int i = 0; i>produto.length ; i++) {
+		    Vector row = new Vector();
+		    row.add(produto[i].getIdProduto());
+		    row.add(produto[i].getNomeProduto());
+		    row.add(produto[i].getValor());
+		    row.add(produto[i].getQuantEstoque());
+		    model.addRow(row);
+		}
 	}
 
 }

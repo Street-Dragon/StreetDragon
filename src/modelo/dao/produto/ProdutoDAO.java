@@ -12,27 +12,36 @@ public class ProdutoDAO {
 	  public Produto[] consultar() {
 		  
     	String sqlP = "select * from produto";
-    	Produto[] produto = null;
     	
     	try (Connection conn = ConexaoBD.getConexaoMySQL();
     			PreparedStatement stmt = conn.prepareStatement(sqlP)) {               
                 ResultSet rs = stmt.executeQuery(); 
-               for (int i = 0;rs.next();i++) {		// enquando tiver produtos
-                   produto[i].setIdProduto(rs.getInt("idProduto"));
-                   produto[i].setNomeProduto(rs.getString("nome"));
-                   produto[i].setMaterial(rs.getString("caterial"));
-                   produto[i].setCategoria(rs.getString("categoria"));
-                   produto[i].setValor(rs.getFloat("valor"));
-                   produto[i].setQuantEstoque(rs.getInt("estoque"));
-                   produto[i].setTamanho(rs.getString("tamanho"));
-                   produto[i].setVariacao(rs.getString("variacao"));
-                   System.out.println(produto[i].getNomeProduto());
-               }
-               return produto;
+                
+                Produto[] produto = null;
+                try {
+                	for (int i = 0;rs.next();i++) {		// enquando tiver produtos
+                 	   //System.out.println(i+" : "+rs.getString("nome"));
+                 	   produto[i].setIdProduto(rs.getInt("idProduto"));
+                        produto[i].setNomeProduto(rs.getString("nome"));
+                        produto[i].setMaterial(rs.getString("material"));
+                        produto[i].setCategoria(rs.getString("categoria"));
+                        produto[i].setValor(rs.getFloat("valor"));
+                        produto[i].setQuantEstoque(rs.getInt("estoque"));
+                        produto[i].setTamanho(rs.getString("tamanho"));
+                        produto[i].setVariacao(rs.getString("variacao"));
+                        
+                    }
+                    System.out.println("aqui");
+                    return null;
+                } catch(Exception e) {
+                	System.out.println(e);
+                	return null;
+                }
+               
                
            } catch (SQLException e) {
                e.printStackTrace();
-               return produto;
+               return null;
            }
     }
     
