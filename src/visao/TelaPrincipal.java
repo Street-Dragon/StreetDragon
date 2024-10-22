@@ -59,14 +59,14 @@ public class TelaPrincipal extends JFrame {
 		TelaVenda telaVenda = new TelaVenda(this);
 		TelaHistoricoVenda telaHistoricoVenda = new TelaHistoricoVenda(this);
 		TelaCadastroFuncionario telaCadastroFuncionario = new TelaCadastroFuncionario(this);
-	
 
 		// Painel do menu lateral
 		JPanel menuPanel = new JPanel();
 		menuPanel.setBackground(new Color(246, 233, 233));
-		menuPanel.setLayout(new MigLayout("", "[grow]", "[grow][grow][grow][grow]"));
+		menuPanel.setLayout(new MigLayout("", "[grow]", "[grow][grow][grow][grow][grow]"));
 
 		btnVenda = new JButton("Venda");
+		btnVenda.setBackground(new Color(250, 187, 187));
 		menuPanel.add(btnVenda, "cell 0 0,grow");
 
 		btnHistorico = new JButton("Histórico de vendas");
@@ -97,20 +97,22 @@ public class TelaPrincipal extends JFrame {
 		btnDeslogar.setFont(hkGrotesk);
 		panel.add(btnDeslogar, "cell 12 0,alignx right,growy");
 
+		config(btnHistorico);
+		config(btnProdutos);
+		config(btnVenda);
+		config(btnFuncionarios);
+
 		new TelaPrincipalControle(this);
-		
-		
-		
+
 		FuncionarioControle funcionarioControle = new FuncionarioControle();
 		funcionarioControle.setTelaPrincipal(this);
 		funcionarioControle.setCadastroFuncionario(telaCadastroFuncionario);
-		
+
 		// Adiciona os painéis
 		mainPanel.add(telaVenda, "TelaVenda");
 		mainPanel.add(telaHistoricoVenda, "TelaHistoricoVenda");
 		mainPanel.add(telaCadastroFuncionario, "TelaCadastroFuncionario");
-		
-		
+
 	}
 
 	// getters e setters
@@ -141,5 +143,11 @@ public class TelaPrincipal extends JFrame {
 
 	public JLabel getLblFuncionario() {
 		return lblFuncionario;
+	}
+
+	private static void config(JButton button) {
+		button.setContentAreaFilled(false); // Deixa o fundo transparente
+		button.setFocusPainted(false); // Remove o contorno ao focar
+		button.setFont(new Font("Hanken Grotesk", Font.BOLD, 15));
 	}
 }

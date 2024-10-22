@@ -223,7 +223,7 @@ public class TelaCadastroFuncionario extends JPanel { // jpanel ao invés de jfr
 		btnDeletarFuncionario.setBackground(new Color(255, 0, 0));
 		panel_1.add(btnDeletarFuncionario, "cell 0 2,grow");
 		// Botâo Editar
-		JButton btnEditarFuncionario = new JButton("Editar Funcionrio");
+		JButton btnEditarFuncionario = new JButton("Editar Funcionario");
 		btnEditarFuncionario.setForeground(new Color(255, 255, 255));
 		btnEditarFuncionario.setFont(hkGrotesk);
 		btnEditarFuncionario.addActionListener(new ActionListener() {
