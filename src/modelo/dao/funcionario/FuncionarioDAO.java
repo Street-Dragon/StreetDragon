@@ -4,8 +4,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import controle.entidade.conexao.ConexaoBD;
+import modelo.entidade.contato.Contato;
 import modelo.entidade.pessoa.funcionario.Funcionario;
 
 public class FuncionarioDAO {
@@ -27,6 +30,8 @@ public class FuncionarioDAO {
         }
     }
     
+    
+    // Mano pra que q serve isso?
     public String nomeFuncionario(String cpf) {
     	String sqlNome = "SELECT nome FROM funcionario WHERE cpf = ?";
     	
@@ -77,6 +82,37 @@ public class FuncionarioDAO {
             return false;
         }
     }
+    //Falta os outros conteúdos eu tô com preguiça mi deixa
+    public List<Funcionario> listarFuncionarios() {
+		List<Funcionario> funcionarios = new ArrayList<>();
+		String sqlSelect = "SELECT f.*, c.email, c.telefone FROM funcionario f "
+				+ "JOIN contato c ON f.contato_id = c.id_contato";
+
+		try (Connection conn = ConexaoBD.getConexaoMySQL();
+				PreparedStatement stmt = conn.prepareStatement(sqlSelect);
+				ResultSet rs = stmt.executeQuery()) {
+
+			while (rs.next()) {
+				Funcionario funcionario = new Funcionario();
+				Contato contato = new Contato();
+
+				funcionario.setCpf(rs.getString("cpf"));
+				funcionario.setSenhaFuncionario(rs.getString("senha"));
+				funcionario.setNome(rs.getString("nome"));
+				funcionario.setAdm(rs.getBoolean("adm"));
+
+				contato.setId(rs.getInt("contato_id"));
+				contato.setEmail(rs.getString("email"));
+				contato.setTelefone(rs.getString("telefone"));
+				funcionario.setContato(contato);
+				funcionarios.add(funcionario);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return funcionarios;
+	}
 
     
 }

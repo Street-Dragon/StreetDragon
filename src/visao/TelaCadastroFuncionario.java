@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.GraphicsEnvironment;
 import java.io.IOException;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -22,11 +23,17 @@ import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
+import modelo.entidade.pessoa.funcionario.Funcionario;
+
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 import javax.swing.JScrollBar;
 import javax.swing.JTabbedPane;
+
 
 public class TelaCadastroFuncionario extends JPanel { // jpanel ao invés de jframe
 
@@ -42,6 +49,7 @@ public class TelaCadastroFuncionario extends JPanel { // jpanel ao invés de jfr
 	private JCheckBox chckbxVerSenha;
 	private JCheckBox chckbxAdm;
 	private JTable table;
+	private static DefaultTableModel tableModel;
 	private JPasswordField textSenha;
 
 	public String getTextId() {
@@ -235,11 +243,92 @@ public class TelaCadastroFuncionario extends JPanel { // jpanel ao invés de jfr
 		panel_1.add(btnEditarFuncionario, "cell 0 1,grow");
 
 		JScrollPane scrollPane = new JScrollPane();
+
 		add(scrollPane, "cell 0 1 4 3,grow");
 
-		table = new JTable();
-		table.setFont(new Font("Dialog", Font.PLAIN, 15));
-		table.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Nome", "Cpf", "Administrador" }));
+		tableModel = new DefaultTableModel(new Object[] {"Nome", "Cpf", "Administrador"}, 0); 
+
+	        table = new JTable(tableModel);
+  
 		scrollPane.setViewportView(table);
+		
+        table.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 1) {
+                    int selectedRow = table.getSelectedRow();
+                    if (selectedRow != -1) {
+                        int id = (int) tableModel.getValueAt(selectedRow, 0);
+                       
+                    }
+                }
+            }
+        });
+		
 	}
+
+	/*
+	 private void loadCustomFont() {
+	        try {
+	    		Font hkGrotesk = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/resources/fontes/HankenGrotesk-VariableFont_wght.ttf")).deriveFont(20f);
+	    		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+	            ge.registerFont(hkGrotesk);
+	    	} catch (FontFormatException e) {
+	            System.err.println("Formato de fonte inválido: " + e.getMessage());
+	            e.printStackTrace();
+	        } catch (IOException e) {
+	            System.err.println("Erro ao ler o arquivo da fonte: " + e.getMessage());
+	            e.printStackTrace();
+	        }
+	    }
+
+
+*/
+	
+	
+	public void limparCampos() {
+	    textId.setText("");
+	    textNome.setText("");
+	    textCpf.setText("");
+	    textEmail.setText("");
+	    textTelefone.setText("");
+	    textSenha.setText("");
+	}
+	
+	   public JTable getTable() {
+	        return table;
+	    }
+
+
+		public DefaultTableModel getTableModel() {
+			// TODO Auto-generated method stub
+			return tableModel;
+		}
+		
+		
+		  public JTextField getTextFieldId() {
+		        return textId;
+		    }
+
+		    public JTextField getTextFieldNome() {
+		        return textNome;
+		    }
+
+		    public JTextField getTextFieldCpf() {
+		        return textCpf;
+		    }
+
+		    public JTextField getTextFieldEmail() {
+		        return textEmail;
+		    }
+
+		    public JTextField getTextFieldTelefone() {
+		        return textTelefone;
+		    }
+
+		    public JPasswordField getTextFieldSenha() {
+		        return textSenha;
+		    }
+		
+
+
 }
