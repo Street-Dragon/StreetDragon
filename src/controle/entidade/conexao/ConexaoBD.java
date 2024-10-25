@@ -31,7 +31,7 @@ public class ConexaoBD {
 				Statement stmt = conn.createStatement()) {
 
 			// stmt.executeUpdate("DROP DATABASE streetdragon");
-			stmt.executeUpdate("CREATE DATABASE streetdragon");
+			stmt.executeUpdate("CREATE DATABASE IF NOT EXISTS streetdragon");
 			System.out.println("Banco de dados criado ou já existe!");
 			stmt.executeUpdate("USE streetdragon");
 

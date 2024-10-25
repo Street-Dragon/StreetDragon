@@ -34,7 +34,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JScrollBar;
 import javax.swing.JTabbedPane;
 
-
 public class TelaCadastroFuncionario extends JPanel { // jpanel ao invés de jframe
 
 	private static final long serialVersionUID = 1L;
@@ -212,11 +211,12 @@ public class TelaCadastroFuncionario extends JPanel { // jpanel ao invés de jfr
 		btnCadastrarFuncionario = new JButton("Cadastrar");
 		btnCadastrarFuncionario.setForeground(new Color(255, 255, 255));
 		btnCadastrarFuncionario.setFont(hkGrotesk);
-		/*btnCadastrarFuncionario.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-			}
-		});*/
+		/*
+		 * btnCadastrarFuncionario.addActionListener(new ActionListener() { public void
+		 * actionPerformed(ActionEvent e) {
+		 * 
+		 * } });
+		 */
 		panel_1.setLayout(new MigLayout("", "[grow]", "[grow][grow][grow]"));
 		btnCadastrarFuncionario.setBackground(new Color(114, 148, 235));
 		panel_1.add(btnCadastrarFuncionario, "cell 0 0,grow");
@@ -246,89 +246,72 @@ public class TelaCadastroFuncionario extends JPanel { // jpanel ao invés de jfr
 
 		add(scrollPane, "cell 0 1 4 3,grow");
 
-		tableModel = new DefaultTableModel(new Object[] {"Nome", "Cpf", "Administrador"}, 0); 
+		tableModel = new DefaultTableModel();
+        tableModel.addColumn("CPF");
+        tableModel.addColumn("Nome");
+        tableModel.addColumn("Senha");
+        tableModel.addColumn("Administrador");
+        tableModel.addColumn("Email");
+        tableModel.addColumn("Telefone");
+        
+		table = new JTable(tableModel);
 
-	        table = new JTable(tableModel);
-  
 		scrollPane.setViewportView(table);
-		
-        table.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                if (e.getClickCount() == 1) {
-                    int selectedRow = table.getSelectedRow();
-                    if (selectedRow != -1) {
-                        int id = (int) tableModel.getValueAt(selectedRow, 0);
-                       
-                    }
-                }
-            }
-        });
-		
+
+
+		table.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 1) {
+					int selectedRow = table.getSelectedRow();
+					if (selectedRow != -1) {
+						int id = (int) tableModel.getValueAt(selectedRow, 0);
+
+					}
+				}
+			}
+		});
+
 	}
 
-	/*
-	 private void loadCustomFont() {
-	        try {
-	    		Font hkGrotesk = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/resources/fontes/HankenGrotesk-VariableFont_wght.ttf")).deriveFont(20f);
-	    		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-	            ge.registerFont(hkGrotesk);
-	    	} catch (FontFormatException e) {
-	            System.err.println("Formato de fonte inválido: " + e.getMessage());
-	            e.printStackTrace();
-	        } catch (IOException e) {
-	            System.err.println("Erro ao ler o arquivo da fonte: " + e.getMessage());
-	            e.printStackTrace();
-	        }
-	    }
-
-
-*/
-	
-	
 	public void limparCampos() {
-	    textId.setText("");
-	    textNome.setText("");
-	    textCpf.setText("");
-	    textEmail.setText("");
-	    textTelefone.setText("");
-	    textSenha.setText("");
+		textId.setText("");
+		textNome.setText("");
+		textCpf.setText("");
+		textEmail.setText("");
+		textTelefone.setText("");
+		textSenha.setText("");
 	}
-	
-	   public JTable getTable() {
-	        return table;
-	    }
 
+	public JTable getTable() {
+		return table;
+	}
 
-		public DefaultTableModel getTableModel() {
-			// TODO Auto-generated method stub
-			return tableModel;
-		}
-		
-		
-		  public JTextField getTextFieldId() {
-		        return textId;
-		    }
+	public DefaultTableModel getTableModel() {
+		return tableModel;
+	}
 
-		    public JTextField getTextFieldNome() {
-		        return textNome;
-		    }
+	public JTextField getTextFieldId() {
+		return textId;
+	}
 
-		    public JTextField getTextFieldCpf() {
-		        return textCpf;
-		    }
+	public JTextField getTextFieldNome() {
+		return textNome;
+	}
 
-		    public JTextField getTextFieldEmail() {
-		        return textEmail;
-		    }
+	public JTextField getTextFieldCpf() {
+		return textCpf;
+	}
 
-		    public JTextField getTextFieldTelefone() {
-		        return textTelefone;
-		    }
+	public JTextField getTextFieldEmail() {
+		return textEmail;
+	}
 
-		    public JPasswordField getTextFieldSenha() {
-		        return textSenha;
-		    }
-		
+	public JTextField getTextFieldTelefone() {
+		return textTelefone;
+	}
 
+	public JPasswordField getTextFieldSenha() {
+		return textSenha;
+	}
 
 }

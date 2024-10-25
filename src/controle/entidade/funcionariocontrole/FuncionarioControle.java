@@ -46,9 +46,10 @@ public class FuncionarioControle {
       
 	public void setCadastroFuncionario(TelaCadastroFuncionario cadastroFuncionario) {
 		this.cadastroFuncionario = cadastroFuncionario;
-
+		atualizarTabela();
 		cadastroFuncionario.getBtnCadastrarFuncionario().addActionListener(new ActionListener() {
 			@Override
+			
 			public void actionPerformed(ActionEvent e) {
 				cadastrarFuncionario();
         atualizarTabela();
@@ -137,17 +138,18 @@ public class FuncionarioControle {
     
             List<Funcionario> funcionarios = funcionarioDAO.listarFuncionarios();
             DefaultTableModel tableModel = cadastroFuncionario.getTableModel();
-            tableModel.setRowCount(0); // Limpa a tabela
-            String confirm = " ";
-          for(Funcionario funcionario : funcionarios) {
-			if(funcionario.isAdm()) {
-				 confirm = "Sim";
-			} else {
-				 confirm = "Não";
-			}
-			tableModel.addRow(new Object[] {funcionario.getNome(), funcionario.getCpf(), confirm});
-		}
-    }
+            for (Funcionario funcionario : funcionarios) {
+                Contato contato = funcionario.getContato();
+                tableModel.addRow(new Object[]{
+                    funcionario.getCpf(),
+                    funcionario.getNome(),
+                    funcionario.getSenhaFuncionario(),
+                    funcionario.isAdm() ? "Sim" : "Não",
+                    contato.getEmail(),
+                    contato.getTelefone()
+                });
+            }
+        }
     
     /*public void selecionarFuncionario(int id) {
         Funcionario funcionario = funcionarioDAO.getFuncionario(id);
