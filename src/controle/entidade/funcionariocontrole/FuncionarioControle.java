@@ -109,7 +109,7 @@ private void cadastrarFuncionario() {
         cpf = cpf.replaceAll("[^0-9]", ""); 
         telefone = telefone.replaceAll("[^0-9]", ""); // 
         
-        if (funcionarioDAO.verificaCpfExistente(cpf)) {
+        if (funcionarioDAO.verificaCpfsExistentes(cpf)) {
             JOptionPane.showMessageDialog(cadastroFuncionario, "CPF já cadastrado. Tente outro.", "Erro", JOptionPane.ERROR_MESSAGE);
             return; // Interrompe o cadastro
         }
