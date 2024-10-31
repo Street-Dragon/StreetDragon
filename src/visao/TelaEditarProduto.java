@@ -204,6 +204,12 @@ public class TelaEditarProduto extends JFrame {
 				txtFonecedor.setFont(hkGrotesk);
 				
 				textFiedFornecedor = new JTextField();
+				textFiedFornecedor.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						
+			
+					}
+				});
 				textFiedFornecedor.setFont(new Font("Dialog", Font.PLAIN, 15));
 				textFiedFornecedor.setBackground(new Color(246, 233, 233));
 				contentPane.add(textFiedFornecedor, "cell 4 6,growx");
