@@ -79,68 +79,46 @@ public class FuncionarioDAO {
             return false;
         }
     }
-
-    public List<String> verificaCpfsExistentes(List<String> cpfs) {
+    public boolean verificaCpfExistente(String cpf) {
         String sqlFuncionarioCPF = "SELECT cpf FROM funcionario WHERE cpf = ?";
-        List<String> cpfsExistentes = new ArrayList<>();
-        
         try (Connection conn = ConexaoBD.getConexaoMySQL();
              PreparedStatement stmtFuncionario = conn.prepareStatement(sqlFuncionarioCPF)) {
-             
-            for (String cpf : cpfs) {
-                stmtFuncionario.setString(1, cpf);
-                ResultSet rs = stmtFuncionario.executeQuery();
-                if (rs.next()) {
-                    cpfsExistentes.add(cpf);
-                }
-            }
+            
+            stmtFuncionario.setString(1, cpf);
+            ResultSet rs = stmtFuncionario.executeQuery();
+            return rs.next();
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
-
-        return cpfsExistentes;
     }
 
-    public List<String> verificaTelefonesExistentes(List<String> telefones) {
+    public boolean verificaTelefoneExistente(String telefone) {
         String sqlFuncionarioTelefone = "SELECT telefone FROM funcionario WHERE telefone = ?";
-        List<String> telefonesExistentes = new ArrayList<>();
-
         try (Connection conn = ConexaoBD.getConexaoMySQL();
              PreparedStatement stmtFuncionario = conn.prepareStatement(sqlFuncionarioTelefone)) {
-
-            for (String telefone : telefones) {
-                stmtFuncionario.setString(1, telefone);
-                ResultSet rs = stmtFuncionario.executeQuery();
-                if (rs.next()) {
-                    telefonesExistentes.add(telefone);
-                }
-            }
+            
+            stmtFuncionario.setString(1, telefone);
+            ResultSet rs = stmtFuncionario.executeQuery();
+            return rs.next();
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
-
-        return telefonesExistentes;
     }
 
-    public List<String> verificaEmailsExistentes(List<String> emails) {
+    public boolean verificaEmailExistente(String email) {
         String sqlFuncionarioEmail = "SELECT email FROM funcionario WHERE email = ?";
-        List<String> emailsExistentes = new ArrayList<>();
-        
         try (Connection conn = ConexaoBD.getConexaoMySQL();
              PreparedStatement stmtFuncionario = conn.prepareStatement(sqlFuncionarioEmail)) {
-             
-            for (String email : emails) {
-                stmtFuncionario.setString(1, email);
-                ResultSet rs = stmtFuncionario.executeQuery();
-                if (rs.next()) {
-                    emailsExistentes.add(email);
-                }
-            }
+            
+            stmtFuncionario.setString(1, email);
+            ResultSet rs = stmtFuncionario.executeQuery();
+            return rs.next();
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
-
-        return emailsExistentes;
     }
 
     

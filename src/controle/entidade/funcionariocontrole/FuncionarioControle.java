@@ -109,9 +109,9 @@ private void cadastrarFuncionario() {
         cpf = cpf.replaceAll("[^0-9]", ""); 
         telefone = telefone.replaceAll("[^0-9]", ""); // 
         
-        if (funcionarioDAO.verificaCpfsExistentes(cpf)) {
+        if (funcionarioDAO.verificaCpfExistente(cpf)) {
             JOptionPane.showMessageDialog(cadastroFuncionario, "CPF já cadastrado. Tente outro.", "Erro", JOptionPane.ERROR_MESSAGE);
-            return; // Interrompe o cadastro
+            return;
         }
         
         if (!Utils.isValidCPF(cpf)) {
@@ -123,6 +123,14 @@ private void cadastrarFuncionario() {
         if (!Utils.isValidTelefone(telefone)) {
             JOptionPane.showMessageDialog(cadastroFuncionario, "O telefone informado é inválido.", "Erro",
                     JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (funcionarioDAO.verificaTelefoneExistente(telefone)) {
+            JOptionPane.showMessageDialog(cadastroFuncionario, "Telefone já cadastrado. Tente outro.", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (funcionarioDAO.verificaEmailExistente(email)) {
+            JOptionPane.showMessageDialog(cadastroFuncionario, "Email já cadastrado. Tente outro.", "Erro", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
