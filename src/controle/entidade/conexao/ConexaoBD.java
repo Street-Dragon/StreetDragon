@@ -6,13 +6,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class ConexaoBD {
-    private static final String DB_URL = "jdbc:mysql://localhost/";
-    private static final String USERNAME = "root";
-    private static final String PASSWORD = "aluno";
+	private static final String DB_URL = "jdbc:mysql://localhost/";
+	private static final String USERNAME = "root";
+	private static final String PASSWORD = "aluno";
 
-    public static Connection getConexaoMySQL() {
-        Connection connection = null;
-        String driverName = "com.mysql.cj.jdbc.Driver";
+	public static Connection getConexaoMySQL() {
+		Connection connection = null;
+		String driverName = "com.mysql.cj.jdbc.Driver";
 
 		try {
 			Class.forName(driverName);
@@ -23,14 +23,12 @@ public class ConexaoBD {
 			System.out.println("Não foi possível conectar ao banco de dados: " + e.getMessage());
 		}
 
+		return connection;
+	}
 
-        return connection;
-    }
-
-    public static void criarBancoDeDadosETabela() {
-        try (Connection conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
-             Statement stmt = conn.createStatement()) {
-
+	public static void criarBancoDeDadosETabela() {
+		try (Connection conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
+				Statement stmt = conn.createStatement()) {
 
 			// stmt.executeUpdate("DROP DATABASE streetdragon");
 			stmt.executeUpdate("CREATE DATABASE IF NOT EXISTS streetdragon");
@@ -118,9 +116,9 @@ public class ConexaoBD {
 
 			System.out.println("Tabelas criadas ou já existem!");
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 }
   
