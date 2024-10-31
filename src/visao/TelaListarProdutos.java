@@ -1,40 +1,31 @@
 package visao;
 
+import java.awt.Color;
 import java.awt.EventQueue;
+import java.util.Vector;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import java.awt.GridLayout;
-import javax.swing.JLabel;
-import java.awt.Component;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import net.miginfocom.swing.MigLayout;
-import java.awt.Font;
-import javax.swing.JScrollBar;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-import java.awt.ScrollPane;
-import java.awt.Scrollbar;
-import java.awt.Panel;
+import utils.Utils;
 import javax.swing.JScrollPane;
-import java.awt.Color;
-import javax.swing.border.LineBorder;
-import javax.swing.JRadioButton;
-import javax.swing.ButtonGroup;
+import net.miginfocom.swing.MigLayout;
+import javax.swing.JList;
+import javax.swing.AbstractListModel;
+import javax.swing.JTable;
+import javax.swing.JButton;
+import javax.swing.JTextField;
+import javax.swing.JLabel;
+import javax.swing.table.DefaultTableModel;
+
+import modelo.dao.produto.ProdutoDAO;
+import modelo.entidade.produto.Produto;
 
 public class TelaListarProdutos extends JFrame {
 
-	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JScrollPane scrollPane;
 	private JTable table;
-	private JLabel lblNewLabel;
-	private JRadioButton rdbtnFornecedor;
-	private JRadioButton rdbtnCategoria;
-	private JRadioButton rdbtnQuantidade;
-	private final ButtonGroup buttonGroup = new ButtonGroup();
+	private JTextField textFieldNome;
 
 	/**
 	 * Launch the application.
@@ -56,62 +47,47 @@ public class TelaListarProdutos extends JFrame {
 	 * Create the frame.
 	 */
 	public TelaListarProdutos() {
-		setBackground(new Color(246, 233, 233));
+
+		setTitle("Lista de Produtos");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 804, 473);
+		setBounds(100, 100, 672, 540);
 		contentPane = new JPanel();
+		contentPane.setBackground(new Color(255, 255, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
+		Utils.loadCustomFont();
+
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[grow][grow 20][grow]", "[grow 10][grow][]"));
-		
-		lblNewLabel = new JLabel("Lista de produtos ");
-		lblNewLabel.setFont(new Font("Hanken Grotesk", Font.PLAIN, 20));
-		contentPane.add(lblNewLabel, "cell 0 0,alignx center,aligny center");
-		
-		rdbtnFornecedor = new JRadioButton("Fornecedor");
-		buttonGroup.add(rdbtnFornecedor);
-		rdbtnFornecedor.setFont(new Font("Hanken Grotesk", Font.PLAIN, 20));
-		contentPane.add(rdbtnFornecedor, "flowx,cell 2 0");
-		
-		scrollPane = new JScrollPane();
-		contentPane.add(scrollPane, "cell 0 1 3 1,grow");
-		
+		contentPane.setLayout(new MigLayout("", "[grow]", "[grow][grow]"));
+
+		JPanel panel = new JPanel();
+		contentPane.add(panel, "cell 0 0,grow");
+		panel.setLayout(new MigLayout("", "[][grow]", "[grow]"));
+
+		JLabel lblNewLabel = new JLabel("Consultar Nome");
+		panel.add(lblNewLabel, "cell 0 0,alignx trailing");
+
+		textFieldNome = new JTextField();
+		panel.add(textFieldNome, "cell 1 0,growx");
+		textFieldNome.setColumns(10);
+
+		JScrollPane scrollPane = new JScrollPane();
+		contentPane.add(scrollPane, "cell 0 1,grow");
+
 		table = new JTable();
-		table.setBorder(new LineBorder(new Color(246, 233, 233)));
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{"cu", null, null},
-			},
-			new String[] {
-				"New column", "New column", "New column"
-			}
-		));
-		table.setBackground(new Color(246, 233, 233));
+		table.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Id", "Nome", "Valor", "Qnt estoque" }));
+		table.setFillsViewportHeight(true);
 		scrollPane.setViewportView(table);
-		
-		rdbtnCategoria = new JRadioButton("Categoria");
-		buttonGroup.add(rdbtnCategoria);
-		rdbtnCategoria.setFont(new Font("Hanken Grotesk", Font.PLAIN, 20));
-		contentPane.add(rdbtnCategoria, "cell 2 0");
-		
-		rdbtnQuantidade = new JRadioButton("Quantidade");
-		buttonGroup.add(rdbtnQuantidade);
-		rdbtnQuantidade.setFont(new Font("Hanken Grotesk", Font.PLAIN, 20));
-		contentPane.add(rdbtnQuantidade, "cell 2 0");
+		// LoadTable();
 	}
+	/*
+	 * private void LoadTable() { // TODO Auto-generated method stub
+	 * DefaultTableModel model = (DefaultTableModel) table.getModel(); ProdutoDAO
+	 * dao = new ProdutoDAO(); Produto[] produto = dao.consultar(); for(int i = 0;
+	 * i>produto.length ; i++) { Vector row = new Vector();
+	 * row.add(produto[i].getIdProduto()); row.add(produto[i].getNomeProduto());
+	 * row.add(produto[i].getValor()); row.add(produto[i].getQuantEstoque());
+	 * model.addRow(row); } }
+	 */
 
 }
