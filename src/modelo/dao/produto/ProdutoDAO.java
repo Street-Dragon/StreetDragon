@@ -15,39 +15,6 @@ import modelo.entidade.produto.Produto;
 import modelo.enumeracao.tamanho.Tamanho;
 
 public class ProdutoDAO {
-	public Produto[] consultar() {
-
-		String sqlP = "select * from produto";
-
-		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement stmt = conn.prepareStatement(sqlP)) {
-			ResultSet rs = stmt.executeQuery();
-
-			Produto[] produto = null;
-			try {
-				for (int i = 0; rs.next(); i++) { // enquando tiver produtos
-					// System.out.println(i+" : "+rs.getString("nome"));
-					produto[i].setIdProduto(rs.getInt("idProduto"));
-					produto[i].setNomeProduto(rs.getString("nome"));
-					produto[i].setMaterial(rs.getString("material"));
-					produto[i].setCategoria(rs.getString("categoria"));
-					produto[i].setValor(rs.getFloat("valor"));
-					produto[i].setQuantEstoque(rs.getInt("estoque"));
-					produto[i].setTamanho(Tamanho.valueOf(rs.getString("tamanho").toUpperCase()));
-					produto[i].setVariacao(rs.getString("variacao"));
-
-				}
-				System.out.println("aqui");
-				return null;
-			} catch (Exception e) {
-				System.out.println(e);
-				return null;
-			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
 
 	public boolean cadastrarProduto(Produto produto) {
 		String sqlFornecedor = "SELECT nome FROM Fornecedor WHERE nome = ?";
@@ -63,7 +30,7 @@ public class ProdutoDAO {
 			stmtProduto.setString(4, produto.getVariacao());
 			stmtProduto.setFloat(5, produto.getValor());
 			stmtProduto.setInt(6, produto.getQuantEstoque());
-			stmtProduto.setString(7, produto.getTamanho().name());
+			stmtProduto.setString(7, produto.getTamanho());
 
 			stmtProduto.executeUpdate();
 			return true;
@@ -106,7 +73,7 @@ public class ProdutoDAO {
 	}
 	public List<Produto> listarProdutos() {
 		List<Produto> produtos = new ArrayList<>();
-		String sqlSelect = "SELECT * FROM funcionario";
+		String sqlSelect = "SELECT * FROM produto";
 
 		try (Connection conn = ConexaoBD.getConexaoMySQL();
 				PreparedStatement stmt = conn.prepareStatement(sqlSelect);
@@ -114,19 +81,19 @@ public class ProdutoDAO {
 
 			while (rs.next()) {
 				Produto produto = new Produto();
-				
+				produto.setIdProduto(rs.getInt("idProduto"));
 				produto.setNomeProduto(rs.getString("nome"));
 				produto.setMaterial(rs.getString("material"));
 				produto.setCategoria(rs.getString("categoria"));
 				produto.setValor(Float.parseFloat(rs.getString("valor")));
-				produto.setQuantEstoque(Integer.parseInt(rs.getString("estoque")));
-				produto.setTamanho(Tamanho.valueOf(rs.getString("tamanho").toUpperCase()));
+				produto.setQuantEstoque(rs.getInt("estoque"));
+				produto.setTamanho(rs.getString("tamanho"));
 				produto.setVariacao(rs.getString("variacao"));
 				
 				produtos.add(produto);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			System.out.println(e);
 		}
 
 		return produtos;

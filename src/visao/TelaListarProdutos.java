@@ -18,6 +18,7 @@ import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.table.DefaultTableModel;
 
+import controle.entidade.produto.ProdutoControle;
 import modelo.dao.produto.ProdutoDAO;
 import modelo.entidade.produto.Produto;
 
@@ -26,6 +27,14 @@ public class TelaListarProdutos extends JFrame {
 	private JPanel contentPane;
 	private JTable table;
 	private JTextField textFieldNome;
+	private JButton btnNovoProduto;
+	
+	public JButton getbtnNovoProduto(){
+		return btnNovoProduto;
+	}
+	public JTable gettable(){
+		return table;
+	}
 
 	/**
 	 * Launch the application.
@@ -46,8 +55,7 @@ public class TelaListarProdutos extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public TelaListarProdutos() {
-
+	public TelaListarProdutos() {			
 		setTitle("Lista de Produtos");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 672, 540);
@@ -62,7 +70,7 @@ public class TelaListarProdutos extends JFrame {
 
 		JPanel panel = new JPanel();
 		contentPane.add(panel, "cell 0 0,grow");
-		panel.setLayout(new MigLayout("", "[][grow]", "[grow]"));
+		panel.setLayout(new MigLayout("", "[][grow][]", "[grow]"));
 
 		JLabel lblNewLabel = new JLabel("Consultar Nome");
 		panel.add(lblNewLabel, "cell 0 0,alignx trailing");
@@ -70,6 +78,9 @@ public class TelaListarProdutos extends JFrame {
 		textFieldNome = new JTextField();
 		panel.add(textFieldNome, "cell 1 0,growx");
 		textFieldNome.setColumns(10);
+		
+		JButton btnNovoProduto = new JButton("Novo Produto");
+		panel.add(btnNovoProduto, "cell 2 0");
 
 		JScrollPane scrollPane = new JScrollPane();
 		contentPane.add(scrollPane, "cell 0 1,grow");
@@ -78,16 +89,9 @@ public class TelaListarProdutos extends JFrame {
 		table.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Id", "Nome", "Valor", "Qnt estoque" }));
 		table.setFillsViewportHeight(true);
 		scrollPane.setViewportView(table);
-		// LoadTable();
+		
+		ProdutoControle Pcontrole = new ProdutoControle(this);
+		Pcontrole.listarProdutosTable();
+			
 	}
-	/*
-	 * private void LoadTable() { // TODO Auto-generated method stub
-	 * DefaultTableModel model = (DefaultTableModel) table.getModel(); ProdutoDAO
-	 * dao = new ProdutoDAO(); Produto[] produto = dao.consultar(); for(int i = 0;
-	 * i>produto.length ; i++) { Vector row = new Vector();
-	 * row.add(produto[i].getIdProduto()); row.add(produto[i].getNomeProduto());
-	 * row.add(produto[i].getValor()); row.add(produto[i].getQuantEstoque());
-	 * model.addRow(row); } }
-	 */
-
 }

@@ -204,8 +204,6 @@ public class TelaCadastroProdutos extends JFrame {
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ClearText();
-				ProdutoDAO dao = new ProdutoDAO();
-				dao.consultar();
 			}
 		});
 		btnCancelar.setForeground(new Color(255, 255, 255));
