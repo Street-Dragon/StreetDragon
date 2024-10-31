@@ -43,11 +43,11 @@ public class ProdutoDAO {
 
 	}
 
-	public boolean deletarProduto(Produto produto) {
+	public boolean deletarProduto(int produto) {
 		String sqlP = "DELETE FROM produto WHERE idProduto = ?";
 
 		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement stmt = conn.prepareStatement(sqlP)) {
-			stmt.setInt(1, produto.getIdProduto());
+			stmt.setInt(1, produto);
 			stmt.executeUpdate();
 			return true;
 
@@ -97,6 +97,50 @@ public class ProdutoDAO {
 		}
 
 		return produtos;
+	}
+
+	public boolean editarProduto(Integer id, Produto produto) {
+		String sqlP = "UPDATE produto set nome = ?, material = ?, Categoria = ?, valor = ?, estoque = ?, tamanho = ?, variacao = ? where idProduto = ?;";
+
+		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement stmtProduto = conn.prepareStatement(sqlP)) {
+			stmtProduto.setString(1, produto.getNomeProduto());
+			stmtProduto.setString(2, produto.getMaterial());
+			stmtProduto.setString(3, produto.getCategoria());
+			stmtProduto.setString(4, produto.getVariacao());
+			stmtProduto.setFloat(5, produto.getValor());
+			stmtProduto.setInt(6, produto.getQuantEstoque());
+			stmtProduto.setString(7, produto.getTamanho());
+			stmtProduto.setInt(8, id);
+			stmtProduto.executeUpdate();
+			return true;
+
+		} catch (SQLException e) {
+			System.out.println(e);
+			return false;
+		}
+		
+	}
+	public Produto getId(int id) {
+		String sqlSelect = "SELECT * FROM produto where idProduto = ?";
+		try (Connection conn = ConexaoBD.getConexaoMySQL()){
+				PreparedStatement stmt = conn.prepareStatement(sqlSelect);
+				stmt.setInt(1, id);
+				ResultSet rs = stmt.executeQuery();
+				Produto produto = new Produto();
+				produto.setIdProduto(rs.getInt("idProduto"));
+				produto.setNomeProduto(rs.getString("nome"));
+				produto.setMaterial(rs.getString("material"));
+				produto.setCategoria(rs.getString("categoria"));
+				produto.setValor(Float.parseFloat(rs.getString("valor")));
+				produto.setQuantEstoque(rs.getInt("estoque"));
+				produto.setTamanho(rs.getString("tamanho"));
+				produto.setVariacao(rs.getString("variacao"));
+				return produto;
+			
+		} catch (SQLException e) {
+			System.out.println(e);
+			return null;
+		}
 	}
 
 }

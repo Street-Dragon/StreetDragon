@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import controle.entidade.produto.ProdutoControle;
 import modelo.dao.produto.ProdutoDAO;
 import modelo.entidade.contato.Contato;
 import modelo.entidade.pessoa.fornecedor.Fornecedor;
@@ -43,6 +44,8 @@ public class TelaCadastroProdutos extends JFrame {
 	private Font hkGrotesk;
 	private JButton btnCancelar; 
 	private JButton btnCadastrarProduto;
+	private ProdutoDAO pDAO = new ProdutoDAO();
+	ProdutoControle produtoC = new ProdutoControle();
 	
 	public JButton getbtnCancelar() {
 		return btnCancelar;
@@ -70,10 +73,7 @@ public class TelaCadastroProdutos extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public TelaCadastroProdutos() {
-		ProdutoDAO produtoDAO = new ProdutoDAO();
-
-		
+	public TelaCadastroProdutos() {	
 		setTitle("Cadastrar Produto");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 672, 540);
@@ -91,7 +91,7 @@ public class TelaCadastroProdutos extends JFrame {
 		contentPane.add(lblId, "cell 0 0,growx");
 		lblId.setFont(hkGrotesk);
 		
-		textFieldId = new JTextField(String.valueOf(produtoDAO.Idshow()));
+		textFieldId = new JTextField(String.valueOf(pDAO.Idshow()));
 		textFieldId.setHorizontalAlignment(SwingConstants.CENTER);
 		textFieldId.setFont(new Font("Dialog", Font.PLAIN, 15));
 		textFieldId.setEditable(false);
@@ -194,6 +194,12 @@ public class TelaCadastroProdutos extends JFrame {
 		textFieldQntEstoque.setFont(new Font("Dialog", Font.PLAIN, 15));
 		
 		btnCadastrarProduto = new JButton("Cadastrar Produto");
+		btnCadastrarProduto.addActionListener(new ActionListener() {
+	        public void actionPerformed(ActionEvent e) {
+	            ProdutoControle Pcontrole = new ProdutoControle();
+	            produtoC.cadastrarProduto(TelaCadastroProdutos.this);
+	        }
+	    });
 		btnCadastrarProduto.setForeground(new Color(255, 255, 255));
 		btnCadastrarProduto.setBackground(new Color(100, 149, 255));
 		contentPane.add(btnCadastrarProduto, "cell 0 8 2 1,growx");
@@ -248,6 +254,7 @@ public class TelaCadastroProdutos extends JFrame {
             e.printStackTrace();
         }
     }
+	
 
 	public int getTextFieldId() {
 		return Integer.valueOf(textFieldId.getText());
