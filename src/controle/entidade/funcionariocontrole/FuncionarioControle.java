@@ -9,77 +9,83 @@ import visao.TelaLogin;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 public class FuncionarioControle {
-    private TelaLogin telaLogin;
+	private TelaLogin telaLogin;
 	private TelaCadastroFuncionario cadastroFuncionario;
 	private FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
-	private TelaPrincipal telaPrincipal; 
-    private String  cpfUsuarioLogado;
-    
-    public void setTelaLogin(TelaLogin telaLogin) {
-        this.telaLogin = telaLogin;
 
-        telaLogin.getBtnContinuar().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                realizarLogin();
-            }
-        });
-    }
-    
-    public void setTelaPrincipal(TelaPrincipal telaPrincipal) {
-        this.telaPrincipal = telaPrincipal;
-        System.out.println("setTelaPrincipal chamada"); 
-        
-        telaPrincipal.getBtnDeslogar().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("Botão clicado");
-                realizarLogout();
-            }
-        });
-    }
-    
-    public void setCadastroFuncionario(TelaCadastroFuncionario cadastroFuncionario) {
-        this.cadastroFuncionario = cadastroFuncionario;
+	private TelaPrincipal telaPrincipal;
+	private String cpfUsuarioLogado;
+  //cadastroFuncionario.addTableClickListener(this::selecionarFuncionario);
 
-        cadastroFuncionario.getBtnCadastrarFuncionario().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                cadastrarFuncionario();
-            }
-        });
-    }   
+	public void setTelaLogin(TelaLogin telaLogin) {
+		this.telaLogin = telaLogin;
 
-    private void realizarLogin() {
-        String cpf = telaLogin.getCampoCpf();
-        String senha = telaLogin.getCampoSenha();
-        
-        if (funcionarioDAO.login(cpf, senha)) {
-            
-            if (telaPrincipal == null) {
-                telaPrincipal = new TelaPrincipal();
-                setTelaPrincipal(telaPrincipal); // Configuração da tela principal
-            }
-            cpfUsuarioLogado = cpf;
-            telaPrincipal.getLblFuncionario().setText("Funcionario: "+funcionarioDAO.nomeFuncionario(cpfUsuarioLogado));
-            telaPrincipal.setVisible(true);
-            telaLogin.dispose();
-            
-            //limpa os campos e checkbox
-            telaLogin.getTxtCpf().setText("");
-            telaLogin.getTxtSenha().setText("");
-            telaLogin.getCkboxMotrarSenha().setSelected(false);
-            
-        } else {
-            JOptionPane.showMessageDialog(telaLogin, "Credenciais inválidas. Tente novamente.", "Erro", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-    
-    private void realizarLogout() {
+		telaLogin.getBtnContinuar().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				realizarLogin();
+			}
+		});
+	}
+
+	public void setTelaPrincipal(TelaPrincipal telaPrincipal) {
+		this.telaPrincipal = telaPrincipal;
+		telaPrincipal.getBtnDeslogar().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				realizarLogout();
+			}
+		});
+	}
+      
+	public void setCadastroFuncionario(TelaCadastroFuncionario cadastroFuncionario) {
+		this.cadastroFuncionario = cadastroFuncionario;
+		atualizarTabela();
+		cadastroFuncionario.getBtnCadastrarFuncionario().addActionListener(new ActionListener() {
+			@Override
+			
+			public void actionPerformed(ActionEvent e) {
+				cadastrarFuncionario();
+        atualizarTabela();
+        cadastroFuncionario.limparCampos();
+			}
+		});
+	}
+
+	private void realizarLogin() {
+		String cpf = telaLogin.getCampoCpf();
+		String senha = telaLogin.getCampoSenha();
+
+		if (funcionarioDAO.login(cpf, senha)) {
+
+			if (telaPrincipal == null) {
+				telaPrincipal = new TelaPrincipal();
+				setTelaPrincipal(telaPrincipal); // Configuração da tela principal
+			}
+			cpfUsuarioLogado = cpf;
+			telaPrincipal.getLblFuncionario()
+					.setText("Funcionario: " + funcionarioDAO.nomeFuncionario(cpfUsuarioLogado));
+			telaPrincipal.setVisible(true);
+			telaLogin.dispose();
+
+			// limpa os campos e checkbox
+			telaLogin.getTxtCpf().setText("");
+			telaLogin.getTxtSenha().setText("");
+			telaLogin.getCkboxMotrarSenha().setSelected(false);
+
+		} else {
+			JOptionPane.showMessageDialog(telaLogin, "Credenciais inválidas. Tente novamente.", "Erro",
+					JOptionPane.ERROR_MESSAGE);
+		}
+	}
+	
+	private void realizarLogout() {
         System.out.println("Função chamada");
         int confirmar = JOptionPane.showConfirmDialog(telaPrincipal, "Deseja realmente deslogar?", "Confirmação", JOptionPane.YES_NO_OPTION);
         if (confirmar == JOptionPane.YES_OPTION || cpfUsuarioLogado != null) {
@@ -89,6 +95,9 @@ public class FuncionarioControle {
             telaLogin.setVisible(true); // Mostra a tela de login novamente
         }
     }
+	
+	
+
 
     
     private void cadastrarFuncionario() {
@@ -124,5 +133,31 @@ public class FuncionarioControle {
         }
         return;
     }
+    
+    public void atualizarTabela() {
+    
+            List<Funcionario> funcionarios = funcionarioDAO.listarFuncionarios();
+            DefaultTableModel tableModel = cadastroFuncionario.getTableModel();
+            for (Funcionario funcionario : funcionarios) {
+                Contato contato = funcionario.getContato();
+                tableModel.addRow(new Object[]{
+                    funcionario.getCpf(),
+                    funcionario.getNome(),
+                    funcionario.getSenhaFuncionario(),
+                    funcionario.isAdm() ? "Sim" : "Não",
+                    contato.getEmail(),
+                    contato.getTelefone()
+                });
+            }
+        }
+    
+    /*public void selecionarFuncionario(int id) {
+        Funcionario funcionario = funcionarioDAO.getFuncionario(id);
+        if (funcionario != null) {
+            view.setFuncionario(funcionario);
+        } else {
+            JOptionPane.showMessageDialog(view, "Funcionário não encontrado");
+        }
+    }*/
     
 }

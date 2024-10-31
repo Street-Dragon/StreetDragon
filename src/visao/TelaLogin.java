@@ -125,6 +125,7 @@ public class TelaLogin extends JFrame {
         panel.add(lblCpf, "cell 1 3,alignx left,aligny center");
 
         txtCpfLogin = new JTextField();
+        txtCpfLogin.setFont(new Font("Dialog", Font.PLAIN, 15));
         txtCpfLogin.setColumns(10);
         panel.add(txtCpfLogin, "cell 1 4,grow");
         
@@ -134,9 +135,11 @@ public class TelaLogin extends JFrame {
         panel.add(lblSenha, "flowx,cell 1 5,alignx left,aligny center");
         
         txtSenhaLogin = new JPasswordField();
+        txtSenhaLogin.setFont(new Font("Dialog", Font.PLAIN, 15));
         panel.add(txtSenhaLogin, "cell 1 6,grow");
         
          ckboxMotrarSenha = new JCheckBox("Motrar Senha");
+         ckboxMotrarSenha.setFont(new Font("Dialog", Font.PLAIN, 15));
          ckboxMotrarSenha.addChangeListener(new ChangeListener() {
          	public void stateChanged(ChangeEvent e) {
          		if (ckboxMotrarSenha.isSelected()) {
