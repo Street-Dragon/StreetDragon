@@ -5,7 +5,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
 import controle.entidade.conexao.ConexaoBD;
+import modelo.entidade.contato.Contato;
+import modelo.entidade.pessoa.funcionario.Funcionario;
 import modelo.entidade.produto.Produto;
 import modelo.enumeracao.tamanho.Tamanho;
 
@@ -98,6 +103,33 @@ public class ProdutoDAO {
 			System.out.println(e);
 			return 0;
 		}
+	}
+	public List<Produto> listarProdutos() {
+		List<Produto> produtos = new ArrayList<>();
+		String sqlSelect = "SELECT * FROM funcionario";
+
+		try (Connection conn = ConexaoBD.getConexaoMySQL();
+				PreparedStatement stmt = conn.prepareStatement(sqlSelect);
+				ResultSet rs = stmt.executeQuery()) {
+
+			while (rs.next()) {
+				Produto produto = new Produto();
+				
+				produto.setNomeProduto(rs.getString("nome"));
+				produto.setMaterial(rs.getString("material"));
+				produto.setCategoria(rs.getString("categoria"));
+				produto.setValor(Float.parseFloat(rs.getString("valor")));
+				produto.setQuantEstoque(Integer.parseInt(rs.getString("estoque")));
+				produto.setTamanho(Tamanho.valueOf(rs.getString("tamanho").toUpperCase()));
+				produto.setVariacao(rs.getString("variacao"));
+				
+				produtos.add(produto);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return produtos;
 	}
 
 }

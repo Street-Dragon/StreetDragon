@@ -41,6 +41,15 @@ public class TelaCadastroProdutos extends JFrame {
 	private JComboBox cbCategoria;
 	private JComboBox cBTamanho;
 	private Font hkGrotesk;
+	private JButton btnCancelar; 
+	private JButton btnCadastrarProduto;
+	
+	public JButton getbtnCancelar() {
+		return btnCancelar;
+	}
+	public JButton getbtnCadastrarProduto() {
+		return btnCadastrarProduto;
+	}
 
 	/**
 	 * Launch the application.
@@ -184,54 +193,14 @@ public class TelaCadastroProdutos extends JFrame {
 		textFieldQntEstoque.setColumns(10);
 		textFieldQntEstoque.setFont(new Font("Dialog", Font.PLAIN, 15));
 		
-		JButton btnCadastrarProduto = new JButton("Cadastrar Produto");
-		
-		
-		/*
-		btnCadastrarProduto.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				try {	
-					//Coletando os dados dos campos
-					Produto produto = new Produto();
-					String NomeP = textFieldNome.getText();
-					String Material = cbMaterial.getSelectedItem().toString();
-					String Categoria = cbCategoria.getSelectedItem().toString();
-					String Variação = textFieldVariacao.getText();
-					float Valor = Float.parseFloat(textFieldValor.getText());
-					int QntEstoque = Integer.parseInt(textFieldQntEstoque.getText());
-					String tamanho = cBTamanho.getSelectedItem().toString(); 
-					
-					//adicionando os dados em um objeto produto
-					ProdutoDAO produtoDAO = new ProdutoDAO();
-					produto.setNomeProduto(NomeP);
-		            produto.setMaterial(Material);
-		            produto.setCategoria(Categoria);
-		            produto.setVariacao(Variação);
-		            produto.setValor(Valor);
-		            produto.setQuantEstoque(QntEstoque);
-		            produto.setTamanho(tamanho);
-		            
-		            //chamando adicionando um produto ao banco de dados
-		            if(produtoDAO.cadastrarProduto(produto)) {
-		            	JOptionPane.showMessageDialog(null, "Proto Cadastrado!");
-		            	ClearText();
-		            }
-					
-				} catch (Exception E) {
-					JOptionPane.showMessageDialog(null,"Dados Inseridos incorretamente");
-				}
-	            
-			}
-		});
-		*/
+		btnCadastrarProduto = new JButton("Cadastrar Produto");
 		btnCadastrarProduto.setForeground(new Color(255, 255, 255));
 		btnCadastrarProduto.setBackground(new Color(100, 149, 255));
 		contentPane.add(btnCadastrarProduto, "cell 0 8 2 1,growx");
 		btnCadastrarProduto.setFont(hkGrotesk);
 		
 		
-		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ClearText();
@@ -255,7 +224,7 @@ public class TelaCadastroProdutos extends JFrame {
 		
 	}
 	
-	protected void ClearText() {
+	public void ClearText() {
 		// TODO Auto-generated method stub
 		textFieldId.setText(null);
 		textFieldNome.setText(null);
@@ -281,5 +250,39 @@ public class TelaCadastroProdutos extends JFrame {
             e.printStackTrace();
         }
     }
-	
+
+	public int getTextFieldId() {
+		return Integer.valueOf(textFieldId.getText());
+	}
+
+	public String getTextFieldNome() {
+		return textFieldNome.getText();
+	}
+
+	public float getTextFieldValor() {
+		return Float.valueOf(textFieldValor.getText());
+	}
+
+	public int getTextFieldQntEstoque() {
+		return Integer.valueOf(textFieldQntEstoque.getText());
+	}
+
+	public String getTextFieldVariacao() {
+		return textFieldVariacao.getText();
+	}
+
+	public String getTextFieldFornecedor() {
+		return textFieldFornecedor.getText();
+	}
+
+	public String getCbMaterial() {
+		return String.valueOf(cbMaterial.getSelectedObjects());
+	}
+
+	public String getCbCategoria() {
+		return String.valueOf(cbCategoria.getSelectedObjects());
+	}
+	public String getCbTamnho() {
+		return String.valueOf(cBTamanho.getSelectedObjects());
+	}
 }
