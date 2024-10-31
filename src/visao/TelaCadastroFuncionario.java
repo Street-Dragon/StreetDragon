@@ -259,7 +259,7 @@ public class TelaCadastroFuncionario extends JPanel { // jpanel ao invés de jfr
 		scrollPane.setViewportView(table);
 
 
-		table.addMouseListener(new MouseAdapter() {
+		/*table.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 1) {
 					int selectedRow = table.getSelectedRow();
@@ -269,7 +269,7 @@ public class TelaCadastroFuncionario extends JPanel { // jpanel ao invés de jfr
 					}
 				}
 			}
-		});
+		});*/
 
 	}
 

@@ -9,6 +9,8 @@ import visao.TelaLogin;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -46,17 +48,34 @@ public class FuncionarioControle {
       
 	public void setCadastroFuncionario(TelaCadastroFuncionario cadastroFuncionario) {
 		this.cadastroFuncionario = cadastroFuncionario;
-		atualizarTabela();
-		cadastroFuncionario.getBtnCadastrarFuncionario().addActionListener(new ActionListener() {
+			atualizarTabela();
+			adicionarListeners();
+			cadastroFuncionario.getBtnCadastrarFuncionario().addActionListener(new ActionListener() {
 			@Override
 			
 			public void actionPerformed(ActionEvent e) {
 				cadastrarFuncionario();
-        atualizarTabela();
-        cadastroFuncionario.limparCampos();
+				cadastroFuncionario.limparCampos();
+				atualizarTabela();
+				
 			}
 		});
 	}
+	
+    private void adicionarListeners() {
+    	cadastroFuncionario.getTable().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int selectedRow = cadastroFuncionario.getTable().getSelectedRow();
+                if (selectedRow != -1) {
+                	 // Converte o valor da tabela para String e depois para Integer
+                    String funcionarioIdStr = (String) cadastroFuncionario.getTable().getValueAt(selectedRow, 0);
+                    int funcionarioId = Integer.parseInt(funcionarioIdStr);
+                    carregarDadosFuncionario(funcionarioId);
+                }
+            }
+        });
+    }
 
 	private void realizarLogin() {
 		String cpf = telaLogin.getCampoCpf();
@@ -131,6 +150,8 @@ public class FuncionarioControle {
         } else {
             JOptionPane.showMessageDialog(cadastroFuncionario, "Erro ao cadastrar funcionário.", "Erro", JOptionPane.ERROR_MESSAGE);
         }
+        
+        atualizarTabela();
         return;
     }
     
@@ -150,6 +171,25 @@ public class FuncionarioControle {
                 });
             }
         }
+    
+    private void carregarDadosFuncionario(int id) {
+        Funcionario funcionario = funcionarioDAO.carregarDadosFuncionario(id);
+        if (funcionario != null) {
+        	System.out.println("atualizar campo chamado");
+            atualizarCampos(funcionario);
+        }
+    }
+    
+    private void atualizarCampos(Funcionario funcionario) {
+    	cadastroFuncionario.getTextFieldNome().setText(funcionario.getNome());
+    	cadastroFuncionario.getTextFieldCpf().setText(funcionario.getCpf());
+    	cadastroFuncionario.getTextFieldSenha().setText(funcionario.getSenhaFuncionario());
+    	cadastroFuncionario.getTextFieldEmail().setText(funcionario.getContato().getEmail());
+    	cadastroFuncionario.getTextFieldTelefone().setText(funcionario.getContato().getTelefone());
+    	System.out.println("Campos atualizados");
+    }
+    
+    
     
     /*public void selecionarFuncionario(int id) {
         Funcionario funcionario = funcionarioDAO.getFuncionario(id);

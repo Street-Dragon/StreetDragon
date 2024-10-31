@@ -82,7 +82,7 @@ public class FuncionarioDAO {
             return false;
         }
     }
-    //Falta os outros conteúdos eu tô com preguiça mi deixa
+    
     public List<Funcionario> listarFuncionarios() {
 		List<Funcionario> funcionarios = new ArrayList<>();
 		String sqlSelect = "SELECT f.*, c.email, c.telefone FROM funcionario f "
@@ -113,6 +113,47 @@ public class FuncionarioDAO {
 
 		return funcionarios;
 	}
+
+
+	public Funcionario carregarDadosFuncionario(int id) {
+		Funcionario funcionario = null;
+		String sqlFuncionario = "SELECT * FROM funcionario WHERE id = ?";
+		String sqlContato = "SELECT * FROM contato WHERE funcionario_id = ?";
+		
+		 try (Connection conn = ConexaoBD.getConexaoMySQL();
+				 PreparedStatement stmtFuncionario = conn.prepareStatement(sqlFuncionario);
+				 PreparedStatement stmtContato = conn.prepareStatement(sqlContato)){
+			 
+			 	stmtFuncionario.setInt(1, id);
+	            ResultSet rsFuncionario = stmtFuncionario.executeQuery();
+			 
+	            if (rsFuncionario.next()) {
+	                funcionario = new Funcionario();
+	                funcionario.setId(rsFuncionario.getInt("id"));
+	                funcionario.setNome(rsFuncionario.getString("nome"));
+	                funcionario.setCpf(rsFuncionario.getString("cpf"));
+	                funcionario.setSenhaFuncionario(rsFuncionario.getString("senha"));
+	                System.out.println("Funcionario buscado");
+
+	                stmtContato.setInt(1, id);
+	                ResultSet rsContato = stmtContato.executeQuery();
+
+	                if (rsContato.next()) {
+	                    Contato contato = new Contato();
+	                    contato.setEmail(rsContato.getString("email"));
+	                    contato.setTelefone(rsContato.getString("telefone"));
+	                    funcionario.setContato(contato);
+	                    System.out.println("Contato buscado");
+	                }
+	            }
+		 } catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		return funcionario;
+	}
+    
+    
 
     
 }
