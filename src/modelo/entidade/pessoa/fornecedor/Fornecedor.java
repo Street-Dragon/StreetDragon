@@ -1,8 +1,6 @@
 package modelo.entidade.pessoa.fornecedor;
 
-import modelo.entidade.pessoa.Pessoa;
-
-public class Fornecedor extends Pessoa{
+public class Fornecedor {
 	private int cpnj;
 	private int cep;
 	private String rua;

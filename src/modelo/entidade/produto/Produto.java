@@ -13,7 +13,7 @@ public class Produto {
 	private float valor;
 	private int quantEstoque;
 	private Fornecedor Fornecedor;
-	private String tamanho;
+	private Tamanho tamanho;
 	
 	public int getIdProduto() {
 		return idProduto;
@@ -63,10 +63,10 @@ public class Produto {
 	public void setFornecedor(Fornecedor fornecedor) {
 		Fornecedor = fornecedor;
 	}
-	public String getTamanho() {
+	public Tamanho getTamanho() {
 		return tamanho;
 	}
-	public void setTamanho(String tamanho) {
+	public void setTamanho(Tamanho tamanho) {
 		this.tamanho = tamanho;
 	}
 
