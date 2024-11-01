@@ -94,12 +94,14 @@ public class FuncionarioDAO {
     }
 
     public boolean verificaTelefoneExistente(String telefone) {
-        String sqlFuncionarioTelefone = "SELECT telefone FROM funcionario WHERE telefone = ?";
+        String sqlFuncionarioContatoTelefone = "SELECT c.telefone FROM contato c " +
+                                    "JOIN funcionario f ON c.id_contato = f.contato_id " +
+                                    "WHERE c.telefone = ?";
         try (Connection conn = ConexaoBD.getConexaoMySQL();
-             PreparedStatement stmtFuncionario = conn.prepareStatement(sqlFuncionarioTelefone)) {
+             PreparedStatement stmtContato = conn.prepareStatement(sqlFuncionarioContatoTelefone)) {
             
-            stmtFuncionario.setString(1, telefone);
-            ResultSet rs = stmtFuncionario.executeQuery();
+            stmtContato.setString(1, telefone);
+            ResultSet rs = stmtContato.executeQuery();
             return rs.next();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -107,19 +109,23 @@ public class FuncionarioDAO {
         }
     }
 
+
     public boolean verificaEmailExistente(String email) {
-        String sqlFuncionarioEmail = "SELECT email FROM funcionario WHERE email = ?";
+        String sqlFuncionarioContatoEmail = "SELECT c.email FROM contato c " +
+                                 "JOIN funcionario f ON c.id_contato = f.contato_id " +
+                                 "WHERE c.email = ?";
         try (Connection conn = ConexaoBD.getConexaoMySQL();
-             PreparedStatement stmtFuncionario = conn.prepareStatement(sqlFuncionarioEmail)) {
+             PreparedStatement stmtContato = conn.prepareStatement(sqlFuncionarioContatoEmail)) {
             
-            stmtFuncionario.setString(1, email);
-            ResultSet rs = stmtFuncionario.executeQuery();
+            stmtContato.setString(1, email);
+            ResultSet rs = stmtContato.executeQuery();
             return rs.next();
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
     }
+
 
     
 }

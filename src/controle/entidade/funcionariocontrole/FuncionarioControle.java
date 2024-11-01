@@ -151,7 +151,13 @@ private void cadastrarFuncionario() {
 		if (funcionarioDAO.cadastrarFuncionario(funcionario)) {
 			JOptionPane.showMessageDialog(cadastroFuncionario, "Funcionário cadastrado com sucesso!", "Sucesso",
 					JOptionPane.INFORMATION_MESSAGE);
-
+	        cadastroFuncionario.setTextNome("");
+	        cadastroFuncionario.setPasswordField("");
+	        cadastroFuncionario.setTextCpf("");
+	        cadastroFuncionario.setChckbxAdm(false);
+	        cadastroFuncionario.setChckbxSenha(false);
+	        cadastroFuncionario.setTextEmail("");
+	        cadastroFuncionario.setTextTelefone("");
 		} else {
 			JOptionPane.showMessageDialog(cadastroFuncionario, "Erro ao cadastrar funcionário.", "Erro",
 					JOptionPane.ERROR_MESSAGE);

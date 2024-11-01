@@ -2,9 +2,6 @@ package visao;
 
 import java.awt.EventQueue;
 import java.awt.Font;
-import java.awt.FontFormatException;
-import java.awt.GraphicsEnvironment;
-import java.io.IOException;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -15,7 +12,7 @@ import utils.Utils;
 import javax.swing.JLabel;
 import java.awt.Color;
 import javax.swing.border.LineBorder;
-import javax.swing.JRadioButton;
+
 import javax.swing.JTextField;
 import javax.swing.JCheckBox;
 import javax.swing.JPasswordField;
@@ -25,8 +22,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
-import javax.swing.JScrollBar;
-import javax.swing.JTabbedPane;
+
 
 public class TelaCadastroFuncionario extends JFrame {
 
@@ -73,6 +69,40 @@ public class TelaCadastroFuncionario extends JFrame {
 	public boolean getChckbxAdm() {
 		return chckbxAdm.isSelected();
 	}
+	public boolean getChckbxSenha() {
+		return chckbxVerSenha.isSelected();
+	}
+
+	// limpa campos
+    public void setTextNome(String nome) {
+    	textNome.setText(nome);
+    }
+
+    public void setPasswordField(String senha) {
+    	textSenha.setText(senha);
+    }
+
+    public void setTextCpf(String cpf) {
+    	textCpf.setText(cpf);
+    }
+
+    public void setChckbxAdm(boolean isAdm) {
+        chckbxAdm.setSelected(isAdm);
+    }
+
+	public void setChckbxSenha(boolean verSenha) {
+		chckbxVerSenha.setSelected(verSenha);
+		
+	}
+
+    public void setTextEmail(String email) {
+    	textEmail.setText(email);
+    }
+
+    public void setTextTelefone(String telefone) {
+    	textTelefone.setText(telefone);
+    }
+	
 	
 	/**
 	 * Launch the application.
@@ -261,4 +291,5 @@ public class TelaCadastroFuncionario extends JFrame {
 		));
 		scrollPane.setViewportView(table);
 	}
+
 }

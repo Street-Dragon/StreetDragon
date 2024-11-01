@@ -145,5 +145,4 @@ public class Utils {
         String prefixoCelular = telefone.substring(2, 3);
         return prefixoCelular.equals("9") || prefixoCelular.equals("8") || prefixoCelular.equals("7");
     }
-    
 }

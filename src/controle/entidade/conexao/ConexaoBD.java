@@ -30,8 +30,8 @@ public class ConexaoBD {
         try (Connection conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
              Statement stmt = conn.createStatement()) {
 
-        	stmt.executeUpdate("DROP DATABASE streetdragon");
-            stmt.executeUpdate("CREATE DATABASE streetdragon");
+        	stmt.executeUpdate("DROP DATABASE IF EXISTS streetdragon;");
+            stmt.executeUpdate("CREATE DATABASE IF NOT EXISTS streetdragon");
             System.out.println("Banco de dados criado ou já existe!");
             stmt.executeUpdate("USE streetdragon");
 
