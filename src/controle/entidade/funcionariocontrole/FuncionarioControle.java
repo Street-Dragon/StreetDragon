@@ -68,10 +68,10 @@ public class FuncionarioControle {
             public void mouseClicked(MouseEvent e) {
                 int selectedRow = cadastroFuncionario.getTable().getSelectedRow();
                 if (selectedRow != -1) {
-                	 // Converte o valor da tabela para String e depois para Integer
+                	 // |Tem que parar de converter, passa string direto e ajusta;
                     String funcionarioIdStr = (String) cadastroFuncionario.getTable().getValueAt(selectedRow, 0);
-                    int funcionarioId = Integer.parseInt(funcionarioIdStr);
-                    carregarDadosFuncionario(funcionarioId);
+                   
+                    carregarDadosFuncionarioDAO(funcionarioIdStr);
                 }
             }
         });
@@ -172,8 +172,8 @@ public class FuncionarioControle {
             }
         }
     
-    private void carregarDadosFuncionario(int id) {
-        Funcionario funcionario = funcionarioDAO.carregarDadosFuncionario(id);
+    private void carregarDadosFuncionarioDAO(String funcionarioIdStr) {
+        Funcionario funcionario = funcionarioDAO.carregarDadosFuncionario(funcionarioIdStr);
         if (funcionario != null) {
         	System.out.println("atualizar campo chamado");
             atualizarCampos(funcionario);

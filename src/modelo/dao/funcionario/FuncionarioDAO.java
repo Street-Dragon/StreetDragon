@@ -115,45 +115,36 @@ public class FuncionarioDAO {
 	}
 
 
-	public Funcionario carregarDadosFuncionario(int id) {
-		Funcionario funcionario = null;
-		String sqlFuncionario = "SELECT * FROM funcionario WHERE cpf = ?";
-		
-		
-		 try (Connection conn = ConexaoBD.getConexaoMySQL();
-				 PreparedStatement stmtFuncionario = conn.prepareStatement(sqlFuncionario)){
-			 
-			 	stmtFuncionario.setInt(1, id);
-	            ResultSet rsFuncionario = stmtFuncionario.executeQuery();
-			 
-	            if (rsFuncionario.next()) {
-	                funcionario = new Funcionario();
-
-	                funcionario.setNome(rsFuncionario.getString("nome"));
-	                funcionario.setCpf(rsFuncionario.getString("cpf"));
-	                funcionario.setSenhaFuncionario(rsFuncionario.getString("senha"));
-	                System.out.println("Funcionario buscado");
+	public Funcionario carregarDadosFuncionario(String cpf) {
+	    Funcionario funcionario = null;
+	    String sql = "SELECT f.nome, f.cpf, f.senha, c.email, c.telefone " +
+	                 "FROM funcionario f " +
+	                 "JOIN contato c ON f.contato_id = c.contato_id " +
+	                 "WHERE f.cpf = ?";
+	    
+	    try (Connection conn = ConexaoBD.getConexaoMySQL();
+	         PreparedStatement stmt = conn.prepareStatement(sql)) {
+	        
+	        stmt.setString(1, cpf);
+	        ResultSet rs = stmt.executeQuery();
+	        
+	        if (rs.next()) {
+	            funcionario = new Funcionario();
+	            funcionario.setNome(rs.getString("nome"));
+	            funcionario.setCpf(rs.getString("cpf"));
+	            funcionario.setSenhaFuncionario(rs.getString("senha"));
+	            System.out.println("Funcionario buscado");
 	            
-	            
-	            	String sqlContato = "SELECT * FROM contato WHERE funcionario_cpf = ?";
-	            	PreparedStatement stmtContato = conn.prepareStatement(sqlContato);
-	                stmtContato.setInt(1, id);
-	                ResultSet rsContato = stmtContato.executeQuery();
-	                
-	                if (rsContato.next()) {
-	                    Contato contato = new Contato();
-	                    contato.setEmail(rsContato.getString("email"));
-	                    contato.setTelefone(rsContato.getString("telefone"));
-	                    funcionario.setContato(contato);
-	                    System.out.println("Contato buscado");
-	                
-	            }
-		 }
-		 } catch (SQLException e) {
-			
-			e.printStackTrace();
-		}
-		return funcionario;
+	            Contato contato = new Contato();
+	            contato.setEmail(rs.getString("email"));
+	            contato.setTelefone(rs.getString("telefone"));
+	            funcionario.setContato(contato);
+	            System.out.println("Contato buscado");
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return funcionario;
 	}
 	
 	public void deletarFuncionario(int id) {
