@@ -51,38 +51,6 @@ public class TelaCadastroFuncionario extends JPanel { // jpanel ao invés de jfr
 	private static DefaultTableModel tableModel;
 	private JPasswordField textSenha;
 
-	public String getTextId() {
-		return textId.getText();
-	}
-
-	public String getTextNome() {
-		return textNome.getText();
-	}
-
-	public String getTextCpf() {
-		return textCpf.getText();
-	}
-
-	public String getTextEmail() {
-		return textEmail.getText();
-	}
-
-	public String getTextTelefone() {
-		return textTelefone.getText();
-	}
-
-	public char[] getPasswordField() {
-		return textSenha.getPassword();
-	}
-
-	public JButton getBtnCadastrarFuncionario() {
-		return btnCadastrarFuncionario;
-	}
-
-	public boolean getChckbxAdm() {
-		return chckbxAdm.isSelected();
-	}
-
 	// main apagado
 
 	/**
@@ -247,17 +215,16 @@ public class TelaCadastroFuncionario extends JPanel { // jpanel ao invés de jfr
 		add(scrollPane, "cell 0 1 4 3,grow");
 
 		tableModel = new DefaultTableModel();
-        tableModel.addColumn("CPF");
-        tableModel.addColumn("Nome");
-        tableModel.addColumn("Senha");
-        tableModel.addColumn("Administrador");
-        tableModel.addColumn("Email");
-        tableModel.addColumn("Telefone");
-        
+		tableModel.addColumn("CPF");
+		tableModel.addColumn("Nome");
+		tableModel.addColumn("Senha");
+		tableModel.addColumn("Administrador");
+		tableModel.addColumn("Email");
+		tableModel.addColumn("Telefone");
+
 		table = new JTable(tableModel);
 
 		scrollPane.setViewportView(table);
-
 
 		table.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
@@ -312,6 +279,38 @@ public class TelaCadastroFuncionario extends JPanel { // jpanel ao invés de jfr
 
 	public JPasswordField getTextFieldSenha() {
 		return textSenha;
+	}
+
+	public String getTextId() {
+		return textId.getText();
+	}
+
+	public String getTextNome() {
+		return textNome.getText();
+	}
+
+	public String getTextCpf() {
+		return textCpf.getText();
+	}
+
+	public String getTextEmail() {
+		return textEmail.getText();
+	}
+
+	public String getTextTelefone() {
+		return textTelefone.getText();
+	}
+
+	public char[] getPasswordField() {
+		return textSenha.getPassword();
+	}
+
+	public JButton getBtnCadastrarFuncionario() {
+		return btnCadastrarFuncionario;
+	}
+
+	public boolean getChckbxAdm() {
+		return chckbxAdm.isSelected();
 	}
 
 }

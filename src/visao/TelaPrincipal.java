@@ -58,6 +58,7 @@ public class TelaPrincipal extends JFrame {
 		TelaVenda telaVenda = new TelaVenda(this);
 		TelaHistoricoVenda telaHistoricoVenda = new TelaHistoricoVenda(this);
 		TelaCadastroFuncionario telaCadastroFuncionario = new TelaCadastroFuncionario(this);
+		TelaProdutos telaProdutos = new TelaProdutos(this);
 
 		// Painel do menu lateral
 		JPanel menuPanel = new JPanel();
@@ -94,7 +95,7 @@ public class TelaPrincipal extends JFrame {
 		btnDeslogar.setFont(new Font("Hanken Grotesk", Font.BOLD, 20));
 		btnDeslogar.setForeground(Color.WHITE);
 		btnDeslogar.setIcon(Utils.carregarIcone("logout.png", 30, 30));
-		
+
 		panel.add(btnDeslogar, "cell 4 0,alignx right,growy");
 
 		config(btnHistorico);
@@ -107,11 +108,12 @@ public class TelaPrincipal extends JFrame {
 		FuncionarioControle funcionarioControle = new FuncionarioControle();
 		funcionarioControle.setTelaPrincipal(this);
 		funcionarioControle.setCadastroFuncionario(telaCadastroFuncionario);
-		
+
 		// Adiciona os painéis
 		mainPanel.add(telaVenda, "TelaVenda");
 		mainPanel.add(telaHistoricoVenda, "TelaHistoricoVenda");
 		mainPanel.add(telaCadastroFuncionario, "TelaCadastroFuncionario");
+		mainPanel.add(telaProdutos, "TelaProdutos");
 
 	}
 

@@ -37,7 +37,7 @@ public class TelaPrincipalControle {
 		this.telaPrincipal.getBtnProdutos().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// trocarTela("TelaProdutos");
+				trocarTela("TelaProdutos");
 				mudarCorBotao(telaPrincipal.getBtnProdutos());
 			}
 		});
