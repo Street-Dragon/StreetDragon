@@ -4,6 +4,7 @@ import modelo.dao.funcionario.FuncionarioDAO;
 import modelo.entidade.contato.Contato;
 import modelo.entidade.pessoa.funcionario.Funcionario;
 import visao.TelaPrincipal;
+import visao.TelaProdutos;
 import visao.TelaCadastroFuncionario;
 import visao.TelaLogin;
 
@@ -21,7 +22,7 @@ public class FuncionarioControle {
 
 	private TelaPrincipal telaPrincipal;
 	private String cpfUsuarioLogado;
-  //cadastroFuncionario.addTableClickListener(this::selecionarFuncionario);
+	// cadastroFuncionario.addTableClickListener(this::selecionarFuncionario);
 
 	public void setTelaLogin(TelaLogin telaLogin) {
 		this.telaLogin = telaLogin;
@@ -43,17 +44,17 @@ public class FuncionarioControle {
 			}
 		});
 	}
-      
+
 	public void setCadastroFuncionario(TelaCadastroFuncionario cadastroFuncionario) {
 		this.cadastroFuncionario = cadastroFuncionario;
 		atualizarTabela();
 		cadastroFuncionario.getBtnCadastrarFuncionario().addActionListener(new ActionListener() {
 			@Override
-			
+
 			public void actionPerformed(ActionEvent e) {
 				cadastrarFuncionario();
-        atualizarTabela();
-        cadastroFuncionario.limparCampos();
+				atualizarTabela();
+				cadastroFuncionario.limparCampos();
 			}
 		});
 	}
@@ -84,80 +85,73 @@ public class FuncionarioControle {
 					JOptionPane.ERROR_MESSAGE);
 		}
 	}
-	
+
 	private void realizarLogout() {
-        System.out.println("Função chamada");
-        int confirmar = JOptionPane.showConfirmDialog(telaPrincipal, "Deseja realmente deslogar?", "Confirmação", JOptionPane.YES_NO_OPTION);
-        if (confirmar == JOptionPane.YES_OPTION || cpfUsuarioLogado != null) {
-            System.out.println("Usuário deslogado");
-            cpfUsuarioLogado = null;
-            telaPrincipal.dispose(); // Fecha a tela principal
-            telaLogin.setVisible(true); // Mostra a tela de login novamente
-        }
-    }
-	
-	
+		System.out.println("Função chamada");
+		int confirmar = JOptionPane.showConfirmDialog(telaPrincipal, "Deseja realmente deslogar?", "Confirmação",
+				JOptionPane.YES_NO_OPTION);
+		if (confirmar == JOptionPane.YES_OPTION || cpfUsuarioLogado != null) {
+			System.out.println("Usuário deslogado");
+			cpfUsuarioLogado = null;
+			telaPrincipal.dispose(); // Fecha a tela principal
+			telaLogin.setVisible(true); // Mostra a tela de login novamente
+		}
+	}
 
+	private void cadastrarFuncionario() {
+		String nome = cadastroFuncionario.getTextNome();
+		char[] senhaArray = cadastroFuncionario.getPasswordField();
+		String cpf = cadastroFuncionario.getTextCpf();
+		boolean isAdm = cadastroFuncionario.getChckbxAdm();
+		String email = cadastroFuncionario.getTextEmail();
+		String senha = new String(senhaArray);
+		String telefone = cadastroFuncionario.getTextTelefone();
 
-    
-    private void cadastrarFuncionario() {
-        String nome = cadastroFuncionario.getTextNome();
-        char[] senhaArray = cadastroFuncionario.getPasswordField();
-        String cpf = cadastroFuncionario.getTextCpf();
-        boolean isAdm = cadastroFuncionario.getChckbxAdm();
-        String email = cadastroFuncionario.getTextEmail();
-        String senha = new String(senhaArray);
-        String telefone = cadastroFuncionario.getTextTelefone();
-     
-        if (nome.isEmpty() || cpf.isEmpty() || senha.isEmpty()) {
-            JOptionPane.showMessageDialog(cadastroFuncionario, "Preencha todos os campos obrigatórios.", "Erro", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        
-        Funcionario funcionario = new Funcionario();
-        funcionario.setNome(nome);
-        funcionario.setCpf(cpf);
-        funcionario.setSenhaFuncionario(senha);
-        funcionario.setAdm(isAdm);
+		if (nome.isEmpty() || cpf.isEmpty() || senha.isEmpty()) {
+			JOptionPane.showMessageDialog(cadastroFuncionario, "Preencha todos os campos obrigatórios.", "Erro",
+					JOptionPane.ERROR_MESSAGE);
+			return;
+		}
 
-        Contato contato = new Contato();
-        contato.setEmail(email);
-        contato.setTelefone(telefone);
-        funcionario.setContato(contato);
-        
-        if (funcionarioDAO.cadastrarFuncionario(funcionario)) {
-            JOptionPane.showMessageDialog(cadastroFuncionario, "Funcionário cadastrado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-           
-        } else {
-            JOptionPane.showMessageDialog(cadastroFuncionario, "Erro ao cadastrar funcionário.", "Erro", JOptionPane.ERROR_MESSAGE);
-        }
-        return;
-    }
-    
-    public void atualizarTabela() {
-    
-            List<Funcionario> funcionarios = funcionarioDAO.listarFuncionarios();
-            DefaultTableModel tableModel = cadastroFuncionario.getTableModel();
-            for (Funcionario funcionario : funcionarios) {
-                Contato contato = funcionario.getContato();
-                tableModel.addRow(new Object[]{
-                    funcionario.getCpf(),
-                    funcionario.getNome(),
-                    funcionario.getSenhaFuncionario(),
-                    funcionario.isAdm() ? "Sim" : "Não",
-                    contato.getEmail(),
-                    contato.getTelefone()
-                });
-            }
-        }
-    
-    /*public void selecionarFuncionario(int id) {
-        Funcionario funcionario = funcionarioDAO.getFuncionario(id);
-        if (funcionario != null) {
-            view.setFuncionario(funcionario);
-        } else {
-            JOptionPane.showMessageDialog(view, "Funcionário não encontrado");
-        }
-    }*/
-    
+		Funcionario funcionario = new Funcionario();
+		funcionario.setNome(nome);
+		funcionario.setCpf(cpf);
+		funcionario.setSenhaFuncionario(senha);
+		funcionario.setAdm(isAdm);
+
+		Contato contato = new Contato();
+		contato.setEmail(email);
+		contato.setTelefone(telefone);
+		funcionario.setContato(contato);
+
+		if (funcionarioDAO.cadastrarFuncionario(funcionario)) {
+			JOptionPane.showMessageDialog(cadastroFuncionario, "Funcionário cadastrado com sucesso!", "Sucesso",
+					JOptionPane.INFORMATION_MESSAGE);
+
+		} else {
+			JOptionPane.showMessageDialog(cadastroFuncionario, "Erro ao cadastrar funcionário.", "Erro",
+					JOptionPane.ERROR_MESSAGE);
+		}
+		return;
+	}
+
+	public void atualizarTabela() {
+
+		List<Funcionario> funcionarios = funcionarioDAO.listarFuncionarios();
+		DefaultTableModel tableModel = cadastroFuncionario.getTableModel();
+		for (Funcionario funcionario : funcionarios) {
+			Contato contato = funcionario.getContato();
+			tableModel.addRow(
+					new Object[] { funcionario.getCpf(), funcionario.getNome(), funcionario.getSenhaFuncionario(),
+							funcionario.isAdm() ? "Sim" : "Não", contato.getEmail(), contato.getTelefone() });
+		}
+	}
+
+	/*
+	 * public void selecionarFuncionario(int id) { Funcionario funcionario =
+	 * funcionarioDAO.getFuncionario(id); if (funcionario != null) {
+	 * view.setFuncionario(funcionario); } else {
+	 * JOptionPane.showMessageDialog(view, "Funcionário não encontrado"); } }
+	 */
+
 }
