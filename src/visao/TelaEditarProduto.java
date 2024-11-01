@@ -42,12 +42,14 @@ import java.awt.FlowLayout;
 import javax.swing.border.LineBorder;
 
 import controle.entidade.produto.ProdutoControle;
+import modelo.entidade.produto.Produto;
 
 
 public class TelaEditarProduto extends JFrame {
-
+	private Produto produto;
+    private ProdutoControle Pcontrole = new ProdutoControle();
+    
 	private JPanel contentPane;
-
 	private JTextField textNomeProduto;
 	private JTextField textPrecoProduto;
 	private JTextField textCategoriaProduto;
@@ -75,7 +77,7 @@ public class TelaEditarProduto extends JFrame {
 	private JComboBox cbMaterial;
 	private Font hkGrotesk;
 	private JLabel lblEditarProduto;
-	private ProdutoControle Pcontrole = new ProdutoControle();
+	
 
 	public JButton getbtnConfirmar() {
 		return btnConfirmar;
@@ -88,7 +90,7 @@ public class TelaEditarProduto extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TelaEditarProduto frame = new TelaEditarProduto();
+					TelaEditarProduto frame = new TelaEditarProduto(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -101,7 +103,10 @@ public class TelaEditarProduto extends JFrame {
 	 * Create the frame.
 	 */
 	
-	public TelaEditarProduto(Produto produto) {
+	public TelaEditarProduto (Produto produto) {
+		this.produto = produto;
+        this.Pcontrole = new ProdutoControle();
+		
 		setTitle("Editar Produto");
 		setAlwaysOnTop(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -143,18 +148,25 @@ public class TelaEditarProduto extends JFrame {
             JLabel imageLabel = new JLabel(imageIcon);
             panelimage.add(imageLabel);
         }
-		
+        
+        textFieldNome.setText(produto.getNomeProduto());
+        cbMaterial.setSelectedItem(produto.getMaterial());
+        cbCategoria.setSelectedItem(produto.getCategoria());
+        textFieldVariacao.setText(produto.getVariacao());
+        textFieldValor.setText(String.valueOf(produto.getValor()));
+        textFieldQntEstoque.setText(String.valueOf(produto.getQuantEstoque()));
+        cbTamanho.setSelectedItem(produto.getTamanho());
 				
 				btnConfirmar = new JButton("Confirmar");
 				btnConfirmar.setForeground(Color.WHITE);
 				btnConfirmar.setBackground(new Color(114, 148, 235));
 				btnConfirmar.setFont(hkGrotesk);
 				btnConfirmar.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						Pcontrole.EditProduto();
-					}
-				});
-				
+		            public void actionPerformed(ActionEvent e) {
+		                Pcontrole.editProduto(produto);
+		                dispose();
+		            }
+		        });		
 				txtNome = new JLabel("Nome");
 				txtNome.setHorizontalAlignment(SwingConstants.CENTER);
 				contentPane.add(txtNome, "cell 0 2,grow");
@@ -262,8 +274,6 @@ public class TelaEditarProduto extends JFrame {
 		btnCancelar.setForeground(Color.WHITE);
 		btnCancelar.setBackground(Color.RED);
 		contentPane.add(btnCancelar, "cell 3 9 2 1,growx");
-		
-		Pcontrole.listarProdutosTable();
 		
 	}
 	public int getTextFieldId() {

@@ -11,6 +11,7 @@ import utils.Utils;
 import javax.swing.JScrollPane;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.AbstractListModel;
 import javax.swing.JTable;
 import javax.swing.JButton;
@@ -30,13 +31,10 @@ public class TelaListarProdutos extends JFrame {
 	private JTable table;
 	private JTextField textFieldNome;
 	private JButton btnNovoProduto;
-	private ProdutoControle Pcontrole = new ProdutoControle();
+	private ProdutoControle Pcontrole;
 	
 	public JButton getbtnNovoProduto(){
 		return btnNovoProduto;
-	}
-	public JTable gettable(){
-		return table;
 	}
 
 	/**
@@ -58,14 +56,15 @@ public class TelaListarProdutos extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public TelaListarProdutos() {			
+	public TelaListarProdutos() {	
+		Pcontrole = new ProdutoControle(this);
 		setTitle("Lista de Produtos");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 672, 540);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(255, 255, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-
+		
 		Utils.loadCustomFont();
 
 		setContentPane(contentPane);
@@ -100,30 +99,45 @@ public class TelaListarProdutos extends JFrame {
 		});
 		panel.add(btnNovoProduto_1, "cell 1 1,growx");
 		
-		ProdutoControle Pcontrole = new ProdutoControle();
-	    Pcontrole.setTelaListarProdutos(this);
-		
+	    Pcontrole = new ProdutoControle(this);
 		JButton btnDeletarProduto = new JButton("Deletar Produto");
 		btnDeletarProduto.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Pcontrole.setTelaListarProdutos(TelaListarProdutos.this);
-				
-				
-			}
-		});
-		btnDeletarProduto.setToolTipText("");
-		panel.add(btnDeletarProduto, "cell 2 1,growx");
+	        public void actionPerformed(ActionEvent e) {
+	            Pcontrole.setTelaListarProdutos(TelaListarProdutos.this);
+	            Pcontrole.DeletProduto(TelaListarProdutos.this);
+	        }
+	    });
 		
-		JButton btnEditarProduto = new JButton("Editar Produto");
-		btnEditarProduto.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Pcontrole.setTelaListarProdutos(TelaListarProdutos.this);
-				Pcontrole.EditProduto();
-			}
-		});
-		panel.add(btnEditarProduto, "cell 3 1,growx");
+		
+		panel.add(btnDeletarProduto, "cell 2 1,growx");
+		Pcontrole.setTelaListarProdutos(this);
+
+		Pcontrole = new ProdutoControle(this);
+
+        JButton btnEditarProduto = new JButton("Editar Produto");
+        btnEditarProduto.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                int selectedRowIndex = table.getSelectedRow();
+                if (selectedRowIndex != -1) {
+                    int idProduto = (int) table.getValueAt(selectedRowIndex, 0);
+                    Produto selectedProduto = Pcontrole.getProdutoById(idProduto);
+                    TelaEditarProduto telaE = new TelaEditarProduto(selectedProduto);
+                    Pcontrole.setTelaEditarProduto(telaE);
+                    telaE.setVisible(true);
+                    setVisible(false);
+                } else {
+                    JOptionPane.showMessageDialog(TelaListarProdutos.this, "Nenhum produto selecionado", "Erro", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+
+        panel.add(btnEditarProduto, "cell 3 1,growx");
+
+        Pcontrole.listarProdutosTable();
+    }
 	
-		Pcontrole.listarProdutosTable();
-			
-	}
+
+    public JTable gettable() {
+        return table;
+    }
 }

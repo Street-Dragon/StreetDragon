@@ -15,22 +15,82 @@ import visao.TelaListarProdutos;
 
 public class ProdutoControle {
 	private TelaCadastroProdutos telaCProduto;
-	private TelaDeletarProduto telaDProduto;
-	private TelaEditarProduto telaEProduto;
-	private ProdutoDAO pDAO = new ProdutoDAO();
-	private TelaListarProdutos telaLProduto;
+	private TelaDeletarProduto telaDProduto;	
+    private TelaEditarProduto telaEProduto;
+    private TelaListarProdutos telaLProduto;
+    private ProdutoDAO pDAO = new ProdutoDAO();
 
-	public void setTelaListarProdutos(TelaListarProdutos telaLProduto) {
+    public ProdutoControle(TelaListarProdutos telaLProduto) {
         this.telaLProduto = telaLProduto;
     }
-	public void setTelaEdutarProdutos(TelaEditarProduto telaEProduto) {
+
+    public void setTelaListarProdutos(TelaListarProdutos telaLProduto) {
+        this.telaLProduto = telaLProduto;
+    }
+
+    public void listarProdutosTable() {
+        if (telaLProduto == null) {
+            throw new IllegalStateException("TelaListarProdutos is not set");
+        }
+
+        List<Produto> produtos = pDAO.listarProdutos();
+        DefaultTableModel tableModel = (DefaultTableModel) telaLProduto.gettable().getModel();
+        tableModel.setRowCount(0);
+
+        for (Produto produto : produtos) {
+            tableModel.addRow(new Object[]{
+                produto.getIdProduto(),
+                produto.getNomeProduto(),
+                produto.getValor(),
+                produto.getQuantEstoque(),
+            });
+        }
+    }
+    
+    public ProdutoControle() {
+    }
+    public void setTelaEditarProduto(TelaEditarProduto telaEProduto) {
         this.telaEProduto = telaEProduto;
     }
 
-	public ProdutoControle() {
-	    this.pDAO = new ProdutoDAO();
-	}
+    public Produto getProdutoById(int id) {
+        Produto produto = pDAO.getId(id);
+        if (produto == null) {
+            throw new IllegalStateException("Produto with ID " + id + " not found.");
+        }
+        return produto;
+    }
 
+
+    public void editProduto(Produto produto) {
+        String nome = telaEProduto.getTextFieldNome();
+        String material = telaEProduto.getCbMaterial();
+        String categoria = telaEProduto.getCbCategoria();
+        String variacao = telaEProduto.getTextFieldVariacao();
+        float valor = telaEProduto.getTextFieldValor();
+        int estoque = telaEProduto.getTextFieldQntEstoque();
+        String tamanho = telaEProduto.getCbTamnho();
+
+        if (nome.isEmpty() || material.isEmpty() || categoria.isEmpty() || tamanho.isEmpty() || variacao.isEmpty() || String.valueOf(valor).isEmpty() || String.valueOf(estoque).isEmpty()) {
+            JOptionPane.showMessageDialog(telaEProduto, "Parece que você não preencheu todos os campos", ":(", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        produto.setNomeProduto(nome);
+        produto.setMaterial(material);
+        produto.setCategoria(categoria);
+        produto.setVariacao(variacao);
+        produto.setValor(valor);
+        produto.setQuantEstoque(estoque);
+        produto.setTamanho(tamanho);
+
+        if (pDAO.editarProduto(produto.getIdProduto(), produto)) {
+            JOptionPane.showMessageDialog(telaEProduto, "Produto Editado com Sucesso!", null, JOptionPane.INFORMATION_MESSAGE);
+            telaLProduto.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(telaEProduto, "Erro ao editar produto", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 	
 	public void setCadastroProduto(TelaCadastroProdutos cadastroProduto) {
 	    this.telaCProduto = cadastroProduto;
@@ -54,27 +114,6 @@ public class ProdutoControle {
 		});
 		
 	}
-	
-	public void listarProdutosTable() {
-	    if (telaLProduto == null) {
-	        throw new IllegalStateException("TelaListarProdutos is not set");
-	    }
-
-	    List<Produto> produtos = pDAO.listarProdutos();
-	    DefaultTableModel tableModel = (DefaultTableModel) telaLProduto.gettable().getModel();
-	    tableModel.setRowCount(0);
-
-	    for (Produto produto : produtos) {
-	        tableModel.addRow(new Object[]{
-	            produto.getIdProduto(),
-	            produto.getNomeProduto(),
-	            produto.getValor(),
-	            produto.getQuantEstoque(),
-	        });
-	    }
-	}
-
-
 
 	
 	public void cadastrarProduto(TelaCadastroProdutos cadastroProduto) {
@@ -102,6 +141,7 @@ public class ProdutoControle {
 		produto.setQuantEstoque(estoque);
 		produto.setTamanho(tamanho);
 		produto.setVariacao(variacao);
+		
 		
 		if (pDAO.cadastrarProduto(produto)) {
 			JOptionPane.showMessageDialog(cadastroProduto, "Produto Cadastrado",null, JOptionPane.INFORMATION_MESSAGE);
@@ -165,4 +205,5 @@ public class ProdutoControle {
 			
 		}
 	}
+
 }

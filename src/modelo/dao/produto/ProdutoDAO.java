@@ -121,26 +121,28 @@ public class ProdutoDAO {
 		
 	}
 	public Produto getId(int id) {
-		String sqlSelect = "SELECT * FROM produto where idProduto = ?";
-		try (Connection conn = ConexaoBD.getConexaoMySQL()){
-				PreparedStatement stmt = conn.prepareStatement(sqlSelect);
-				stmt.setInt(1, id);
-				ResultSet rs = stmt.executeQuery();
-				Produto produto = new Produto();
-				produto.setIdProduto(rs.getInt("idProduto"));
-				produto.setNomeProduto(rs.getString("nome"));
-				produto.setMaterial(rs.getString("material"));
-				produto.setCategoria(rs.getString("categoria"));
-				produto.setValor(Float.parseFloat(rs.getString("valor")));
-				produto.setQuantEstoque(rs.getInt("estoque"));
-				produto.setTamanho(rs.getString("tamanho"));
-				produto.setVariacao(rs.getString("variacao"));
-				return produto;
-			
-		} catch (SQLException e) {
-			System.out.println(e);
-			return null;
-		}
+	    String sqlSelect = "SELECT * FROM produto WHERE idProduto = ?";
+	    try (Connection conn = ConexaoBD.getConexaoMySQL();
+	         PreparedStatement stmt = conn.prepareStatement(sqlSelect)) {
+	        stmt.setInt(1, id);
+	        ResultSet rs = stmt.executeQuery();
+	        if (rs.next()) {
+	            Produto produto = new Produto();
+	            produto.setIdProduto(rs.getInt("idProduto"));
+	            produto.setNomeProduto(rs.getString("nome"));
+	            produto.setMaterial(rs.getString("material"));
+	            produto.setCategoria(rs.getString("categoria"));
+	            produto.setVariacao(rs.getString("variacao"));
+	            produto.setValor(rs.getFloat("valor"));
+	            produto.setQuantEstoque(rs.getInt("estoque"));
+	            produto.setTamanho(rs.getString("tamanho"));
+	            return produto;
+	        } else {
+	            return null;
+	        }
+	    } catch (SQLException e) {
+	        System.out.println(e);
+	        return null;
+	    }
 	}
-
 }
