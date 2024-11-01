@@ -117,40 +117,47 @@ public class FuncionarioDAO {
 
 	public Funcionario carregarDadosFuncionario(int id) {
 		Funcionario funcionario = null;
-		String sqlFuncionario = "SELECT * FROM funcionario WHERE id = ?";
-		String sqlContato = "SELECT * FROM contato WHERE funcionario_id = ?";
+		String sqlFuncionario = "SELECT * FROM funcionario WHERE cpf = ?";
+		
 		
 		 try (Connection conn = ConexaoBD.getConexaoMySQL();
-				 PreparedStatement stmtFuncionario = conn.prepareStatement(sqlFuncionario);
-				 PreparedStatement stmtContato = conn.prepareStatement(sqlContato)){
+				 PreparedStatement stmtFuncionario = conn.prepareStatement(sqlFuncionario)){
 			 
 			 	stmtFuncionario.setInt(1, id);
 	            ResultSet rsFuncionario = stmtFuncionario.executeQuery();
 			 
 	            if (rsFuncionario.next()) {
 	                funcionario = new Funcionario();
-	                funcionario.setId(rsFuncionario.getInt("id"));
+
 	                funcionario.setNome(rsFuncionario.getString("nome"));
 	                funcionario.setCpf(rsFuncionario.getString("cpf"));
 	                funcionario.setSenhaFuncionario(rsFuncionario.getString("senha"));
 	                System.out.println("Funcionario buscado");
-
+	            
+	            
+	            	String sqlContato = "SELECT * FROM contato WHERE funcionario_cpf = ?";
+	            	PreparedStatement stmtContato = conn.prepareStatement(sqlContato);
 	                stmtContato.setInt(1, id);
 	                ResultSet rsContato = stmtContato.executeQuery();
-
+	                
 	                if (rsContato.next()) {
 	                    Contato contato = new Contato();
 	                    contato.setEmail(rsContato.getString("email"));
 	                    contato.setTelefone(rsContato.getString("telefone"));
 	                    funcionario.setContato(contato);
 	                    System.out.println("Contato buscado");
-	                }
+	                
 	            }
+		 }
 		 } catch (SQLException e) {
 			
 			e.printStackTrace();
 		}
 		return funcionario;
+	}
+	
+	public void deletarFuncionario(int id) {
+		String delFuncionario = "DELETE * FROM funcionario WHERE cpf = ?";
 	}
     
     
