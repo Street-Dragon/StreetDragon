@@ -13,45 +13,49 @@ import modelo.entidade.contato.Contato;
 import modelo.entidade.pessoa.funcionario.Funcionario;
 
 public class FuncionarioDAO {
-	public boolean login(String cpf, String senha) {
-		String sql = "SELECT * FROM funcionario WHERE cpf = ? AND senha = ?";
 
-		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-			stmt.setString(1, cpf);
-			stmt.setString(2, senha);
-
-			ResultSet rs = stmt.executeQuery();
-			return rs.next(); // Retorna true se houver um funcionário com as credenciais corretas
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return false;
-		}
-	}
-
-	// Mano pra que q serve isso?
-	public String nomeFuncionario(String cpf) {
-		String sqlNome = "SELECT nome FROM funcionario WHERE cpf = ?";
-
-		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement stmt = conn.prepareStatement(sqlNome)) {
-
-			stmt.setString(1, cpf);
-
-			ResultSet rs = stmt.executeQuery();
-			if (rs.next()) { // se tiver um funcionario com esse cpf,
-				return rs.getString("nome"); // retorna o nome do funcionario
-			} else {
-				return "Nenhum"; // não retorna nada
-			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return "Erro ao consultar";
-		}
-	}
-
-	public boolean cadastrarFuncionario(Funcionario funcionario) {
+    public boolean login(String cpf, String senha) {
+        String sql = "SELECT * FROM funcionario WHERE cpf = ? AND senha = ?";
+        
+        try (Connection conn = ConexaoBD.getConexaoMySQL();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+             
+            stmt.setString(1, cpf);
+            stmt.setString(2, senha);
+            
+            ResultSet rs = stmt.executeQuery();
+            return rs.next(); // Retorna true se houver um funcionário com as credenciais corretas
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+    
+    // Mano pra que q serve isso?
+    public String nomeFuncionario(String cpf) {
+    	String sqlNome = "SELECT nome FROM funcionario WHERE cpf = ?";
+    	
+    	try (Connection conn = ConexaoBD.getConexaoMySQL();
+    			PreparedStatement stmt = conn.prepareStatement(sqlNome)) {
+                
+               stmt.setString(1, cpf);
+               
+               ResultSet rs = stmt.executeQuery(); 
+               if (rs.next()) {		// se tiver um funcionario com esse cpf,
+                   return rs.getString("nome"); // retorna o nome do funcionario
+               } else {
+                   return "Nenhum"; // não retorna nada
+               }
+               
+           } catch (SQLException e) {
+               e.printStackTrace();
+               return "Erro ao consultar";
+           }
+    }
+    
+    public boolean cadastrarFuncionario(Funcionario funcionario) {
 		String sqlContato = "INSERT INTO contato (email, telefone) VALUES (?, ?)";
 		String sqlFuncionario = "INSERT INTO funcionario (cpf, senha, nome, contato_id, adm) VALUES (?, ?, ?, ?, ?)";
 
@@ -81,8 +85,56 @@ public class FuncionarioDAO {
 		}
 	}
 
-	// Falta os outros conteúdos eu tô com preguiça mi deixa
-	public List<Funcionario> listarFuncionarios() {
+    public boolean verificaCpfExistente(String cpf) {
+        String sqlFuncionarioCPF = "SELECT cpf FROM funcionario WHERE cpf = ?";
+        try (Connection conn = ConexaoBD.getConexaoMySQL();
+             PreparedStatement stmtFuncionario = conn.prepareStatement(sqlFuncionarioCPF)) {
+            
+            stmtFuncionario.setString(1, cpf);
+            ResultSet rs = stmtFuncionario.executeQuery();
+            return rs.next();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean verificaTelefoneExistente(String telefone) {
+        String sqlFuncionarioContatoTelefone = "SELECT c.telefone FROM contato c " +
+                                    "JOIN funcionario f ON c.id_contato = f.contato_id " +
+                                    "WHERE c.telefone = ?";
+        try (Connection conn = ConexaoBD.getConexaoMySQL();
+             PreparedStatement stmtContato = conn.prepareStatement(sqlFuncionarioContatoTelefone)) {
+            
+            stmtContato.setString(1, telefone);
+            ResultSet rs = stmtContato.executeQuery();
+            return rs.next();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
+    public boolean verificaEmailExistente(String email) {
+        String sqlFuncionarioContatoEmail = "SELECT c.email FROM contato c " +
+                                 "JOIN funcionario f ON c.id_contato = f.contato_id " +
+                                 "WHERE c.email = ?";
+        try (Connection conn = ConexaoBD.getConexaoMySQL();
+             PreparedStatement stmtContato = conn.prepareStatement(sqlFuncionarioContatoEmail)) {
+            
+            stmtContato.setString(1, email);
+            ResultSet rs = stmtContato.executeQuery();
+            return rs.next();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    //Falta os outros conteúdos
+    public List<Funcionario> listarFuncionarios() {
+
 		List<Funcionario> funcionarios = new ArrayList<>();
 		String sqlSelect = "SELECT f.*, c.email, c.telefone FROM funcionario f "
 				+ "JOIN contato c ON f.contato_id = c.id_contato";

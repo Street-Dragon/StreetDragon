@@ -2,10 +2,6 @@ package visao;
 
 import java.awt.EventQueue;
 import java.awt.Font;
-import java.awt.FontFormatException;
-import java.awt.GraphicsEnvironment;
-import java.io.IOException;
-import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -16,7 +12,7 @@ import utils.Utils;
 import javax.swing.JLabel;
 import java.awt.Color;
 import javax.swing.border.LineBorder;
-import javax.swing.JRadioButton;
+
 import javax.swing.JTextField;
 import javax.swing.JCheckBox;
 import javax.swing.JPasswordField;
@@ -31,8 +27,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
-import javax.swing.JScrollBar;
-import javax.swing.JTabbedPane;
+
 
 public class TelaCadastroFuncionario extends JPanel { // jpanel ao invés de jframe
 
@@ -51,7 +46,66 @@ public class TelaCadastroFuncionario extends JPanel { // jpanel ao invés de jfr
 	private static DefaultTableModel tableModel;
 	private JPasswordField textSenha;
 
-	// main apagado
+	public char[] getPasswordField() {
+		return textSenha.getPassword();
+	}
+		
+	public JButton getBtnCadastrarFuncionario() {
+		return btnCadastrarFuncionario;
+	}
+	public boolean getChckbxAdm() {
+		return chckbxAdm.isSelected();
+	}
+	public boolean getChckbxSenha() {
+		return chckbxVerSenha.isSelected();
+	}
+
+	// limpa campos
+    public void setTextNome(String nome) {
+    	textNome.setText(nome);
+    }
+
+    public void setPasswordField(String senha) {
+    	textSenha.setText(senha);
+    }
+
+    public void setTextCpf(String cpf) {
+    	textCpf.setText(cpf);
+    }
+
+    public void setChckbxAdm(boolean isAdm) {
+        chckbxAdm.setSelected(isAdm);
+    }
+
+	public void setChckbxSenha(boolean verSenha) {
+		chckbxVerSenha.setSelected(verSenha);
+		
+	}
+
+    public void setTextEmail(String email) {
+    	textEmail.setText(email);
+    }
+
+    public void setTextTelefone(String telefone) {
+    	textTelefone.setText(telefone);
+    }
+	
+	
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					TelaCadastroFuncionario frame = new TelaCadastroFuncionario();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
 
 	/**
 	 * Create the frame.
