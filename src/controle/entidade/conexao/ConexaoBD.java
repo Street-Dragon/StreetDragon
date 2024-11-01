@@ -145,8 +145,8 @@ public class ConexaoBD {
             stmt.executeUpdate(sqlFornecedor);
 
 			String sqlContatoRoot = "INSERT INTO contato (email, telefone) VALUES ('mariana@aluno.ifsc', '48 9884651')";
-			String sqlFuncionarioRoot = "INSERT INTO funcionario (cpf, senha, nome, contato_id) "
-					+ "VALUES ('123', '321', 'Mari', " + 1 + ")";
+			String sqlFuncionarioRoot = "INSERT INTO funcionario (cpf, senha, nome, contato_id, adm) "
+					+ "VALUES ('123', '321', 'Mari', " + 1 + ", true)";
 
 			// root:
 			stmt.executeUpdate(sqlContatoRoot);
@@ -159,4 +159,3 @@ public class ConexaoBD {
         }
     }
 }
-  
