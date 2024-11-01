@@ -89,23 +89,6 @@ public class TelaCadastroFuncionario extends JPanel { // jpanel ao invés de jfr
     public void setTextTelefone(String telefone) {
     	textTelefone.setText(telefone);
     }
-	
-	
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					TelaCadastroFuncionario frame = new TelaCadastroFuncionario();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
@@ -353,18 +336,6 @@ public class TelaCadastroFuncionario extends JPanel { // jpanel ao invés de jfr
 
 	public String getTextTelefone() {
 		return textTelefone.getText();
-	}
-
-	public char[] getPasswordField() {
-		return textSenha.getPassword();
-	}
-
-	public JButton getBtnCadastrarFuncionario() {
-		return btnCadastrarFuncionario;
-	}
-
-	public boolean getChckbxAdm() {
-		return chckbxAdm.isSelected();
 	}
 
 }

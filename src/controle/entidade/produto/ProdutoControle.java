@@ -99,6 +99,7 @@ public class ProdutoControle {
 	        public void actionPerformed(ActionEvent e) {
 	            //cadastrarProduto();
 	            telaCProduto.ClearText();
+	            telaCProduto.dispose();
 	        }
 	    });
 	}
