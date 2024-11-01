@@ -29,8 +29,8 @@ public class ConexaoBD {
     public static void criarBancoDeDadosETabela() {
         try (Connection conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
              Statement stmt = conn.createStatement()) {
-
-        	stmt.executeUpdate("DROP DATABASE IF EXISTS streetdragon;");
+          
+        	  stmt.executeUpdate("DROP DATABASE IF EXISTS streetdragon;");
             stmt.executeUpdate("CREATE DATABASE IF NOT EXISTS streetdragon");
             System.out.println("Banco de dados criado ou já existe!");
             stmt.executeUpdate("USE streetdragon");
@@ -144,10 +144,19 @@ public class ConexaoBD {
             stmt.executeUpdate(sqlPromocaoCliente);
             stmt.executeUpdate(sqlFornecedor);
 
-            System.out.println("Tabelas criadas ou já existem!");
+			String sqlContatoRoot = "INSERT INTO contato (email, telefone) VALUES ('mariana@aluno.ifsc', '48 9884651')";
+			String sqlFuncionarioRoot = "INSERT INTO funcionario (cpf, senha, nome, contato_id) "
+					+ "VALUES ('123', '321', 'Mari', " + 1 + ")";
+
+			// root:
+			stmt.executeUpdate(sqlContatoRoot);
+			stmt.executeUpdate(sqlFuncionarioRoot);
+
+			System.out.println("Tabelas criadas ou já existem!");
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 }
+  

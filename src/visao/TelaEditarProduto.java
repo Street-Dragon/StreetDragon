@@ -41,11 +41,15 @@ import java.awt.Window.Type;
 import java.awt.FlowLayout;
 import javax.swing.border.LineBorder;
 
+import controle.entidade.produto.ProdutoControle;
+import modelo.entidade.produto.Produto;
+
 
 public class TelaEditarProduto extends JFrame {
-
+	private Produto produto;
+    private ProdutoControle Pcontrole = new ProdutoControle();
+    
 	private JPanel contentPane;
-
 	private JTextField textNomeProduto;
 	private JTextField textPrecoProduto;
 	private JTextField textCategoriaProduto;
@@ -66,14 +70,18 @@ public class TelaEditarProduto extends JFrame {
 	private JTextField textFieldValor;
 	private JLabel txtFonecedor;
 	private JLabel txtQuantidade;
-	private JTextField textFieldQuantidade;
-	private JComboBox comboBoxTamanho;
-	private JComboBox comboBoxCategoria;
-	private JTextField textFiedFornecedor;
-	private JComboBox comboBoxMaterial;
+	private JTextField textFieldQntEstoque;
+	private JComboBox cbTamanho;
+	private JComboBox cbCategoria;
+	private JTextField textFieldFornecedor;
+	private JComboBox cbMaterial;
 	private Font hkGrotesk;
 	private JLabel lblEditarProduto;
+	
 
+	public JButton getbtnConfirmar() {
+		return btnConfirmar;
+	}
 
 	/**
 	 * Launch the application.
@@ -82,7 +90,7 @@ public class TelaEditarProduto extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TelaEditarProduto frame = new TelaEditarProduto();
+					TelaEditarProduto frame = new TelaEditarProduto(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -95,7 +103,10 @@ public class TelaEditarProduto extends JFrame {
 	 * Create the frame.
 	 */
 	
-	public TelaEditarProduto() {
+	public TelaEditarProduto (Produto produto) {
+		this.produto = produto;
+        this.Pcontrole = new ProdutoControle();
+		
 		setTitle("Editar Produto");
 		setAlwaysOnTop(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -137,17 +148,25 @@ public class TelaEditarProduto extends JFrame {
             JLabel imageLabel = new JLabel(imageIcon);
             panelimage.add(imageLabel);
         }
-		
+        
+        textFieldNome.setText(produto.getNomeProduto());
+        cbMaterial.setSelectedItem(produto.getMaterial());
+        cbCategoria.setSelectedItem(produto.getCategoria());
+        textFieldVariacao.setText(produto.getVariacao());
+        textFieldValor.setText(String.valueOf(produto.getValor()));
+        textFieldQntEstoque.setText(String.valueOf(produto.getQuantEstoque()));
+        cbTamanho.setSelectedItem(produto.getTamanho());
 				
 				btnConfirmar = new JButton("Confirmar");
 				btnConfirmar.setForeground(Color.WHITE);
 				btnConfirmar.setBackground(new Color(114, 148, 235));
 				btnConfirmar.setFont(hkGrotesk);
 				btnConfirmar.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-					}
-				});
-				
+		            public void actionPerformed(ActionEvent e) {
+		                Pcontrole.editProduto(produto);
+		                dispose();
+		            }
+		        });		
 				txtNome = new JLabel("Nome");
 				txtNome.setHorizontalAlignment(SwingConstants.CENTER);
 				contentPane.add(txtNome, "cell 0 2,grow");
@@ -163,21 +182,21 @@ public class TelaEditarProduto extends JFrame {
 				contentPane.add(txtMaterial, "cell 0 3,alignx center");
 				txtMaterial.setFont(hkGrotesk);
 				
-				comboBoxMaterial = new JComboBox();
-				comboBoxMaterial.setFont(new Font("Dialog", Font.PLAIN, 15));
-				comboBoxMaterial.setBackground(new Color(246, 233, 233));
-				contentPane.add(comboBoxMaterial, "cell 1 3,growx");
-				comboBoxMaterial.setModel(new DefaultComboBoxModel(new String[] {"", "Algodão", "Lã", "Seda", "Viscose", "Tencel", "Linho", "Poliéster", "Elastano"}));
+				cbMaterial = new JComboBox();
+				cbMaterial.setFont(new Font("Dialog", Font.PLAIN, 15));
+				cbMaterial.setBackground(new Color(246, 233, 233));
+				contentPane.add(cbMaterial, "cell 1 3,growx");
+				cbMaterial.setModel(new DefaultComboBoxModel(new String[] {"", "Algodão", "Lã", "Seda", "Viscose", "Tencel", "Linho", "Poliéster", "Elastano"}));
 				
 				txtCategoria = new JLabel("Categoria");
 				contentPane.add(txtCategoria, "cell 0 4,alignx center");
 				txtCategoria.setFont(hkGrotesk);
 				
-				comboBoxCategoria = new JComboBox();
-				comboBoxCategoria.setFont(new Font("Dialog", Font.PLAIN, 15));
-				comboBoxCategoria.setBackground(new Color(246, 233, 233));
-				contentPane.add(comboBoxCategoria, "cell 1 4,growx");
-				comboBoxCategoria.setModel(new DefaultComboBoxModel(new String[] {"", "Calsa", "Camisa", "Camiseta", "Moleton", "Boné", "Toca", "Tênis", "Acessórios"}));
+				cbCategoria = new JComboBox();
+				cbCategoria.setFont(new Font("Dialog", Font.PLAIN, 15));
+				cbCategoria.setBackground(new Color(246, 233, 233));
+				contentPane.add(cbCategoria, "cell 1 4,growx");
+				cbCategoria.setModel(new DefaultComboBoxModel(new String[] {"", "Calsa", "Camisa", "Camiseta", "Moleton", "Boné", "Toca", "Tênis", "Acessórios"}));
 				
 				txtvariacao = new JLabel("Variação");
 				contentPane.add(txtvariacao, "cell 0 5,alignx center");
@@ -203,31 +222,37 @@ public class TelaEditarProduto extends JFrame {
 				contentPane.add(txtFonecedor, "cell 3 6,alignx center");
 				txtFonecedor.setFont(hkGrotesk);
 				
-				textFiedFornecedor = new JTextField();
-				textFiedFornecedor.setFont(new Font("Dialog", Font.PLAIN, 15));
-				textFiedFornecedor.setBackground(new Color(246, 233, 233));
-				contentPane.add(textFiedFornecedor, "cell 4 6,growx");
-				textFiedFornecedor.setColumns(10);
+				textFieldFornecedor = new JTextField();
+				textFieldFornecedor.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						
+			
+					}
+				});
+				textFieldFornecedor.setFont(new Font("Dialog", Font.PLAIN, 15));
+				textFieldFornecedor.setBackground(new Color(246, 233, 233));
+				contentPane.add(textFieldFornecedor, "cell 4 6,growx");
+				textFieldFornecedor.setColumns(10);
 				
 				txtTamanho = new JLabel("Tamanho");
 				contentPane.add(txtTamanho, "cell 0 7,alignx center");
 				txtTamanho.setFont(hkGrotesk);
 				
-				comboBoxTamanho = new JComboBox();
-				comboBoxTamanho.setFont(new Font("Dialog", Font.PLAIN, 15));
-				comboBoxTamanho.setBackground(new Color(246, 233, 233));
-				contentPane.add(comboBoxTamanho, "cell 1 7,growx");
-				comboBoxTamanho.setModel(new DefaultComboBoxModel(new String[] {"", "PP", "P", "M", "G", "GG", "XG", "XGG", "EG", "EGG"}));
+				cbTamanho = new JComboBox();
+				cbTamanho.setFont(new Font("Dialog", Font.PLAIN, 15));
+				cbTamanho.setBackground(new Color(246, 233, 233));
+				contentPane.add(cbTamanho, "cell 1 7,growx");
+				cbTamanho.setModel(new DefaultComboBoxModel(new String[] {"", "PP", "P", "M", "G", "GG", "XG", "XGG", "EG", "EGG"}));
 				
 				txtQuantidade = new JLabel("Quantidade");
 				contentPane.add(txtQuantidade, "cell 3 7,alignx center");
 				txtQuantidade.setFont(hkGrotesk);
 				
-				textFieldQuantidade = new JTextField();
-				textFieldQuantidade.setFont(new Font("Dialog", Font.PLAIN, 15));
-				textFieldQuantidade.setBackground(new Color(246, 233, 233));
-				contentPane.add(textFieldQuantidade, "cell 4 7,growx");
-				textFieldQuantidade.setColumns(10);
+				textFieldQntEstoque = new JTextField();
+				textFieldQntEstoque.setFont(new Font("Dialog", Font.PLAIN, 15));
+				textFieldQntEstoque.setBackground(new Color(246, 233, 233));
+				contentPane.add(textFieldQntEstoque, "cell 4 7,growx");
+				textFieldQntEstoque.setColumns(10);
 				
 				contentPane.add(btnConfirmar, "cell 0 9 2 1,growx");
 		
@@ -238,17 +263,52 @@ public class TelaEditarProduto extends JFrame {
 				textFieldNome.setText(null);
 				textFieldVariacao.setText(null);
 				textFieldValor.setText(null);
-				textFiedFornecedor.setText(null);
-				textFieldQuantidade.setText(null);
-				comboBoxCategoria.setSelectedIndex(0);
-				comboBoxTamanho.setSelectedIndex(0);
-				comboBoxMaterial.setSelectedIndex(0);
+				textFieldFornecedor.setText(null);
+				textFieldQntEstoque.setText(null);
+				cbCategoria.setSelectedIndex(0);
+				cbTamanho.setSelectedIndex(0);
+				cbMaterial.setSelectedIndex(0);
 				
 			}
 		});
 		btnCancelar.setForeground(Color.WHITE);
 		btnCancelar.setBackground(Color.RED);
 		contentPane.add(btnCancelar, "cell 3 9 2 1,growx");
+		
+	}
+	public int getTextFieldId() {
+		return Integer.valueOf(textFieldId.getText());
+	}
+
+	public String getTextFieldNome() {
+		return textFieldNome.getText();
+	}
+
+	public float getTextFieldValor() {
+		return Float.valueOf(textFieldValor.getText());
+	}
+
+	public int getTextFieldQntEstoque() {
+		return Integer.valueOf(textFieldQntEstoque.getText());
+	}
+
+	public String getTextFieldVariacao() {
+		return textFieldVariacao.getText();
+	}
+
+	public String getTextFieldFornecedor() {
+		return textFieldFornecedor.getText();
+	}
+
+	public String getCbMaterial() {
+		return String.valueOf(cbMaterial.getSelectedObjects());
+	}
+
+	public String getCbCategoria() {
+		return String.valueOf(cbCategoria.getSelectedObjects());
+	}
+	public String getCbTamnho() {
+		return String.valueOf(cbTamanho.getSelectedObjects());
 	}
 	
 }

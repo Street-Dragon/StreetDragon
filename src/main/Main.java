@@ -15,7 +15,7 @@ public class Main {
 		// Inicialização as telas
 		TelaLogin telaLogin = new TelaLogin();
 		TelaPrincipal telaPrincipal = new TelaPrincipal();
-		TelaCadastroFuncionario telaCadastroFuncionario = new TelaCadastroFuncionario();
+		TelaCadastroFuncionario telaCadastroFuncionario = new TelaCadastroFuncionario(telaPrincipal);
 
 		// Instancia o controle
 		FuncionarioControle funcionarioControle = new FuncionarioControle();
@@ -27,8 +27,10 @@ public class Main {
 		// Exibe a tela de login
 		telaLogin.setVisible(true);
 
-		// Exibe a tela de cadastro
-		// no primeiro momento, apenas exibe sem logica
-		telaCadastroFuncionario.setVisible(true);
-	}
+        // Exibe a tela de cadastro
+        // no primeiro momento, apenas exibe sem logica
+        telaCadastroFuncionario.setVisible(true);
+        //Atualizando a tabela logo no começo pq ss
+        funcionarioControle.atualizarTabela();
+    }
 }

@@ -3,7 +3,10 @@ package utils;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.GraphicsEnvironment;
+import java.awt.Image;
 import java.io.IOException;
+
+import javax.swing.ImageIcon;
 
 public class Utils {
     
@@ -24,7 +27,7 @@ public class Utils {
         }
         return customFont;
     }
-    
+  
     // Enum para tipos de documento
     public enum TipoDocumento {
         CPF, CNPJ, TELEFONE
@@ -144,5 +147,10 @@ public class Utils {
         // Prefixos válidos para celulares
         String prefixoCelular = telefone.substring(2, 3);
         return prefixoCelular.equals("9") || prefixoCelular.equals("8") || prefixoCelular.equals("7");
+
+    public static ImageIcon carregarIcone(String caminho, int largura, int altura) {
+        ImageIcon iconeOriginal = new ImageIcon(Utils.class.getResource("/resources/imagens/"+caminho));
+        Image iconeRedimensionada = iconeOriginal.getImage().getScaledInstance(largura, altura, Image.SCALE_SMOOTH);
+        return new ImageIcon(iconeRedimensionada);
     }
 }

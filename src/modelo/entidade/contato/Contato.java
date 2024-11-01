@@ -3,7 +3,14 @@ package modelo.entidade.contato;
 public class Contato  {
 
 	private  String email;
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	private String telefone;
+	private int id;
 	
 	public String getEmail() {
 		return email;

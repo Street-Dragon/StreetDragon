@@ -5,20 +5,25 @@ import modelo.entidade.contato.Contato;
 import modelo.entidade.pessoa.funcionario.Funcionario;
 import utils.Utils;
 import visao.TelaPrincipal;
+import visao.TelaProdutos;
 import visao.TelaCadastroFuncionario;
 import visao.TelaLogin;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 public class FuncionarioControle {
 	private TelaLogin telaLogin;
 	private TelaCadastroFuncionario cadastroFuncionario;
 	private FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
+
 	private TelaPrincipal telaPrincipal;
 	private String cpfUsuarioLogado;
+	// cadastroFuncionario.addTableClickListener(this::selecionarFuncionario);
 
 	public void setTelaLogin(TelaLogin telaLogin) {
 		this.telaLogin = telaLogin;
@@ -43,11 +48,14 @@ public class FuncionarioControle {
 
 	public void setCadastroFuncionario(TelaCadastroFuncionario cadastroFuncionario) {
 		this.cadastroFuncionario = cadastroFuncionario;
-
+		atualizarTabela();
 		cadastroFuncionario.getBtnCadastrarFuncionario().addActionListener(new ActionListener() {
 			@Override
+
 			public void actionPerformed(ActionEvent e) {
 				cadastrarFuncionario();
+				atualizarTabela();
+				cadastroFuncionario.limparCampos();
 			}
 		});
 	}
@@ -78,7 +86,7 @@ public class FuncionarioControle {
 					JOptionPane.ERROR_MESSAGE);
 		}
 	}
-	
+
 	private void realizarLogout() {
         System.out.println("Função chamada");
         int confirmar = JOptionPane.showConfirmDialog(telaPrincipal, "Deseja realmente deslogar?", "Confirmação", JOptionPane.YES_NO_OPTION);
@@ -164,5 +172,24 @@ private void cadastrarFuncionario() {
 		}
 		return;
 	}
+
+	public void atualizarTabela() {
+
+		List<Funcionario> funcionarios = funcionarioDAO.listarFuncionarios();
+		DefaultTableModel tableModel = cadastroFuncionario.getTableModel();
+		for (Funcionario funcionario : funcionarios) {
+			Contato contato = funcionario.getContato();
+			tableModel.addRow(
+					new Object[] { funcionario.getCpf(), funcionario.getNome(), funcionario.getSenhaFuncionario(),
+							funcionario.isAdm() ? "Sim" : "Não", contato.getEmail(), contato.getTelefone() });
+		}
+	}
+
+	/*
+	 * public void selecionarFuncionario(int id) { Funcionario funcionario =
+	 * funcionarioDAO.getFuncionario(id); if (funcionario != null) {
+	 * view.setFuncionario(funcionario); } else {
+	 * JOptionPane.showMessageDialog(view, "Funcionário não encontrado"); } }
+	 */
 
 }
