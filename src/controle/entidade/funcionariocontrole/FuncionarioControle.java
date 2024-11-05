@@ -114,11 +114,7 @@ public class FuncionarioControle {
             telaLogin.setVisible(true); // Mostra a tela de login novamente
         }
     }
-	
-	
-
-
-    
+   
     private void cadastrarFuncionario() {
         String nome = cadastroFuncionario.getTextNome();
         char[] senhaArray = cadastroFuncionario.getPasswordField();
@@ -188,16 +184,6 @@ public class FuncionarioControle {
     	cadastroFuncionario.getTextFieldTelefone().setText(funcionario.getContato().getTelefone());
     	System.out.println("Campos atualizados");
     }
-    
-    
-    
-    /*public void selecionarFuncionario(int id) {
-        Funcionario funcionario = funcionarioDAO.getFuncionario(id);
-        if (funcionario != null) {
-            view.setFuncionario(funcionario);
-        } else {
-            JOptionPane.showMessageDialog(view, "Funcionário não encontrado");
-        }
-    }*/
-    
+
+
 }
