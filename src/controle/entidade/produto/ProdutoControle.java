@@ -35,7 +35,7 @@ public class ProdutoControle {
     	this.telaCProduto = telaCProduto;
     }
     
-    public void setCadastroProduto(TelaProdutos telaP) {
+    public void setCadastroProdutobtn(TelaProdutos telaP) {
         this.telaP = telaP;
         telaP.getBtnCadastrarProd().addActionListener(new ActionListener() {
             @Override
@@ -44,7 +44,19 @@ public class ProdutoControle {
                      System.out.println("botão ta cagado");
                  } else {
                      telaCProduto.setVisible(true);
+                     telaCProduto.getTextFieldId().setText(String.valueOf(pDAO.Idshow()));
                  }
+            }
+        });
+    }
+    public void setCadastroProduto(TelaCadastroProdutos telaCProduto) {
+    	this.telaCProduto = telaCProduto;
+    	telaCProduto.getbtnCadastrarProduto().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	cadastrarProduto(telaCProduto);
+            	telaCProduto.ClearText();
+            	telaCProduto.getTextFieldId().setText(String.valueOf(pDAO.Idshow()));
             }
         });
     }
@@ -133,6 +145,11 @@ public class ProdutoControle {
 	
 	public void cadastrarProduto(TelaCadastroProdutos cadastroProduto) {
 		// TODO Auto-generated method stub
+			//if quase mais longo que a sua mãe.
+			if (cadastroProduto.getTextFieldNome().isEmpty()||cadastroProduto.getCbMaterial().isEmpty()||cadastroProduto.getCbCategoria().isEmpty()||cadastroProduto.getCbCategoria().isEmpty()||cadastroProduto.getCbTamnho().isEmpty()||cadastroProduto.getTextFieldVariacao().isEmpty()|| String.valueOf(cadastroProduto.getTextFieldValor()).isEmpty()||String.valueOf(cadastroProduto.getTextFieldQntEstoque()).isEmpty()) {
+				JOptionPane.showMessageDialog(cadastroProduto, "Parece que você não prencheu todos os campos", ":(", JOptionPane.ERROR_MESSAGE);
+	            return;
+			}
 			String nome = cadastroProduto.getTextFieldNome();
 			String material = cadastroProduto.getCbMaterial();
 			String categoria = cadastroProduto.getCbCategoria();
@@ -140,12 +157,6 @@ public class ProdutoControle {
 			int estoque = cadastroProduto.getTextFieldQntEstoque();
 			String tamanho = cadastroProduto.getCbTamnho();
 			String variacao = cadastroProduto.getTextFieldVariacao();
-		
-			if (nome.isEmpty()||material.isEmpty()||categoria.isEmpty()||categoria.isEmpty()||tamanho.isEmpty()||variacao.isEmpty()|| String.valueOf(valor).isEmpty()||String.valueOf(estoque).isEmpty()) {
-				JOptionPane.showMessageDialog(cadastroProduto, "Parece que você não prencheu todos os campos", ":(", JOptionPane.ERROR_MESSAGE);
-	            return;
-			}
-			
 		
 		Produto produto = new Produto();
 		

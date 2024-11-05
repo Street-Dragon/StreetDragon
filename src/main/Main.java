@@ -24,9 +24,10 @@ public class Main {
 		TelaProdutos telaProduto = new TelaProdutos(telaPrincipal);
 		TelaCadastroProdutos telaCadastroProdutos = new TelaCadastroProdutos();
 		ProdutoControle produtoControle = new ProdutoControle();
-		produtoControle.setCadastroProduto(telaProduto);
+		produtoControle.setCadastroProdutobtn(telaProduto);
 		produtoControle.setTelaCadastrarProduto(telaCadastroProdutos);
-
+		produtoControle.setCadastroProduto(telaCadastroProdutos);
+		
 		// Instancia o controle
 		FuncionarioControle funcionarioControle = new FuncionarioControle();
 		// TelaPrincipalControle telaPrincipalControle = new TelaPrincipalControle();
@@ -36,7 +37,7 @@ public class Main {
 		funcionarioControle.setTelaPrincipal(telaPrincipal);
 		// Exibe a tela de login
 		telaLogin.setVisible(true);
-
+			
         // Exibe a tela de cadastro
         // no primeiro momento, apenas exibe sem logica
         telaCadastroFuncionario.setVisible(true);
@@ -44,5 +45,10 @@ public class Main {
         funcionarioControle.atualizarTabela();
         		
         produtoControle.listarProdutosTable();
+        
+        telaPrincipal.add(telaProduto); // or mainPanel.add(telaProdutos);
+        telaPrincipal.revalidate();
+        telaPrincipal.repaint();
+        
     }
 }

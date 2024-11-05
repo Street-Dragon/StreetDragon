@@ -17,6 +17,8 @@ import modelo.entidade.pessoa.fornecedor.Fornecedor;
 import modelo.entidade.produto.Produto;
 import modelo.enumeracao.tamanho.Tamanho;
 import net.miginfocom.swing.MigLayout;
+import utils.Utils;
+
 import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -53,6 +55,9 @@ public class TelaCadastroProdutos extends JFrame {
 	public JButton getbtnCadastrarProduto() {
 		return btnCadastrarProduto;
 	}
+	public JTextField getTextFieldId() {
+		return textFieldId;
+	}
 
 	/**
 	 * Launch the application.
@@ -80,8 +85,8 @@ public class TelaCadastroProdutos extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(255, 255, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-
-		loadCustomFont();
+		
+		hkGrotesk = Utils.loadCustomFont();
 
 		setContentPane(contentPane);
 		contentPane.setLayout(
@@ -92,7 +97,7 @@ public class TelaCadastroProdutos extends JFrame {
 		contentPane.add(lblId, "cell 0 0,growx");
 		lblId.setFont(hkGrotesk);
 
-		textFieldId = new JTextField(String.valueOf(pDAO.Idshow()));
+		textFieldId = new JTextField();
 		textFieldId.setHorizontalAlignment(SwingConstants.CENTER);
 		textFieldId.setFont(new Font("Dialog", Font.PLAIN, 15));
 		textFieldId.setEditable(false);
@@ -204,11 +209,6 @@ public class TelaCadastroProdutos extends JFrame {
 		btnCadastrarProduto.setFont(hkGrotesk);
 
 		btnCancelar = new JButton("Cancelar");
-		btnCancelar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				ClearText();
-			}
-		});
 		btnCancelar.setForeground(new Color(255, 255, 255));
 		btnCancelar.setBackground(new Color(226, 61, 40));
 		contentPane.add(btnCancelar, "cell 3 8 2 1,growx");
@@ -236,27 +236,6 @@ public class TelaCadastroProdutos extends JFrame {
 		cBTamanho.setSelectedItem(null);
 		cbMaterial.setSelectedItem(null);
 		cbCategoria.setSelectedItem(null);
-	}
-
-	private void loadCustomFont() {
-		try {
-			hkGrotesk = Font
-					.createFont(Font.TRUETYPE_FONT,
-							getClass().getResourceAsStream("/resources/fontes/HankenGrotesk-VariableFont_wght.ttf"))
-					.deriveFont(20f);
-			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-			ge.registerFont(hkGrotesk);
-		} catch (FontFormatException e) {
-			System.err.println("Formato de fonte inválido: " + e.getMessage());
-			e.printStackTrace();
-		} catch (IOException e) {
-			System.err.println("Erro ao ler o arquivo da fonte: " + e.getMessage());
-			e.printStackTrace();
-		}
-	}
-
-	public int getTextFieldId() {
-		return Integer.valueOf(textFieldId.getText());
 	}
 
 	public String getTextFieldNome() {
