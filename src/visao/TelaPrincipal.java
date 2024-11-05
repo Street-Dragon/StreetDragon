@@ -17,6 +17,8 @@ import net.miginfocom.swing.MigLayout;
 import utils.Utils;
 
 import javax.swing.JLabel;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class TelaPrincipal extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -30,6 +32,7 @@ public class TelaPrincipal extends JFrame {
 	private JLabel lblFuncionario;
 	private JButton btnDeslogar;
 	private JButton btnFuncionarios;
+	private JButton btnFornecedor;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(() -> {
@@ -59,6 +62,7 @@ public class TelaPrincipal extends JFrame {
 		TelaHistoricoVenda telaHistoricoVenda = new TelaHistoricoVenda(this);
 		TelaCadastroFuncionario telaCadastroFuncionario = new TelaCadastroFuncionario(this);
 		TelaProdutos telaProdutos = new TelaProdutos(this);
+		TelaFornecedor telaFornecedor = new TelaFornecedor(this);
 
 		// Painel do menu lateral
 		JPanel menuPanel = new JPanel();
@@ -71,6 +75,9 @@ public class TelaPrincipal extends JFrame {
 
 		btnHistorico = new JButton("Histórico de vendas");
 		menuPanel.add(btnHistorico, "cell 0 1,grow");
+		
+		btnFornecedor = new JButton("Fornecedor");
+		menuPanel.add(btnFornecedor, "cell 0 4,grow");
 
 		btnProdutos = new JButton("Produtos");
 		menuPanel.add(btnProdutos, "cell 0 2,grow");
@@ -102,6 +109,9 @@ public class TelaPrincipal extends JFrame {
 		config(btnProdutos);
 		config(btnVenda);
 		config(btnFuncionarios);
+		config(btnFornecedor);
+
+		
 
 		new TelaPrincipalControle(this);
 
@@ -114,6 +124,7 @@ public class TelaPrincipal extends JFrame {
 		mainPanel.add(telaHistoricoVenda, "TelaHistoricoVenda");
 		mainPanel.add(telaCadastroFuncionario, "TelaCadastroFuncionario");
 		mainPanel.add(telaProdutos, "TelaProdutos");
+		mainPanel.add(telaFornecedor, "TelaFornecedor");
 
 	}
 
@@ -137,6 +148,10 @@ public class TelaPrincipal extends JFrame {
 
 	public JButton getBtnFuncionarios() {
 		return btnFuncionarios;
+	}
+	
+	public JButton getBtnFornecedor() {
+		return btnFornecedor;
 	}
 
 	public JButton getBtnDeslogar() {
