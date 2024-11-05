@@ -33,7 +33,15 @@ public class TelaPrincipalControle {
 				mudarCorBotao(telaPrincipal.getBtnHistorico());
 			}
 		});
-
+		
+		this.telaPrincipal.getBtnFornecedor().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				trocarTela("TelaFornecedor");
+				mudarCorBotao(telaPrincipal.getBtnFornecedor());
+			}
+		});
+		
 		this.telaPrincipal.getBtnProdutos().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
