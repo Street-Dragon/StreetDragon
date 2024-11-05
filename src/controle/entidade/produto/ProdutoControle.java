@@ -26,6 +26,7 @@ public class ProdutoControle {
     private TelaLogin telaLogin;
     private TelaPrincipal telaPrincipal;
     private ProdutoDAO pDAO = new ProdutoDAO();
+    
 
     public void setTelaEditarProduto(TelaEditarProduto telaEProduto) {
         this.telaEProduto = telaEProduto;
@@ -33,13 +34,17 @@ public class ProdutoControle {
     public void setTelaCadastrarProduto(TelaCadastroProdutos telaCProduto) {
     	this.telaCProduto = telaCProduto;
     }
-    //---------------------------------------------------------------------------------------
+    
     public void setCadastroProduto(TelaProdutos telaP) {
         this.telaP = telaP;
         telaP.getBtnCadastrarProd().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                telaCProduto.setVisible(true);
+            	 if (telaCProduto == null) {
+                     System.out.println("botão ta cagado");
+                 } else {
+                     telaCProduto.setVisible(true);
+                 }
             }
         });
     }
@@ -55,22 +60,6 @@ public class ProdutoControle {
 	        }
 	    });
 	}
-    
-    
-    /*public void setCadastroFuncionario(TelaCadastroFuncionario cadastroFuncionario) {
-		this.cadastroFuncionario = cadastroFuncionario;
-		atualizarTabela();
-		cadastroFuncionario.getBtnCadastrarFuncionario().addActionListener(new ActionListener() {
-			@Override
-
-			public void actionPerformed(ActionEvent e) {
-				cadastrarFuncionario();
-				atualizarTabela();
-				cadastroFuncionario.limparCampos();
-			}
-		});
-	}*/
-    //-----------------------------------------------------------------------------------------
 
 	public void setTelaCadastro(TelaProdutos listarProduto) {
 		this.telaP = listarProduto;

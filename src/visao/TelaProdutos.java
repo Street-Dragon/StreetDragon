@@ -14,6 +14,8 @@ import net.miginfocom.swing.MigLayout;
 import utils.Utils;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class TelaProdutos extends JPanel {
 
@@ -30,7 +32,6 @@ public class TelaProdutos extends JPanel {
 	private JTextField txtFieldNome;
 	private JTextField txtFieldValor;
 	private JTextField txtFieldQntEstoque;
-	private static DefaultTableModel tableModel;
 	private JButton btnEditarProd;
 
 	
@@ -126,7 +127,7 @@ public class TelaProdutos extends JPanel {
 		add(scrollPane, "cell 0 1 4 3,grow");
 
 		table = new JTable();
-		table.setFont(new Font("Hanken Grotesk", Font.PLAIN, 25));
+		table.setFont(new Font("Hanken Grotesk", Font.PLAIN, 15));
 		table.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Id", "Nome", "Valor", "Qnt estoque" }));
 		table.setFillsViewportHeight(true);
 		table.setBackground(new Color(255, 233, 233));

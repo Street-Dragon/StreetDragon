@@ -13,17 +13,19 @@ import visao.TelaCadastroProdutos;
 public class Main {
 	public static void main(String[] args) {
 		// Cria o banco
-		ConexaoBD.criarBancoDeDadosETabela();
+		//ConexaoBD.criarBancoDeDadosETabela();
 
 		// Inicialização as telas
 		TelaLogin telaLogin = new TelaLogin();
 		TelaPrincipal telaPrincipal = new TelaPrincipal();
+		
 		TelaCadastroFuncionario telaCadastroFuncionario = new TelaCadastroFuncionario(telaPrincipal);
-		TelaProdutos telaProduto = new TelaProdutos(telaPrincipal); 
-		TelaCadastroProdutos telaCadastroProdutos = new TelaCadastroProdutos(); 
+		
+		TelaProdutos telaProduto = new TelaProdutos(telaPrincipal);
+		TelaCadastroProdutos telaCadastroProdutos = new TelaCadastroProdutos();
 		ProdutoControle produtoControle = new ProdutoControle();
-		produtoControle.setCadastroProduto(telaProduto);  // Wire the controller to the TelaProdutos
-
+		produtoControle.setCadastroProduto(telaProduto);
+		produtoControle.setTelaCadastrarProduto(telaCadastroProdutos);
 
 		// Instancia o controle
 		FuncionarioControle funcionarioControle = new FuncionarioControle();
@@ -38,9 +40,9 @@ public class Main {
         // Exibe a tela de cadastro
         // no primeiro momento, apenas exibe sem logica
         telaCadastroFuncionario.setVisible(true);
-        telaProduto.setVisible(true);
         //Atualizando a tabela logo no começo pq ss
         funcionarioControle.atualizarTabela();
+        		
         produtoControle.listarProdutosTable();
     }
 }
