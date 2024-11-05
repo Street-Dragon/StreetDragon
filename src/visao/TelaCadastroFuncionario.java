@@ -81,7 +81,7 @@ public class TelaCadastroFuncionario extends JPanel { // jpanel ao invés de jfr
 	}
 
 	public JButton getBtnDeletarFuncionario() {
-		return btnCadastrarFuncionario;
+		return btnDeletarFuncionario;
 	}
 
 	public boolean getChckbxAdm() {

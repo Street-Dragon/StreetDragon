@@ -82,38 +82,20 @@ public class FuncionarioDAO {
         }
     }
     
-    public void deletarFuncionario(int id, String nomeFuncionario, String cpfFuncionario) {
-        int resposta = JOptionPane.showConfirmDialog(
-            null,
-            "Você tem certeza que deseja deletar o Funcionário: " + nomeFuncionario + 
-            ", com o CPF: " + cpfFuncionario + "? Essa ação é IRREVERSÍVEL!",
-            "Confirmar Exclusão",
-            JOptionPane.YES_NO_OPTION,
-            JOptionPane.WARNING_MESSAGE
-        );
-        if (resposta == JOptionPane.YES_OPTION) {
-            String sql = "DELETE FROM funcionario WHERE cpf = ?";
-            try (Connection conn = ConexaoBD.getConexaoMySQL();
-                 PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-                stmt.setString(1, cpfFuncionario);
-
-                int dado = stmt.executeUpdate();
-
-                if (dado > 0) {
-                    JOptionPane.showMessageDialog(null, "Funcionário deletado com sucesso.");
-                } else {
-                    JOptionPane.showMessageDialog(null, "Nenhum funcionário encontrado com o CPF fornecido.");
-                }
-            } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, "Erro ao deletar funcionário: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-                e.printStackTrace();
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Ação de exclusão cancelada.");
+    public boolean excluirFuncionario(String cpf) {
+        String sql = "DELETE FROM funcionario WHERE cpf = ?";
+        
+        try (Connection conn = ConexaoBD.getConexaoMySQL();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, cpf);
+            int rowsAffected = stmt.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
         }
     }
-    
+
     public List<Funcionario> listarFuncionarios() {
 		List<Funcionario> funcionarios = new ArrayList<>();
 		String sqlSelect = "SELECT f.*, c.email, c.telefone "

@@ -20,7 +20,6 @@ public class FuncionarioControle {
 	private TelaLogin telaLogin;
 	private TelaCadastroFuncionario cadastroFuncionario;
 	private FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
-
 	private TelaPrincipal telaPrincipal;
 	private String cpfUsuarioLogado;
   //cadastroFuncionario.addTableClickListener(this::selecionarFuncionario);
@@ -52,7 +51,6 @@ public class FuncionarioControle {
 			adicionarListeners();
 			cadastroFuncionario.getBtnCadastrarFuncionario().addActionListener(new ActionListener() {
 			@Override
-			
 			public void actionPerformed(ActionEvent e) {
 				cadastrarFuncionario();
 				cadastroFuncionario.limparCampos();
@@ -114,7 +112,7 @@ public class FuncionarioControle {
             telaLogin.setVisible(true); // Mostra a tela de login novamente
         }
     }
-   
+
     private void cadastrarFuncionario() {
         String nome = cadastroFuncionario.getTextNome();
         char[] senhaArray = cadastroFuncionario.getPasswordField();
@@ -151,6 +149,33 @@ public class FuncionarioControle {
         return;
     }
     
+    // Método para excluir um funcionário
+    private void excluirFuncionario() {
+        int selectedRow = cadastroFuncionario.getTable().getSelectedRow();
+        
+        if (selectedRow != -1) {
+            String cpfFuncionario = (String) cadastroFuncionario.getTable().getValueAt(selectedRow, 0);
+            
+            int resposta = JOptionPane.showConfirmDialog(cadastroFuncionario,
+                "Você tem certeza que deseja excluir o funcionário com CPF: " + cpfFuncionario + "?",
+                "Confirmar Exclusão",
+                JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+
+            if (resposta == JOptionPane.YES_OPTION) {
+
+                boolean excluido = funcionarioDAO.excluirFuncionario(cpfFuncionario);
+                
+                if (excluido) {
+                    JOptionPane.showMessageDialog(cadastroFuncionario, "Funcionário excluído com sucesso!");
+                    atualizarTabela();
+                } else {
+                    JOptionPane.showMessageDialog(cadastroFuncionario, "Erro ao excluir o funcionário.", "Erro", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(cadastroFuncionario, "Selecione um funcionário para excluir.", "Erro", JOptionPane.WARNING_MESSAGE);
+        }
+    }
     public void atualizarTabela() {
     
             List<Funcionario> funcionarios = funcionarioDAO.listarFuncionarios();
