@@ -83,7 +83,7 @@ public class TelaProdutos extends JPanel {
 
 		JPanel panel_1 = new JPanel();
 		add(panel_1, "cell 3 0,grow");
-		panel_1.setBorder(new LineBorder(new Color(246, 233, 233), 5));
+		// panel_1.setBorder(new LineBorder(new Color(246, 233, 233), 5));
 		panel_1.setBackground(new Color(255, 255, 255));
 
 		// Botão Cadastrar
@@ -117,5 +117,41 @@ public class TelaProdutos extends JPanel {
 		JTableHeader header = table.getTableHeader();
 		header.setBackground(Color.WHITE);
 		header.setFont(new Font("Hanken Grotesk", Font.PLAIN, 25));
+	}
+
+	public JTextField getTxtId() {
+		return txtId;
+	}
+
+	public void setTxtId(JTextField txtId) {
+		this.txtId = txtId;
+	}
+
+	public JTextField getTxtNome() {
+		return txtNome;
+	}
+
+	public void setTxtNome(JTextField txtNome) {
+		this.txtNome = txtNome;
+	}
+
+	public JButton getBtnCadastrarProd() {
+		return btnCadastrarProd;
+	}
+
+	public JButton getBtnDeletarProd() {
+		return btnDeletarProd;
+	}
+
+	public void setTxtValor(JTextField txtValor) {
+		this.txtValor = txtValor;
+	}
+
+	public void setTxtQuantEstoque(JTextField txtQuantEstoque) {
+		this.txtQuantEstoque = txtQuantEstoque;
+	}
+
+	public JTable geTable() {
+		return table;
 	}
 }
