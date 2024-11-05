@@ -20,6 +20,7 @@ public class FuncionarioControle {
 	private TelaLogin telaLogin;
 	private TelaCadastroFuncionario cadastroFuncionario;
 	private FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
+	private String funcionarioIdStr;
 
 	private TelaPrincipal telaPrincipal;
 	private String cpfUsuarioLogado;
@@ -47,6 +48,7 @@ public class FuncionarioControle {
 	}
       
 	public void setCadastroFuncionario(TelaCadastroFuncionario cadastroFuncionario) {
+		
 		this.cadastroFuncionario = cadastroFuncionario;
 			atualizarTabela();
 			adicionarListeners();
@@ -60,6 +62,13 @@ public class FuncionarioControle {
 				
 			}
 		});
+			cadastroFuncionario.getBtnEditarFuncionario().addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					editarFuncinarioDAO(funcionarioIdStr);
+				}
+			});
 	}
 	
     private void adicionarListeners() {
@@ -69,7 +78,7 @@ public class FuncionarioControle {
                 int selectedRow = cadastroFuncionario.getTable().getSelectedRow();
                 if (selectedRow != -1) {
                 	 // |Tem que parar de converter, passa string direto e ajusta;
-                    String funcionarioIdStr = (String) cadastroFuncionario.getTable().getValueAt(selectedRow, 0);
+                    funcionarioIdStr = (String) cadastroFuncionario.getTable().getValueAt(selectedRow, 0);
                    
                     carregarDadosFuncionarioDAO(funcionarioIdStr);
                 }
@@ -156,7 +165,6 @@ public class FuncionarioControle {
     }
     
     public void atualizarTabela() {
-    
             List<Funcionario> funcionarios = funcionarioDAO.listarFuncionarios();
             DefaultTableModel tableModel = cadastroFuncionario.getTableModel();
             for (Funcionario funcionario : funcionarios) {
@@ -175,8 +183,49 @@ public class FuncionarioControle {
     private void carregarDadosFuncionarioDAO(String funcionarioIdStr) {
         Funcionario funcionario = funcionarioDAO.carregarDadosFuncionario(funcionarioIdStr);
         if (funcionario != null) {
-        	System.out.println("atualizar campo chamado");
+        	
             atualizarCampos(funcionario);
+        }
+    }
+    
+    private void editarFuncinarioDAO(String funcionarioIdString) {
+    	//Funcionario funcionario = funcionarioDAO.carregarDadosFuncionario(funcionarioIdStr);
+    	//funcionarioDAO.editarFuncionario(funcionario);
+    	
+    	String nome = cadastroFuncionario.getTextNome();
+        String cpf = cadastroFuncionario.getTextCpf();
+        char[] senhaArray = cadastroFuncionario.getPasswordField();
+        String senha = new String(senhaArray);
+        boolean isAdm = cadastroFuncionario.getChckbxAdm();
+        String email = cadastroFuncionario.getTextEmail();
+        String telefone = cadastroFuncionario.getTextTelefone();
+        
+        if (nome.isEmpty() || cpf.isEmpty() || senha.isEmpty()) {
+            JOptionPane.showMessageDialog(cadastroFuncionario, "Preencha todos os campos obrigatórios.", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Criar o objeto Funcionario com os novos dados
+        Funcionario funcionario = new Funcionario();
+        funcionario.setNome(nome);
+        funcionario.setCpf(cpf);
+        funcionario.setSenhaFuncionario(senha);
+        funcionario.setAdm(isAdm);
+
+        Contato contato = new Contato();
+        contato.setEmail(email);
+        contato.setTelefone(telefone);
+        funcionario.setContato(contato);
+
+        
+        boolean resultado = funcionarioDAO.editarFuncionario(funcionario);
+        
+        if (resultado) {
+            JOptionPane.showMessageDialog(cadastroFuncionario, "Funcionário atualizado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            
+            atualizarTabela();
+        } else {
+            JOptionPane.showMessageDialog(cadastroFuncionario, "Erro ao atualizar funcionário.", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
     
@@ -186,7 +235,7 @@ public class FuncionarioControle {
     	cadastroFuncionario.getTextFieldSenha().setText(funcionario.getSenhaFuncionario());
     	cadastroFuncionario.getTextFieldEmail().setText(funcionario.getContato().getEmail());
     	cadastroFuncionario.getTextFieldTelefone().setText(funcionario.getContato().getTelefone());
-    	System.out.println("Campos atualizados");
+    	
     }
     
     

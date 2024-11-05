@@ -45,6 +45,7 @@ public class TelaCadastroFuncionario extends JPanel { // jpanel ao invés de jfr
 	private JTextField textEmail;
 	private JTextField textTelefone;
 	private JButton btnCadastrarFuncionario;
+	private JButton btnEditarFuncionario;
 	private JCheckBox chckbxVerSenha;
 	private JCheckBox chckbxAdm;
 	private JTable table;
@@ -81,6 +82,10 @@ public class TelaCadastroFuncionario extends JPanel { // jpanel ao invés de jfr
 
 	public boolean getChckbxAdm() {
 		return chckbxAdm.isSelected();
+	}
+	
+	public JButton getBtnEditarFuncionario() {
+		return btnEditarFuncionario;
 	}
 
 	// main apagado
@@ -224,21 +229,25 @@ public class TelaCadastroFuncionario extends JPanel { // jpanel ao invés de jfr
 		JButton btnDeletarFuncionario = new JButton("Excluir Funcionario");
 		btnDeletarFuncionario.setForeground(new Color(255, 255, 255));
 		btnDeletarFuncionario.setFont(hkGrotesk);
-		btnDeletarFuncionario.addActionListener(new ActionListener() {
+		
+		/*btnDeletarFuncionario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
-		});
+		});*/
+		
 		btnDeletarFuncionario.setBackground(new Color(255, 0, 0));
 		panel_1.add(btnDeletarFuncionario, "cell 0 2,grow");
 		// Botâo Editar
-		JButton btnEditarFuncionario = new JButton("Editar Funcionario");
+		btnEditarFuncionario = new JButton("Editar Funcionario");
 		btnEditarFuncionario.setForeground(new Color(255, 255, 255));
 		btnEditarFuncionario.setFont(hkGrotesk);
-		btnEditarFuncionario.addActionListener(new ActionListener() {
+		
+		/*btnEditarFuncionario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
 			}
-		});
+		});*/
+		
 		btnEditarFuncionario.setBackground(Color.PINK);
 		panel_1.add(btnEditarFuncionario, "cell 0 1,grow");
 

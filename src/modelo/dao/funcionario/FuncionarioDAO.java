@@ -135,18 +135,45 @@ public class FuncionarioDAO {
 	            funcionario.setNome(rs.getString("nome"));
 	            funcionario.setCpf(rs.getString("cpf"));
 	            funcionario.setSenhaFuncionario(rs.getString("senha"));
-	            System.out.println("Funcionario buscado");
 	            
 	            Contato contato = new Contato();
 	            contato.setEmail(rs.getString("email"));
 	            contato.setTelefone(rs.getString("telefone"));
 	            funcionario.setContato(contato);
-	            System.out.println("Contato buscado");
+	           
 	        }
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	    }
 	    return funcionario;
+	}
+	
+	public boolean editarFuncionario(Funcionario f) {
+		  String sqlFuncionario = "UPDATE funcionario SET nome = ?, senha = ?, adm = ? WHERE cpf = ?";
+		  String sqlContato = "UPDATE contato SET email = ?, telefone = ? WHERE id_contato = ?";
+		  
+		  try (Connection conn = ConexaoBD.getConexaoMySQL();
+		             PreparedStatement stmtContato = conn.prepareStatement(sqlContato, Statement.RETURN_GENERATED_KEYS);
+		             PreparedStatement stmtFuncionario = conn.prepareStatement(sqlFuncionario)) {
+			  
+			  	stmtFuncionario.setString(1, f.getNome());
+	            stmtFuncionario.setString(2, f.getSenhaFuncionario());
+	            stmtFuncionario.setBoolean(3, f.isAdm());
+	            stmtFuncionario.setString(4, f.getCpf());
+	            stmtFuncionario.executeUpdate();
+
+	            
+	            stmtContato.setString(1, f.getContato().getEmail());
+	            stmtContato.setString(2, f.getContato().getTelefone());
+	            stmtContato.setInt(3, f.getContato().getId());
+	            stmtContato.executeUpdate();
+			  
+		  } catch (SQLException e) {
+		
+			e.printStackTrace();
+		}
+		
+		return true;
 	}
 	
 	public void deletarFuncionario(int id) {
