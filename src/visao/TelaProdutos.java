@@ -30,6 +30,7 @@ public class TelaProdutos extends JPanel {
 	private JTextField txtFieldNome;
 	private JTextField txtFieldValor;
 	private JTextField txtFieldQntEstoque;
+	private static DefaultTableModel tableModel;
 	private JButton btnEditarProd;
 
 	

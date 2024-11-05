@@ -57,7 +57,7 @@ public class TelaListarProdutos extends JFrame {
 	 * Create the frame.
 	 */
 	public TelaListarProdutos() {	
-		Pcontrole = new ProdutoControle(this);
+		Pcontrole = new ProdutoControle();
 		setTitle("Lista de Produtos");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 672, 540);
@@ -99,7 +99,7 @@ public class TelaListarProdutos extends JFrame {
 		});
 		panel.add(btnNovoProduto_1, "cell 1 1,growx");
 		
-	    Pcontrole = new ProdutoControle(this);
+	    Pcontrole = new ProdutoControle();
 		JButton btnDeletarProduto = new JButton("Deletar Produto");
 		btnDeletarProduto.addActionListener(new ActionListener() {
 	        public void actionPerformed(ActionEvent e) {
@@ -112,7 +112,7 @@ public class TelaListarProdutos extends JFrame {
 		panel.add(btnDeletarProduto, "cell 2 1,growx");
 		Pcontrole.setTelaListarProdutos(this);
 
-		Pcontrole = new ProdutoControle(this);
+		Pcontrole = new ProdutoControle();
 
         JButton btnEditarProduto = new JButton("Editar Produto");
         btnEditarProduto.addActionListener(new ActionListener() {

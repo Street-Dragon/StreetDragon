@@ -45,7 +45,6 @@ public class TelaCadastroProdutos extends JFrame {
 	private JButton btnCancelar;
 	private JButton btnCadastrarProduto;
 	private ProdutoDAO pDAO = new ProdutoDAO();
-	ProdutoControle produtoC = new ProdutoControle();
 
 	public JButton getbtnCancelar() {
 		return btnCancelar;
@@ -199,12 +198,6 @@ public class TelaCadastroProdutos extends JFrame {
 		textFieldQntEstoque.setFont(new Font("Dialog", Font.PLAIN, 15));
 
 		btnCadastrarProduto = new JButton("Cadastrar Produto");
-		btnCadastrarProduto.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				ProdutoControle Pcontrole = new ProdutoControle();
-				produtoC.cadastrarProduto(TelaCadastroProdutos.this);
-			}
-		});
 		btnCadastrarProduto.setForeground(new Color(255, 255, 255));
 		btnCadastrarProduto.setBackground(new Color(100, 149, 255));
 		contentPane.add(btnCadastrarProduto, "cell 0 8 2 1,growx");

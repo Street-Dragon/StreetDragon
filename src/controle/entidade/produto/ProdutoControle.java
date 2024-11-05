@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import modelo.dao.funcionario.FuncionarioDAO;
 import modelo.dao.produto.ProdutoDAO;
 import modelo.entidade.produto.Produto;
 
@@ -15,6 +16,8 @@ import visao.TelaCadastroProdutos;
 import visao.TelaDeletarProduto;
 import visao.TelaEditarProduto;
 import visao.TelaListarProdutos;
+import visao.TelaLogin;
+import visao.TelaPrincipal;
 import visao.TelaProdutos;
 
 public class ProdutoControle {
@@ -22,11 +25,9 @@ public class ProdutoControle {
     private TelaEditarProduto telaEProduto;
     private TelaListarProdutos telaLProduto;
     private TelaProdutos telaP;
+    private TelaLogin telaLogin;
+    private TelaPrincipal telaPrincipal;
     private ProdutoDAO pDAO = new ProdutoDAO();
-
-    public ProdutoControle(TelaListarProdutos telaLProduto) {
-        this.telaLProduto = telaLProduto;
-    }
 
     public void setTelaListarProdutos(TelaListarProdutos telaLProduto) {
         this.telaLProduto = telaLProduto;
@@ -34,25 +35,27 @@ public class ProdutoControle {
     public void setTelaEditarProduto(TelaEditarProduto telaEProduto) {
         this.telaEProduto = telaEProduto;
     }
+    public void setTelaCadastrarProduto(TelaCadastroProdutos telaCProduto) {
+    	this.telaCProduto = telaCProduto;
+    }
     //---------------------------------------------------------------------------------------
-    public void setCadastroProdutoD(TelaCadastroProdutos cadastroProduto) {
-	    this.telaCProduto = cadastroProduto;
-	    cadastroProduto.getbtnCadastrarProduto().addActionListener(new ActionListener() {
+    public void setCadastroProduto(TelaProdutos telaP) {
+	    this.telaP = telaP;
+	    telaP.getBtnCadastrarProd().addActionListener(new ActionListener() {
 	        @Override
 	        public void actionPerformed(ActionEvent e) {
-	            //cadastrarProduto();
-	            telaCProduto.ClearText();
-	            telaCProduto.dispose();
+	            telaCProduto.setVisible(true);
 	        }
 	    });
 	}
-    public void setCadastroProduto(TelaProdutos telaP) {
+    
+    public void setDeletarProduto(TelaProdutos telaP) {
 	    this.telaP = telaP;
 	    listarProdutosTable2();
 	    telaP.getBtnDeletarProd().addActionListener(new ActionListener() {
 	        @Override
 	        public void actionPerformed(ActionEvent e) {
-	        	DeletProduto2();
+	        	DeletProduto();
 	            listarProdutosTable2();
 	        }
 	    });
@@ -72,23 +75,6 @@ public class ProdutoControle {
 			}
 		});
 	}*/
-    //-----------------------------------------------------------------------------------------
-    public ProdutoControle(TelaProdutos telaP) {
-    	this.telaP.getBtnCadastrarProd().addActionListener(new ActionListener() {
-    		@Override
-    		public void actionPerformed(ActionEvent e) {
-    			telaCProduto.setVisible(true);
-    		}
-    	});
-    	this.telaP.getBtnDeletarProd().addActionListener(new ActionListener() {
-    		@Override
-    		public void actionPerformed(ActionEvent e) {
-    			DeletProduto2();
-	            listarProdutosTable2();
-    		}
-    	});
-    	
-    }
     //-----------------------------------------------------------------------------------------
 
 	public void setTelaCadastro(TelaProdutos listarProduto) {
@@ -217,22 +203,8 @@ public class ProdutoControle {
 			JOptionPane.showMessageDialog(cadastroProduto, "Erro ao cadastrar produto","Erro", JOptionPane.ERROR_MESSAGE);
 		}
 	}
-
-
-	public void DeletProduto(TelaListarProdutos telaL) {
-		// TODO Auto-generated method stub
-		JTable table = telaL.gettable();
-		int selectedRowIndex = table.getSelectedRow();
-		if (selectedRowIndex == -1) {
-			JOptionPane.showMessageDialog(telaL, "Nenhum produto selecionado","Erro", JOptionPane.ERROR_MESSAGE);
-		} else {
-			String firstColumnValue = table.getValueAt(selectedRowIndex, 0).toString();
-			pDAO.deletarProduto(Integer.valueOf(firstColumnValue));
-			listarProdutosTable();
-		}
-	}
 	//-----------------------------------------------------------------
-	public void DeletProduto2() {
+	public void DeletProduto() {
 		// TODO Auto-generated method stub
 		JTable table = telaP.getTable();
 		int selectedRowIndex = table.getSelectedRow();
@@ -288,5 +260,6 @@ public class ProdutoControle {
 			
 		}
 	}
+	
 
 }
