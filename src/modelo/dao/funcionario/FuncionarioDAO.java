@@ -85,8 +85,10 @@ public class FuncionarioDAO {
     
     public List<Funcionario> listarFuncionarios() {
 		List<Funcionario> funcionarios = new ArrayList<>();
-		String sqlSelect = "SELECT f.*, c.email, c.telefone FROM funcionario f "
-				+ "JOIN contato c ON f.contato_id = c.id_contato";
+		String sqlSelect = "SELECT f.*, c.email, c.telefone "
+                + "FROM funcionario f "
+                + "JOIN contato c ON f.contato_id = c.id_contato"; // Qualifique as colunas corretamente
+
 
 		try (Connection conn = ConexaoBD.getConexaoMySQL();
 				PreparedStatement stmt = conn.prepareStatement(sqlSelect);
@@ -117,10 +119,10 @@ public class FuncionarioDAO {
 
 	public Funcionario carregarDadosFuncionario(String cpf) {
 	    Funcionario funcionario = null;
-	    String sql = "SELECT f.nome, f.cpf, f.senha, c.email, c.telefone " +
-	                 "FROM funcionario f " +
-	                 "JOIN contato c ON f.contato_id = c.contato_id " +
-	                 "WHERE f.cpf = ?";
+	    String sql = "SELECT nome, cpf, senha, email, telefone "
+	    		+ "FROM funcionario "
+	    		+ "JOIN contato ON contato_id = id_contato "
+	    		+ "WHERE cpf = ?";
 	    
 	    try (Connection conn = ConexaoBD.getConexaoMySQL();
 	         PreparedStatement stmt = conn.prepareStatement(sql)) {
