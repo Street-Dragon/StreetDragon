@@ -108,15 +108,10 @@ public class TelaProdutos extends JPanel {
 		add(scrollPane, "cell 0 1 4 3,grow");
 
 		table = new JTable();
-		table.setFont(new Font("Hanken Grotesk", Font.PLAIN, 25));
 		table.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Id", "Nome", "Valor", "Qnt estoque" }));
-		table.setFillsViewportHeight(true);
-		table.setBackground(new Color(255, 233, 233));
 		scrollPane.setViewportView(table);
 
-		JTableHeader header = table.getTableHeader();
-		header.setBackground(Color.WHITE);
-		header.setFont(new Font("Hanken Grotesk", Font.PLAIN, 25));
+		Utils.configTabela(table, scrollPane);
 	}
 
 	public JTextField getTxtId() {
