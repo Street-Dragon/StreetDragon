@@ -6,18 +6,22 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
 import modelo.dao.produto.ProdutoDAO;
 import modelo.entidade.produto.Produto;
+
+import visao.TelaCadastroFuncionario;
 import visao.TelaCadastroProdutos;
 import visao.TelaDeletarProduto;
 import visao.TelaEditarProduto;
 import visao.TelaListarProdutos;
+import visao.TelaProdutos;
 
 public class ProdutoControle {
-	private TelaCadastroProdutos telaCProduto;
-	private TelaDeletarProduto telaDProduto;	
+	private TelaCadastroProdutos telaCProduto;	
     private TelaEditarProduto telaEProduto;
     private TelaListarProdutos telaLProduto;
+    private TelaProdutos telaP;
     private ProdutoDAO pDAO = new ProdutoDAO();
 
     public ProdutoControle(TelaListarProdutos telaLProduto) {
@@ -27,7 +31,77 @@ public class ProdutoControle {
     public void setTelaListarProdutos(TelaListarProdutos telaLProduto) {
         this.telaLProduto = telaLProduto;
     }
+    public void setTelaEditarProduto(TelaEditarProduto telaEProduto) {
+        this.telaEProduto = telaEProduto;
+    }
+    //---------------------------------------------------------------------------------------
+    public void setCadastroProdutoD(TelaCadastroProdutos cadastroProduto) {
+	    this.telaCProduto = cadastroProduto;
+	    cadastroProduto.getbtnCadastrarProduto().addActionListener(new ActionListener() {
+	        @Override
+	        public void actionPerformed(ActionEvent e) {
+	            //cadastrarProduto();
+	            telaCProduto.ClearText();
+	            telaCProduto.dispose();
+	        }
+	    });
+	}
+    public void setCadastroProduto(TelaProdutos telaP) {
+	    this.telaP = telaP;
+	    listarProdutosTable2();
+	    telaP.getBtnDeletarProd().addActionListener(new ActionListener() {
+	        @Override
+	        public void actionPerformed(ActionEvent e) {
+	        	DeletProduto2();
+	            listarProdutosTable2();
+	        }
+	    });
+	}
+    
+    
+    /*public void setCadastroFuncionario(TelaCadastroFuncionario cadastroFuncionario) {
+		this.cadastroFuncionario = cadastroFuncionario;
+		atualizarTabela();
+		cadastroFuncionario.getBtnCadastrarFuncionario().addActionListener(new ActionListener() {
+			@Override
 
+			public void actionPerformed(ActionEvent e) {
+				cadastrarFuncionario();
+				atualizarTabela();
+				cadastroFuncionario.limparCampos();
+			}
+		});
+	}*/
+    //-----------------------------------------------------------------------------------------
+    public ProdutoControle(TelaProdutos telaP) {
+    	this.telaP.getBtnCadastrarProd().addActionListener(new ActionListener() {
+    		@Override
+    		public void actionPerformed(ActionEvent e) {
+    			telaCProduto.setVisible(true);
+    		}
+    	});
+    	this.telaP.getBtnDeletarProd().addActionListener(new ActionListener() {
+    		@Override
+    		public void actionPerformed(ActionEvent e) {
+    			DeletProduto2();
+	            listarProdutosTable2();
+    		}
+    	});
+    	
+    }
+    //-----------------------------------------------------------------------------------------
+
+	public void setTelaCadastro(TelaProdutos listarProduto) {
+		this.telaP = listarProduto;
+		listarProduto.getBtnCadastrarProd().addActionListener(new ActionListener() {
+			@Override
+			
+			public void actionPerformed(ActionEvent e) {
+				telaCProduto.setVisible(true);
+			}
+		});
+	}
+    
     public void listarProdutosTable() {
         if (telaLProduto == null) {
             throw new IllegalStateException("TelaListarProdutos is not set");
@@ -45,22 +119,37 @@ public class ProdutoControle {
                 produto.getQuantEstoque(),
             });
         }
-    }
-    
-    public ProdutoControle() {
-    }
-    public void setTelaEditarProduto(TelaEditarProduto telaEProduto) {
-        this.telaEProduto = telaEProduto;
-    }
+        }
+
+
 
     public Produto getProdutoById(int id) {
         Produto produto = pDAO.getId(id);
         if (produto == null) {
-            throw new IllegalStateException("Produto with ID " + id + " not found.");
+            throw new IllegalStateException("Produt com ID " + id + "não encontrado.");
         }
         return produto;
     }
 
+    public void listarProdutosTable2() {
+        if (telaLProduto == null) {
+            throw new IllegalStateException("TelaListarProdutos is not set");
+        }
+
+        List<Produto> produtos = pDAO.listarProdutos();
+        DefaultTableModel tableModel = (DefaultTableModel) telaP.getTable().getModel();
+        tableModel.setRowCount(0);
+
+        for (Produto produto : produtos) {
+            tableModel.addRow(new Object[]{
+                produto.getIdProduto(),
+                produto.getNomeProduto(),
+                produto.getValor(),
+                produto.getQuantEstoque(),
+            });
+        }
+    }
+    
 
     public void editProduto(Produto produto) {
         String nome = telaEProduto.getTextFieldNome();
@@ -92,29 +181,7 @@ public class ProdutoControle {
         }
     }
 	
-	public void setCadastroProduto(TelaCadastroProdutos cadastroProduto) {
-	    this.telaCProduto = cadastroProduto;
-	    cadastroProduto.getbtnCadastrarProduto().addActionListener(new ActionListener() {
-	        @Override
-	        public void actionPerformed(ActionEvent e) {
-	            //cadastrarProduto();
-	            telaCProduto.ClearText();
-	            telaCProduto.dispose();
-	        }
-	    });
-	}
-
-	public void setTelaCadastro(TelaListarProdutos listarProduto) {
-		this.telaLProduto = listarProduto;
-		listarProduto.getbtnNovoProduto().addActionListener(new ActionListener() {
-			@Override
-			
-			public void actionPerformed(ActionEvent e) {
-				telaCProduto.setVisible(true);
-			}
-		});
-		
-	}
+	
 
 	
 	public void cadastrarProduto(TelaCadastroProdutos cadastroProduto) {
@@ -164,6 +231,21 @@ public class ProdutoControle {
 			listarProdutosTable();
 		}
 	}
+	//-----------------------------------------------------------------
+	public void DeletProduto2() {
+		// TODO Auto-generated method stub
+		JTable table = telaP.getTable();
+		int selectedRowIndex = table.getSelectedRow();
+		if (selectedRowIndex == -1) {
+			JOptionPane.showMessageDialog(telaP, "Nenhum produto selecionado","Erro", JOptionPane.ERROR_MESSAGE);
+		} else {
+			String firstColumnValue = table.getValueAt(selectedRowIndex, 0).toString();
+			pDAO.deletarProduto(Integer.valueOf(firstColumnValue));
+			listarProdutosTable();
+		}
+	}
+	//------------------------------------------------------------------
+	
 	public void EditProduto(Produto produto) {
 		// TODO Auto-generated method stub
 		String nome = telaEProduto.getTextFieldNome();
