@@ -61,6 +61,7 @@ public class TelaProdutos extends JPanel {
 		panel.add(lblNewLabel, "cell 0 0,alignx left");
 
 		txtFieldId = new JTextField();
+		txtFieldId.setEditable(false);
 		txtFieldId.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
 		panel.add(txtFieldId, "cell 1 0,growx");
 		txtFieldId.setColumns(10);
@@ -70,6 +71,7 @@ public class TelaProdutos extends JPanel {
 		panel.add(lblNewLabel_2, "cell 3 0,alignx left,growy");
 
 		txtFieldValor = new JTextField();
+		txtFieldValor.setEditable(false);
 		txtFieldValor.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
 		panel.add(txtFieldValor, "cell 4 0,growx");
 		txtFieldValor.setColumns(10);
@@ -79,6 +81,7 @@ public class TelaProdutos extends JPanel {
 		panel.add(lblNewLabel_1, "cell 0 1,alignx left");
 
 		txtFieldNome = new JTextField();
+		txtFieldNome.setEditable(false);
 		txtFieldNome.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
 		panel.add(txtFieldNome, "cell 1 1,growx");
 		txtFieldNome.setColumns(10);
@@ -88,6 +91,7 @@ public class TelaProdutos extends JPanel {
 		panel.add(lblNewLabel_3, "cell 3 1,alignx left");
 
 		txtFieldQntEstoque = new JTextField();
+		txtFieldQntEstoque.setEditable(false);
 		txtFieldQntEstoque.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
 		panel.add(txtFieldQntEstoque, "cell 4 1,growx");
 		txtFieldQntEstoque.setColumns(10);

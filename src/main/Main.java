@@ -2,10 +2,13 @@ package main;
 
 import controle.entidade.conexao.ConexaoBD;
 import controle.entidade.funcionariocontrole.FuncionarioControle;
+import controle.entidade.produto.ProdutoControle;
 import controle.entidade.funcionariocontrole.TelaPrincipalControle;
 import visao.TelaLogin;
 import visao.TelaPrincipal;
+import visao.TelaProdutos;
 import visao.TelaCadastroFuncionario;
+import visao.TelaCadastroProdutos;
 
 public class Main {
 	public static void main(String[] args) {
@@ -16,6 +19,11 @@ public class Main {
 		TelaLogin telaLogin = new TelaLogin();
 		TelaPrincipal telaPrincipal = new TelaPrincipal();
 		TelaCadastroFuncionario telaCadastroFuncionario = new TelaCadastroFuncionario(telaPrincipal);
+		TelaProdutos telaProduto = new TelaProdutos(telaPrincipal); 
+		TelaCadastroProdutos telaCadastroProdutos = new TelaCadastroProdutos(); 
+		ProdutoControle produtoControle = new ProdutoControle();
+		produtoControle.setCadastroProduto(telaProduto);  // Wire the controller to the TelaProdutos
+
 
 		// Instancia o controle
 		FuncionarioControle funcionarioControle = new FuncionarioControle();
@@ -30,7 +38,9 @@ public class Main {
         // Exibe a tela de cadastro
         // no primeiro momento, apenas exibe sem logica
         telaCadastroFuncionario.setVisible(true);
+        telaProduto.setVisible(true);
         //Atualizando a tabela logo no começo pq ss
         funcionarioControle.atualizarTabela();
+        produtoControle.listarProdutosTable();
     }
 }
