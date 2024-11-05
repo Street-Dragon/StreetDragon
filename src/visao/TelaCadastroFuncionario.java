@@ -45,6 +45,7 @@ public class TelaCadastroFuncionario extends JPanel { // jpanel ao invés de jfr
 	private JTextField textEmail;
 	private JTextField textTelefone;
 	private JButton btnCadastrarFuncionario;
+	private JButton btnDeletarFuncionario;
 	private JCheckBox chckbxVerSenha;
 	private JCheckBox chckbxAdm;
 	private JTable table;
@@ -76,6 +77,10 @@ public class TelaCadastroFuncionario extends JPanel { // jpanel ao invés de jfr
 	}
 
 	public JButton getBtnCadastrarFuncionario() {
+		return btnCadastrarFuncionario;
+	}
+
+	public JButton getBtnDeletarFuncionario() {
 		return btnCadastrarFuncionario;
 	}
 
