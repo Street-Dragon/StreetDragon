@@ -5,8 +5,10 @@ import java.awt.Font;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import net.miginfocom.swing.MigLayout;
+import utils.Cores;
 import utils.Utils;
 
 import javax.swing.JLabel;
@@ -18,6 +20,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.JTextField;
 import javax.swing.JCheckBox;
 import javax.swing.JPasswordField;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -32,6 +35,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
+import javax.swing.border.CompoundBorder;
 
 public class TelaCadastroFuncionario extends JPanel { // jpanel ao invés de jframe
 
@@ -100,24 +104,19 @@ public class TelaCadastroFuncionario extends JPanel { // jpanel ao invés de jfr
 	 * Create the frame.
 	 */
 	public TelaCadastroFuncionario(TelaPrincipal telaPrincipal) { // telaprincipal
-		// setTitle("Cadastrar Funcionario");
-		// setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		// contentPane = new JPanel();
-		// setContentPane(contentPane);
-
-		// apagadas todas as linhas acima e os "contentPane.add" trocados para apenas
-		// "add"
 
 		setBounds(100, 100, 926, 526);
-		setBackground(Color.WHITE);
+		setBackground(Cores.COR_ROSA_CLARO);
 		setBorder(new EmptyBorder(5, 5, 5, 5));
 
+		
+		Border borda = new LineBorder(Cores.COR_ROSA_CLARO, 1);
 		hkGrotesk = Utils.loadCustomFont();
 		setLayout(new MigLayout("", "[grow][grow][grow][grow]", "[grow][grow][grow][grow]"));
 
 		JPanel panel = new JPanel();
-		panel.setBorder(null);
 		panel.setBackground(new Color(255, 255, 255));
+		panel.setBorder(new CompoundBorder(new LineBorder(new Color(255, 255, 255)), null));
 		add(panel, "cell 0 0 3 1,grow");
 		panel.setLayout(new MigLayout("", "[grow][grow][grow][grow][grow][grow]", "[grow][grow][grow][grow]"));
 
@@ -214,6 +213,7 @@ public class TelaCadastroFuncionario extends JPanel { // jpanel ao invés de jfr
 		panel.add(chckbxAdm, "cell 1 3 2 1,alignx left");
 
 		JPanel panel_1 = new JPanel();
+		panel_1.setBorder(new CompoundBorder(null, borda));
 		add(panel_1, "cell 3 0,grow");
 		panel_1.setBackground(new Color(255, 255, 255));
 		// Botão Cadastrar
@@ -251,7 +251,6 @@ public class TelaCadastroFuncionario extends JPanel { // jpanel ao invés de jfr
 		
 		
 		JScrollPane scrollPane = new JScrollPane();
-
 		add(scrollPane, "cell 0 1 4 3,grow");
 
 		tableModel = new DefaultTableModel();
@@ -285,7 +284,8 @@ public class TelaCadastroFuncionario extends JPanel { // jpanel ao invés de jfr
 		});
 
 	}
-
+	
+	
 	public void limparCampos() {
 		textId.setText("");
 		textNome.setText("");
