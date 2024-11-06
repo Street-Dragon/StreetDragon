@@ -119,7 +119,7 @@ public class FuncionarioDAO {
 
 	public Funcionario carregarDadosFuncionario(String cpf) {
 	    Funcionario funcionario = null;
-	    String sql = "SELECT nome, cpf, senha, email, telefone "
+	    String sql = "SELECT nome, cpf, senha, email, telefone,id_contato "
 	    		+ "FROM funcionario "
 	    		+ "JOIN contato ON contato_id = id_contato "
 	    		+ "WHERE cpf = ?";
@@ -137,6 +137,8 @@ public class FuncionarioDAO {
 	            funcionario.setSenhaFuncionario(rs.getString("senha"));
 	            
 	            Contato contato = new Contato();
+	            contato.setId(rs.getInt("id_contato"));
+
 	            contato.setEmail(rs.getString("email"));
 	            contato.setTelefone(rs.getString("telefone"));
 	            funcionario.setContato(contato);
@@ -161,19 +163,25 @@ public class FuncionarioDAO {
 	            stmtFuncionario.setBoolean(3, f.isAdm());
 	            stmtFuncionario.setString(4, f.getCpf());
 	            stmtFuncionario.executeUpdate();
+	            int rowsAffectedFuncionario = stmtFuncionario.executeUpdate();
 
 	            
 	            stmtContato.setString(1, f.getContato().getEmail());
 	            stmtContato.setString(2, f.getContato().getTelefone());
 	            stmtContato.setInt(3, f.getContato().getId());
 	            stmtContato.executeUpdate();
+	            int rowsAffectedContato = stmtContato.executeUpdate();
+
+	            // Verifica se as atualizações foram bem-sucedidas
+	            return rowsAffectedFuncionario > 0 || rowsAffectedContato > 0;
 			  
 		  } catch (SQLException e) {
 		
 			e.printStackTrace();
+			return false;
 		}
 		
-		return true;
+		
 	}
 	
 	public void deletarFuncionario(int id) {

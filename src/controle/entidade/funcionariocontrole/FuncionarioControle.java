@@ -67,6 +67,7 @@ public class FuncionarioControle {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					editarFuncinarioDAO(funcionarioIdStr);
+					atualizarTabela();
 				}
 			});
 	}
@@ -189,7 +190,7 @@ public class FuncionarioControle {
     }
     
     private void editarFuncinarioDAO(String funcionarioIdString) {
-    	//Funcionario funcionario = funcionarioDAO.carregarDadosFuncionario(funcionarioIdStr);
+    	Funcionario funcionarioAlteracao = funcionarioDAO.carregarDadosFuncionario(funcionarioIdStr);
     	//funcionarioDAO.editarFuncionario(funcionario);
     	
     	String nome = cadastroFuncionario.getTextNome();
@@ -205,24 +206,23 @@ public class FuncionarioControle {
             return;
         }
 
-        // Criar o objeto Funcionario com os novos dados
+        
         Funcionario funcionario = new Funcionario();
         funcionario.setNome(nome);
-        funcionario.setCpf(cpf);
+        funcionario.setCpf(funcionarioAlteracao.getCpf());
         funcionario.setSenhaFuncionario(senha);
         funcionario.setAdm(isAdm);
 
         Contato contato = new Contato();
+        contato.setId(funcionarioAlteracao.getContato().getId());
         contato.setEmail(email);
         contato.setTelefone(telefone);
         funcionario.setContato(contato);
 
-        
         boolean resultado = funcionarioDAO.editarFuncionario(funcionario);
-        
+
         if (resultado) {
             JOptionPane.showMessageDialog(cadastroFuncionario, "Funcionário atualizado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-            
             atualizarTabela();
         } else {
             JOptionPane.showMessageDialog(cadastroFuncionario, "Erro ao atualizar funcionário.", "Erro", JOptionPane.ERROR_MESSAGE);
