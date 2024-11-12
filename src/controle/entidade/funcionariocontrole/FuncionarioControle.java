@@ -169,6 +169,16 @@ public class FuncionarioControle {
                     JOptionPane.ERROR_MESSAGE);
             return;
         } 
+        Funcionario funcionario = new Funcionario();
+        Contato contato = new Contato();
+        funcionario.setNome(nome);
+        funcionario.setCpf(cpf);
+        funcionario.setSenhaFuncionario(senha);
+        funcionario.setAdm(isAdm);
+        contato.setEmail(email);
+        contato.setTelefone(telefone);
+        funcionario.setContato(contato);
+        funcionarioDAO.cadastrarFuncionario(funcionario);
         atualizarTabela();
         return;
     }
