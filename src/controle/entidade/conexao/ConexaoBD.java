@@ -130,57 +130,7 @@ public class ConexaoBD {
 					                    "ON DELETE NO ACTION " +
 					                    "ON UPDATE NO ACTION) ENGINE = InnoDB;";
 
-			String sqlProduto = "CREATE TABLE IF NOT EXISTS produto ("
-					+ "idProduto INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " + "nome VARCHAR(45) NOT NULL, "
-					+ "material VARCHAR(45) NOT NULL, " + "categoria VARCHAR(45) NOT NULL, " + "valor FLOAT NOT NULL, "
-					+ "estoque INT NOT NULL, " + "tamanho VARCHAR(45) NOT NULL, " + "variacao VARCHAR(45) NULL"
-					+ ") ENGINE = InnoDB;";
-
-			String sqlPromocao = "CREATE TABLE IF NOT EXISTS promocao ("
-					+ "idPromocao INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " + "desconto FLOAT NOT NULL"
-					+ ") ENGINE = InnoDB;";
-
-			String sqlFuncionario = "CREATE TABLE IF NOT EXISTS funcionario ("
-					+ "cpf VARCHAR(14) NOT NULL PRIMARY KEY, " + "senha VARCHAR(100) NOT NULL, "
-					+ "nome VARCHAR(100) NOT NULL, " + "contato_id INT NOT NULL, "
-					+ "adm BOOLEAN NOT NULL DEFAULT FALSE, "
-					+ "FOREIGN KEY (contato_id) REFERENCES contato(id_contato) " + "ON DELETE NO ACTION "
-					+ "ON UPDATE NO ACTION) ENGINE = InnoDB;";
-
-			String sqlCliente = "CREATE TABLE IF NOT EXISTS cliente (" + "cpf VARCHAR(14) NOT NULL PRIMARY KEY, "
-					+ "nome VARCHAR(100) NOT NULL, " + "contato_id INT NOT NULL, "
-					+ "FOREIGN KEY (contato_id) REFERENCES contato(id_contato) " + "ON DELETE NO ACTION "
-					+ "ON UPDATE NO ACTION) ENGINE = InnoDB;";
-
-			String sqlItem = "CREATE TABLE IF NOT EXISTS item (" + "idItem INT NOT NULL AUTO_INCREMENT PRIMARY KEY, "
-					+ "quantidade INT NOT NULL, " + "produto_idProduto INT NOT NULL, "
-					+ "promocao_idPromocao INT NULL, "
-					+ "FOREIGN KEY (produto_idProduto) REFERENCES produto(idProduto) " + "ON DELETE NO ACTION "
-					+ "ON UPDATE NO ACTION, " + "FOREIGN KEY (promocao_idPromocao) REFERENCES promocao(idPromocao) "
-					+ "ON DELETE NO ACTION " + "ON UPDATE NO ACTION) ENGINE = InnoDB;";
-
-			String sqlVenda = "CREATE TABLE IF NOT EXISTS venda (" + "idVenda INT NOT NULL AUTO_INCREMENT PRIMARY KEY, "
-					+ "funcionario_cpf VARCHAR(14) NOT NULL, " + "cliente_cpf VARCHAR(14) NOT NULL, "
-					+ "precoTotal FLOAT NOT NULL, " + "item_idItem INT NOT NULL, "
-					+ "FOREIGN KEY (funcionario_cpf) REFERENCES funcionario(cpf) " + "ON DELETE NO ACTION "
-					+ "ON UPDATE NO ACTION, " + "FOREIGN KEY (cliente_cpf) REFERENCES cliente(cpf) "
-					+ "ON DELETE NO ACTION " + "ON UPDATE NO ACTION, "
-					+ "FOREIGN KEY (item_idItem) REFERENCES item(idItem) " + "ON DELETE NO ACTION "
-					+ "ON UPDATE NO ACTION) ENGINE = InnoDB;";
-
-			String sqlPromocaoCliente = "CREATE TABLE IF NOT EXISTS promocao_cliente ("
-					+ "promocao_idPromocao INT NOT NULL, " + "cliente_cpf VARCHAR(14) NOT NULL, "
-					+ "idPromocaoCliente INT NOT NULL AUTO_INCREMENT PRIMARY KEY, "
-					+ "FOREIGN KEY (promocao_idPromocao) REFERENCES promocao(idPromocao) " + "ON DELETE NO ACTION "
-					+ "ON UPDATE NO ACTION, " + "FOREIGN KEY (cliente_cpf) REFERENCES cliente(cpf) "
-					+ "ON DELETE NO ACTION " + "ON UPDATE NO ACTION) ENGINE = InnoDB;";
-
-			String sqlFornecedor = "CREATE TABLE IF NOT EXISTS fornecedor ("
-					+ "idFornecedores INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " + "nome VARCHAR(45) NOT NULL, "
-					+ "endereco_CEP VARCHAR(10) NOT NULL, " + "produtos_idProdutos INT NOT NULL, "
-					+ "FOREIGN KEY (endereco_CEP) REFERENCES endereco(cep) " + "ON DELETE NO ACTION "
-					+ "ON UPDATE NO ACTION, " + "FOREIGN KEY (produtos_idProdutos) REFERENCES produto(idProduto) "
-					+ "ON DELETE NO ACTION " + "ON UPDATE NO ACTION) ENGINE = InnoDB;";
+			
 
 			stmt.executeUpdate(sqlContato);
 			stmt.executeUpdate(sqlEndereco);
