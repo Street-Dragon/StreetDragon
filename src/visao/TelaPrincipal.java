@@ -5,7 +5,9 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Image;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -18,8 +20,6 @@ import utils.Cores;
 import utils.Utils;
 
 import javax.swing.JLabel;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class TelaPrincipal extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -34,6 +34,9 @@ public class TelaPrincipal extends JFrame {
 	private JButton btnDeslogar;
 	private JButton btnFuncionarios;
 	private JButton btnFornecedor;
+	private JButton btnClientes;
+	private JButton btnPromocoes;
+	private JPanel panel_logo;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(() -> {
@@ -64,30 +67,38 @@ public class TelaPrincipal extends JFrame {
 		TelaCadastroFuncionario telaCadastroFuncionario = new TelaCadastroFuncionario(this);
 		TelaProdutos telaProdutos = new TelaProdutos(this);
 		TelaFornecedor telaFornecedor = new TelaFornecedor(this);
+		TelaCliente telaCliente = new TelaCliente(this);
+		TelaPromocao telaPromocao = new TelaPromocao(this);
 
 		// Painel do menu lateral
 		JPanel menuPanel = new JPanel();
 		menuPanel.setBackground(Cores.COR_ROSA_CLARO);
-		menuPanel.setLayout(new MigLayout("", "[grow]", "[grow][grow][grow][grow][grow]"));
+		menuPanel.setLayout(new MigLayout("", "[grow]", "[grow][grow][grow][grow][grow][grow][grow][grow]"));
 
-		btnVenda = new JButton("Venda");
+		btnVenda = new JButton("Vendas");
 		btnVenda.setBackground(Cores.COR_ROSA);
 		menuPanel.add(btnVenda, "cell 0 0,grow");
 
 		btnHistorico = new JButton("Histórico de vendas");
 		menuPanel.add(btnHistorico, "cell 0 1,grow");
 
-		btnFornecedor = new JButton("Fornecedor");
-		menuPanel.add(btnFornecedor, "cell 0 4,grow");
+		btnClientes = new JButton("Clientes");
+		menuPanel.add(btnClientes, "cell 0 2,grow");
+
+		btnPromocoes = new JButton("Promoções");
+		menuPanel.add(btnPromocoes, "cell 0 5,grow");
+
+		btnFornecedor = new JButton("Fornecedores");
+		menuPanel.add(btnFornecedor, "cell 0 6,grow");
 
 		btnProdutos = new JButton("Produtos");
-		menuPanel.add(btnProdutos, "cell 0 2,grow");
+		menuPanel.add(btnProdutos, "cell 0 3,grow");
 
 		// Adicionando os painéis à janela principal
 		getContentPane().add(menuPanel, BorderLayout.WEST);
 
 		btnFuncionarios = new JButton("Funcionários");
-		menuPanel.add(btnFuncionarios, "cell 0 3,grow");
+		menuPanel.add(btnFuncionarios, "cell 0 4,grow");
 
 		panel = new JPanel();
 		panel.setBackground(Cores.COR_ROSA_CLARO);
@@ -111,6 +122,27 @@ public class TelaPrincipal extends JFrame {
 		config(btnVenda);
 		config(btnFuncionarios);
 		config(btnFornecedor);
+		config(btnPromocoes);
+		config(btnClientes);
+
+		panel_logo = new JPanel();
+		menuPanel.add(panel_logo, "cell 0 7,alignx center,aligny center");
+		panel_logo.setOpaque(false);
+
+		// Verificação do caminho da imagem e redimensionamento
+		java.net.URL imageURL = getClass().getResource("/resources/imagens/logo.png");
+		if (imageURL == null) {
+			System.out.println("Imagem não encontrada. Verifique o caminho");
+		} else {
+			ImageIcon imageIcon = new ImageIcon(imageURL);
+			// Redimensionar a imagem
+			Image img = imageIcon.getImage();
+			Image resizedImg = img.getScaledInstance(150, 150, Image.SCALE_SMOOTH); // Ajuste o tamanho conforme
+																					// necessário
+			imageIcon = new ImageIcon(resizedImg);
+			JLabel imageLabel = new JLabel(imageIcon);
+			panel_logo.add(imageLabel);
+		}
 
 		new TelaPrincipalControle(this);
 
@@ -124,6 +156,8 @@ public class TelaPrincipal extends JFrame {
 		mainPanel.add(telaCadastroFuncionario, "TelaCadastroFuncionario");
 		mainPanel.add(telaProdutos, "TelaProdutos");
 		mainPanel.add(telaFornecedor, "TelaFornecedor");
+		mainPanel.add(telaPromocao, "TelaPromocao");
+		mainPanel.add(telaCliente, "TelaCliente");
 
 	}
 
@@ -159,6 +193,14 @@ public class TelaPrincipal extends JFrame {
 
 	public JLabel getLblFuncionario() {
 		return lblFuncionario;
+	}
+
+	public JButton getBtnClientes() {
+		return btnClientes;
+	}
+
+	public JButton getBtnPromocoes() {
+		return btnPromocoes;
 	}
 
 	private static void config(JButton button) {
