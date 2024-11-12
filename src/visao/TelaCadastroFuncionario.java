@@ -48,6 +48,7 @@ public class TelaCadastroFuncionario extends JPanel { // jpanel ao invés de jfr
 	private JTextField textEmail;
 	private JTextField textTelefone;
 	private JButton btnCadastrarFuncionario;
+	private JButton btnEditarFuncionario;
 	private JCheckBox chckbxVerSenha;
 	private JCheckBox chckbxAdm;
 	private JTable table;
@@ -60,6 +61,10 @@ public class TelaCadastroFuncionario extends JPanel { // jpanel ao invés de jfr
 
 	public JButton getBtnCadastrarFuncionario() {
 		return btnCadastrarFuncionario;
+	}
+	
+	public JButton getBtnEditarFuncionario() {
+		return btnEditarFuncionario;
 	}
 
 	public boolean getChckbxAdm() {
@@ -242,7 +247,7 @@ public class TelaCadastroFuncionario extends JPanel { // jpanel ao invés de jfr
 		
 		
 		// Botâo Editar
-		JButton btnEditarFuncionario = new JButton("Editar Funcionario");
+		btnEditarFuncionario = new JButton("Editar Funcionario");
 		btnEditarFuncionario.setForeground(new Color(255, 255, 255));
 		btnEditarFuncionario.setFont(hkGrotesk);
 		btnEditarFuncionario.setBackground(Color.PINK);
