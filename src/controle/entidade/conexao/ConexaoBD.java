@@ -2,6 +2,8 @@ package controle.entidade.conexao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -105,13 +107,20 @@ public class ConexaoBD {
 			stmt.executeUpdate(sqlPromocaoCliente);
 			stmt.executeUpdate(sqlFornecedor);
 
-			String sqlContatoRoot = "INSERT INTO contato (email, telefone) VALUES ('mariana@aluno.ifsc', '48 9884651')";
-			String sqlFuncionarioRoot = "INSERT INTO funcionario (cpf, senha, nome, contato_id) "
-					+ "VALUES ('123', '321', 'Mari', " + 1 + ")";
+			// checa se tem o funcionário root criado
+			String sqlVerificaFuncionario = "SELECT cpf FROM funcionario WHERE cpf = '123'";
+			PreparedStatement psFuncionario = conn.prepareStatement(sqlVerificaFuncionario);
+			ResultSet rsFuncionario = psFuncionario.executeQuery();
 
-			// root:
-			stmt.executeUpdate(sqlContatoRoot);
-			stmt.executeUpdate(sqlFuncionarioRoot);
+			// caso não tenha, cria um root
+			if (!rsFuncionario.next()) {
+				String sqlContatoRoot = "INSERT INTO contato (email, telefone) VALUES ('mariana@aluno.ifsc', '48 9884651')";
+				String sqlFuncionarioRoot = "INSERT INTO funcionario (cpf, senha, nome, contato_id, adm) "
+						+ "VALUES ('123', '321', 'Mari', " + 1 + ", true)";
+				// root:
+				stmt.executeUpdate(sqlContatoRoot);
+				stmt.executeUpdate(sqlFuncionarioRoot);
+			}
 
 			System.out.println("Tabelas criadas ou já existem!");
 
@@ -120,4 +129,3 @@ public class ConexaoBD {
 		}
 	}
 }
-  

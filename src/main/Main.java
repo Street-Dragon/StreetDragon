@@ -2,7 +2,7 @@ package main;
 
 import controle.entidade.conexao.ConexaoBD;
 import controle.entidade.funcionariocontrole.FuncionarioControle;
-import controle.entidade.funcionariocontrole.TelaPrincipalControle;
+import controle.visao.principal.TelaPrincipalControle;
 import visao.TelaLogin;
 import visao.TelaPrincipal;
 import visao.TelaCadastroFuncionario;
@@ -20,6 +20,7 @@ public class Main {
 		// Instancia o controle
 		FuncionarioControle funcionarioControle = new FuncionarioControle();
 		// TelaPrincipalControle telaPrincipalControle = new TelaPrincipalControle();
+		
 		// Conecta as telas ao controle
 		funcionarioControle.setTelaLogin(telaLogin);
 		funcionarioControle.setTelaCadastroFuncionario(telaCadastroFuncionario);

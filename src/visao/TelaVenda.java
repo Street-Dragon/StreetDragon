@@ -51,7 +51,7 @@ public class TelaVenda extends JPanel { // mudado para jpanel ao invés de jfram
 		txtCodigo.setFont(hkGrotesk);
 		panel.add(txtCodigo, "cell 1 0,growx,aligny center");
 		txtCodigo.setColumns(10);
-		
+
 		txtNome = new JTextField();
 		panel.add(txtNome, "cell 1 1,growx,aligny center");
 		txtNome.setEditable(false);
