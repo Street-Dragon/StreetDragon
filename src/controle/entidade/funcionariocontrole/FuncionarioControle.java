@@ -19,6 +19,7 @@ import javax.swing.table.DefaultTableModel;
 public class FuncionarioControle {
 	private TelaLogin telaLogin;
 	private TelaCadastroFuncionario cadastroFuncionario;
+	private TelaCadastroFuncionario deletarFuncionario;
 	private FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
 	private TelaPrincipal telaPrincipal;
 	private String cpfUsuarioLogado;
@@ -54,6 +55,21 @@ public class FuncionarioControle {
 			public void actionPerformed(ActionEvent e) {
 				cadastrarFuncionario();
 				cadastroFuncionario.limparCampos();
+				atualizarTabela();
+				
+			}
+		});
+	}
+
+	public void setExcluirFuncionario(TelaCadastroFuncionario deletarFuncionario) {
+		this.deletarFuncionario = deletarFuncionario;
+			atualizarTabela();
+			adicionarListeners();
+			deletarFuncionario.getBtnDeletarFuncionario().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				deletarFuncionario();
+				deletarFuncionario.limparCampos();
 				atualizarTabela();
 				
 			}
@@ -150,7 +166,7 @@ public class FuncionarioControle {
     }
     
     // Método para excluir um funcionário
-    private void excluirFuncionario() {
+    private void deletarFuncionario() {
         int selectedRow = cadastroFuncionario.getTable().getSelectedRow();
         
         if (selectedRow != -1) {
