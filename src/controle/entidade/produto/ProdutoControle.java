@@ -54,10 +54,19 @@ public class ProdutoControle {
     	telaCProduto.getbtnCadastrarProduto().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            	cadastrarProduto(telaCProduto);
-            	telaCProduto.ClearText();
-            	telaCProduto.getTextFieldId().setText(String.valueOf(pDAO.Idshow()));
-            	listarProdutosTable();
+            	if(telaCProduto.getbtnCadastrarProduto().getText().equals("Cadastrar Produto")) {
+            		cadastrarProduto(telaCProduto);
+                	telaCProduto.ClearText();
+                	telaCProduto.getTextFieldId().setText(String.valueOf(pDAO.Idshow()));
+                	listarProdutosTable();
+            	} else {
+            		
+            		Produto produto = new Produto();
+         	 		produto = pDAO.getId(Integer.valueOf(telaCProduto.getTextFieldId().getText()));
+         	 		EditProduto(produto);
+         	 		listarProdutosTable();
+         	 		telaCProduto.dispose();
+            	}
             }
         });
     }
@@ -68,14 +77,14 @@ public class ProdutoControle {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                     telaCProduto.setVisible(true);
-                     telaCProduto.getbtnCadastrarProduto().setText("Editar Produto");
-                     telaCProduto.setTitle("Editar Produto");
                      JTable table = telaP.getTable();
              		 int selectedRowIndex = table.getSelectedRow();
              		 if (selectedRowIndex == -1) {
              		 	JOptionPane.showMessageDialog(telaP, "Nenhum produto selecionado","Erro", JOptionPane.ERROR_MESSAGE);
              		 } else {
+             			telaCProduto.setVisible(true);
+                        telaCProduto.getbtnCadastrarProduto().setText("Editar Produto");
+                        telaCProduto.setTitle("Editar Produto");
              	 		String firstColumnValue = table.getValueAt(selectedRowIndex, 0).toString();
              	 		Produto produto = new Produto();
              	 		produto = pDAO.getId(Integer.valueOf(firstColumnValue));
@@ -135,13 +144,13 @@ public class ProdutoControle {
     
 
     public void EditProduto(Produto produto) {
-        String nome = telaEProduto.getTextFieldNome();
-        String material = telaEProduto.getCbMaterial();
-        String categoria = telaEProduto.getCbCategoria();
-        String variacao = telaEProduto.getTextFieldVariacao();
-        float valor = telaEProduto.getTextFieldValor();
-        int estoque = telaEProduto.getTextFieldQntEstoque();
-        String tamanho = telaEProduto.getCbTamnho();
+        String nome = telaCProduto.getTextFieldNome();
+        String material = telaCProduto.getCbMaterial();
+        String categoria = telaCProduto.getCbCategoria();
+        String variacao = telaCProduto.getTextFieldVariacao();
+        float valor = telaCProduto.getTextFieldValor();
+        int estoque = telaCProduto.getTextFieldQntEstoque();
+        String tamanho = telaCProduto.getCbTamnho();
 
         if (nome.isEmpty() || material.isEmpty() || categoria.isEmpty() || tamanho.isEmpty() || variacao.isEmpty() || String.valueOf(valor).isEmpty() || String.valueOf(estoque).isEmpty()) {
             JOptionPane.showMessageDialog(telaEProduto, "Parece que você não preencheu todos os campos", ":(", JOptionPane.ERROR_MESSAGE);
@@ -157,10 +166,10 @@ public class ProdutoControle {
         produto.setTamanho(tamanho);
 
         if (pDAO.editarProduto(produto.getIdProduto(), produto)) {
-            JOptionPane.showMessageDialog(telaEProduto, "Produto Editado com Sucesso!", null, JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(telaCProduto, "Produto Editado com Sucesso!", null, JOptionPane.INFORMATION_MESSAGE);
             telaP.setVisible(true);
         } else {
-            JOptionPane.showMessageDialog(telaEProduto, "Erro ao editar produto", "Erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(telaCProduto, "Erro ao editar produto", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }	
 
