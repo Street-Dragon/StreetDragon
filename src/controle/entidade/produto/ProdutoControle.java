@@ -28,14 +28,12 @@ public class ProdutoControle {
     private ProdutoDAO pDAO = new ProdutoDAO();
     
 
-    public void setTelaEditarProduto(TelaEditarProduto telaEProduto) {
-        this.telaEProduto = telaEProduto;
-    }
     public void setTelaCadastrarProduto(TelaCadastroProdutos telaCProduto) {
     	this.telaCProduto = telaCProduto;
     }
     
-    public void setCadastroProdutobtn(TelaProdutos telaP) {
+    //---------------------------------------Cadastrar-------------------------------------
+     public void setCadastroProdutobtn(TelaProdutos telaP) {
         this.telaP = telaP;
         telaP.getBtnCadastrarProd().addActionListener(new ActionListener() {
             @Override
@@ -44,37 +42,13 @@ public class ProdutoControle {
                      System.out.println("botão ta cagado");
                  } else {
                      telaCProduto.setVisible(true);
+                     telaCProduto.getbtnCadastrarProduto().setText("Cadastrar Produto");
+                     telaCProduto.setTitle("Cadastrar Produto");
                      telaCProduto.getTextFieldId().setText(String.valueOf(pDAO.Idshow()));
                  }
             }
         });
     }
-    public void setTelaEdiitarProduto(TelaCadastroProdutos telaCProduto) {
-    	this.telaP = telaP;
-        telaP.getBtnDeletarProd().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-            	 if (telaCProduto == null) {
-                     System.out.println("botão ta cagado");
-                 } else {
-                     telaCProduto.setVisible(true);
-                     
-                     JTable table = telaP.getTable();
-             		 int selectedRowIndex = table.getSelectedRow();
-             		 if (selectedRowIndex == -1) {
-             		 	JOptionPane.showMessageDialog(telaP, "Nenhum produto selecionado","Erro", JOptionPane.ERROR_MESSAGE);
-             		 } else {
-             	 		String firstColumnValue = table.getValueAt(selectedRowIndex, 0).toString();
-             	 		Produto produto = new Produto();
-             	 		produto = pDAO.getId(Integer.valueOf(firstColumnValue));
-             	 		telaCProduto.setVisible(true);
-             	 		fillEdit(produto);	
-              		} 
-                 }
-            }
-        });
-    }
-    
     public void setCadastroProduto(TelaCadastroProdutos telaCProduto) {
     	this.telaCProduto = telaCProduto;
     	telaCProduto.getbtnCadastrarProduto().addActionListener(new ActionListener() {
@@ -87,6 +61,42 @@ public class ProdutoControle {
             }
         });
     }
+  //---------------------------------------Editar-------------------------------------
+    public void setTelaEditarProduto(TelaProdutos telaProdutos) {
+    	this.telaP = telaProdutos;
+    	telaProdutos.getBtnEditProd().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                     telaCProduto.setVisible(true);
+                     telaCProduto.getbtnCadastrarProduto().setText("Editar Produto");
+                     telaCProduto.setTitle("Editar Produto");
+                     JTable table = telaP.getTable();
+             		 int selectedRowIndex = table.getSelectedRow();
+             		 if (selectedRowIndex == -1) {
+             		 	JOptionPane.showMessageDialog(telaP, "Nenhum produto selecionado","Erro", JOptionPane.ERROR_MESSAGE);
+             		 } else {
+             	 		String firstColumnValue = table.getValueAt(selectedRowIndex, 0).toString();
+             	 		Produto produto = new Produto();
+             	 		produto = pDAO.getId(Integer.valueOf(firstColumnValue));
+             	 		telaCProduto.setVisible(true);
+             	 		fillEdit(produto);	
+              		} 
+            }
+        });
+    }
+  //---------------------------------------Deletar-------------------------------------
+    
+    public void setDeletarProduto(TelaProdutos telaP) {
+	    telaP.getBtnDeletarProd().addActionListener(new ActionListener() {
+	        @Override
+	        public void actionPerformed(ActionEvent e) {
+	        	DeletProduto();
+	            listarProdutosTable();
+	        }
+	    });
+	}
+  //------------------------------------------------------------------------------------
     public void setCancelarProduto(TelaCadastroProdutos telaCProduto) {
     	this.telaCProduto = telaCProduto;
     	telaCProduto.getbtnCancelar().addActionListener(new ActionListener() {
@@ -97,29 +107,6 @@ public class ProdutoControle {
             }
         });
     }
-    
-    public void setDeletarProduto(TelaProdutos telaP) {
-	    this.telaP = telaP;
-	    listarProdutosTable();
-	    telaP.getBtnDeletarProd().addActionListener(new ActionListener() {
-	        @Override
-	        public void actionPerformed(ActionEvent e) {
-	        	DeletProduto();
-	            listarProdutosTable();
-	        }
-	    });
-	}
-
-	public void setTelaCadastro(TelaProdutos listarProduto) {
-		this.telaP = listarProduto;
-		listarProduto.getBtnCadastrarProd().addActionListener(new ActionListener() {
-			@Override
-			
-			public void actionPerformed(ActionEvent e) {
-				telaCProduto.setVisible(true);
-			}
-		});
-	}
     
     public void listarProdutosTable() {
         List<Produto> produtos = pDAO.listarProdutos();
