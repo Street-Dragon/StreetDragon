@@ -42,6 +42,9 @@ public class TelaProdutos extends JPanel {
 	public JButton getBtnDeletarProd() {
 		return btnDeletarProd;
 	}
+	public JButton getBtnEditProd() {
+		return btnEditarProd;
+	}
 	
 	/**
 	 * Create the panel.
@@ -141,7 +144,7 @@ public class TelaProdutos extends JPanel {
 	public JTextField getTxtId() {
 		return txtFieldId;
 	}
-
+	
 	public void setTxtId(JTextField txtId) {
 		this.txtFieldId = txtId;
 	}

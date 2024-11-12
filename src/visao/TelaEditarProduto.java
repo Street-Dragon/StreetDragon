@@ -163,7 +163,7 @@ public class TelaEditarProduto extends JFrame {
 				btnConfirmar.setFont(hkGrotesk);
 				btnConfirmar.addActionListener(new ActionListener() {
 		            public void actionPerformed(ActionEvent e) {
-		                Pcontrole.editProduto(produto);
+		                Pcontrole.EditProduto(produto);
 		                dispose();
 		            }
 		        });		
