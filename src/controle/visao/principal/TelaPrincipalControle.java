@@ -1,4 +1,4 @@
-package controle.entidade.funcionariocontrole;
+package controle.visao.principal;
 
 import visao.TelaPrincipal;
 

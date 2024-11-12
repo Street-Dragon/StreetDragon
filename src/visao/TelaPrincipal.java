@@ -13,8 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import controle.entidade.funcionariocontrole.FuncionarioControle;
-import controle.entidade.funcionariocontrole.TelaPrincipalControle;
-
+import controle.visao.principal.TelaPrincipalControle;
 import net.miginfocom.swing.MigLayout;
 import utils.Cores;
 import utils.Utils;
