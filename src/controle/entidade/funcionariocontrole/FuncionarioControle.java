@@ -243,7 +243,7 @@ private void cadastrarFuncionario() {
     
     
     
-    public void selecionarFuncionario(int id) {
+    /*public void selecionarFuncionario(int id) {
         Funcionario funcionario = funcionarioDAO.getFuncionario(id);
         if (funcionario != null) {
             view.setFuncionario(funcionario);
@@ -293,9 +293,9 @@ private void cadastrarFuncionario() {
 					JOptionPane.ERROR_MESSAGE);
 		}
 		return;
-	}
+	}*/
 
-	public void atualizarTabela() {
+	/*public void atualizarTabela() {
 
 		List<Funcionario> funcionarios = funcionarioDAO.listarFuncionarios();
 		DefaultTableModel tableModel = cadastroFuncionario.getTableModel();
@@ -305,13 +305,13 @@ private void cadastrarFuncionario() {
 					new Object[] { funcionario.getCpf(), funcionario.getNome(), funcionario.getSenhaFuncionario(),
 							funcionario.isAdm() ? "Sim" : "Não", contato.getEmail(), contato.getTelefone() });
 		}
-	}
+	}*/
 
 	
-	 public void selecionarFuncionario(int id) { Funcionario funcionario =
+	/* public void selecionarFuncionario(int id) { Funcionario funcionario =
 	 funcionarioDAO.getFuncionario(id); if (funcionario != null) {
 	 view.setFuncionario(funcionario); } else {
-	 JOptionPane.showMessageDialog(view, "Funcionário não encontrado"); } }
+	 JOptionPane.showMessageDialog(view, "Funcionário não encontrado"); } }*/
 
 
 }
