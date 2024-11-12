@@ -227,12 +227,12 @@ public class TelaCadastroProdutos extends JFrame {
 		return textFieldNome.getText();
 	}
 
-	public float getTextFieldValor() {
-		return Float.valueOf(textFieldValor.getText());
+	public String getTextFieldValor() {
+		return textFieldValor.getText();
 	}
 
-	public int getTextFieldQntEstoque() {
-		return Integer.valueOf(textFieldQntEstoque.getText());
+	public String getTextFieldQntEstoque() {
+		return textFieldQntEstoque.getText();
 	}
 
 	public String getTextFieldVariacao() {

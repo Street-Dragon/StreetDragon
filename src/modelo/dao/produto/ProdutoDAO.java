@@ -58,7 +58,7 @@ public class ProdutoDAO {
 	}
 
 	public int Idshow() {
-		String sql = "SELECT COUNT(*) FROM produto";
+		String sql = "select idProduto from produto Order by idProduto desc limit 1;";
 
 		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 			ResultSet rs = stmt.executeQuery();

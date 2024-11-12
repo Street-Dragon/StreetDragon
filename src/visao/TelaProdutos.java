@@ -145,25 +145,16 @@ public class TelaProdutos extends JPanel {
 		return txtFieldId;
 	}
 	
-	public void setTxtId(JTextField txtId) {
-		this.txtFieldId = txtId;
-	}
-
 	public JTextField getTxtNome() {
 		return txtFieldNome;
 	}
-
-	public void setTxtNome(JTextField txtNome) {
-		this.txtFieldNome = txtNome;
+	public JTextField getTxtValor() {
+		return txtFieldValor;
+	}
+	public JTextField getTxtQnt() {
+		return txtFieldQntEstoque;
 	}
 
-	public void setTxtValor(JTextField txtValor) {
-		this.txtFieldValor = txtValor;
-	}
-
-	public void setTxtQuantEstoque(JTextField txtQuantEstoque) {
-		this.txtFieldQntEstoque = txtQuantEstoque;
-	}
 
 	public JTable getTable() {
 		return table;

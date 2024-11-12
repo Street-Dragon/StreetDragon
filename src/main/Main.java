@@ -29,6 +29,7 @@ public class Main {
 		produtoControle.setCadastroProduto(telaCadastroProdutos);
 		produtoControle.setDeletarProduto(telaProduto);
 		produtoControle.setTelaEditarProduto(telaProduto);
+		produtoControle.fillPP(telaProduto);
 		
 		// Instancia o controle
 		FuncionarioControle funcionarioControle = new FuncionarioControle();
