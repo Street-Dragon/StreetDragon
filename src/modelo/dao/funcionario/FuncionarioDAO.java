@@ -132,12 +132,13 @@ public class FuncionarioDAO {
         }
     }
 
-    //Falta os outros conteúdos
     public List<Funcionario> listarFuncionarios() {
 
 		List<Funcionario> funcionarios = new ArrayList<>();
-		String sqlSelect = "SELECT f.*, c.email, c.telefone FROM funcionario f "
-				+ "JOIN contato c ON f.contato_id = c.id_contato";
+		String sqlSelect = "SELECT f.*, c.email, c.telefone "
+                + "FROM funcionario f "
+                + "JOIN contato c ON f.contato_id = c.id_contato"; // Qualifique as colunas corretamente
+
 
 		try (Connection conn = ConexaoBD.getConexaoMySQL();
 				PreparedStatement stmt = conn.prepareStatement(sqlSelect);
@@ -163,6 +164,79 @@ public class FuncionarioDAO {
 		}
 
 		return funcionarios;
+	}
+
+
+
+	public Funcionario carregarDadosFuncionario(String cpf) {
+	    Funcionario funcionario = null;
+	    String sql = "SELECT nome, cpf, senha, email, telefone,id_contato "
+	    		+ "FROM funcionario "
+	    		+ "JOIN contato ON contato_id = id_contato "
+	    		+ "WHERE cpf = ?";
+	    
+	    try (Connection conn = ConexaoBD.getConexaoMySQL();
+	         PreparedStatement stmt = conn.prepareStatement(sql)) {
+	        
+	        stmt.setString(1, cpf);
+	        ResultSet rs = stmt.executeQuery();
+	        
+	        if (rs.next()) {
+	            funcionario = new Funcionario();
+	            funcionario.setNome(rs.getString("nome"));
+	            funcionario.setCpf(rs.getString("cpf"));
+	            funcionario.setSenhaFuncionario(rs.getString("senha"));
+	            
+	            Contato contato = new Contato();
+	            contato.setId(rs.getInt("id_contato"));
+
+	            contato.setEmail(rs.getString("email"));
+	            contato.setTelefone(rs.getString("telefone"));
+	            funcionario.setContato(contato);
+	           
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return funcionario;
+	}
+	
+	public boolean editarFuncionario(Funcionario f) {
+		  String sqlFuncionario = "UPDATE funcionario SET nome = ?, senha = ?, adm = ? WHERE cpf = ?";
+		  String sqlContato = "UPDATE contato SET email = ?, telefone = ? WHERE id_contato = ?";
+		  
+		  try (Connection conn = ConexaoBD.getConexaoMySQL();
+		             PreparedStatement stmtContato = conn.prepareStatement(sqlContato, Statement.RETURN_GENERATED_KEYS);
+		             PreparedStatement stmtFuncionario = conn.prepareStatement(sqlFuncionario)) {
+			  
+			  	stmtFuncionario.setString(1, f.getNome());
+	            stmtFuncionario.setString(2, f.getSenhaFuncionario());
+	            stmtFuncionario.setBoolean(3, f.isAdm());
+	            stmtFuncionario.setString(4, f.getCpf());
+	            stmtFuncionario.executeUpdate();
+	            int rowsAffectedFuncionario = stmtFuncionario.executeUpdate();
+
+	            
+	            stmtContato.setString(1, f.getContato().getEmail());
+	            stmtContato.setString(2, f.getContato().getTelefone());
+	            stmtContato.setInt(3, f.getContato().getId());
+	            stmtContato.executeUpdate();
+	            int rowsAffectedContato = stmtContato.executeUpdate();
+
+	            // Verifica se as atualizações foram bem-sucedidas
+	            return rowsAffectedFuncionario > 0 || rowsAffectedContato > 0;
+			  
+		  } catch (SQLException e) {
+		
+			e.printStackTrace();
+			return false;
+		}
+		
+		
+	}
+	
+	public void deletarFuncionario(int id) {
+		String delFuncionario = "DELETE * FROM funcionario WHERE cpf = ?";
 	}
 
 }
