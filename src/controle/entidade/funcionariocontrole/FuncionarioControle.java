@@ -37,14 +37,22 @@ public class FuncionarioControle {
 	}
 
 	public void setTelaPrincipal(TelaPrincipal telaPrincipal) {
-		this.telaPrincipal = telaPrincipal;
-		telaPrincipal.getBtnDeslogar().addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				realizarLogout();
-			}
-		});
+	    this.telaPrincipal = telaPrincipal;
+
+	    // Remove todos os ActionListeners existentes
+	    for (ActionListener al : telaPrincipal.getBtnDeslogar().getActionListeners()) {
+	        telaPrincipal.getBtnDeslogar().removeActionListener(al);
+	    }
+
+	    // Adiciona um novo ActionListener
+	    telaPrincipal.getBtnDeslogar().addActionListener(new ActionListener() {
+	        @Override
+	        public void actionPerformed(ActionEvent e) {
+	            realizarLogout();
+	        }
+	    });
 	}
+
 
 	public void setCadastroFuncionario(TelaCadastroFuncionario cadastroFuncionario) {
 		this.cadastroFuncionario = cadastroFuncionario;
@@ -88,15 +96,17 @@ public class FuncionarioControle {
 	}
 
 	private void realizarLogout() {
-        System.out.println("Função chamada");
-        int confirmar = JOptionPane.showConfirmDialog(telaPrincipal, "Deseja realmente deslogar?", "Confirmação", JOptionPane.YES_NO_OPTION);
-        if (confirmar == JOptionPane.YES_OPTION || cpfUsuarioLogado != null) {
-            System.out.println("Usuário deslogado");
-            cpfUsuarioLogado = null;
-            telaPrincipal.dispose(); // Fecha a tela principal
-            telaLogin.setVisible(true); // Mostra a tela de login novamente
-        }
-    }
+	    System.out.println("Função chamada");
+	    int confirmar = JOptionPane.showConfirmDialog(telaPrincipal, "Deseja realmente deslogar?", "Confirmação", JOptionPane.YES_NO_OPTION);
+	    if (confirmar == JOptionPane.YES_OPTION) {
+	        System.out.println("Usuário deslogado");
+	        cpfUsuarioLogado = null;
+	        telaPrincipal.dispose(); // Fecha a tela principal
+	        telaLogin.setVisible(true); // Mostra a tela de login novamente
+	    }
+	}
+
+	
 
 private void cadastrarFuncionario() {
         String nome = cadastroFuncionario.getTextNome();
