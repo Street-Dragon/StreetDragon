@@ -23,7 +23,6 @@ public class FuncionarioControle {
 	private TelaCadastroFuncionario cadastroFuncionario;
 	private FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
 	private String funcionarioIdStr;
-
 	private TelaPrincipal telaPrincipal;
 	private String cpfUsuarioLogado;
 	// cadastroFuncionario.addTableClickListener(this::selecionarFuncionario);
@@ -56,9 +55,7 @@ public class FuncionarioControle {
 	    });
 	}
 
-
-	public void setCadastroFuncionario(TelaCadastroFuncionario cadastroFuncionario) {
-		
+	public void setTelaCadastroFuncionario(TelaCadastroFuncionario cadastroFuncionario) {
 		this.cadastroFuncionario = cadastroFuncionario;
 			atualizarTabela();
 			adicionarListeners();
@@ -68,6 +65,16 @@ public class FuncionarioControle {
 				cadastrarFuncionario();
 				atualizarTabela();
 				cadastroFuncionario.limparCampos();
+			}
+		});
+	
+			cadastroFuncionario.getBtnDeletarFuncionario().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				deletarFuncionario();
+				cadastroFuncionario.limparCampos();
+				atualizarTabela();
+				
 			}
 		});
 			cadastroFuncionario.getBtnEditarFuncionario().addActionListener(new ActionListener() {
@@ -133,8 +140,6 @@ public class FuncionarioControle {
 	    }
 	}
 
-	
-
 private void cadastrarFuncionario() {
         String nome = cadastroFuncionario.getTextNome();
         char[] senhaArray = cadastroFuncionario.getPasswordField();
@@ -168,9 +173,47 @@ private void cadastrarFuncionario() {
         return;
     }
     
+    // Método para excluir um funcionário
+    private void deletarFuncionario() {
+        int selectedRow = cadastroFuncionario.getTable().getSelectedRow();
+        
+        if (selectedRow != -1) {
+            String cpfFuncionario = (String) cadastroFuncionario.getTable().getValueAt(selectedRow, 0);
+            
+            int resposta = JOptionPane.showConfirmDialog(cadastroFuncionario,
+                "Você tem certeza que deseja excluir o funcionário com CPF: " + cpfFuncionario + "?",
+                "Confirmar Exclusão",
+                JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+
+            if (resposta == JOptionPane.YES_OPTION) {
+
+                boolean excluido = funcionarioDAO.excluirFuncionario(cpfFuncionario);
+                
+                if (excluido) {
+                    JOptionPane.showMessageDialog(cadastroFuncionario, "Funcionário excluído com sucesso!");
+                    atualizarTabela();
+                } else {
+                    JOptionPane.showMessageDialog(cadastroFuncionario, "Erro ao excluir o funcionário.", "Erro", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(cadastroFuncionario, "Selecione um funcionário para excluir.", "Erro", JOptionPane.WARNING_MESSAGE);
+        }
+    }
     public void atualizarTabela() {
             List<Funcionario> funcionarios = funcionarioDAO.listarFuncionarios();
-            DefaultTableModel tableModel = cadastroFuncionario.getTableModel();
+           
+            DefaultTableModel tableModel;
+    		tableModel = new DefaultTableModel();
+            tableModel.addColumn("CPF");
+            tableModel.addColumn("Nome");
+            tableModel.addColumn("Senha");
+            tableModel.addColumn("Administrador");
+            tableModel.addColumn("Email");
+            tableModel.addColumn("Telefone");
+            
+            
+
             for (Funcionario funcionario : funcionarios) {
                 Contato contato = funcionario.getContato();
                 tableModel.addRow(new Object[]{
@@ -182,6 +225,8 @@ private void cadastrarFuncionario() {
                     contato.getTelefone()
                 });
             }
+            
+            cadastroFuncionario.getTable().setModel(tableModel);
         }
     
     private void carregarDadosFuncionarioDAO(String funcionarioIdStr) {
@@ -240,8 +285,7 @@ private void cadastrarFuncionario() {
     	cadastroFuncionario.getTextFieldTelefone().setText(funcionario.getContato().getTelefone());
     	
     }
-    
-    
+
     
     /*public void selecionarFuncionario(int id) {
         Funcionario funcionario = funcionarioDAO.getFuncionario(id);

@@ -8,6 +8,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import controle.entidade.conexao.ConexaoBD;
 import modelo.entidade.contato.Contato;
 import modelo.entidade.pessoa.funcionario.Funcionario;
@@ -32,8 +34,6 @@ public class FuncionarioDAO {
         }
     }
     
-    
-    // Mano pra que q serve isso?
     public String nomeFuncionario(String cpf) {
     	String sqlNome = "SELECT nome FROM funcionario WHERE cpf = ?";
     	
@@ -54,7 +54,7 @@ public class FuncionarioDAO {
                return "Erro ao consultar";
            }
     }
-    
+
     public boolean cadastrarFuncionario(Funcionario funcionario) {
 		String sqlContato = "INSERT INTO contato (email, telefone) VALUES (?, ?)";
 		String sqlFuncionario = "INSERT INTO funcionario (cpf, senha, nome, contato_id, adm) VALUES (?, ?, ?, ?, ?)";
@@ -132,12 +132,26 @@ public class FuncionarioDAO {
         }
     }
 
+    public boolean excluirFuncionario(String cpf) {
+        String sql = "DELETE FROM funcionario WHERE cpf = ?";
+        
+        try (Connection conn = ConexaoBD.getConexaoMySQL();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, cpf);
+            int rowsAffected = stmt.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     public List<Funcionario> listarFuncionarios() {
 
 		List<Funcionario> funcionarios = new ArrayList<>();
 		String sqlSelect = "SELECT f.*, c.email, c.telefone "
                 + "FROM funcionario f "
-                + "JOIN contato c ON f.contato_id = c.id_contato"; // Qualifique as colunas corretamente
+                + "JOIN contato c ON f.contato_id = c.id_contato";
 
 
 		try (Connection conn = ConexaoBD.getConexaoMySQL();
@@ -165,8 +179,6 @@ public class FuncionarioDAO {
 
 		return funcionarios;
 	}
-
-
 
 	public Funcionario carregarDadosFuncionario(String cpf) {
 	    Funcionario funcionario = null;

@@ -48,6 +48,7 @@ public class TelaCadastroFuncionario extends JPanel { // jpanel ao invés de jfr
 	private JTextField textEmail;
 	private JTextField textTelefone;
 	private JButton btnCadastrarFuncionario;
+	private JButton btnDeletarFuncionario;
 	private JButton btnEditarFuncionario;
 	private JCheckBox chckbxVerSenha;
 	private JCheckBox chckbxAdm;
@@ -86,6 +87,10 @@ public class TelaCadastroFuncionario extends JPanel { // jpanel ao invés de jfr
 
 	public void setTextCpf(String cpf) {
 		textCpf.setText(cpf);
+	}
+
+	public JButton getBtnDeletarFuncionario() {
+		return btnDeletarFuncionario;
 	}
 
 	public void setChckbxAdm(boolean isAdm) {
@@ -235,7 +240,7 @@ public class TelaCadastroFuncionario extends JPanel { // jpanel ao invés de jfr
 		btnCadastrarFuncionario.setBackground(new Color(114, 148, 235));
 		panel_1.add(btnCadastrarFuncionario, "cell 0 0,grow");
 		// Botão Ecluir
-		JButton btnDeletarFuncionario = new JButton("Excluir Funcionario");
+		btnDeletarFuncionario = new JButton("Excluir Funcionario");
 		btnDeletarFuncionario.setForeground(new Color(255, 255, 255));
 		btnDeletarFuncionario.setFont(new Font("Hanken Grotesk", Font.PLAIN, 25));
 		
