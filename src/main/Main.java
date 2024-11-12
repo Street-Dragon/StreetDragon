@@ -20,6 +20,7 @@ public class Main {
 		// Instancia o controle
 		FuncionarioControle funcionarioControle = new FuncionarioControle();
 		// TelaPrincipalControle telaPrincipalControle = new TelaPrincipalControle();
+		
 		// Conecta as telas ao controle
 		funcionarioControle.setTelaLogin(telaLogin);
 		funcionarioControle.setCadastroFuncionario(telaCadastroFuncionario);
