@@ -140,7 +140,7 @@ public class FuncionarioControle {
 	    }
 	}
 
-private void cadastrarFuncionario() {
+	private void cadastrarFuncionario() {
         String nome = cadastroFuncionario.getTextNome();
         char[] senhaArray = cadastroFuncionario.getPasswordField();
         String cpf = cadastroFuncionario.getTextCpf();
@@ -200,6 +200,8 @@ private void cadastrarFuncionario() {
             JOptionPane.showMessageDialog(cadastroFuncionario, "Selecione um funcionário para excluir.", "Erro", JOptionPane.WARNING_MESSAGE);
         }
     }
+    
+   
     public void atualizarTabela() {
             List<Funcionario> funcionarios = funcionarioDAO.listarFuncionarios();
            
@@ -286,8 +288,8 @@ private void cadastrarFuncionario() {
     	
     }
 
-    
-    /*public void selecionarFuncionario(int id) {
+    /*
+    public void selecionarFuncionario(int id) {
         Funcionario funcionario = funcionarioDAO.getFuncionario(id);
         if (funcionario != null) {
             view.setFuncionario(funcionario);
@@ -337,25 +339,12 @@ private void cadastrarFuncionario() {
 					JOptionPane.ERROR_MESSAGE);
 		}
 		return;
-	}*/
+	}
 
-	/*public void atualizarTabela() {
-
-		List<Funcionario> funcionarios = funcionarioDAO.listarFuncionarios();
-		DefaultTableModel tableModel = cadastroFuncionario.getTableModel();
-		for (Funcionario funcionario : funcionarios) {
-			Contato contato = funcionario.getContato();
-			tableModel.addRow(
-					new Object[] { funcionario.getCpf(), funcionario.getNome(), funcionario.getSenhaFuncionario(),
-							funcionario.isAdm() ? "Sim" : "Não", contato.getEmail(), contato.getTelefone() });
-		}
-	}*/
-
-	
-	/* public void selecionarFuncionario(int id) { Funcionario funcionario =
+	 public void selecionarFuncionario(int id) { Funcionario funcionario =
 	 funcionarioDAO.getFuncionario(id); if (funcionario != null) {
 	 view.setFuncionario(funcionario); } else {
-	 JOptionPane.showMessageDialog(view, "Funcionário não encontrado"); } }*/
+	 JOptionPane.showMessageDialog(view, "Funcionário não encontrado"); } }
 
-
+*/
 }
