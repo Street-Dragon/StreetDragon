@@ -1,4 +1,4 @@
-package controle.entidade.funcionariocontrole;
+package controle.visao.principal;
 
 import visao.TelaPrincipal;
 
@@ -33,7 +33,7 @@ public class TelaPrincipalControle {
 				mudarCorBotao(telaPrincipal.getBtnHistorico());
 			}
 		});
-		
+
 		this.telaPrincipal.getBtnFornecedor().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -41,12 +41,28 @@ public class TelaPrincipalControle {
 				mudarCorBotao(telaPrincipal.getBtnFornecedor());
 			}
 		});
-		
+
 		this.telaPrincipal.getBtnProdutos().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				trocarTela("TelaProdutos");
 				mudarCorBotao(telaPrincipal.getBtnProdutos());
+			}
+		});
+
+		this.telaPrincipal.getBtnPromocoes().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				trocarTela("TelaPromocao");
+				mudarCorBotao(telaPrincipal.getBtnPromocoes());
+			}
+		});
+
+		this.telaPrincipal.getBtnClientes().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				trocarTela("TelaCliente");
+				mudarCorBotao(telaPrincipal.getBtnClientes());
 			}
 		});
 
