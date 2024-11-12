@@ -2,6 +2,8 @@ package visao;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.sql.SQLException;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -12,8 +14,12 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
+import modelo.dao.fornecedor.FornecedorDAO;
+import modelo.entidade.pessoa.fornecedor.Fornecedor;
 import net.miginfocom.swing.MigLayout;
 import utils.Utils;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class TelaFornecedor extends JPanel {
 
@@ -36,6 +42,12 @@ public class TelaFornecedor extends JPanel {
 	 * Create the panel.
 	 */
 	public TelaFornecedor(TelaPrincipal telaPrincipal) {
+		
+		
+		
+		
+		
+		// Dentro da classe TelaFornecedor, adicione os métodos para atualizar a tabela e capturar os dados:
 		setBackground(new Color(255, 255, 255));
 		hkGrotesk = Utils.loadCustomFont();
 		setLayout(new MigLayout("", "[grow][grow][grow][grow]", "[grow][grow][grow][grow]"));
@@ -89,6 +101,19 @@ public class TelaFornecedor extends JPanel {
 
 		// Botão Cadastrar
 		btnCadastrarfFor = new JButton("Cadastrar");
+		btnCadastrarfFor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				  Fornecedor fornecedor = capturarDadosFornecedor();
+	                FornecedorDAO dao = new FornecedorDAO();
+	                try {
+	                    dao.cadastrarFornecedor(fornecedor);
+	                    atualizarTabela();
+	                    limparCampos();
+	                } catch (SQLException ex) {
+	                    ex.printStackTrace();
+	                }
+	            }
+		});
 		btnCadastrarfFor.setForeground(new Color(255, 255, 255));
 		btnCadastrarfFor.setFont(hkGrotesk);
 		panel_1.setLayout(new MigLayout("", "[grow]", "[grow][grow][][grow][grow][grow]"));
@@ -96,6 +121,26 @@ public class TelaFornecedor extends JPanel {
 		panel_1.add(btnCadastrarfFor, "cell 0 1,grow");
 		
 		btnEditarFor = new JButton("Editar Fornecedor");
+		btnEditarFor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				int selectedRow = table.getSelectedRow();
+                if (selectedRow != -1) {
+                    int id = (int) table.getValueAt(selectedRow, 0);
+                    Fornecedor fornecedor = capturarDadosFornecedor();
+                    fornecedor.setId(id);
+                    FornecedorDAO dao = new FornecedorDAO();
+                    try {
+                        dao.atualizarFornecedor(fornecedor);
+                        atualizarTabela();
+                        limparCampos();
+                    } catch (SQLException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            }
+
+		});
 		btnEditarFor.setFont(new Font("Hanken Grotesk", Font.PLAIN, 20));
 		btnEditarFor.setForeground(new Color(255, 255, 255));
 		btnEditarFor.setBackground(new Color(255, 149, 149));
@@ -103,6 +148,23 @@ public class TelaFornecedor extends JPanel {
 
 		// Botão Excluir
 		btnDeletarFor = new JButton("Excluir");
+		btnDeletarFor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				int selectedRow = table.getSelectedRow();
+                if (selectedRow != -1) {
+                    int id = (int) table.getValueAt(selectedRow, 0);
+                    FornecedorDAO dao = new FornecedorDAO();
+                    try {
+                        dao.excluirFornecedor(id);
+                        atualizarTabela();
+                    } catch (SQLException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            }
+
+		});
 		btnDeletarFor.setForeground(new Color(255, 255, 255));
 		btnDeletarFor.setFont(hkGrotesk);
 		btnDeletarFor.setBackground(new Color(255, 0, 0));
@@ -127,32 +189,95 @@ public class TelaFornecedor extends JPanel {
 		header.setFont(new Font("Hanken Grotesk", Font.PLAIN, 25));
 	}
 	
-	//bocetinha
-	public JTextField getTxtNome() {
-		return txtCnpj;
+	public Fornecedor capturarDadosFornecedor() {
+	    Fornecedor fornecedor = new Fornecedor();
+	    fornecedor.setNome(textNome.getText());
+	    fornecedor.setCnpj(txtCnpj.getText());
+	    fornecedor.setCep(Integer.parseInt(txtCep.getText()));
+	    fornecedor.setRua(txtRua.getText());
+	    return fornecedor;
 	}
 
-	public void setTxtNome(JTextField txtNome) {
-		this.txtCnpj = txtNome;
+	public void limparCampos() {
+	    textNome.setText("");
+	    txtCnpj.setText("");
+	    txtCep.setText("");
+	    txtRua.setText("");
 	}
 
-	public JButton getBtnCadastrarProd() {
+	public void atualizarTabela() {
+	    try {
+	        FornecedorDAO dao = new FornecedorDAO();
+	        List<Fornecedor> fornecedores = dao.listarFornecedores();
+	        DefaultTableModel model = (DefaultTableModel) table.getModel();
+	        model.setRowCount(0); // Limpa a tabela antes de adicionar novos dados
+	        for (Fornecedor fornecedor : fornecedores) {
+	            model.addRow(new Object[]{fornecedor.getId(), fornecedor.getNome(), fornecedor.getCnpj(), fornecedor.getCep(), fornecedor.getRua()});
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	}
+	
+	
+
+	public JButton getBtnCadastrarfFor() {
 		return btnCadastrarfFor;
 	}
 
-	public JButton getBtnDeletarProd() {
+	public void setBtnCadastrarfFor(JButton btnCadastrarfFor) {
+		this.btnCadastrarfFor = btnCadastrarfFor;
+	}
+
+	public JButton getBtnDeletarFor() {
 		return btnDeletarFor;
 	}
 
-	public void setTxtValor(JTextField txtValor) {
-		this.txtRua = txtValor;
+	public void setBtnDeletarFor(JButton btnDeletarFor) {
+		this.btnDeletarFor = btnDeletarFor;
 	}
 
-	public void setTxtQuantEstoque(JTextField txtQuantEstoque) {
-		this.txtCep = txtQuantEstoque;
+	public JTextField getTxtCnpj() {
+		return txtCnpj;
 	}
 
-	public JTable geTable() {
-		return table;
+	public void setTxtCnpj(JTextField txtCnpj) {
+		this.txtCnpj = txtCnpj;
 	}
+
+	public JTextField getTxtRua() {
+		return txtRua;
+	}
+
+	public void setTxtRua(JTextField txtRua) {
+		this.txtRua = txtRua;
+	}
+
+	public JTextField getTxtCep() {
+		return txtCep;
+	}
+
+	public void setTxtCep(JTextField txtCep) {
+		this.txtCep = txtCep;
+	}
+
+	public JTextField getTextNome() {
+		return textNome;
+	}
+
+	public void setTextNome(JTextField textNome) {
+		this.textNome = textNome;
+	}
+
+	public JButton getBtnEditarFor() {
+		return btnEditarFor;
+	}
+
+	public void setBtnEditarFor(JButton btnEditarFor) {
+		this.btnEditarFor = btnEditarFor;
+	}
+	
+	
+	
+	
 }
