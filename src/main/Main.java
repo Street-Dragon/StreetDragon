@@ -22,7 +22,7 @@ public class Main {
 		// TelaPrincipalControle telaPrincipalControle = new TelaPrincipalControle();
 		// Conecta as telas ao controle
 		funcionarioControle.setTelaLogin(telaLogin);
-		funcionarioControle.setCadastroFuncionario(telaCadastroFuncionario);
+		funcionarioControle.setTelaCadastroFuncionario(telaCadastroFuncionario);
 		funcionarioControle.setTelaPrincipal(telaPrincipal);
 		// Exibe a tela de login
 		telaLogin.setVisible(true);

@@ -226,7 +226,7 @@ public class TelaCadastroFuncionario extends JPanel { // jpanel ao invés de jfr
 		btnCadastrarFuncionario.setBackground(new Color(114, 148, 235));
 		panel_1.add(btnCadastrarFuncionario, "cell 0 0,grow");
 		// Botão Ecluir
-		JButton btnDeletarFuncionario = new JButton("Excluir Funcionario");
+		btnDeletarFuncionario = new JButton("Excluir Funcionario");
 		btnDeletarFuncionario.setForeground(new Color(255, 255, 255));
 		btnDeletarFuncionario.setFont(hkGrotesk);
 		btnDeletarFuncionario.addActionListener(new ActionListener() {

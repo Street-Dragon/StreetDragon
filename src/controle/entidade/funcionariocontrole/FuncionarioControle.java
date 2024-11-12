@@ -19,7 +19,6 @@ import javax.swing.table.DefaultTableModel;
 public class FuncionarioControle {
 	private TelaLogin telaLogin;
 	private TelaCadastroFuncionario cadastroFuncionario;
-	private TelaCadastroFuncionario deletarFuncionario;
 	private FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
 	private TelaPrincipal telaPrincipal;
 	private String cpfUsuarioLogado;
@@ -46,7 +45,7 @@ public class FuncionarioControle {
 		});
 	}
       
-	public void setCadastroFuncionario(TelaCadastroFuncionario cadastroFuncionario) {
+	public void setTelaCadastroFuncionario(TelaCadastroFuncionario cadastroFuncionario) {
 		this.cadastroFuncionario = cadastroFuncionario;
 			atualizarTabela();
 			adicionarListeners();
@@ -59,17 +58,12 @@ public class FuncionarioControle {
 				
 			}
 		});
-	}
-
-	public void setExcluirFuncionario(TelaCadastroFuncionario deletarFuncionario) {
-		this.deletarFuncionario = deletarFuncionario;
-			atualizarTabela();
-			adicionarListeners();
-			deletarFuncionario.getBtnDeletarFuncionario().addActionListener(new ActionListener() {
+	
+			cadastroFuncionario.getBtnDeletarFuncionario().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				deletarFuncionario();
-				deletarFuncionario.limparCampos();
+				cadastroFuncionario.limparCampos();
 				atualizarTabela();
 				
 			}
@@ -195,7 +189,18 @@ public class FuncionarioControle {
     public void atualizarTabela() {
     
             List<Funcionario> funcionarios = funcionarioDAO.listarFuncionarios();
-            DefaultTableModel tableModel = cadastroFuncionario.getTableModel();
+           
+            DefaultTableModel tableModel;
+    		tableModel = new DefaultTableModel();
+            tableModel.addColumn("CPF");
+            tableModel.addColumn("Nome");
+            tableModel.addColumn("Senha");
+            tableModel.addColumn("Administrador");
+            tableModel.addColumn("Email");
+            tableModel.addColumn("Telefone");
+            
+            
+
             for (Funcionario funcionario : funcionarios) {
                 Contato contato = funcionario.getContato();
                 tableModel.addRow(new Object[]{
@@ -207,6 +212,8 @@ public class FuncionarioControle {
                     contato.getTelefone()
                 });
             }
+            
+            cadastroFuncionario.getTable().setModel(tableModel);
         }
     
     private void carregarDadosFuncionarioDAO(String funcionarioIdStr) {
