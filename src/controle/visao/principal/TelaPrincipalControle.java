@@ -23,13 +23,6 @@ public class TelaPrincipalControle {
 		this.telaPrincipal = telaPrincipal;
 		mudarCorBotao(telaPrincipal.getBtnVenda());
 
-
-		if (funcionarioDAO.funcionarioAdm(funcionarioControle.getCpfUsuarioLogado())) {
-	        System.out.println("usuario tem poderes");
-	    }
-		else {
-			System.out.println("usuario NAO tem poderes");
-		}
 	
 		// Configuração dos listeners dos botões
 		this.telaPrincipal.getBtnVenda().addActionListener(new ActionListener() {

@@ -3,7 +3,6 @@ package main;
 import controle.entidade.conexao.ConexaoBD;
 import controle.entidade.funcionariocontrole.FuncionarioControle;
 import controle.entidade.produto.ProdutoControle;
-import controle.entidade.funcionariocontrole.TelaPrincipalControle;
 import visao.TelaLogin;
 import visao.TelaPrincipal;
 import visao.TelaProdutos;
