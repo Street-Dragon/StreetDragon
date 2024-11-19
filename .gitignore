@@ -9,3 +9,9 @@
 # Arquivos temporários
 *.log
 *.tmp
+
+# Arquivos desnecessarios
+.classpath
+/settings
+.project
+.settings
