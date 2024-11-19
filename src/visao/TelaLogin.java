@@ -17,6 +17,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JCheckBox;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
+
+import utils.Cores;
 import utils.Utils;
 
 public class TelaLogin extends JFrame {
@@ -79,7 +81,7 @@ public class TelaLogin extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 750);
 		contentPane = new JPanel();
-		contentPane.setBackground(new Color(250, 188, 188)); // Fundo rosa
+		contentPane.setBackground(Cores.COR_ROSA); // Fundo rosa
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new MigLayout("", "[grow][grow][grow]", "[grow]"));
@@ -88,7 +90,7 @@ public class TelaLogin extends JFrame {
 		hkGrotesk = Utils.loadCustomFont();
 
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(246, 233, 233));
+		panel.setBackground(Cores.COR_ROSA_CLARO);
 		contentPane.add(panel, "cell 1 0,grow");
 		panel.setLayout(
 				new MigLayout("", "[][grow][]", "[grow][grow][grow][grow][grow][grow][grow][grow][grow][grow]"));
@@ -124,24 +126,24 @@ public class TelaLogin extends JFrame {
 		panel.add(lblStreetdragon, "cell 1 2,alignx center,aligny center");
 
 		JLabel lblCpf = new JLabel("CPF");
-		lblCpf.setFont(hkGrotesk);
+		lblCpf.setFont(new Font("Hanken Grotesk", Font.PLAIN, 25));
 		panel.add(lblCpf, "cell 1 3,alignx left,aligny center");
 
 		txtCpfLogin = new JTextField();
-		txtCpfLogin.setFont(new Font("Dialog", Font.PLAIN, 15));
+		txtCpfLogin.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
 		txtCpfLogin.setColumns(10);
 		panel.add(txtCpfLogin, "cell 1 4,grow");
 
 		JLabel lblSenha = new JLabel("Senha");
-		lblSenha.setFont(hkGrotesk);
+		lblSenha.setFont(new Font("Hanken Grotesk", Font.PLAIN, 25));
 		panel.add(lblSenha, "flowx,cell 1 5,alignx left,aligny center");
 
 		txtSenhaLogin = new JPasswordField();
-		txtSenhaLogin.setFont(new Font("Dialog", Font.PLAIN, 15));
+		txtSenhaLogin.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
 		panel.add(txtSenhaLogin, "cell 1 6,grow");
 
 		ckboxMotrarSenha = new JCheckBox("Motrar Senha");
-		ckboxMotrarSenha.setFont(new Font("Dialog", Font.PLAIN, 15));
+		ckboxMotrarSenha.setFont(new Font("Hanken Grotesk", Font.PLAIN, 25));
 		ckboxMotrarSenha.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				if (ckboxMotrarSenha.isSelected()) {
@@ -151,12 +153,13 @@ public class TelaLogin extends JFrame {
 				}
 			}
 		});
-		ckboxMotrarSenha.setBackground(new Color(246, 233, 233));
+
+		ckboxMotrarSenha.setBackground(Cores.COR_ROSA_CLARO);
 		panel.add(ckboxMotrarSenha, "cell 1 7,alignx left");
 
 		btnContinuar = new JButton("Continuar");
-		btnContinuar.setBackground(new Color(250, 187, 187));
-		btnContinuar.setFont(hkGrotesk);
+		btnContinuar.setBackground(Cores.COR_ROSA);
+		btnContinuar.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
 		panel.add(btnContinuar, "cell 1 8,grow");
 	}
 }

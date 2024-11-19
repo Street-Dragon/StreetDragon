@@ -108,7 +108,7 @@ public class TelaProdutos extends JPanel {
 		// Botão Cadastrar
 		btnCadastrarProd = new JButton("Cadastrar");
 		btnCadastrarProd.setForeground(new Color(255, 255, 255));
-		btnCadastrarProd.setFont(hkGrotesk);
+		btnCadastrarProd.setFont(new Font("Hanken Grotesk", Font.PLAIN, 25));
 		panel_1.setLayout(new MigLayout("", "[grow]", "[grow][grow][grow]"));
 		btnCadastrarProd.setBackground(new Color(114, 148, 235));
 		panel_1.add(btnCadastrarProd, "cell 0 0,grow");
@@ -119,7 +119,7 @@ public class TelaProdutos extends JPanel {
 		// Botão Excluir
 		btnDeletarProd = new JButton("Excluir");
 		btnDeletarProd.setForeground(new Color(255, 255, 255));
-		btnDeletarProd.setFont(hkGrotesk);
+		btnDeletarProd.setFont(new Font("Hanken Grotesk", Font.PLAIN, 25));
 		btnDeletarProd.setBackground(new Color(255, 0, 0));
 		panel_1.add(btnDeletarProd, "cell 0 2,grow");
 
@@ -132,8 +132,6 @@ public class TelaProdutos extends JPanel {
 		table = new JTable();
 		table.setFont(new Font("Hanken Grotesk", Font.PLAIN, 15));
 		table.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Id", "Nome", "Valor", "Qnt estoque" }));
-		table.setFillsViewportHeight(true);
-		table.setBackground(new Color(255, 233, 233));
 		scrollPane.setViewportView(table);
 
 		JTableHeader header = table.getTableHeader();
