@@ -10,10 +10,12 @@ public class GenericDAO {
     private Connection conexao;
 
     protected GenericDAO() {
-        this.conexao = ConexaoBD.getConexaoMySQL();
+        //this.conexao = ConexaoBD.getConexaoMySQL();
     }
 
     protected Connection getConnection() {
+    	this.conexao = ConexaoBD.getConexaoMySQL();
+
         return conexao;
     }
 
