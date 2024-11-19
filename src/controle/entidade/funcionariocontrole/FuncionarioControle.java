@@ -115,6 +115,20 @@ public class FuncionarioControle {
 			cpfUsuarioLogado = cpf;
 			telaPrincipal.getLblFuncionario()
 					.setText("Funcionario: " + funcionarioDAO.nomeFuncionario(cpfUsuarioLogado));
+			
+			
+			boolean adm = funcionarioDAO.funcionarioAdm(cpf);
+			if(adm) {
+				System.out.println("USUARIO TEM PODERES");
+			}
+			else {
+				System.out.println("usuario não tem poderes");
+			}
+			telaPrincipal.getBtnFornecedor().setEnabled(adm);
+			telaPrincipal.getBtnFuncionarios().setEnabled(adm);
+			telaPrincipal.getBtnPromocoes().setEnabled(adm);
+			
+			
 			telaPrincipal.setVisible(true);
 			telaLogin.dispose();
 
