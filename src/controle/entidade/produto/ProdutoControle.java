@@ -23,7 +23,6 @@ public class ProdutoControle {
 	public void setTelaProdutos(TelaProdutos telaProdutos) {
 		this.telaProdutos = telaProdutos;
 		
-		System.out.println("entrou");
 		telaProdutos.getBtnCadastrarProd().addActionListener(new ActionListener() {
 			@Override
 			
