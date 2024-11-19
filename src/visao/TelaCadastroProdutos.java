@@ -17,12 +17,15 @@ import modelo.entidade.pessoa.fornecedor.Fornecedor;
 import modelo.entidade.produto.Produto;
 import modelo.enumeracao.tamanho.Tamanho;
 import net.miginfocom.swing.MigLayout;
+import utils.Utils;
+
 import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
+import javax.swing.ComboBoxEditor;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
@@ -40,12 +43,11 @@ public class TelaCadastroProdutos extends JFrame {
 	private JTextField textFieldFornecedor;
 	private JComboBox cbMaterial;
 	private JComboBox cbCategoria;
-	private JComboBox cBTamanho;
+	private JComboBox cbTamanho;
 	private Font hkGrotesk;
 	private JButton btnCancelar;
 	private JButton btnCadastrarProduto;
 	private ProdutoDAO pDAO = new ProdutoDAO();
-	ProdutoControle produtoC = new ProdutoControle();
 
 	public JButton getbtnCancelar() {
 		return btnCancelar;
@@ -54,21 +56,8 @@ public class TelaCadastroProdutos extends JFrame {
 	public JButton getbtnCadastrarProduto() {
 		return btnCadastrarProduto;
 	}
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					TelaCadastroProdutos frame = new TelaCadastroProdutos();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+	public JTextField getTextFieldId() {
+		return textFieldId;
 	}
 
 	/**
@@ -76,13 +65,13 @@ public class TelaCadastroProdutos extends JFrame {
 	 */
 	public TelaCadastroProdutos() {
 		setTitle("Cadastrar Produto");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 672, 540);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(255, 255, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-
-		loadCustomFont();
+		
+		hkGrotesk = Utils.loadCustomFont();
 
 		setContentPane(contentPane);
 		contentPane.setLayout(
@@ -93,7 +82,7 @@ public class TelaCadastroProdutos extends JFrame {
 		contentPane.add(lblId, "cell 0 0,growx");
 		lblId.setFont(hkGrotesk);
 
-		textFieldId = new JTextField(String.valueOf(pDAO.Idshow()));
+		textFieldId = new JTextField();
 		textFieldId.setHorizontalAlignment(SwingConstants.CENTER);
 		textFieldId.setFont(new Font("Dialog", Font.PLAIN, 15));
 		textFieldId.setEditable(false);
@@ -179,13 +168,13 @@ public class TelaCadastroProdutos extends JFrame {
 		contentPane.add(lblTamanho, "cell 0 6,growx");
 		lblTamanho.setFont(hkGrotesk);
 
-		cBTamanho = new JComboBox();
-		cBTamanho.setBackground(new Color(246, 233, 233));
-		cBTamanho.setModel(
+		cbTamanho = new JComboBox();
+		cbTamanho.setBackground(new Color(246, 233, 233));
+		cbTamanho.setModel(
 				new DefaultComboBoxModel(new String[] { "", "PP", "P", "M", "G", "GG", "XG", "XGG", "EG", "EGG" }));
-		cBTamanho.setSelectedIndex(0);
-		contentPane.add(cBTamanho, "cell 1 6,growx");
-		cBTamanho.setFont(new Font("Dialog", Font.PLAIN, 15));
+		cbTamanho.setSelectedIndex(0);
+		contentPane.add(cbTamanho, "cell 1 6,growx");
+		cbTamanho.setFont(new Font("Dialog", Font.PLAIN, 15));
 
 		JLabel lblQntEstoque = new JLabel("Qnt estoque");
 		lblQntEstoque.setHorizontalAlignment(SwingConstants.CENTER);
@@ -199,23 +188,12 @@ public class TelaCadastroProdutos extends JFrame {
 		textFieldQntEstoque.setFont(new Font("Dialog", Font.PLAIN, 15));
 
 		btnCadastrarProduto = new JButton("Cadastrar Produto");
-		btnCadastrarProduto.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				ProdutoControle Pcontrole = new ProdutoControle();
-				produtoC.cadastrarProduto(TelaCadastroProdutos.this);
-			}
-		});
 		btnCadastrarProduto.setForeground(new Color(255, 255, 255));
 		btnCadastrarProduto.setBackground(new Color(100, 149, 255));
 		contentPane.add(btnCadastrarProduto, "cell 0 8 2 1,growx");
 		btnCadastrarProduto.setFont(hkGrotesk);
 
 		btnCancelar = new JButton("Cancelar");
-		btnCancelar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				ClearText();
-			}
-		});
 		btnCancelar.setForeground(new Color(255, 255, 255));
 		btnCancelar.setBackground(new Color(226, 61, 40));
 		contentPane.add(btnCancelar, "cell 3 8 2 1,growx");
@@ -240,42 +218,21 @@ public class TelaCadastroProdutos extends JFrame {
 		textFieldVariacao.setText(null);
 		textFieldQntEstoque.setText(null);
 		textFieldFornecedor.setText(null);
-		cBTamanho.setSelectedItem(null);
+		cbTamanho.setSelectedItem(null);
 		cbMaterial.setSelectedItem(null);
 		cbCategoria.setSelectedItem(null);
-	}
-
-	private void loadCustomFont() {
-		try {
-			hkGrotesk = Font
-					.createFont(Font.TRUETYPE_FONT,
-							getClass().getResourceAsStream("/resources/fontes/HankenGrotesk-VariableFont_wght.ttf"))
-					.deriveFont(20f);
-			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-			ge.registerFont(hkGrotesk);
-		} catch (FontFormatException e) {
-			System.err.println("Formato de fonte inválido: " + e.getMessage());
-			e.printStackTrace();
-		} catch (IOException e) {
-			System.err.println("Erro ao ler o arquivo da fonte: " + e.getMessage());
-			e.printStackTrace();
-		}
-	}
-
-	public int getTextFieldId() {
-		return Integer.valueOf(textFieldId.getText());
 	}
 
 	public String getTextFieldNome() {
 		return textFieldNome.getText();
 	}
 
-	public float getTextFieldValor() {
-		return Float.valueOf(textFieldValor.getText());
+	public String getTextFieldValor() {
+		return textFieldValor.getText();
 	}
 
-	public int getTextFieldQntEstoque() {
-		return Integer.valueOf(textFieldQntEstoque.getText());
+	public String getTextFieldQntEstoque() {
+		return textFieldQntEstoque.getText();
 	}
 
 	public String getTextFieldVariacao() {
@@ -295,6 +252,33 @@ public class TelaCadastroProdutos extends JFrame {
 	}
 
 	public String getCbTamnho() {
-		return String.valueOf(cBTamanho.getSelectedObjects());
+		return String.valueOf(cbTamanho.getSelectedObjects());
+	}
+	public JTextField setTextFieldId() {
+		return textFieldId;
+	}
+	public JTextField setTextFieldNome() {
+		return textFieldNome;
+	}
+	public JTextField setTextFieldValor() {
+		return textFieldValor;
+	}
+	public JTextField setTextFieldQntEstoque() {
+		return textFieldQntEstoque;
+	}
+	public JTextField setTextFieldVariacao() {
+		return textFieldVariacao;
+	}
+	public JTextField setTextFieldFornecedor() {
+		return textFieldFornecedor;
+	}
+	public JComboBox setCbMaretial() {
+		return cbMaterial;
+	}
+	public JComboBox setCbCategoria() {
+		return cbCategoria;
+	}
+	public JComboBox setCbTamanho() {
+		return cbTamanho;
 	}
 }

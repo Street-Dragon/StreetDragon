@@ -9,14 +9,28 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 
+import controle.entidade.funcionariocontrole.FuncionarioControle;
+import modelo.dao.funcionario.FuncionarioDAO;
+
 public class TelaPrincipalControle {
 	private TelaPrincipal telaPrincipal;
 	private JButton btnSelec;
-
+	private FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
+	private FuncionarioControle funcionarioControle = new FuncionarioControle();
+	
+	
 	public TelaPrincipalControle(TelaPrincipal telaPrincipal) {
 		this.telaPrincipal = telaPrincipal;
 		mudarCorBotao(telaPrincipal.getBtnVenda());
 
+
+		if (funcionarioDAO.funcionarioAdm(funcionarioControle.getCpfUsuarioLogado())) {
+	        System.out.println("usuario tem poderes");
+	    }
+		else {
+			System.out.println("usuario NAO tem poderes");
+		}
+	
 		// Configuração dos listeners dos botões
 		this.telaPrincipal.getBtnVenda().addActionListener(new ActionListener() {
 			@Override
