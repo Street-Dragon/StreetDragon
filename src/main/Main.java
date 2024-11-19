@@ -13,7 +13,7 @@ import visao.TelaCadastroProdutos;
 public class Main {
 	public static void main(String[] args) {
 		// Cria o banco
-		//ConexaoBD.criarBancoDeDadosETabela();
+		ConexaoBD.criarBancoDeDadosETabela();
 
 		// Inicialização as telas
 		TelaLogin telaLogin = new TelaLogin();
@@ -49,9 +49,9 @@ public class Main {
         		
         produtoControle.listarProdutosTable();
         
-        telaPrincipal.add(telaProduto); // or mainPanel.add(telaProdutos);
-        telaPrincipal.revalidate();
-        telaPrincipal.repaint();
+//        telaPrincipal.add(telaProduto); // faz a minha parde do programa funcionar, concerta ai Mariana.
+//        telaPrincipal.revalidate();
+//        telaPrincipal.repaint();
         
     }
 }
