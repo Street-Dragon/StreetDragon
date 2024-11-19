@@ -16,7 +16,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class FuncionarioControle {
@@ -125,15 +124,14 @@ public class FuncionarioControle {
 			telaLogin.getCkboxMotrarSenha().setSelected(false);
 
 		} else {
-			JOptionPane.showMessageDialog(telaLogin, "Credenciais inválidas. Tente novamente.", "Erro",
-					JOptionPane.ERROR_MESSAGE);
+			TelaMensagens TM = new TelaMensagens("Credenciais inválidas. Tente novamente.", 1);
 		}
 	}
 
 	private void realizarLogout() {
+		TelaMensagens TM = new TelaMensagens("Deseja realmente deslogar?");
 	    System.out.println("Função chamada");
-	    int confirmar = JOptionPane.showConfirmDialog(telaPrincipal, "Deseja realmente deslogar?", "Confirmação", JOptionPane.YES_NO_OPTION);
-	    if (confirmar == JOptionPane.YES_OPTION) {
+	    if (TM.getResposta()) {
 	        System.out.println("Usuário deslogado");
 	        cpfUsuarioLogado = null;
 	        telaPrincipal.dispose(); // Fecha a tela principal
@@ -151,7 +149,7 @@ private void cadastrarFuncionario() {
         String telefone = cadastroFuncionario.getTextTelefone();
 
         if (nome.isBlank() || cpf.isBlank() || senha.isBlank() || email.isBlank() || telefone.isBlank()) {
-        	TelaMensagens TM = new TelaMensagens("Preencha todos os campos.", 2);
+        	TelaMensagens TM = new TelaMensagens("Preencha todos os campos.", 3);
             return;
         }
 
@@ -160,13 +158,12 @@ private void cadastrarFuncionario() {
         telefone = telefone.replaceAll("[^0-9]", ""); // 
         
         if (funcionarioDAO.verificaCpfExistente(cpf)) {
-            JOptionPane.showMessageDialog(cadastroFuncionario, "CPF já cadastrado. Tente outro.", "Erro", JOptionPane.ERROR_MESSAGE);
+        	TelaMensagens TM = new TelaMensagens("CPF já cadastrado. Tente outro.", 3);
             return;
         }
         
         if (!Utils.isValidCPF(cpf)) {
-            JOptionPane.showMessageDialog(cadastroFuncionario, "O CPF informado é inválido.", "Erro",
-                    JOptionPane.ERROR_MESSAGE);
+        	TelaMensagens TM = new TelaMensagens("O CPF informado é inválido.", 3);
             return;
         } 
         atualizarTabela();
@@ -180,24 +177,20 @@ private void cadastrarFuncionario() {
         if (selectedRow != -1) {
             String cpfFuncionario = (String) cadastroFuncionario.getTable().getValueAt(selectedRow, 0);
             
-            int resposta = JOptionPane.showConfirmDialog(cadastroFuncionario,
-                "Você tem certeza que deseja excluir o funcionário com CPF: " + cpfFuncionario + "?",
-                "Confirmar Exclusão",
-                JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-
-            if (resposta == JOptionPane.YES_OPTION) {
+            TelaMensagens TM = new TelaMensagens("Você tem certeza que deseja excluir o funcionário com CPF: " + cpfFuncionario + "?");
+            if (TM.getResposta()) {
 
                 boolean excluido = funcionarioDAO.excluirFuncionario(cpfFuncionario);
                 
                 if (excluido) {
-                    JOptionPane.showMessageDialog(cadastroFuncionario, "Funcionário excluído com sucesso!");
+                	TelaMensagens TM2 = new TelaMensagens("Funcionário excluído com sucesso!", 0);
                     atualizarTabela();
                 } else {
-                    JOptionPane.showMessageDialog(cadastroFuncionario, "Erro ao excluir o funcionário.", "Erro", JOptionPane.ERROR_MESSAGE);
+                	TelaMensagens TM2 = new TelaMensagens("Erro ao excluir o funcionário.", 1);
                 }
             }
         } else {
-            JOptionPane.showMessageDialog(cadastroFuncionario, "Selecione um funcionário para excluir.", "Erro", JOptionPane.WARNING_MESSAGE);
+        	TelaMensagens TM2 = new TelaMensagens("Selecione um funcionário para excluir.", 3);
         }
     }
     public void atualizarTabela() {
@@ -250,7 +243,7 @@ private void cadastrarFuncionario() {
         String telefone = cadastroFuncionario.getTextTelefone();
         
         if (nome.isEmpty() || cpf.isEmpty() || senha.isEmpty()) {
-            JOptionPane.showMessageDialog(cadastroFuncionario, "Preencha todos os campos obrigatórios.", "Erro", JOptionPane.ERROR_MESSAGE);
+        	TelaMensagens TM = new TelaMensagens("Preencha todos os campos obrigatórios.", 1);
             return;
         }
 
@@ -270,10 +263,10 @@ private void cadastrarFuncionario() {
         boolean resultado = funcionarioDAO.editarFuncionario(funcionario);
 
         if (resultado) {
-            JOptionPane.showMessageDialog(cadastroFuncionario, "Funcionário atualizado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+        	TelaMensagens TM = new TelaMensagens("Funcionário atualizado com sucesso!", 0);
             atualizarTabela();
         } else {
-            JOptionPane.showMessageDialog(cadastroFuncionario, "Erro ao atualizar funcionário.", "Erro", JOptionPane.ERROR_MESSAGE);
+        	TelaMensagens TM = new TelaMensagens("Erro ao atualizar funcionário.", 0);
         }
     }
     

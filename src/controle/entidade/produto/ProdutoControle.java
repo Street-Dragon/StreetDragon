@@ -3,7 +3,6 @@ package controle.entidade.produto;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
-import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import modelo.dao.produto.ProdutoDAO;
@@ -12,6 +11,7 @@ import visao.TelaCadastroProdutos;
 import visao.TelaDeletarProduto;
 import visao.TelaEditarProduto;
 import visao.TelaListarProdutos;
+import visao.TelaMensagens;
 
 public class ProdutoControle {
 	private TelaCadastroProdutos telaCProduto;
@@ -72,7 +72,7 @@ public class ProdutoControle {
         String tamanho = telaEProduto.getCbTamnho();
 
         if (nome.isEmpty() || material.isEmpty() || categoria.isEmpty() || tamanho.isEmpty() || variacao.isEmpty() || String.valueOf(valor).isEmpty() || String.valueOf(estoque).isEmpty()) {
-            JOptionPane.showMessageDialog(telaEProduto, "Parece que você não preencheu todos os campos", ":(", JOptionPane.ERROR_MESSAGE);
+        	TelaMensagens TM = new TelaMensagens("Parece que você não preencheu todos os campos", 3);
             return;
         }
 
@@ -85,10 +85,10 @@ public class ProdutoControle {
         produto.setTamanho(tamanho);
 
         if (pDAO.editarProduto(produto.getIdProduto(), produto)) {
-            JOptionPane.showMessageDialog(telaEProduto, "Produto Editado com Sucesso!", null, JOptionPane.INFORMATION_MESSAGE);
+        	TelaMensagens TM = new TelaMensagens("Produto Editado com Sucesso!", 0);
             telaLProduto.setVisible(true);
         } else {
-            JOptionPane.showMessageDialog(telaEProduto, "Erro ao editar produto", "Erro", JOptionPane.ERROR_MESSAGE);
+        	TelaMensagens TM = new TelaMensagens("Erro ao editar produto", 1);
         }
     }
 	
@@ -128,7 +128,7 @@ public class ProdutoControle {
 			String variacao = cadastroProduto.getTextFieldVariacao();
 		
 			if (nome.isEmpty()||material.isEmpty()||categoria.isEmpty()||categoria.isEmpty()||tamanho.isEmpty()||variacao.isEmpty()|| String.valueOf(valor).isEmpty()||String.valueOf(estoque).isEmpty()) {
-				JOptionPane.showMessageDialog(cadastroProduto, "Parece que você não prencheu todos os campos", ":(", JOptionPane.ERROR_MESSAGE);
+				TelaMensagens TM = new TelaMensagens("Parece que você não prencheu todos os campos", 3);
 	            return;
 			}
 			
@@ -145,9 +145,9 @@ public class ProdutoControle {
 		
 		
 		if (pDAO.cadastrarProduto(produto)) {
-			JOptionPane.showMessageDialog(cadastroProduto, "Produto Cadastrado",null, JOptionPane.INFORMATION_MESSAGE);
+			TelaMensagens TM = new TelaMensagens("Produto Cadastrado", 0);
 		} else {
-			JOptionPane.showMessageDialog(cadastroProduto, "Erro ao cadastrar produto","Erro", JOptionPane.ERROR_MESSAGE);
+			TelaMensagens TM = new TelaMensagens("Erro ao cadastrar produto", 1);
 		}
 	}
 
@@ -157,7 +157,7 @@ public class ProdutoControle {
 		JTable table = telaL.gettable();
 		int selectedRowIndex = table.getSelectedRow();
 		if (selectedRowIndex == -1) {
-			JOptionPane.showMessageDialog(telaL, "Nenhum produto selecionado","Erro", JOptionPane.ERROR_MESSAGE);
+			TelaMensagens TM = new TelaMensagens("Nenhum produto selecionado", 3);
 		} else {
 			String firstColumnValue = table.getValueAt(selectedRowIndex, 0).toString();
 			pDAO.deletarProduto(Integer.valueOf(firstColumnValue));
@@ -175,7 +175,7 @@ public class ProdutoControle {
 		String variacao = telaEProduto.getTextFieldVariacao();
 		
 		if (nome.isEmpty()||material.isEmpty()||categoria.isEmpty()||categoria.isEmpty()||tamanho.isEmpty()||variacao.isEmpty()|| String.valueOf(valor).isEmpty()||String.valueOf(estoque).isEmpty()) {
-			JOptionPane.showMessageDialog(telaEProduto, "Parece que você não prencheu todos os campos", ":(", JOptionPane.ERROR_MESSAGE);
+			TelaMensagens TM = new TelaMensagens("Parece que você não prencheu todos os campos", 3);
             return;
 		}
 		
@@ -196,7 +196,7 @@ public class ProdutoControle {
 		JTable table = telaLProduto.gettable();
 		int selectedRowIndex = table.getSelectedRow();
 		if (selectedRowIndex == -1) {
-			JOptionPane.showMessageDialog(telaLProduto, "Nenhum produto selecionado","Erro", JOptionPane.ERROR_MESSAGE);
+			TelaMensagens TM = new TelaMensagens("Nenhum produto selecionado", 3);
 			return null;
 		} else {
 			Produto produto = new Produto();

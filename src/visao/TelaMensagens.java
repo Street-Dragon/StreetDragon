@@ -27,6 +27,10 @@ public class TelaMensagens extends JDialog{
 		setTitle("Mensagem");
 		setModal(true);
 		setResizable(false);
+		Image image;
+		Image newimg;
+		ImageIcon imageIcon;
+		java.net.URL imageURL;
 		
 		hkGrotesk = Utils.loadCustomFont();
 		
@@ -43,32 +47,49 @@ public class TelaMensagens extends JDialog{
 		String iconPath;
 		switch(tipo) {
 		case 0:
-			iconPath = "/resources/imagens/Check.png";
-			lblMensagem.setIcon(new ImageIcon(getClass().getResource(iconPath)));
 			setTitle("Sucesso");
+			imageURL = getClass().getResource("/resources/imagens/Check.png");
+			imageIcon = new ImageIcon(imageURL);
+			image = imageIcon.getImage();
+			newimg = image.getScaledInstance(100, 100,  java.awt.Image.SCALE_SMOOTH);
+			imageIcon = new ImageIcon(newimg);
+			lblMensagem.setIcon(imageIcon);
+			
 			break;
 		case 1:
-			iconPath = "/resources/imagens/Erro.png";
-			lblMensagem.setIcon(new ImageIcon(getClass().getResource(iconPath)));
 			setTitle("Erro");
+			imageURL = getClass().getResource("/resources/imagens/Erro.png");
+			imageIcon = new ImageIcon(imageURL);
+			image = imageIcon.getImage();
+			newimg = image.getScaledInstance(60, 60,  java.awt.Image.SCALE_SMOOTH);
+			imageIcon = new ImageIcon(newimg);
+			lblMensagem.setIcon(imageIcon);
 			break;
 		case 2:
-			iconPath = "/resources/imagens/Pergunta.png";
-			lblMensagem.setIcon(new ImageIcon(getClass().getResource(iconPath)));
-			setTitle("Mensagem");
+			setTitle("Pergunta");
+			imageURL = getClass().getResource("/resources/imagens/Pergunta.png");
+			imageIcon = new ImageIcon(imageURL);
+			image = imageIcon.getImage();
+			newimg = image.getScaledInstance(100, 100,  java.awt.Image.SCALE_SMOOTH);
+			imageIcon = new ImageIcon(newimg);
+			lblMensagem.setIcon(imageIcon);
 			break;
 		case 3:
-			iconPath = "/resources/imagens/Alerta.png";
 			setTitle("Alerta");
-			ImageIcon imageIcon = new ImageIcon(iconPath);
-			Image img = imageIcon.getImage();
-			Image resizedImg = img.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
-			imageIcon = new ImageIcon(resizedImg);
+			imageURL = getClass().getResource("/resources/imagens/Alerta.png");
+			imageIcon = new ImageIcon(imageURL);
+			image = imageIcon.getImage();
+			newimg = image.getScaledInstance(100, 100,  java.awt.Image.SCALE_SMOOTH);
+			imageIcon = new ImageIcon(newimg);
 			lblMensagem.setIcon(imageIcon);
 			break;
 		case 10:
-			iconPath = "/resources/imagens/logo.png";
-			lblMensagem.setIcon(new ImageIcon(getClass().getResource(iconPath)));
+			imageURL = getClass().getResource("/resources/imagens/logo.png");
+			imageIcon = new ImageIcon(imageURL);
+			image = imageIcon.getImage();
+			newimg = image.getScaledInstance(100, 100,  java.awt.Image.SCALE_SMOOTH);
+			imageIcon = new ImageIcon(newimg);
+			lblMensagem.setIcon(imageIcon);
 			break;
 			default:
 				break;
@@ -101,10 +122,10 @@ public class TelaMensagens extends JDialog{
 	 * @wbp.parser.constructor
 	 */
 	public TelaMensagens(String pergunta) {
+		setAlwaysOnTop(true);
 		setTitle("Mensagem");
 		setModal(true);
 		setResizable(false);
-		
 		
 		JPanel panel = new JPanel();
 		panel.setLayout(new BorderLayout());
@@ -113,8 +134,12 @@ public class TelaMensagens extends JDialog{
 		
 		JLabel labelPergunta = new JLabel(pergunta, SwingConstants.CENTER);
 		labelPergunta.setFont(new Font("Hanken Grotesk", Font.PLAIN, 15));
-		String iconPath = "/resources/imagens/Pergunta.png";
-		labelPergunta.setIcon(new ImageIcon(getClass().getResource(iconPath)));
+		java.net.URL imageURL = getClass().getResource("/resources/imagens/Pergunta.png");
+		ImageIcon imageIcon = new ImageIcon(imageURL);
+		Image image = imageIcon.getImage();
+		Image newimg = image.getScaledInstance(100, 100,  java.awt.Image.SCALE_SMOOTH);
+		imageIcon = new ImageIcon(newimg);
+		labelPergunta.setIcon(imageIcon);
 		panel.add(labelPergunta,BorderLayout.CENTER);
 		
 		JPanel painelSul = new JPanel(new FlowLayout(FlowLayout.CENTER,20,10));
