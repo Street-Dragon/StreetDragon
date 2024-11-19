@@ -39,27 +39,27 @@ public class FuncionarioControle {
 	}
 
 	public void setTelaPrincipal(TelaPrincipal telaPrincipal) {
-		this.telaPrincipal = telaPrincipal;
+	    this.telaPrincipal = telaPrincipal;
 
-		// Remove todos os ActionListeners existentes
-		for (ActionListener al : telaPrincipal.getBtnDeslogar().getActionListeners()) {
-			telaPrincipal.getBtnDeslogar().removeActionListener(al);
-		}
+	    // Remove todos os ActionListeners existentes
+	    for (ActionListener al : telaPrincipal.getBtnDeslogar().getActionListeners()) {
+	        telaPrincipal.getBtnDeslogar().removeActionListener(al);
+	    }
 
-		// Adiciona um novo ActionListener
-		telaPrincipal.getBtnDeslogar().addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				realizarLogout();
-			}
-		});
+	    // Adiciona um novo ActionListener
+	    telaPrincipal.getBtnDeslogar().addActionListener(new ActionListener() {
+	        @Override
+	        public void actionPerformed(ActionEvent e) {
+	            realizarLogout();
+	        }
+	    });
 	}
 
 	public void setTelaCadastroFuncionario(TelaCadastroFuncionario cadastroFuncionario) {
 		this.cadastroFuncionario = cadastroFuncionario;
-		atualizarTabela();
-		adicionarListeners();
-		cadastroFuncionario.getBtnCadastrarFuncionario().addActionListener(new ActionListener() {
+			atualizarTabela();
+			adicionarListeners();
+			cadastroFuncionario.getBtnCadastrarFuncionario().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				cadastrarFuncionario();
@@ -67,40 +67,40 @@ public class FuncionarioControle {
 				cadastroFuncionario.limparCampos();
 			}
 		});
-
-		cadastroFuncionario.getBtnDeletarFuncionario().addActionListener(new ActionListener() {
+	
+			cadastroFuncionario.getBtnDeletarFuncionario().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				deletarFuncionario();
 				cadastroFuncionario.limparCampos();
 				atualizarTabela();
-
+				
 			}
 		});
-		cadastroFuncionario.getBtnEditarFuncionario().addActionListener(new ActionListener() {
+			cadastroFuncionario.getBtnEditarFuncionario().addActionListener(new ActionListener() {
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				editarFuncinarioDAO(funcionarioIdStr);
-				atualizarTabela();
-			}
-		});
-	}
-
-	private void adicionarListeners() {
-		cadastroFuncionario.getTable().addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				int selectedRow = cadastroFuncionario.getTable().getSelectedRow();
-				if (selectedRow != -1) {
-					// |Tem que parar de converter, passa string direto e ajusta;
-					funcionarioIdStr = (String) cadastroFuncionario.getTable().getValueAt(selectedRow, 0);
-
-					carregarDadosFuncionarioDAO(funcionarioIdStr);
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					editarFuncinarioDAO(funcionarioIdStr);
+					atualizarTabela();
 				}
-			}
-		});
+			});
 	}
+	
+    private void adicionarListeners() {
+    	cadastroFuncionario.getTable().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int selectedRow = cadastroFuncionario.getTable().getSelectedRow();
+                if (selectedRow != -1) {
+                	 // |Tem que parar de converter, passa string direto e ajusta;
+                    funcionarioIdStr = (String) cadastroFuncionario.getTable().getValueAt(selectedRow, 0);
+                   
+                    carregarDadosFuncionarioDAO(funcionarioIdStr);
+                }
+            }
+        });
+    }
 
 	private void realizarLogin() {
 		String cpf = telaLogin.getCampoCpf();
@@ -130,224 +130,231 @@ public class FuncionarioControle {
 	}
 
 	private void realizarLogout() {
-		System.out.println("Função chamada");
-		int confirmar = JOptionPane.showConfirmDialog(telaPrincipal, "Deseja realmente deslogar?", "Confirmação",
-				JOptionPane.YES_NO_OPTION);
-		if (confirmar == JOptionPane.YES_OPTION) {
-			System.out.println("Usuário deslogado");
-			cpfUsuarioLogado = null;
-			telaPrincipal.dispose(); // Fecha a tela principal
-			telaLogin.setVisible(true); // Mostra a tela de login novamente
-		}
+	    System.out.println("Função chamada");
+	    int confirmar = JOptionPane.showConfirmDialog(telaPrincipal, "Deseja realmente deslogar?", "Confirmação", JOptionPane.YES_NO_OPTION);
+	    if (confirmar == JOptionPane.YES_OPTION) {
+	        System.out.println("Usuário deslogado");
+	        cpfUsuarioLogado = null;
+	        telaPrincipal.dispose(); // Fecha a tela principal
+	        telaLogin.setVisible(true); // Mostra a tela de login novamente
+	    }
 	}
 
 	private void cadastrarFuncionario() {
-		String nome = cadastroFuncionario.getTextNome();
-		char[] senhaArray = cadastroFuncionario.getPasswordField();
-		String cpf = cadastroFuncionario.getTextCpf();
-		boolean isAdm = cadastroFuncionario.getChckbxAdm();
-		String email = cadastroFuncionario.getTextEmail();
-		String senha = new String(senhaArray);
-		String telefone = cadastroFuncionario.getTextTelefone();
+        String nome = cadastroFuncionario.getTextNome();
+        char[] senhaArray = cadastroFuncionario.getPasswordField();
+        String cpf = cadastroFuncionario.getTextCpf();
+        boolean isAdm = cadastroFuncionario.getChckbxAdm();
+        String email = cadastroFuncionario.getTextEmail();
+        String senha = new String(senhaArray);
+        String telefone = cadastroFuncionario.getTextTelefone();
 
-		if (nome.isBlank() || cpf.isBlank() || senha.isBlank() || email.isBlank() || telefone.isBlank()) {
-			JOptionPane.showMessageDialog(cadastroFuncionario, "Preencha todos os campos.", "Erro",
-					JOptionPane.ERROR_MESSAGE);
-			return;
-		}
+        if (nome.isBlank() || cpf.isBlank() || senha.isBlank() || email.isBlank() || telefone.isBlank()) {
+            JOptionPane.showMessageDialog(cadastroFuncionario, "Preencha todos os campos.", "Erro",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
-		// Tira oq não é numero antes de começar a validação
-		cpf = cpf.replaceAll("[^0-9]", "");
-		telefone = telefone.replaceAll("[^0-9]", ""); //
+        // Tira oq não é numero antes de começar a validação
+        cpf = cpf.replaceAll("[^0-9]", ""); 
+        telefone = telefone.replaceAll("[^0-9]", ""); // 
+        
+        if (funcionarioDAO.verificaCpfExistente(cpf)) {
+            JOptionPane.showMessageDialog(cadastroFuncionario, "CPF já cadastrado. Tente outro.", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        if (!Utils.isValidCPF(cpf)) {
+            JOptionPane.showMessageDialog(cadastroFuncionario, "O CPF informado é inválido.", "Erro",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        } 
+        Funcionario funcionario = new Funcionario();
+        Contato contato = new Contato();
+        funcionario.setNome(nome);
+        funcionario.setCpf(cpf);
+        funcionario.setSenhaFuncionario(senha);
+        funcionario.setAdm(isAdm);
+        contato.setEmail(email);
+        contato.setTelefone(telefone);
+        funcionario.setContato(contato);
+        funcionarioDAO.cadastrarFuncionario(funcionario);
+        atualizarTabela();
+        return;
+    }
+    
+    // Método para excluir um funcionário
+    private void deletarFuncionario() {
+        int selectedRow = cadastroFuncionario.getTable().getSelectedRow();
+        
+        if (selectedRow != -1) {
+            String cpfFuncionario = (String) cadastroFuncionario.getTable().getValueAt(selectedRow, 0);
+            
+            int resposta = JOptionPane.showConfirmDialog(cadastroFuncionario,
+                "Você tem certeza que deseja excluir o funcionário com CPF: " + cpfFuncionario + "?",
+                "Confirmar Exclusão",
+                JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 
-		if (funcionarioDAO.verificaCpfExistente(cpf)) {
-			JOptionPane.showMessageDialog(cadastroFuncionario, "CPF já cadastrado. Tente outro.", "Erro",
-					JOptionPane.ERROR_MESSAGE);
-			return;
-		}
+            if (resposta == JOptionPane.YES_OPTION) {
 
-		if (!Utils.isValidCPF(cpf)) {
-			JOptionPane.showMessageDialog(cadastroFuncionario, "O CPF informado é inválido.", "Erro",
-					JOptionPane.ERROR_MESSAGE);
-			return;
-		}
-		atualizarTabela();
-		return;
-	}
+                boolean excluido = funcionarioDAO.excluirFuncionario(cpfFuncionario);
+                
+                if (excluido) {
+                    JOptionPane.showMessageDialog(cadastroFuncionario, "Funcionário excluído com sucesso!");
+                    atualizarTabela();
+                } else {
+                    JOptionPane.showMessageDialog(cadastroFuncionario, "Erro ao excluir o funcionário.", "Erro", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(cadastroFuncionario, "Selecione um funcionário para excluir.", "Erro", JOptionPane.WARNING_MESSAGE);
+        }
+    }
+    
+   
+    public void atualizarTabela() {
+            List<Funcionario> funcionarios = funcionarioDAO.listarFuncionarios();
+           
+            DefaultTableModel tableModel;
+    		tableModel = new DefaultTableModel();
+            tableModel.addColumn("CPF");
+            tableModel.addColumn("Nome");
+            tableModel.addColumn("Senha");
+            tableModel.addColumn("Administrador");
+            tableModel.addColumn("Email");
+            tableModel.addColumn("Telefone");
+            
+            
 
-	// Método para excluir um funcionário
-	private void deletarFuncionario() {
-		int selectedRow = cadastroFuncionario.getTable().getSelectedRow();
+            for (Funcionario funcionario : funcionarios) {
+                Contato contato = funcionario.getContato();
+                tableModel.addRow(new Object[]{
+                    funcionario.getCpf(),
+                    funcionario.getNome(),
+                    funcionario.getSenhaFuncionario(),
+                    funcionario.isAdm() ? "Sim" : "Não",
+                    contato.getEmail(),
+                    contato.getTelefone()
+                });
+            }
+            
+            cadastroFuncionario.getTable().setModel(tableModel);
+        }
+    
+    private void carregarDadosFuncionarioDAO(String funcionarioIdStr) {
+        Funcionario funcionario = funcionarioDAO.carregarDadosFuncionario(funcionarioIdStr);
+        if (funcionario != null) {
+        	
+            atualizarCampos(funcionario);
+        }
+    }
+    
+    private void editarFuncinarioDAO(String funcionarioIdString) {
+    	Funcionario funcionarioAlteracao = funcionarioDAO.carregarDadosFuncionario(funcionarioIdStr);
+    	//funcionarioDAO.editarFuncionario(funcionario);
+    	
+    	String nome = cadastroFuncionario.getTextNome();
+        String cpf = cadastroFuncionario.getTextCpf();
+        char[] senhaArray = cadastroFuncionario.getPasswordField();
+        String senha = new String(senhaArray);
+        boolean isAdm = cadastroFuncionario.getChckbxAdm();
+        String email = cadastroFuncionario.getTextEmail();
+        String telefone = cadastroFuncionario.getTextTelefone();
+        
+        if (nome.isEmpty() || cpf.isEmpty() || senha.isEmpty()) {
+            JOptionPane.showMessageDialog(cadastroFuncionario, "Preencha todos os campos obrigatórios.", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
-		if (selectedRow != -1) {
-			String cpfFuncionario = (String) cadastroFuncionario.getTable().getValueAt(selectedRow, 0);
+        
+        Funcionario funcionario = new Funcionario();
+        funcionario.setNome(nome);
+        funcionario.setCpf(funcionarioAlteracao.getCpf());
+        funcionario.setSenhaFuncionario(senha);
+        funcionario.setAdm(isAdm);
 
-			int resposta = JOptionPane.showConfirmDialog(cadastroFuncionario,
-					"Você tem certeza que deseja excluir o funcionário com CPF: " + cpfFuncionario + "?",
-					"Confirmar Exclusão", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+        Contato contato = new Contato();
+        contato.setId(funcionarioAlteracao.getContato().getId());
+        contato.setEmail(email);
+        contato.setTelefone(telefone);
+        funcionario.setContato(contato);
 
-			if (resposta == JOptionPane.YES_OPTION) {
+        boolean resultado = funcionarioDAO.editarFuncionario(funcionario);
 
-				boolean excluido = funcionarioDAO.excluirFuncionario(cpfFuncionario);
+        if (resultado) {
+            JOptionPane.showMessageDialog(cadastroFuncionario, "Funcionário atualizado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            atualizarTabela();
+        } else {
+            JOptionPane.showMessageDialog(cadastroFuncionario, "Erro ao atualizar funcionário.", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    private void atualizarCampos(Funcionario funcionario) {
+    	cadastroFuncionario.getTextFieldNome().setText(funcionario.getNome());
+    	cadastroFuncionario.getTextFieldCpf().setText(funcionario.getCpf());
+    	cadastroFuncionario.getTextFieldSenha().setText(funcionario.getSenhaFuncionario());
+    	cadastroFuncionario.getTextFieldEmail().setText(funcionario.getContato().getEmail());
+    	cadastroFuncionario.getTextFieldTelefone().setText(funcionario.getContato().getTelefone());
+    	
+    }
 
-				if (excluido) {
-					JOptionPane.showMessageDialog(cadastroFuncionario, "Funcionário excluído com sucesso!");
-					atualizarTabela();
-				} else {
-					JOptionPane.showMessageDialog(cadastroFuncionario, "Erro ao excluir o funcionário.", "Erro",
-							JOptionPane.ERROR_MESSAGE);
-				}
-			}
-		} else {
-			JOptionPane.showMessageDialog(cadastroFuncionario, "Selecione um funcionário para excluir.", "Erro",
-					JOptionPane.WARNING_MESSAGE);
-		}
-	}
+    /*
+    public void selecionarFuncionario(int id) {
+        Funcionario funcionario = funcionarioDAO.getFuncionario(id);
+        if (funcionario != null) {
+            view.setFuncionario(funcionario);
+        } else {
+            JOptionPane.showMessageDialog(view, "Funcionário não encontrado");
+        if (!Utils.isValidTelefone(telefone)) {
+            JOptionPane.showMessageDialog(cadastroFuncionario, "O telefone informado é inválido.", "Erro",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (funcionarioDAO.verificaTelefoneExistente(telefone)) {
+            JOptionPane.showMessageDialog(cadastroFuncionario, "Telefone já cadastrado. Tente outro.", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
 
-	public void atualizarTabela() {
-		List<Funcionario> funcionarios = funcionarioDAO.listarFuncionarios();
+        }
+        if (funcionarioDAO.verificaEmailExistente(email)) {
+            JOptionPane.showMessageDialog(cadastroFuncionario, "Email já cadastrado. Tente outro.", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
-		DefaultTableModel tableModel;
-		tableModel = new DefaultTableModel();
-		tableModel.addColumn("CPF");
-		tableModel.addColumn("Nome");
-		tableModel.addColumn("Senha");
-		tableModel.addColumn("Administrador");
-		tableModel.addColumn("Email");
-		tableModel.addColumn("Telefone");
-
-		for (Funcionario funcionario : funcionarios) {
-			Contato contato = funcionario.getContato();
-			tableModel.addRow(
-					new Object[] { funcionario.getCpf(), funcionario.getNome(), funcionario.getSenhaFuncionario(),
-							funcionario.isAdm() ? "Sim" : "Não", contato.getEmail(), contato.getTelefone() });
-		}
-
-		cadastroFuncionario.getTable().setModel(tableModel);
-	}
-
-	private void carregarDadosFuncionarioDAO(String funcionarioIdStr) {
-		Funcionario funcionario = funcionarioDAO.carregarDadosFuncionario(funcionarioIdStr);
-		if (funcionario != null) {
-
-			atualizarCampos(funcionario);
-		}
-	}
-
-	private void editarFuncinarioDAO(String funcionarioIdString) {
-		Funcionario funcionarioAlteracao = funcionarioDAO.carregarDadosFuncionario(funcionarioIdStr);
-		// funcionarioDAO.editarFuncionario(funcionario);
-
-		String nome = cadastroFuncionario.getTextNome();
-		String cpf = cadastroFuncionario.getTextCpf();
-		char[] senhaArray = cadastroFuncionario.getPasswordField();
-		String senha = new String(senhaArray);
-		boolean isAdm = cadastroFuncionario.getChckbxAdm();
-		String email = cadastroFuncionario.getTextEmail();
-		String telefone = cadastroFuncionario.getTextTelefone();
-
-		if (nome.isEmpty() || cpf.isEmpty() || senha.isEmpty()) {
-			JOptionPane.showMessageDialog(cadastroFuncionario, "Preencha todos os campos obrigatórios.", "Erro",
-					JOptionPane.ERROR_MESSAGE);
-			return;
-		}
+        cpf = Utils.formatarDocumentos(cpf, Utils.TipoDocumento.CPF);
+        telefone = Utils.formatarDocumentos(telefone, Utils.TipoDocumento.TELEFONE);
 
 		Funcionario funcionario = new Funcionario();
 		funcionario.setNome(nome);
-		funcionario.setCpf(funcionarioAlteracao.getCpf());
+		funcionario.setCpf(cpf);
 		funcionario.setSenhaFuncionario(senha);
 		funcionario.setAdm(isAdm);
 
 		Contato contato = new Contato();
-		contato.setId(funcionarioAlteracao.getContato().getId());
 		contato.setEmail(email);
 		contato.setTelefone(telefone);
 		funcionario.setContato(contato);
 
-		boolean resultado = funcionarioDAO.editarFuncionario(funcionario);
-
-		if (resultado) {
-			JOptionPane.showMessageDialog(cadastroFuncionario, "Funcionário atualizado com sucesso!", "Sucesso",
+		if (funcionarioDAO.cadastrarFuncionario(funcionario)) {
+			JOptionPane.showMessageDialog(cadastroFuncionario, "Funcionário cadastrado com sucesso!", "Sucesso",
 					JOptionPane.INFORMATION_MESSAGE);
-			atualizarTabela();
+	        cadastroFuncionario.setTextNome("");
+	        cadastroFuncionario.setPasswordField("");
+	        cadastroFuncionario.setTextCpf("");
+	        cadastroFuncionario.setChckbxAdm(false);
+	        cadastroFuncionario.setChckbxSenha(false);
+	        cadastroFuncionario.setTextEmail("");
+	        cadastroFuncionario.setTextTelefone("");
 		} else {
-			JOptionPane.showMessageDialog(cadastroFuncionario, "Erro ao atualizar funcionário.", "Erro",
+			JOptionPane.showMessageDialog(cadastroFuncionario, "Erro ao cadastrar funcionário.", "Erro",
 					JOptionPane.ERROR_MESSAGE);
 		}
+		return;
 	}
 
-	private void atualizarCampos(Funcionario funcionario) {
-		cadastroFuncionario.getTextFieldNome().setText(funcionario.getNome());
-		cadastroFuncionario.getTextFieldCpf().setText(funcionario.getCpf());
-		cadastroFuncionario.getTextFieldSenha().setText(funcionario.getSenhaFuncionario());
-		cadastroFuncionario.getTextFieldEmail().setText(funcionario.getContato().getEmail());
-		cadastroFuncionario.getTextFieldTelefone().setText(funcionario.getContato().getTelefone());
+	 public void selecionarFuncionario(int id) { Funcionario funcionario =
+	 funcionarioDAO.getFuncionario(id); if (funcionario != null) {
+	 view.setFuncionario(funcionario); } else {
+	 JOptionPane.showMessageDialog(view, "Funcionário não encontrado"); } }
 
-	}
-
-	public String getCpfUsuarioLogado() {
-		return cpfUsuarioLogado;
-	}
-
-	/*
-	 * public void selecionarFuncionario(int id) { Funcionario funcionario =
-	 * funcionarioDAO.getFuncionario(id); if (funcionario != null) {
-	 * view.setFuncionario(funcionario); } else {
-	 * JOptionPane.showMessageDialog(view, "Funcionário não encontrado"); if
-	 * (!Utils.isValidTelefone(telefone)) {
-	 * JOptionPane.showMessageDialog(cadastroFuncionario,
-	 * "O telefone informado é inválido.", "Erro", JOptionPane.ERROR_MESSAGE);
-	 * return; } if (funcionarioDAO.verificaTelefoneExistente(telefone)) {
-	 * JOptionPane.showMessageDialog(cadastroFuncionario,
-	 * "Telefone já cadastrado. Tente outro.", "Erro", JOptionPane.ERROR_MESSAGE);
-	 * return;
-	 * 
-	 * } if (funcionarioDAO.verificaEmailExistente(email)) {
-	 * JOptionPane.showMessageDialog(cadastroFuncionario,
-	 * "Email já cadastrado. Tente outro.", "Erro", JOptionPane.ERROR_MESSAGE);
-	 * return; }
-	 * 
-	 * cpf = Utils.formatarDocumentos(cpf, Utils.TipoDocumento.CPF); telefone =
-	 * Utils.formatarDocumentos(telefone, Utils.TipoDocumento.TELEFONE);
-	 * 
-	 * Funcionario funcionario = new Funcionario(); funcionario.setNome(nome);
-	 * funcionario.setCpf(cpf); funcionario.setSenhaFuncionario(senha);
-	 * funcionario.setAdm(isAdm);
-	 * 
-	 * Contato contato = new Contato(); contato.setEmail(email);
-	 * contato.setTelefone(telefone); funcionario.setContato(contato);
-	 * 
-	 * if (funcionarioDAO.cadastrarFuncionario(funcionario)) {
-	 * JOptionPane.showMessageDialog(cadastroFuncionario,
-	 * "Funcionário cadastrado com sucesso!", "Sucesso",
-	 * JOptionPane.INFORMATION_MESSAGE); cadastroFuncionario.setTextNome("");
-	 * cadastroFuncionario.setPasswordField(""); cadastroFuncionario.setTextCpf("");
-	 * cadastroFuncionario.setChckbxAdm(false);
-	 * cadastroFuncionario.setChckbxSenha(false);
-	 * cadastroFuncionario.setTextEmail("");
-	 * cadastroFuncionario.setTextTelefone(""); } else {
-	 * JOptionPane.showMessageDialog(cadastroFuncionario,
-	 * "Erro ao cadastrar funcionário.", "Erro", JOptionPane.ERROR_MESSAGE); }
-	 * return; }
-	 */
-
-	/*
-	 * public void atualizarTabela() {
-	 * 
-	 * List<Funcionario> funcionarios = funcionarioDAO.listarFuncionarios();
-	 * DefaultTableModel tableModel = cadastroFuncionario.getTableModel(); for
-	 * (Funcionario funcionario : funcionarios) { Contato contato =
-	 * funcionario.getContato(); tableModel.addRow( new Object[] {
-	 * funcionario.getCpf(), funcionario.getNome(),
-	 * funcionario.getSenhaFuncionario(), funcionario.isAdm() ? "Sim" : "Não",
-	 * contato.getEmail(), contato.getTelefone() }); } }
-	 */
-
-	/*
-	 * public void selecionarFuncionario(int id) { Funcionario funcionario =
-	 * funcionarioDAO.getFuncionario(id); if (funcionario != null) {
-	 * view.setFuncionario(funcionario); } else {
-	 * JOptionPane.showMessageDialog(view, "Funcionário não encontrado"); } }
-	 */
-
+*/
 }

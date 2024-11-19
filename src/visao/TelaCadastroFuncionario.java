@@ -230,23 +230,14 @@ public class TelaCadastroFuncionario extends JPanel { // jpanel ao invés de jfr
 		btnCadastrarFuncionario = new JButton("Cadastrar");
 		btnCadastrarFuncionario.setForeground(new Color(255, 255, 255));
 		btnCadastrarFuncionario.setFont(new Font("Hanken Grotesk", Font.PLAIN, 25));
-		/*
-		 * btnCadastrarFuncionario.addActionListener(new ActionListener() { public void
-		 * actionPerformed(ActionEvent e) {
-		 * 
-		 * } });
-		 */
 		panel_1.setLayout(new MigLayout("", "[grow]", "[grow][grow][grow]"));
 		btnCadastrarFuncionario.setBackground(new Color(114, 148, 235));
 		panel_1.add(btnCadastrarFuncionario, "cell 0 0,grow");
 		// Botão Ecluir
 		btnDeletarFuncionario = new JButton("Excluir Funcionario");
 		btnDeletarFuncionario.setForeground(new Color(255, 255, 255));
-		btnDeletarFuncionario.setFont(new Font("Hanken Grotesk", Font.PLAIN, 25));
-		
-		
-		
-		
+		btnDeletarFuncionario.setFont(new Font("Hanken Grotesk", Font.PLAIN, 25));	
+
 		btnDeletarFuncionario.setBackground(new Color(255, 0, 0));
 		panel_1.add(btnDeletarFuncionario, "cell 0 2,grow");
 		
@@ -258,8 +249,6 @@ public class TelaCadastroFuncionario extends JPanel { // jpanel ao invés de jfr
 		btnEditarFuncionario.setBackground(Color.PINK);
 		panel_1.add(btnEditarFuncionario, "cell 0 1,grow");
 
-		
-		
 		JScrollPane scrollPane = new JScrollPane();
 		add(scrollPane, "cell 0 1 4 3,grow");
 
