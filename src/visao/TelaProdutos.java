@@ -37,18 +37,6 @@ public class TelaProdutos extends JPanel {
 	private JButton btnEditarProd;
 	private static DefaultTableModel tableModel;
 
-	public JButton getBtnCadastrarProd() {
-		return btnCadastrarProd;
-	}
-
-	public JButton getBtnDeletarProd() {
-		return btnDeletarProd;
-	}
-
-	public JButton getBtnEditProd() {
-		return btnEditarProd;
-	}
-
 	/**
 	 * Create the panel.
 	 */
@@ -165,5 +153,17 @@ public class TelaProdutos extends JPanel {
 
 	public JTable getTable() {
 		return table;
+	}
+
+	public JButton getBtnCadastrarProd() {
+		return btnCadastrarProd;
+	}
+
+	public JButton getBtnDeletarProd() {
+		return btnDeletarProd;
+	}
+
+	public JButton getBtnEditProd() {
+		return btnEditarProd;
 	}
 }
