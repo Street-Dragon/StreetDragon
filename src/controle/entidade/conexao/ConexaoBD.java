@@ -114,7 +114,7 @@ public class ConexaoBD {
             if (!rsFuncionario.next()) {
                 String sqlContatoRoot = "INSERT INTO contato (email, telefone) VALUES ('mariana@aluno.ifsc', '48 9884651')";
                 String sqlFuncionarioRoot = "INSERT INTO funcionario (cpf, senha, nome, contato_id, adm) "
-                        + "VALUES ('123', '321', 'Mari', " + 1 + ", true)";
+                        + "VALUES ('123', '321', 'Mari', " + 1 + ", 1)";
                 stmt.executeUpdate(sqlContatoRoot);
                 stmt.executeUpdate(sqlFuncionarioRoot);
             }
