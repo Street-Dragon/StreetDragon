@@ -1,7 +1,10 @@
 package visao;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -11,9 +14,12 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import utils.Cores;
+import utils.Utils;
 
 public class TelaMensagens extends JDialog{
 	
+	private Font hkGrotesk;
 	private static final long serialVersionUID = 1L;
 	private boolean resposta;
 	
@@ -22,34 +28,46 @@ public class TelaMensagens extends JDialog{
 		setModal(true);
 		setResizable(false);
 		
+		hkGrotesk = Utils.loadCustomFont();
+		
 		
 		JPanel panel = new JPanel();
 		panel.setLayout(new BorderLayout());
-		add(panel);
+		panel.setBackground(Cores.COR_ROSA_CLARO);
+		getContentPane().add(panel);
 		
 		JLabel lblMensagem = new JLabel(mensagem, SwingConstants.CENTER);
+		lblMensagem.setFont(new Font("Hanken Grotesk", Font.PLAIN, 15));
 		panel.add(lblMensagem, BorderLayout.CENTER);
 		
 		String iconPath;
 		switch(tipo) {
 		case 0:
-			iconPath = "/resources/images/Check.png";
+			iconPath = "/resources/imagens/Check.png";
 			lblMensagem.setIcon(new ImageIcon(getClass().getResource(iconPath)));
+			setTitle("Sucesso");
 			break;
 		case 1:
-			iconPath = "/resources/images/Erro.png";
+			iconPath = "/resources/imagens/Erro.png";
 			lblMensagem.setIcon(new ImageIcon(getClass().getResource(iconPath)));
+			setTitle("Erro");
 			break;
 		case 2:
-			iconPath = "/resources/images/Pergunta.png";
+			iconPath = "/resources/imagens/Pergunta.png";
 			lblMensagem.setIcon(new ImageIcon(getClass().getResource(iconPath)));
+			setTitle("Mensagem");
 			break;
 		case 3:
-			iconPath = "/resources/images/Alerta.png";
-			lblMensagem.setIcon(new ImageIcon(getClass().getResource(iconPath)));
+			iconPath = "/resources/imagens/Alerta.png";
+			setTitle("Alerta");
+			ImageIcon imageIcon = new ImageIcon(iconPath);
+			Image img = imageIcon.getImage();
+			Image resizedImg = img.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+			imageIcon = new ImageIcon(resizedImg);
+			lblMensagem.setIcon(imageIcon);
 			break;
 		case 10:
-			iconPath = "/resources/images/logo.png";
+			iconPath = "/resources/imagens/logo.png";
 			lblMensagem.setIcon(new ImageIcon(getClass().getResource(iconPath)));
 			break;
 			default:
@@ -58,7 +76,10 @@ public class TelaMensagens extends JDialog{
 		
 		JPanel painelSul = new JPanel(new FlowLayout(FlowLayout.CENTER,20,10));
 		painelSul.add(new JPanel());
+		painelSul.setBackground(Cores.COR_ROSA_CLARO);
 		JButton btnOK = new JButton("OK");
+		btnOK.setFont(hkGrotesk);
+		btnOK.setBackground(Cores.COR_AZUL);
 		btnOK.addActionListener(new ActionListener() {
 			
 			@Override
@@ -76,6 +97,9 @@ public class TelaMensagens extends JDialog{
 		setVisible(true);
 	}
 	
+	/**
+	 * @wbp.parser.constructor
+	 */
 	public TelaMensagens(String pergunta) {
 		setTitle("Mensagem");
 		setModal(true);
@@ -84,16 +108,21 @@ public class TelaMensagens extends JDialog{
 		
 		JPanel panel = new JPanel();
 		panel.setLayout(new BorderLayout());
-		add(panel);
+		getContentPane().add(panel);
+		panel.setBackground(Cores.COR_ROSA_CLARO );
 		
 		JLabel labelPergunta = new JLabel(pergunta, SwingConstants.CENTER);
-		String iconPath = "/br/com/loja/assistec/icones/question.png";
+		labelPergunta.setFont(new Font("Hanken Grotesk", Font.PLAIN, 15));
+		String iconPath = "/resources/imagens/Pergunta.png";
 		labelPergunta.setIcon(new ImageIcon(getClass().getResource(iconPath)));
 		panel.add(labelPergunta,BorderLayout.CENTER);
 		
 		JPanel painelSul = new JPanel(new FlowLayout(FlowLayout.CENTER,20,10));
+		painelSul.setBackground(Cores.COR_ROSA_CLARO);
 		
 		JButton btnSim = new JButton("Sim");
+		btnSim.setFont(hkGrotesk);
+		btnSim.setBackground(Cores.COR_AZUL);
 		btnSim.addActionListener(new ActionListener() {
 			
 			@Override
@@ -105,6 +134,8 @@ public class TelaMensagens extends JDialog{
 		});
 		
 		JButton btnNao = new JButton("Não");
+		btnSim.setFont(hkGrotesk);
+		btnNao.setBackground(Cores.COR_VERMELHO);
 		btnNao.addActionListener(new ActionListener() {
 			
 			@Override

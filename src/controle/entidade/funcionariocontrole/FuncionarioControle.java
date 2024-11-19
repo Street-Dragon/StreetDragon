@@ -8,6 +8,7 @@ import visao.TelaPrincipal;
 import visao.TelaProdutos;
 import visao.TelaCadastroFuncionario;
 import visao.TelaLogin;
+import visao.TelaMensagens;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -150,8 +151,7 @@ private void cadastrarFuncionario() {
         String telefone = cadastroFuncionario.getTextTelefone();
 
         if (nome.isBlank() || cpf.isBlank() || senha.isBlank() || email.isBlank() || telefone.isBlank()) {
-            JOptionPane.showMessageDialog(cadastroFuncionario, "Preencha todos os campos.", "Erro",
-                    JOptionPane.ERROR_MESSAGE);
+        	TelaMensagens TM = new TelaMensagens("Preencha todos os campos.", 2);
             return;
         }
 
