@@ -254,8 +254,4 @@ public class FuncionarioDAO {
 
 	}
 
-	public void deletarFuncionario(int id) {
-		String delFuncionario = "DELETE * FROM funcionario WHERE cpf = ?";
-	}
-
 }
