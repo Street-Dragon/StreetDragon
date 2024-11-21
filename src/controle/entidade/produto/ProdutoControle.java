@@ -28,8 +28,7 @@ public class ProdutoControle {
 			
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("botão clicado");
-				// TelaCadastroProdutos telaCadastroProduto = new TelaCadastroProdutos();
-				// telaCadastroProduto.setVisible(true);
+				telaCadastroProduto.setVisible(true);
 			}
 		});
 
