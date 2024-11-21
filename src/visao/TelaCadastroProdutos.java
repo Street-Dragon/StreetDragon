@@ -83,6 +83,7 @@ public class TelaCadastroProdutos extends JFrame {
 		lblId.setFont(hkGrotesk);
 
 		textFieldId = new JTextField();
+		textFieldId.setEnabled(false);
 		textFieldId.setHorizontalAlignment(SwingConstants.CENTER);
 		textFieldId.setFont(new Font("Dialog", Font.PLAIN, 15));
 		textFieldId.setEditable(false);
@@ -108,8 +109,7 @@ public class TelaCadastroProdutos extends JFrame {
 
 		cbMaterial = new JComboBox();
 		cbMaterial.setBackground(new Color(246, 233, 233));
-		cbMaterial.setModel(new DefaultComboBoxModel(
-				new String[] { "", "Algodão", "Lã", "Seda", "Viscose", "Tencel", "Linho", "Poliéster", "Elastano" }));
+		cbMaterial.setModel(new DefaultComboBoxModel(new String[] {"", "Algodão", "Lã", "Seda", "Viscose", "Tencel", "Linho", "Poliéster", "Elastano", "Outro"}));
 		cbMaterial.setSelectedIndex(0);
 		contentPane.add(cbMaterial, "cell 1 2,growx");
 		cbMaterial.setFont(new Font("Dialog", Font.PLAIN, 15));
@@ -124,8 +124,7 @@ public class TelaCadastroProdutos extends JFrame {
 
 		cbCategoria = new JComboBox();
 		cbCategoria.setBackground(new Color(246, 233, 233));
-		cbCategoria.setModel(new DefaultComboBoxModel(
-				new String[] { "", "Calsa", "Camisa", "Camiseta", "Moleton", "Boné", "Toca", "Tênis", "Acessórios" }));
+		cbCategoria.setModel(new DefaultComboBoxModel(new String[] {"", "Calsa", "Camisa", "Camiseta", "Moleton", "Boné", "Toca", "Tênis", "Acessórios", "Outro"}));
 		cbCategoria.setSelectedIndex(0);
 		contentPane.add(cbCategoria, "cell 1 3,growx");
 		cbCategoria.setFont(new Font("Dialog", Font.PLAIN, 15));
@@ -210,8 +209,7 @@ public class TelaCadastroProdutos extends JFrame {
 
 	}
 
-	public void ClearText() {
-		// TODO Auto-generated method stub
+	public void limparCampos() {
 		textFieldId.setText(null);
 		textFieldNome.setText(null);
 		textFieldValor.setText(null);
