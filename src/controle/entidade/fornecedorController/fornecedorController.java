@@ -36,11 +36,20 @@ public class fornecedorController {
     public void editarFornecedor(Fornecedor fornecedor) {
         if (validarCampos(fornecedor)) {
             try {
+                // Atualizando o fornecedor no banco de dados
                 fornecedorDAO.atualizarFornecedor(fornecedor);
+
+                // Atualizando a tabela na tela
                 atualizarTabela();
+
+                // Limpando os campos da interface
                 telaFornecedor.limparCampos();
+
+                // Mensagem de sucesso
+                telaFornecedor.exibirMensagem("Fornecedor atualizado com sucesso!");
             } catch (SQLException e) {
                 e.printStackTrace();
+                telaFornecedor.exibirMensagem("Erro ao atualizar fornecedor: " + e.getMessage());
             }
         } else {
             telaFornecedor.exibirMensagem("Preencha todos os campos obrigatórios.");

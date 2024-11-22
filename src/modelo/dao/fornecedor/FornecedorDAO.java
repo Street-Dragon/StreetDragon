@@ -1,5 +1,6 @@
 package modelo.dao.fornecedor;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,9 +18,18 @@ public class FornecedorDAO extends GenericDAO {
     }
 
     public void atualizarFornecedor(Fornecedor fornecedor) throws SQLException {
-        String sql = "UPDATE fornecedor SET nome = ?, Cnpj = ?, endereco_CEP = ?, rua = ?, WHERE idFornecedores = ?";
-        update(sql, fornecedor.getId(), fornecedor.getNome(), fornecedor.getCnpj(), fornecedor.getCep(), fornecedor.getRua());
+    	
+        String sql = "UPDATE fornecedor SET nome = ?, cnpj = ?, rua = ? WHERE idFornecedores = ?";
+        try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, fornecedor.getNome());
+            stmt.setString(2, fornecedor.getCnpj());
+            stmt.setInt(3, fornecedor.getCep());
+            stmt.setString(4, fornecedor.getRua());
+            stmt.setInt(5, fornecedor.getId()); // Definindo o ID no WHERE
+            stmt.executeUpdate();
+        }
     }
+
 
     public void excluirFornecedor(int id) throws SQLException {
         String sql = "DELETE FROM fornecedor WHERE idFornecedores = ?";
