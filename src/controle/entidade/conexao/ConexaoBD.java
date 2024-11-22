@@ -125,7 +125,7 @@ public class ConexaoBD {
 					                    "nome VARCHAR(45) NOT NULL, " +
 					                    "endereco_CEP VARCHAR(10) NOT NULL, " +
 					                    "Cnpj VARCHAR (45) NOT NULL, " +
-					                    "Rua VARCHAR (45) NOT NULL, " +
+					                    "rua VARCHAR (45) NOT NULL, " +
 					                    "FOREIGN KEY (endereco_CEP) REFERENCES endereco(cep) " +
 					                    "ON DELETE NO ACTION " +
 					                    "ON UPDATE NO ACTION) ENGINE = InnoDB;";

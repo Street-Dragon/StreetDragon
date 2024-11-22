@@ -83,7 +83,7 @@ public class fornecedorController {
             return false;  // CNPJ obrigatório
         }
         
-        // Você pode adicionar mais validações conforme necessário
+     
 
         return true;
     }

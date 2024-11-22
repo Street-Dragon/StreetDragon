@@ -12,12 +12,12 @@ import modelo.entidade.pessoa.fornecedor.Fornecedor;
 public class FornecedorDAO extends GenericDAO {
 
     public void cadastrarFornecedor(Fornecedor fornecedor) throws SQLException {
-        String sql = "INSERT INTO fornecedor (nome, Cnpj, endereco_CEP, Rua) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO fornecedor (nome, Cnpj, endereco_CEP, rua) VALUES (?, ?, ?, ?)";
         save(sql, fornecedor.getNome(), fornecedor.getCnpj(), fornecedor.getCep(), fornecedor.getRua());
     }
 
     public void atualizarFornecedor(Fornecedor fornecedor) throws SQLException {
-        String sql = "UPDATE fornecedor SET nome = ?, Cnpj = ?, endereco_CEP = ?, Rua = ?, WHERE idFornecedores = ?";
+        String sql = "UPDATE fornecedor SET nome = ?, Cnpj = ?, endereco_CEP = ?, rua = ?, WHERE idFornecedores = ?";
         update(sql, fornecedor.getId(), fornecedor.getNome(), fornecedor.getCnpj(), fornecedor.getCep(), fornecedor.getRua());
     }
 
@@ -39,7 +39,7 @@ public class FornecedorDAO extends GenericDAO {
                 fornecedor.setNome(rs.getString("nome"));
                 fornecedor.setCnpj(rs.getString("cnpj"));
                 fornecedor.setCep(rs.getInt("endereco_cep"));
-                fornecedor.setRua(rs.getString("Rua"));
+                fornecedor.setRua(rs.getString("rua"));
                 fornecedores.add(fornecedor);
             }
         }
