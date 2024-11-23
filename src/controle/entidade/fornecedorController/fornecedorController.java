@@ -2,8 +2,11 @@ package controle.entidade.fornecedorController;
 
 import modelo.dao.fornecedor.FornecedorDAO;
 import modelo.entidade.pessoa.fornecedor.Fornecedor;
+import modelo.entidade.pessoa.funcionario.Funcionario;
 import visao.TelaFornecedor;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -11,6 +14,7 @@ public class fornecedorController {
 
     private TelaFornecedor telaFornecedor;
     private FornecedorDAO fornecedorDAO;
+    private int fornecedorIdint;
 
     public fornecedorController(TelaFornecedor telaFornecedor) {
         this.telaFornecedor = telaFornecedor;
@@ -31,6 +35,10 @@ public class fornecedorController {
             telaFornecedor.exibirMensagem("Preencha todos os campos obrigatórios.");
         }
     }
+    
+    
+   
+
 
     // Método para editar fornecedor
     public void editarFornecedor(Fornecedor fornecedor) {
@@ -55,7 +63,8 @@ public class fornecedorController {
             telaFornecedor.exibirMensagem("Preencha todos os campos obrigatórios.");
         }
     }
-
+    
+  
     // Método para excluir fornecedor
     public void excluirFornecedor(int id) {
         if (id <= 0) {
@@ -70,6 +79,8 @@ public class fornecedorController {
             e.printStackTrace();
         }
     }
+    
+    
 
     // Método para atualizar a tabela na tela
     public void atualizarTabela() {
@@ -91,9 +102,13 @@ public class fornecedorController {
         if (fornecedor.getCnpj() == null || fornecedor.getCnpj().trim().isEmpty()) {
             return false;  // CNPJ obrigatório
         }
-        
+       
+    
      
 
         return true;
     }
+    
+   
+        
 }

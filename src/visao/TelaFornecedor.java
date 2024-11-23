@@ -31,9 +31,41 @@ public class TelaFornecedor extends JPanel {
     private JButton btnEditarFor;
     private JTable table;
     private JTextField txtCnpj;
-    private JTextField txtRua;
+    public JTextField getTxtCnpj() {
+		return txtCnpj;
+	}
+
+	public void setTxtCnpj(JTextField txtCnpj) {
+		this.txtCnpj = txtCnpj;
+	}
+
+	public JTextField getTxtRua() {
+		return txtRua;
+	}
+
+	public void setTxtRua(JTextField txtRua) {
+		this.txtRua = txtRua;
+	}
+
+	public JTextField getTxtCep() {
+		return txtCep;
+	}
+
+	public void setTxtCep(JTextField txtCep) {
+		this.txtCep = txtCep;
+	}
+
+	public JTextField getTextNome() {
+		return textNome;
+	}
+
+	public void setTextNome(JTextField textNome) {
+		this.textNome = textNome;
+	}
+	private JTextField txtRua;
     private JTextField txtCep;
     private JTextField textNome;
+    private static DefaultTableModel tableModel;
 
     private fornecedorController fornecedorController;
 
@@ -93,6 +125,21 @@ public class TelaFornecedor extends JPanel {
         add(panelButtons, "cell 3 0,grow");
         panelButtons.setBackground(new Color(255, 255, 255));
         panelButtons.setLayout(new MigLayout("", "[grow]", "[grow][grow][][grow][grow][grow]"));
+        
+        tableModel = new DefaultTableModel();
+		tableModel.addColumn("Id");
+		tableModel.addColumn("Nome");
+		tableModel.addColumn("CNPJ");
+		tableModel.addColumn("Rua");
+		
+        
+		table = new JTable(tableModel) {
+		    // não deixa as células serem editadas
+		    @Override
+		    public boolean isCellEditable(int row, int column) {
+		        return false; 
+		    }
+		};
 
         // Botão Cadastrar
         btnCadastrarFor = new JButton("Cadastrar");
@@ -159,19 +206,35 @@ public class TelaFornecedor extends JPanel {
         // Tabela de fornecedores
         JScrollPane scrollPane = new JScrollPane();
         add(scrollPane, "cell 0 1 4 3,grow");
-
-        table = new JTable();
+        
+        tableModel = new DefaultTableModel();
+		tableModel.addColumn("Id");
+		tableModel.addColumn("Nome");
+		tableModel.addColumn("CNPJ");
+		tableModel.addColumn("Rua");
+		
+        
+		table = new JTable(tableModel) {
+		    // não deixa as células serem editadas
+		    @Override
+		    public boolean isCellEditable(int row, int column) {
+		        return false; 
+		    }
+		};
         table.setFont(new Font("Hanken Grotesk", Font.PLAIN, 25));
         table.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Id", "Nome", "CNPJ", "Rua" }));
         table.setFillsViewportHeight(true);
         table.setBackground(new Color(255, 233, 233));
         scrollPane.setViewportView(table);
-
+        
         JTableHeader header = table.getTableHeader();
         header.setBackground(Color.WHITE);
         header.setFont(new Font("Hanken Grotesk", Font.PLAIN, 25));
         Utils.configTabela(table, scrollPane);
-
+        
+        
+        
+        
         // Atualiza a tabela ao carregar a tela
         fornecedorController.atualizarTabela();
     }
@@ -204,6 +267,10 @@ public class TelaFornecedor extends JPanel {
     public void exibirMensagem(String mensagem) {
         JOptionPane.showMessageDialog(this, mensagem);
     }
+    public JTable getTable() {
+        return table;
+    }
+
 
     // Limpa os campos da tela
     public void limparCampos() {
@@ -211,5 +278,11 @@ public class TelaFornecedor extends JPanel {
         txtCnpj.setText("");
         txtCep.setText("");
         txtRua.setText("");
+    }
+    public void preencherCampos(Fornecedor fornecedor) {
+    	textNome.setText(fornecedor.getNome());
+    	txtCnpj.setText(fornecedor.getCnpj());
+    	txtCep.setText(fornecedor.getRua());
+    	txtRua.setText(String.valueOf(fornecedor.getCep()));
     }
 }
