@@ -21,23 +21,20 @@ public class ClienteControle {
 	private ClienteDAO clienteDAO = new ClienteDAO();
 	private String clienteIdStr;
 	
-	
     private void adicionarListeners() {
     	cadastroCliente.getTable().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 int selectedRow = cadastroCliente.getTable().getSelectedRow();
                 if (selectedRow != -1) {
-                	 // |Tem que parar de converter, passa string direto e ajusta;
                     clienteIdStr = (String) cadastroCliente.getTable().getValueAt(selectedRow, 0);
-                   
                     carregarDadosCliente(clienteIdStr);
                 }
             }
         });
     }
 	
-	public void setTelaCadastroFuncionario(TelaCliente cadastroCliente) {
+	public void setTelaCadastroCliente(TelaCliente cadastroCliente) {
 		this.cadastroCliente = cadastroCliente;
 			atualizarTabela();
 			adicionarListeners();

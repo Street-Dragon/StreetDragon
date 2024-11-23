@@ -90,34 +90,37 @@ public class ClienteDAO extends GenericDAO{
 
 	public List<Cliente> listarClientes() {
 
-		List<Cliente> clientes = new ArrayList<>();
-		String sqlCliente = "SELECT c.*, c.email, c.telefone " + "FROM cliente c "
-				+ "JOIN contato c ON f.contato_id = c.id_contato";
+	    List<Cliente> clientes = new ArrayList<>();
+	    String sqlCliente = "SELECT cliente.*, contato.email, contato.telefone " + 
+	                        "FROM cliente " + 
+	                        "JOIN contato ON cliente.contato_id = contato.id_contato";
 
-		try (Connection conn = ConexaoBD.getConexaoMySQL();
-				PreparedStatement stmt = conn.prepareStatement(sqlCliente);
-				ResultSet rs = stmt.executeQuery()) {
+	    try (Connection conn = ConexaoBD.getConexaoMySQL();
+	         PreparedStatement stmt = conn.prepareStatement(sqlCliente);
+	         ResultSet rs = stmt.executeQuery()) {
 
-			while (rs.next()) {
-				Cliente cliente = new Cliente();
-				Contato contato = new Contato();
+	        while (rs.next()) {
+	            Cliente cliente = new Cliente();
+	            Contato contato = new Contato();
 
-				cliente.setCpf(rs.getString("cpf"));
-				cliente.setNome(rs.getString("nome"));
-				cliente.setNome(rs.getString("numero_compras"));
+	            cliente.setCpf(rs.getString("cpf"));
+	            cliente.setNome(rs.getString("nome"));
+	            cliente.setNumeroCompras(rs.getString("numero_compras"));
 
-				contato.setId(rs.getInt("contato_id"));
-				contato.setEmail(rs.getString("email"));
-				contato.setTelefone(rs.getString("telefone"));
-				cliente.setContato(contato);
-				clientes.add(cliente);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+	            contato.setId(rs.getInt("contato_id"));
+	            contato.setEmail(rs.getString("email"));
+	            contato.setTelefone(rs.getString("telefone"));
+	            cliente.setContato(contato);
 
-		return clientes;
+	            clientes.add(cliente);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    return clientes;
 	}
+
 
 	public Cliente carregarDadosCliente(String cpf) {
 		Cliente cliente = null;
