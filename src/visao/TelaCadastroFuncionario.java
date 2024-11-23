@@ -109,7 +109,57 @@ public class TelaCadastroFuncionario extends JPanel { // jpanel ao invés de jfr
 	public void setTextTelefone(String telefone) {
 		textTelefone.setText(telefone);
 	}
+	public JTable getTable() {
+		return table;
+	}
 
+	public DefaultTableModel getTableModel() {
+		return tableModel;
+	}
+
+	public JTextField getTextFieldId() {
+		return textId;
+	}
+
+	public JTextField getTextFieldNome() {
+		return textNome;
+	}
+
+	public JTextField getTextFieldCpf() {
+		return textCpf;
+	}
+
+	public JTextField getTextFieldEmail() {
+		return textEmail;
+	}
+
+	public JTextField getTextFieldTelefone() {
+		return textTelefone;
+	}
+
+	public JPasswordField getTextFieldSenha() {
+		return textSenha;
+	}
+
+	public String getTextId() {
+		return textId.getText();
+	}
+
+	public String getTextNome() {
+		return textNome.getText();
+	}
+
+	public String getTextCpf() {
+		return textCpf.getText();
+	}
+
+	public String getTextEmail() {
+		return textEmail.getText();
+	}
+
+	public String getTextTelefone() {
+		return textTelefone.getText();
+	}
 	/**
 	 * Create the frame.
 	 */
@@ -284,7 +334,6 @@ public class TelaCadastroFuncionario extends JPanel { // jpanel ao invés de jfr
 
 	}
 	
-	
 	public void limparCampos() {
 		textId.setText("");
 		textNome.setText("");
@@ -292,58 +341,6 @@ public class TelaCadastroFuncionario extends JPanel { // jpanel ao invés de jfr
 		textEmail.setText("");
 		textTelefone.setText("");
 		textSenha.setText("");
-	}
-
-	public JTable getTable() {
-		return table;
-	}
-
-	public DefaultTableModel getTableModel() {
-		return tableModel;
-	}
-
-	public JTextField getTextFieldId() {
-		return textId;
-	}
-
-	public JTextField getTextFieldNome() {
-		return textNome;
-	}
-
-	public JTextField getTextFieldCpf() {
-		return textCpf;
-	}
-
-	public JTextField getTextFieldEmail() {
-		return textEmail;
-	}
-
-	public JTextField getTextFieldTelefone() {
-		return textTelefone;
-	}
-
-	public JPasswordField getTextFieldSenha() {
-		return textSenha;
-	}
-
-	public String getTextId() {
-		return textId.getText();
-	}
-
-	public String getTextNome() {
-		return textNome.getText();
-	}
-
-	public String getTextCpf() {
-		return textCpf.getText();
-	}
-
-	public String getTextEmail() {
-		return textEmail.getText();
-	}
-
-	public String getTextTelefone() {
-		return textTelefone.getText();
 	}
 
 }

@@ -10,7 +10,7 @@ import java.sql.Statement;
 public class ConexaoBD {
     private static final String DB_URL = "jdbc:mysql://localhost/";
     private static final String USERNAME = "root";
-    private static final String PASSWORD = "aluno";
+    private static final String PASSWORD = "root";
 
     public static Connection getConexaoMySQL() {
         Connection connection = null;
@@ -61,9 +61,13 @@ public class ConexaoBD {
                     + "FOREIGN KEY (contato_id) REFERENCES contato(id_contato) " + "ON DELETE NO ACTION "
                     + "ON UPDATE NO ACTION) ENGINE = InnoDB;";
 
-            String sqlCliente = "CREATE TABLE IF NOT EXISTS cliente (" + "cpf VARCHAR(14) NOT NULL PRIMARY KEY, "
-                    + "nome VARCHAR(100) NOT NULL, " + "contato_id INT NOT NULL, "
-                    + "FOREIGN KEY (contato_id) REFERENCES contato(id_contato) " + "ON DELETE NO ACTION "
+            String sqlCliente = "CREATE TABLE IF NOT EXISTS cliente ("
+                    + "cpf VARCHAR(14) NOT NULL PRIMARY KEY, "
+                    + "nome VARCHAR(100) NOT NULL, "
+                    + "contato_id INT NOT NULL, "
+                    + "numeroCompras INT DEFAULT NULL, "
+                    + "FOREIGN KEY (contato_id) REFERENCES contato(id_contato) "
+                    + "ON DELETE NO ACTION "
                     + "ON UPDATE NO ACTION) ENGINE = InnoDB;";
 
             String sqlItem = "CREATE TABLE IF NOT EXISTS item (" + "idItem INT NOT NULL AUTO_INCREMENT PRIMARY KEY, "

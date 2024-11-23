@@ -32,16 +32,88 @@ public class TelaCliente extends JPanel {
 	private JTextField txtCompras;
 	private JTextField txtEmail;
 	private JTextField txtCpf;
+	private JTextField txtTelefone;
 	private JButton btnCadastrar;
+	private JButton btnDeletar;
+	private JButton btnEditar;
 	private JTable table;
 	private static DefaultTableModel tableModel;
-
-	/**
-	 * Create the panel.
-	 */
-	public TelaCliente(TelaPrincipal telaPrincipal) {
-
 	
+	public JTextField getTextFieldNome() {
+		return txtNome;
+	}
+	public void setTxtNome(JTextField txtNome) {
+		this.txtNome = txtNome;
+	}
+	public JTextField getTextNumeroCompras() {
+		return txtCompras;
+	}
+	public void setTxtCompras(JTextField txtCompras) {
+		this.txtCompras = txtCompras;
+	}
+	public JTextField getTextFieldEmail() {
+		return txtEmail;
+	}
+	public void setTxtEmail(JTextField txtEmail) {
+		this.txtEmail = txtEmail;
+	}
+	public JTextField getTextFieldCpf() {
+		return txtCpf;
+	}
+	public void setTxtCpf(JTextField txtCpf) {
+		this.txtCpf = txtCpf;
+	}
+	
+	public JTextField getTextFieldTelefone() {
+		return txtTelefone;
+	}
+	public void setTxtTelefone(JTextField txtTelefone) {
+		this.txtTelefone = txtTelefone;
+	}
+	
+	public JButton getBtnCadastrar() {
+		return btnCadastrar;
+	}
+	public void setBtnCadastrar(JButton btnCadastrar) {
+		this.btnCadastrar = btnCadastrar;
+	}
+	public JButton getBtnDeletar() {
+		return btnCadastrar;
+	}
+	public void setBtnDeletar(JButton btnDeletar) {
+		this.btnDeletar = btnDeletar;
+	}
+	public JButton getBtnEditar() {
+		return btnCadastrar;
+	}
+	public void setBtnEditar(JButton btnEditar) {
+		this.btnEditar = btnEditar;
+	}
+	
+	public JTable getTable() {
+		return table;
+	}
+	public DefaultTableModel getTableModel() {
+		return tableModel;
+	}
+	
+	public String getTxtNome() {
+		return txtNome.getText();
+	}
+	public String getTxtCpf() {
+		return txtCpf.getText();
+	}
+	public String getTxtEmail() {
+		return txtEmail.getText();
+	}
+	public String getTxtTelefone() {
+		return txtTelefone.getText();
+	}
+	public String getTxtNumeroCompras() {
+		return txtCompras.getText();
+	}
+
+	public TelaCliente(TelaPrincipal telaPrincipal) {
 
 		setBounds(100, 100, 926, 526);
 		setBackground(Cores.COR_ROSA_CLARO);
@@ -106,11 +178,9 @@ public class TelaCliente extends JPanel {
 		btnCadastrar.setBackground(new Color(114, 148, 235));
 		panel_1.add(btnCadastrar, "cell 0 0,grow");
 		// Botão Ecluir
-		JButton btnDeletar = new JButton("Excluir Funcionario");
+		btnDeletar = new JButton("Excluir Funcionario");
 		btnDeletar.setForeground(new Color(255, 255, 255));
-		btnDeletar.setFont(new Font("Hanken Grotesk", Font.PLAIN, 25));
-		
-		
+		btnDeletar.setFont(new Font("Hanken Grotesk", Font.PLAIN, 25));	
 		
 		
 		btnDeletar.setBackground(new Color(255, 0, 0));
@@ -149,4 +219,13 @@ public class TelaCliente extends JPanel {
 			}
 		});
 	}
+	
+	public void limparCampos() {
+		txtNome.setText("");
+		txtCpf.setText("");
+		txtEmail.setText("");
+		txtTelefone.setText("");
+		txtCompras.setText("");
+	}
+	
 }

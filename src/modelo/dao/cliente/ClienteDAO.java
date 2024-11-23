@@ -5,10 +5,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import controle.entidade.conexao.ConexaoBD;
 import modelo.dao.genericdao.GenericDAO;
+import modelo.entidade.contato.Contato;
 import modelo.entidade.pessoa.cliente.Cliente;
+import modelo.entidade.pessoa.funcionario.Funcionario;
 
 public class ClienteDAO extends GenericDAO{
 	
@@ -39,10 +43,9 @@ public class ClienteDAO extends GenericDAO{
 			return false;
 		}
 	}
-
 	
 	public boolean editarCliente(Cliente cliente) {
-		String sqlCliente = "UPDATE cliente SET nome = ?, senha = ? WHERE cpf = ?";
+		String sqlCliente = "UPDATE cliente SET nome = ?, senha = ?, numero_compras = ? WHERE cpf = ?";
 		String sqlContato = "UPDATE contato SET email = ?, telefone = ? WHERE id_contato = ?";
 
 		try (Connection conn = ConexaoBD.getConexaoMySQL();
@@ -51,6 +54,7 @@ public class ClienteDAO extends GenericDAO{
 
 			stmtCliente.setString(1, cliente.getNome());
 			stmtCliente.setString(2, cliente.getCpf());
+			stmtCliente.setString(3, cliente.getNumeroCompras());
 			stmtCliente.executeUpdate();
 			int rowsAffectedCliente = stmtCliente.executeUpdate();
 
@@ -72,9 +76,9 @@ public class ClienteDAO extends GenericDAO{
 	}
 	
 	public boolean excluirCliente(String cpf) {
-		String sql = "DELETE FROM cliente WHERE cpf = ?";
+		String sqlExcluir = "DELETE FROM cliente WHERE cpf = ?";
 
-		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement stmt = conn.prepareStatement(sqlExcluir)) {
 			stmt.setString(1, cpf);
 			int rowsAffected = stmt.executeUpdate();
 			return rowsAffected > 0;
@@ -83,94 +87,95 @@ public class ClienteDAO extends GenericDAO{
 			return false;
 		}
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-/*	    public void saveCliente(Cliente cliente) throws SQLException {
-	       
-	        String sqlContato = "INSERT INTO contato (email, telefone) VALUES (?, ?)";
-	        save(sqlContato, cliente.getContato().getEmail(), cliente.getContato().getTelefone());
 
-	        String sqlGetContatoId = "SELECT LAST_INSERT_ID()";
-	        ResultSet rs = find(sqlGetContatoId);
-	        rs.next();
-	        int contatoId = rs.getInt(1);
+	public List<Cliente> listarClientes() {
 
-	        
-	        String sqlCliente = "INSERT INTO cliente (nome, cpf, contato_id) VALUES (?, ?, ?)";
-	        save(sqlCliente, cliente.getNome(), cliente.getCpf(), contatoId);
-	    }
-	
-*/
-	
-//	    public Cliente findClienteById(int id) throws SQLException {
-//	        String sql = "SELECT c.id, c.nome, c.cpf, ct.id as contato_id, ct.email, ct.telefone " +
-//	                     "FROM cliente c " +
-//	                     "JOIN contato ct ON c.contato_id = ct.id " +
-//	                     "WHERE c.id = ?";
-//	        ResultSet rs = find(sql, id);
-//
-//	        if (rs.next()) {
-//	            Cliente cliente = new Cliente();
-//	            cliente.setId(rs.getInt("id"));
-//	            cliente.setNome(rs.getString("nome"));
-//	            cliente.setCpf(rs.getString("cpf"));
-//
-//	            
-//	            Contato contato = new Contato();
-//	            contato.setId(rs.getInt("contato_id"));
-//	            contato.setEmail(rs.getString("email"));
-//	            contato.setTelefone(rs.getString("telefone"));
-//
-//	            cliente.setContato(contato);  
-//	            return cliente;
-//	        }
-//	        return null;  
-//	    }
+		List<Cliente> clientes = new ArrayList<>();
+		String sqlCliente = "SELECT c.*, c.email, c.telefone " + "FROM cliente c "
+				+ "JOIN contato c ON f.contato_id = c.id_contato";
 
-	    
-//	    public void updateCliente(Cliente cliente) throws SQLException {
-//	        
-//	        String sqlContato = "UPDATE contato SET email = ?, telefone = ? WHERE id = ?";
-//	        update(sqlContato, cliente.getContato().getEmail(), cliente.getContato().getTelefone(), cliente.getContato().getId());
-//
-//	        
-//	        String sqlCliente = "UPDATE cliente SET nome = ?, cpf = ? WHERE id = ?";
-//	        update(sqlCliente, cliente.getNome(), cliente.getCpf(), cliente.getId());
-//	    }
+		try (Connection conn = ConexaoBD.getConexaoMySQL();
+				PreparedStatement stmt = conn.prepareStatement(sqlCliente);
+				ResultSet rs = stmt.executeQuery()) {
 
-	    
-//	    public void deleteCliente(int id) throws SQLException {
-//	        // Primeiro, exclui o cliente
-//	        String sqlCliente = "DELETE FROM cliente WHERE id = ?";
-//	        delete(sqlCliente, id);
-//
-//	       
-//	        String sqlContato = "DELETE FROM contato WHERE id = (SELECT contato_id FROM cliente WHERE id = ?)";
-//	        delete(sqlContato, id);
-//	    }
+			while (rs.next()) {
+				Cliente cliente = new Cliente();
+				Contato contato = new Contato();
 
-	    
-//	    public ResultSet findAllClientes() throws SQLException {
-//	        String sql = "SELECT c.id, c.nome, c.cpf, ct.id as contato_id, ct.email, ct.telefone " +
-//	                     "FROM cliente c " +
-//	                     "JOIN contato ct ON c.contato_id = ct.id";
-//	        return find(sql);
-//	    }
+				cliente.setCpf(rs.getString("cpf"));
+				cliente.setNome(rs.getString("nome"));
+				cliente.setNome(rs.getString("numero_compras"));
+
+				contato.setId(rs.getInt("contato_id"));
+				contato.setEmail(rs.getString("email"));
+				contato.setTelefone(rs.getString("telefone"));
+				cliente.setContato(contato);
+				clientes.add(cliente);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return clientes;
 	}
 
+	public Cliente carregarDadosCliente(String cpf) {
+		Cliente cliente = null;
+		String sqlCliente = "SELECT nome, cpf, senha, email, telefone, numero_compras,id_contato " + "FROM cliente " //
+				+ "JOIN contato ON contato_id = id_contato " + "WHERE cpf = ?";
 
+		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement stmt = conn.prepareStatement(sqlCliente)) {
+
+			stmt.setString(1, cpf);
+			ResultSet rs = stmt.executeQuery();
+
+			if (rs.next()) {
+				cliente = new Cliente();
+				cliente.setNome(rs.getString("nome"));
+				cliente.setCpf(rs.getString("cpf"));
+				cliente.setNumeroCompras(rs.getString("numeroCompras"));
+
+				Contato contato = new Contato();
+				contato.setId(rs.getInt("id_contato"));
+
+				contato.setEmail(rs.getString("email"));
+				contato.setTelefone(rs.getString("telefone"));
+				cliente.setContato(contato);
+
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return cliente;
+	}
+	
+	public boolean verificaCpfExistente(String cpf) {
+		String sqlClienteCPF = "SELECT cpf FROM cliente WHERE cpf = ?";
+		try (Connection conn = ConexaoBD.getConexaoMySQL();
+				PreparedStatement stmtCliente = conn.prepareStatement(sqlClienteCPF)) {
+
+			stmtCliente.setString(1, cpf);
+			ResultSet rs = stmtCliente.executeQuery();
+			return rs.next();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	public boolean verificaTelefoneExistente(String telefone) {
+		String sqlClienteContatoTelefone = "SELECT c.telefone FROM contato c "
+				+ "JOIN cliente c ON c.id_contato = c.contato_id " + "WHERE c.telefone = ?";
+		try (Connection conn = ConexaoBD.getConexaoMySQL();
+				PreparedStatement stmtContato = conn.prepareStatement(sqlClienteContatoTelefone)) {
+
+			stmtContato.setString(1, telefone);
+			ResultSet rs = stmtContato.executeQuery();
+			return rs.next();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+}
