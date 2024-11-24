@@ -1,6 +1,7 @@
 package modelo.dao.fornecedor;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -31,8 +32,21 @@ public class FornecedorDAO extends GenericDAO {
             stmt.executeUpdate();
         }
     }
-
-
+    
+    public boolean cnpjExiste(String cnpj) throws SQLException {
+    	String sql = "SELECT COUNT(*) FROM fornecedor WHERE cnpj = ?";
+    	 try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/streetdragon", "root", "aluno");
+    	         PreparedStatement stmt = conn.prepareStatement(sql)) {
+    	        stmt.setString(1, cnpj);
+    	        try (ResultSet rs = stmt.executeQuery()) {
+    	            if (rs.next()) {
+    	                return rs.getInt(1) > 0;
+    	            }
+    	        }
+    	    }
+    	    return false; 
+    	}
+    	
 
     public void excluirFornecedor(int id) throws SQLException {
         String sql = "DELETE FROM fornecedor WHERE idFornecedores = ?";

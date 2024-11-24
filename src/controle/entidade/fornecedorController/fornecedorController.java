@@ -10,11 +10,12 @@ import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 public class fornecedorController {
 
     private TelaFornecedor telaFornecedor;
     private FornecedorDAO fornecedorDAO;
-    private int fornecedorIdint;
 
     public fornecedorController(TelaFornecedor telaFornecedor) {
         this.telaFornecedor = telaFornecedor;
@@ -25,25 +26,57 @@ public class fornecedorController {
     public void cadastrarFornecedor(Fornecedor fornecedor) {
         if (validarCampos(fornecedor)) {
             try {
+                // Verifica se o CNPJ já existe para cadastro
+                if (fornecedorDAO.cnpjExiste(fornecedor.getCnpj())) {
+                    telaFornecedor.exibirMensagem("Já existe um fornecedor cadastrado com esse CNPJ.");
+                    telaFornecedor.limparCampos();
+                    return;  // Se o CNPJ já existir, não continua o cadastro
+                }
+
+                // Caso o CNPJ não exista, continua o processo de cadastro
                 fornecedorDAO.cadastrarFornecedor(fornecedor);
                 atualizarTabela();
                 telaFornecedor.limparCampos();
+                telaFornecedor.exibirMensagem("Fornecedor cadastrado com sucesso!");
+
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         } else {
-            telaFornecedor.exibirMensagem("Preencha todos os campos obrigatórios.");
+            telaFornecedor.exibirMensagem("Alguns campos não foram preenchidos de forma correta ou não foram preenchidos.");
         }
     }
-    
-    
-   
 
 
-    // Método para editar fornecedor
+    
+    
+    public void confirmarExclusaoFornecedor(int id) {
+        // Exibe o JOptionPane de confirmação
+        int confirm = JOptionPane.showConfirmDialog(
+            null,  // Componente pai (null para centralizar na tela)
+            "Tem certeza de que deseja excluir este fornecedor?", 
+            "Confirmar Exclusão", 
+            JOptionPane.YES_NO_OPTION,  // Opções "Sim" e "Não"
+            JOptionPane.WARNING_MESSAGE  // Ícone de alerta
+        );
+
+        // Se o usuário clicar em "Sim"
+        if (confirm == JOptionPane.YES_OPTION) {
+            excluirFornecedor(id); // Chama o método para excluir
+        }
+    }
+
+
+ // Método para editar fornecedor
     public void editarFornecedor(Fornecedor fornecedor) {
         if (validarCampos(fornecedor)) {
             try {
+                // Verifica se o CNPJ já existe (exceto para o próprio fornecedor sendo editado)
+                if (fornecedorDAO.cnpjExiste(fornecedor.getCnpj())) {
+                    telaFornecedor.exibirMensagem("Já existe um fornecedor cadastrado com esse CNPJ.");
+                    return;  // Se o CNPJ já existir, não continua o processo de edição
+                }
+
                 // Atualizando o fornecedor no banco de dados
                 fornecedorDAO.atualizarFornecedor(fornecedor);
 
@@ -57,12 +90,13 @@ public class fornecedorController {
                 telaFornecedor.exibirMensagem("Fornecedor atualizado com sucesso!");
             } catch (SQLException e) {
                 e.printStackTrace();
-                telaFornecedor.exibirMensagem("Erro ao atualizar fornecedor: " + e.getMessage());
             }
         } else {
-            telaFornecedor.exibirMensagem("Preencha todos os campos obrigatórios.");
+            telaFornecedor.exibirMensagem("Alguns campos não foram preenchidos de forma correta ou não foram preenchidos.");
         }
     }
+
+
     
   
     // Método para excluir fornecedor
@@ -71,10 +105,11 @@ public class fornecedorController {
             telaFornecedor.exibirMensagem("Selecione um fornecedor para excluir.");
             return;
         }
-
         try {
             fornecedorDAO.excluirFornecedor(id);
             atualizarTabela();
+            telaFornecedor.limparCampos();
+            
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -93,14 +128,24 @@ public class fornecedorController {
         }
     }
 
-    // Método para validar os campos antes de cadastrar ou editar
+    // Método para validar aqui
     private boolean validarCampos(Fornecedor fornecedor) {
-        // Aqui você pode adicionar suas validações, por exemplo:
+       
+    	
+    	 if (fornecedor.getCep() == 0) { 
+    	        return false;  
+    	    }
+    	
+    	if (fornecedor.getRua() == null || fornecedor.getRua().trim().isEmpty() ) {
+    		return false;
+    	}
+    	
         if (fornecedor.getNome() == null || fornecedor.getNome().trim().isEmpty()) {
-            return false;  // Nome obrigatório
+            return false;  
         }
-        if (fornecedor.getCnpj() == null || fornecedor.getCnpj().trim().isEmpty()) {
-            return false;  // CNPJ obrigatório
+        if (!fornecedor.getCnpj().matches("[0-9/]+")) {
+           
+            return false;
         }
        
     
