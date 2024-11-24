@@ -36,15 +36,14 @@ public class Main {
 		ProdutoControle produtoControle = new ProdutoControle();
 		produtoControle.setTelaProdutos(telaProduto);
 		produtoControle.setTelaCadastrarProduto(telaCadastroProdutos);
-		// produtoControle.setDeletarProduto(telaProduto);
-		// produtoControle.setTelaEditarProduto(telaProduto);
-		// produtoControle.fillPP(telaProduto);
 
 		// Exibe a tela de login
 		telaLogin.setVisible(true);
 
 		// Atualizando a tabela logo no começo pq ss
 		funcionarioControle.atualizarTabela();
+		produtoControle.atualizarTabela();
+		produtoControle.fillPP(telaProduto);
 		// produtoControle.listarProdutosTable();
 
 	}
