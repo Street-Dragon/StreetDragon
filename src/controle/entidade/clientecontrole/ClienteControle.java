@@ -20,27 +20,25 @@ public class ClienteControle {
 	private TelaCliente cadastroCliente;
 	private ClienteDAO clienteDAO = new ClienteDAO();
 	private String clienteIdStr;
-	
-    private void adicionarListeners() {
-    	cadastroCliente.getTable().addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                int selectedRow = cadastroCliente.getTable().getSelectedRow();
-                if (selectedRow != -1) {
-                    clienteIdStr = (String) cadastroCliente.getTable().getValueAt(selectedRow, 0);
-                    carregarDadosCliente(clienteIdStr);
-                }
-            }
-        });
-    }
-	
+
 	public void setTelaCadastroCliente(TelaCliente cadastroCliente) {
 		this.cadastroCliente = cadastroCliente;
+			System.out.println("TELA");
 			atualizarTabela();
 			adicionarListeners();
+			
+			System.out.println("TELA LISTENER");
+			System.out.println("Botão Cadastrar: " + cadastroCliente.getBtnCadastrar());
+			if (cadastroCliente.getBtnCadastrar() != null) {
+			    System.out.println("Botão encontrado e pronto para receber listener.");
+			} else {
+			    System.out.println("Erro: Botão não encontrado.");
+			}
+			
 			cadastroCliente.getBtnCadastrar().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+		        System.out.println("Botão Cadastrar pressionado");
 				cadastrarCliente();
 				atualizarTabela();
 				cadastroCliente.limparCampos();
@@ -65,6 +63,19 @@ public class ClienteControle {
 				}
 			});
 	}
+	
+    private void adicionarListeners() {
+    	cadastroCliente.getTable().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int selectedRow = cadastroCliente.getTable().getSelectedRow();
+                if (selectedRow != -1) {
+                    clienteIdStr = (String) cadastroCliente.getTable().getValueAt(selectedRow, 0);
+                    carregarDadosCliente(clienteIdStr);
+                }
+            }
+        });
+    }
 	
 	private void cadastrarCliente() {
         String nome = cadastroCliente.getTxtNome();

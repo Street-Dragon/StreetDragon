@@ -210,8 +210,7 @@ public class FuncionarioControle {
             JOptionPane.showMessageDialog(cadastroFuncionario, "Selecione um funcionário para excluir.", "Erro", JOptionPane.WARNING_MESSAGE);
         }
     }
-    
-   
+  
     public void atualizarTabela() {
             List<Funcionario> funcionarios = funcionarioDAO.listarFuncionarios();
            
