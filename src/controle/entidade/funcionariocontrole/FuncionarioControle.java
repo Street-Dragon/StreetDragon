@@ -115,6 +115,20 @@ public class FuncionarioControle {
 			cpfUsuarioLogado = cpf;
 			telaPrincipal.getLblFuncionario()
 					.setText("Funcionario: " + funcionarioDAO.nomeFuncionario(cpfUsuarioLogado));
+			
+			
+			boolean adm = funcionarioDAO.funcionarioAdm(cpf);
+			if(adm) {
+				System.out.println("USUARIO TEM PODERES");
+			}
+			else {
+				System.out.println("usuario não tem poderes");
+			}
+			telaPrincipal.getBtnFornecedor().setEnabled(adm);
+			telaPrincipal.getBtnFuncionarios().setEnabled(adm);
+			telaPrincipal.getBtnPromocoes().setEnabled(adm);
+			
+			
 			telaPrincipal.setVisible(true);
 			telaLogin.dispose();
 
@@ -139,7 +153,7 @@ public class FuncionarioControle {
 	    }
 	}
 
-private void cadastrarFuncionario() {
+	private void cadastrarFuncionario() {
         String nome = cadastroFuncionario.getTextNome();
         char[] senhaArray = cadastroFuncionario.getPasswordField();
         String cpf = cadastroFuncionario.getTextCpf();
@@ -166,6 +180,16 @@ private void cadastrarFuncionario() {
         	TelaMensagens TM = new TelaMensagens("O CPF informado é inválido.", 3);
             return;
         } 
+        Funcionario funcionario = new Funcionario();
+        Contato contato = new Contato();
+        funcionario.setNome(nome);
+        funcionario.setCpf(cpf);
+        funcionario.setSenhaFuncionario(senha);
+        funcionario.setAdm(isAdm);
+        contato.setEmail(email);
+        contato.setTelefone(telefone);
+        funcionario.setContato(contato);
+        funcionarioDAO.cadastrarFuncionario(funcionario);
         atualizarTabela();
         return;
     }
@@ -193,6 +217,8 @@ private void cadastrarFuncionario() {
         	TelaMensagens TM2 = new TelaMensagens("Selecione um funcionário para excluir.", 3);
         }
     }
+    
+   
     public void atualizarTabela() {
             List<Funcionario> funcionarios = funcionarioDAO.listarFuncionarios();
            
@@ -279,8 +305,8 @@ private void cadastrarFuncionario() {
     	
     }
 
-    
-    /*public void selecionarFuncionario(int id) {
+    /*
+    public void selecionarFuncionario(int id) {
         Funcionario funcionario = funcionarioDAO.getFuncionario(id);
         if (funcionario != null) {
             view.setFuncionario(funcionario);
@@ -330,25 +356,12 @@ private void cadastrarFuncionario() {
 					JOptionPane.ERROR_MESSAGE);
 		}
 		return;
-	}*/
+	}
 
-	/*public void atualizarTabela() {
-
-		List<Funcionario> funcionarios = funcionarioDAO.listarFuncionarios();
-		DefaultTableModel tableModel = cadastroFuncionario.getTableModel();
-		for (Funcionario funcionario : funcionarios) {
-			Contato contato = funcionario.getContato();
-			tableModel.addRow(
-					new Object[] { funcionario.getCpf(), funcionario.getNome(), funcionario.getSenhaFuncionario(),
-							funcionario.isAdm() ? "Sim" : "Não", contato.getEmail(), contato.getTelefone() });
-		}
-	}*/
-
-	
-	/* public void selecionarFuncionario(int id) { Funcionario funcionario =
+	 public void selecionarFuncionario(int id) { Funcionario funcionario =
 	 funcionarioDAO.getFuncionario(id); if (funcionario != null) {
 	 view.setFuncionario(funcionario); } else {
-	 JOptionPane.showMessageDialog(view, "Funcionário não encontrado"); } }*/
+	 JOptionPane.showMessageDialog(view, "Funcionário não encontrado"); } }
 
-
+*/
 }

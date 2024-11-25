@@ -58,7 +58,7 @@ public class ProdutoDAO {
 	}
 
 	public int Idshow() {
-		String sql = "SELECT COUNT(*) FROM produto";
+		String sql = "select idProduto from produto Order by idProduto desc limit 1;";
 
 		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 			ResultSet rs = stmt.executeQuery();
@@ -106,10 +106,10 @@ public class ProdutoDAO {
 			stmtProduto.setString(1, produto.getNomeProduto());
 			stmtProduto.setString(2, produto.getMaterial());
 			stmtProduto.setString(3, produto.getCategoria());
-			stmtProduto.setString(4, produto.getVariacao());
-			stmtProduto.setFloat(5, produto.getValor());
-			stmtProduto.setInt(6, produto.getQuantEstoque());
-			stmtProduto.setString(7, produto.getTamanho());
+			stmtProduto.setFloat(4, produto.getValor());
+			stmtProduto.setInt(5, produto.getQuantEstoque());
+			stmtProduto.setString(6, produto.getTamanho());
+			stmtProduto.setString(7, produto.getVariacao());
 			stmtProduto.setInt(8, id);
 			stmtProduto.executeUpdate();
 			return true;
