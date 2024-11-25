@@ -1,6 +1,8 @@
 package controle.visao.principal;
 
+import visao.TelaCadastroFuncionario;
 import visao.TelaPrincipal;
+import visao.TelaVenda;
 
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -17,13 +19,12 @@ public class TelaPrincipalControle {
 	private JButton btnSelec;
 	private FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
 	private FuncionarioControle funcionarioControle = new FuncionarioControle();
-	
-	
+	private TelaVenda telaVenda;
+
 	public TelaPrincipalControle(TelaPrincipal telaPrincipal) {
 		this.telaPrincipal = telaPrincipal;
 		mudarCorBotao(telaPrincipal.getBtnVenda());
 
-	
 		// Configuração dos listeners dos botões
 		this.telaPrincipal.getBtnVenda().addActionListener(new ActionListener() {
 			@Override
@@ -79,6 +80,15 @@ public class TelaPrincipalControle {
 				trocarTela("TelaCadastroFuncionario");
 				mudarCorBotao(telaPrincipal.getBtnFuncionarios());
 			}
+		});
+	}
+
+	public void setTelaVenda(TelaVenda telaVenda) {
+		this.telaVenda = telaVenda;
+
+		
+		telaVenda.getBtnRealizarCompra().addActionListener(e -> {
+		    telaPrincipal.getCardLayout().show(telaPrincipal.getMainPanel(), "TelaPagamento"); 
 		});
 	}
 

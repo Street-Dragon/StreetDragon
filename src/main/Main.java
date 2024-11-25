@@ -32,7 +32,6 @@ public class Main {
 		
 		// Instancia o controle
 		FuncionarioControle funcionarioControle = new FuncionarioControle();
-		// TelaPrincipalControle telaPrincipalControle = new TelaPrincipalControle();
 		
 		// Conecta as telas ao controle
 		funcionarioControle.setTelaLogin(telaLogin);
@@ -49,9 +48,6 @@ public class Main {
         		
         produtoControle.listarProdutosTable();
         
-//        telaPrincipal.add(telaProduto); // faz a minha parde do programa funcionar, concerta ai Mariana.
-//        telaPrincipal.revalidate();
-//        telaPrincipal.repaint();
         
     }
 }
