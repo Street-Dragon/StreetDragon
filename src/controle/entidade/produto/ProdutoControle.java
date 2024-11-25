@@ -32,7 +32,7 @@ public class ProdutoControle {
 					cadastrarProduto(telaCadastroProduto);
 				else
 					System.out.println("Cu");
-					EditProduto();
+					EditProduto(telaCadastroProduto);
 				
 			}
 		});
@@ -55,7 +55,6 @@ public class ProdutoControle {
 					telaCadastroProduto.setTitle("Editar Produto");
 					Produto produto = new Produto();
 					editarProduto();
-					atualizarTabela();
 
 				}
 		});
@@ -65,7 +64,6 @@ public class ProdutoControle {
 			public void actionPerformed(ActionEvent e) {
 					telaCadastroProduto.setTitle("Cadastrar Produto");
 					cadastrarProduto();
-					atualizarTabela();
 
 				}
 		});
@@ -94,16 +92,18 @@ public class ProdutoControle {
 		System.out.println("edit");
 		JTable table = telaProdutos.getTable(); int selectedRowIndex = table.getSelectedRow(); 
 		if (selectedRowIndex == -1) {
-		JOptionPane.showMessageDialog(telaProdutos, "Nenhum produto selecionado", "Erro", JOptionPane.ERROR_MESSAGE); 
+			JOptionPane.showMessageDialog(telaProdutos, "Nenhum produto selecionado", "Erro", JOptionPane.ERROR_MESSAGE); 
 		} else {
-		telaCadastroProduto.setVisible(true);
-		telaCadastroProduto.getbtnCadastrarProduto().setText("Editar Produto");
-		telaCadastroProduto.getbtnCadastrarProduto().setText("Editar Protuto");
-		telaCadastroProduto.setTitle("Editar Produto"); String firstColumnValue = table.getValueAt(selectedRowIndex, 0).toString();
-		Produto produto = new Produto();
-		produto = produtoDAO.getId(Integer.valueOf(firstColumnValue));
-		telaCadastroProduto.setVisible(true);
-		fillEdit(produto); 
+			telaCadastroProduto.setVisible(true);
+			telaCadastroProduto.getbtnCadastrarProduto().setText("Editar Produto");
+			telaCadastroProduto.getbtnCadastrarProduto().setText("Editar Protuto");
+			telaCadastroProduto.setTitle("Editar Produto"); 
+			String firstColumnValue = table.getValueAt(selectedRowIndex, 0).toString();
+			Produto produto = new Produto();
+			produto = produtoDAO.getId(Integer.valueOf(firstColumnValue));
+			telaCadastroProduto.setVisible(true);
+			telaCadastroProduto.limparCampos();
+			fillEdit(produto); 
 		}
 	}
 
@@ -126,7 +126,6 @@ public class ProdutoControle {
 		return produto;
 	}
 
-
   //-----------------------------------------------------------------------------
   public void listarProdutosTable() { List<Produto> produtos =
   produtoDAO.listarProdutos(); DefaultTableModel tableModel =
@@ -137,83 +136,84 @@ public class ProdutoControle {
   produto.getIdProduto(), produto.getNomeProduto(), produto.getValor(),
   produto.getQuantEstoque(), }); } }
   
-  public void EditProduto() { 
-	  try { 
-	  int id = Integer.parseInt(String.valueOf(telaCadastroProduto.getTextFieldId()));
-	  float valor = Float.parseFloat(telaCadastroProduto.getTextFieldValor());
-	  int estoque = Integer.parseInt(telaCadastroProduto.getTextFieldQntEstoque()); 
-	  String nome = telaCadastroProduto.getTextFieldNome(); 
-	  String material = telaCadastroProduto.getCbMaterial(); 
-	  String categoria = telaCadastroProduto.getCbCategoria(); 
-	  String variacao = telaCadastroProduto.getTextFieldVariacao(); 
-	  String tamanho = telaCadastroProduto.getCbTamnho();
-  
-//	  if (nome.isEmpty() || material.isEmpty() || categoria.isEmpty() ||
-//	  tamanho.isEmpty() || variacao.isEmpty() || String.valueOf(valor).isEmpty() ||
-//	  String.valueOf(estoque).isEmpty()){
-//		  
-//		  JOptionPane.showMessageDialog(telaCadastroProduto, "Parece que você não preencheu todos os campos", ":(",JOptionPane.ERROR_MESSAGE); 
-//		  return; 
-//		  }
+  public void EditProduto(TelaCadastroProdutos cadastroProduto) { 
+	  if
+	  (cadastroProduto.getTextFieldNome().isEmpty() ||
+	  cadastroProduto.getCbMaterial().isEmpty() ||
+	  cadastroProduto.getCbCategoria().isEmpty() ||
+	  cadastroProduto.getCbCategoria().isEmpty() ||
+	  cadastroProduto.getCbTamnho().isEmpty() ||
+	  cadastroProduto.getTextFieldVariacao().isEmpty() ||
+	  cadastroProduto.getTextFieldValor().isEmpty() ||
+	  cadastroProduto.getTextFieldQntEstoque().isEmpty()) {
+	  JOptionPane.showMessageDialog(cadastroProduto,
+	  "Parece que você não prencheu todos os campos", ":(",
+	  JOptionPane.ERROR_MESSAGE); return; } try { float valor =
+	  Float.parseFloat(telaCadastroProduto.getTextFieldValor()); int estoque =
+	  Integer.parseInt(telaCadastroProduto.getTextFieldQntEstoque()); String nome =
+	  cadastroProduto.getTextFieldNome(); String material =
+	  cadastroProduto.getCbMaterial(); String categoria =
+	  cadastroProduto.getCbCategoria(); String tamanho =
+	  cadastroProduto.getCbTamnho(); String variacao =
+	  cadastroProduto.getTextFieldVariacao();
+	  int id = cadastroProduto.setTextFieldId();
+	  
 	  Produto produto = new Produto();
+	  
 	  produto.setIdProduto(id);
-	  produto.setNomeProduto(nome); 
-	  produto.setMaterial(material);
-	  produto.setCategoria(categoria); 
+	  produto.setNomeProduto(nome); produto.setMaterial(material);
+	  produto.setCategoria(categoria); produto.setValor(valor);
+	  produto.setQuantEstoque(estoque); produto.setTamanho(tamanho);
 	  produto.setVariacao(variacao);
-	  produto.setValor(valor); 
-	  produto.setQuantEstoque(estoque);
-	  produto.setTamanho(tamanho);
-  
-  if (produtoDAO.editarProduto(produto.getIdProduto(), produto)) {
-  JOptionPane.showMessageDialog(telaCadastroProduto,
-  "Produto Editado com Sucesso!", null, JOptionPane.INFORMATION_MESSAGE);
-  telaProdutos.setVisible(true); } else {
-  JOptionPane.showMessageDialog(telaCadastroProduto, "Erro ao editar produto",
-  "Erro", JOptionPane.ERROR_MESSAGE); 
-  } 
-  } catch (Exception e) {
-  JOptionPane.showMessageDialog(telaCadastroProduto,
-  "Valor ou Estoque preechidos incorreetamente", ":(",
-  JOptionPane.ERROR_MESSAGE); } }
+	  
+	  
+	  if (produtoDAO.editarProduto(produto)) {
+		  JOptionPane.showMessageDialog(telaCadastroProduto, "Produto Editado com Sucesso!", null, JOptionPane.INFORMATION_MESSAGE);
+		  telaCadastroProduto.dispose();
+		  atualizarTabela();
+	  } else {
+		  JOptionPane.showMessageDialog(telaCadastroProduto, "Erro ao editar produto", "Erro", JOptionPane.ERROR_MESSAGE); 
+	  } 
+	  } catch (Exception e) {
+		  JOptionPane.showMessageDialog(telaCadastroProduto,
+				  "Valor ou Estoque preechidos incorreetamente", ":(",
+				  JOptionPane.ERROR_MESSAGE); 
+	  } 
+  }
   
   public void cadastrarProduto(TelaCadastroProdutos cadastroProduto) {
 	  // if quase mais longo que a sua mãe. 
-  if
-  (cadastroProduto.getTextFieldNome().isEmpty() ||
-  cadastroProduto.getCbMaterial().isEmpty() ||
-  cadastroProduto.getCbCategoria().isEmpty() ||
-  cadastroProduto.getCbCategoria().isEmpty() ||
-  cadastroProduto.getCbTamnho().isEmpty() ||
-  cadastroProduto.getTextFieldVariacao().isEmpty() ||
-  cadastroProduto.getTextFieldValor().isEmpty() ||
-  cadastroProduto.getTextFieldQntEstoque().isEmpty()) {
-  JOptionPane.showMessageDialog(cadastroProduto,
-  "Parece que você não prencheu todos os campos", ":(",
-  JOptionPane.ERROR_MESSAGE); return; } try { float valor =
-  Float.parseFloat(telaCadastroProduto.getTextFieldValor()); int estoque =
-  Integer.parseInt(telaCadastroProduto.getTextFieldQntEstoque()); String nome =
-  cadastroProduto.getTextFieldNome(); String material =
-  cadastroProduto.getCbMaterial(); String categoria =
-  cadastroProduto.getCbCategoria(); String tamanho =
-  cadastroProduto.getCbTamnho(); String variacao =
-  cadastroProduto.getTextFieldVariacao();
+  if (cadastroProduto.getTextFieldNome().isEmpty() || cadastroProduto.getCbMaterial().isEmpty() ||cadastroProduto.getCbCategoria().isEmpty() ||cadastroProduto.getCbCategoria().isEmpty() ||cadastroProduto.getCbTamnho().isEmpty() ||cadastroProduto.getTextFieldVariacao().isEmpty() ||cadastroProduto.getTextFieldValor().isEmpty() ||cadastroProduto.getTextFieldQntEstoque().isEmpty()) {
+	  JOptionPane.showMessageDialog(cadastroProduto, "Parece que você não prencheu todos os campos", ":(", JOptionPane.ERROR_MESSAGE);
+	  return; 
+  } try { 
+	  float valor =
+	  Float.parseFloat(telaCadastroProduto.getTextFieldValor());
+	  int estoque = Integer.parseInt(telaCadastroProduto.getTextFieldQntEstoque()); 
+	  String nome = cadastroProduto.getTextFieldNome(); 
+	  String material = cadastroProduto.getCbMaterial(); 
+	  String categoria = cadastroProduto.getCbCategoria();
+	  String tamanho = cadastroProduto.getCbTamnho(); 
+	  String variacao = cadastroProduto.getTextFieldVariacao();
   
-  Produto produto = new Produto();
+	  Produto produto = new Produto();
+	  
+	  produto.setNomeProduto(nome); produto.setMaterial(material);
+	  produto.setCategoria(categoria); produto.setValor(valor);
+	  produto.setQuantEstoque(estoque); produto.setTamanho(tamanho);
+	  produto.setVariacao(variacao);
   
-  produto.setNomeProduto(nome); produto.setMaterial(material);
-  produto.setCategoria(categoria); produto.setValor(valor);
-  produto.setQuantEstoque(estoque); produto.setTamanho(tamanho);
-  produto.setVariacao(variacao);
-  
-  if (produtoDAO.cadastrarProduto(produto)) {
-  JOptionPane.showMessageDialog(cadastroProduto, "Produto Cadastrado", null,
-  JOptionPane.INFORMATION_MESSAGE); } else {
-  JOptionPane.showMessageDialog(cadastroProduto, "Erro ao cadastrar produto",
-  "Erro", JOptionPane.ERROR_MESSAGE); } } catch (Exception e) {
-  JOptionPane.showMessageDialog(telaCadastroProduto,
-  "Valor ou Estoque preechidos incorreetamente", ":(",
-  JOptionPane.ERROR_MESSAGE); } }
+	  if (produtoDAO.cadastrarProduto(produto)) {
+		  JOptionPane.showMessageDialog(cadastroProduto, "Produto Cadastrado", null, JOptionPane.INFORMATION_MESSAGE); 
+		  atualizarTabela();
+		  telaCadastroProduto.dispose();
+	  } else {
+		  JOptionPane.showMessageDialog(cadastroProduto, "Erro ao cadastrar produto", "Erro", JOptionPane.ERROR_MESSAGE); 
+	  } 
+  	  } catch (Exception e) {
+  		  JOptionPane.showMessageDialog(telaCadastroProduto, "Valor ou Estoque preechidos incorreetamente", ":(", JOptionPane.ERROR_MESSAGE);
+  	  } 
+  }
   
   public void DeletProduto() { 
 	  JTable table
@@ -225,7 +225,7 @@ public class ProdutoControle {
   listarProdutosTable(); } }
   
   public void fillEdit(Produto produto) {
-  telaCadastroProduto.setTextFieldId().setText(Integer.toString(produto.
+  telaCadastroProduto.getTextFieldId().setText(Integer.toString(produto.
   getIdProduto()));
   telaCadastroProduto.setTextFieldNome().setText(produto.getNomeProduto());
   telaCadastroProduto.setTextFieldValor().setText(Float.toString(produto.

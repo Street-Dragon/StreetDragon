@@ -252,8 +252,8 @@ public class TelaCadastroProdutos extends JFrame {
 	public String getCbTamnho() {
 		return String.valueOf(cbTamanho.getSelectedObjects());
 	}
-	public JTextField setTextFieldId() {
-		return textFieldId;
+	public int setTextFieldId() {
+		return Integer.parseInt(textFieldId.getText());
 	}
 	public JTextField setTextFieldNome() {
 		return textFieldNome;
