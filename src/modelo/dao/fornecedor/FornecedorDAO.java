@@ -10,8 +10,8 @@ import java.util.List;
 
 import modelo.dao.genericdao.GenericDAO;
 import modelo.entidade.pessoa.fornecedor.Fornecedor;
-import modelo.entidade.pessoa.funcionario.Funcionario;
-import modelo.entidade.produto.Produto;
+
+
 
 public class FornecedorDAO extends GenericDAO {
 	
@@ -104,12 +104,8 @@ public class FornecedorDAO extends GenericDAO {
         return fornecedores;
     }
 
-	public static Produto getId(Integer valueOf) {
-		return null;
+
 	}
     
    
-    
- 
-    
-}
+   
