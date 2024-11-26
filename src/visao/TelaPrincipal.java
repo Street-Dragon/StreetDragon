@@ -69,6 +69,7 @@ public class TelaPrincipal extends JFrame {
 		TelaFornecedor telaFornecedor = new TelaFornecedor(this);
 		TelaCliente telaCliente = new TelaCliente(this);
 		TelaPromocao telaPromocao = new TelaPromocao(this);
+        TelaPagamento telaPagamento = new TelaPagamento(this);
 
 		// Painel do menu lateral
 		JPanel menuPanel = new JPanel();
@@ -144,13 +145,14 @@ public class TelaPrincipal extends JFrame {
 			panel_logo.add(imageLabel);
 		}
 
-		// instancia os controles
-
-		new TelaPrincipalControle(this);
-
+		//new TelaPrincipalControle(this);
+		TelaPrincipalControle telaPrincipalControle = new TelaPrincipalControle(this);
 		FuncionarioControle funcionarioControle = new FuncionarioControle();
 		funcionarioControle.setTelaPrincipal(this);
 		funcionarioControle.setTelaCadastroFuncionario(telaCadastroFuncionario);
+		
+		
+		telaPrincipalControle.setTelaVenda(telaVenda);
 
 		
 		ProdutoControle produtoControle = new ProdutoControle();
@@ -168,9 +170,10 @@ public class TelaPrincipal extends JFrame {
 		mainPanel.add(telaHistoricoVenda, "TelaHistoricoVenda");
 		mainPanel.add(telaCadastroFuncionario, "TelaCadastroFuncionario");
 		mainPanel.add(telaProdutos, "TelaProdutos");
-		mainPanel.add(telaFornecedor, "TelaFornecedor");
+		mainPanel.add(telaFornecedor, "TelaFornecedor");	
 		mainPanel.add(telaPromocao, "TelaPromocao");
 		mainPanel.add(telaCliente, "TelaCliente");
+		mainPanel.add(telaPagamento, "TelaPagamento");
 
 	}
 
@@ -215,6 +218,9 @@ public class TelaPrincipal extends JFrame {
 	public JButton getBtnPromocoes() {
 		return btnPromocoes;
 	}
+	public CardLayout getCardLayout() {
+        return cardLayout;
+    }
 
 	private static void config(JButton button) {
 		button.setContentAreaFilled(false); // Deixa o fundo transparente

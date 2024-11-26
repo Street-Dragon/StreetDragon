@@ -29,6 +29,10 @@ public class TelaVenda extends JPanel { // mudado para jpanel ao invés de jfram
 	private JTextField txtQuantidade;
 	private JTextField txtValor;
 	private Font hkGrotesk;
+	private JButton btnRemoverProduto;
+	private JButton btnAdicionarProduto;
+	private JButton btnRealizarCompra;
+	private JButton btnLimparCarrinho;
 
 	/**
 	 * Create the frame.
@@ -88,17 +92,13 @@ public class TelaVenda extends JPanel { // mudado para jpanel ao invés de jfram
 		txtValor.setColumns(10);
 		txtValor.setFont(hkGrotesk);
 
-		JButton btnRemoverProduto = new JButton("Remover produto");
+		btnRemoverProduto = new JButton("Remover produto");
 		btnRemoverProduto.setForeground(new Color(255, 255, 255));
 		btnRemoverProduto.setBackground(new Color(226, 61, 40));
 		btnRemoverProduto.setFont(new Font("Hanken Grotesk", Font.BOLD, 24));
-		btnRemoverProduto.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
 		panel.add(btnRemoverProduto, "cell 0 4,grow");
 
-		JButton btnAdicionarProduto = new JButton("Adicionar produto");
+		btnAdicionarProduto = new JButton("Adicionar produto");
 		btnAdicionarProduto.setForeground(new Color(255, 255, 255));
 		btnAdicionarProduto.setBackground(new Color(114, 148, 235));
 		btnAdicionarProduto.setFont(new Font("Hanken Grotesk", Font.BOLD, 24));
@@ -113,20 +113,18 @@ public class TelaVenda extends JPanel { // mudado para jpanel ao invés de jfram
 		lblTotal.setFont(new Font("Hanken Grotesk", Font.PLAIN, 29));
 		panel_1.add(lblTotal, "cell 0 0,alignx center,aligny center");
 
-		JButton btnRealizarCompra = new JButton("Realizar Compra");
+		btnRealizarCompra = new JButton("Realizar Compra");
 		btnRealizarCompra.setForeground(new Color(255, 255, 255));
 		btnRealizarCompra.setBackground(new Color(114, 148, 235));
 		panel_1.add(btnRealizarCompra, "cell 0 1,grow");
 
-		JButton btnLimparCarrinho = new JButton("Limpar Carrinho");
+		btnLimparCarrinho = new JButton("Limpar Carrinho");
 		btnLimparCarrinho.setForeground(new Color(255, 255, 255));
 		btnLimparCarrinho.setBackground(new Color(226, 61, 40));
 		panel_1.add(btnLimparCarrinho, "cell 0 2,grow");
 
 		btnLimparCarrinho.setFont(new Font("Hanken Grotesk", Font.BOLD, 24));
 		btnRealizarCompra.setFont(new Font("Hanken Grotesk", Font.BOLD, 24));
-
-		//
 
 		btnRealizarCompra.setIcon(Utils.carregarIcone("carrinho.png", 30, 30));
 		btnLimparCarrinho.setIcon(Utils.carregarIcone("lixo.png", 30, 30));
@@ -151,5 +149,21 @@ public class TelaVenda extends JPanel { // mudado para jpanel ao invés de jfram
 
 	public void setTable(JTable table) {
 		this.table = table;
+	}
+
+	public JButton getBtnRemoverProduto() {
+		return btnRemoverProduto;
+	}
+
+	public JButton getBtnAdicionarProduto() {
+		return btnAdicionarProduto;
+	}
+
+	public JButton getBtnRealizarCompra() {
+		return btnRealizarCompra;
+	}
+
+	public JButton getBtnLimparCarrinho() {
+		return btnLimparCarrinho;
 	}
 }

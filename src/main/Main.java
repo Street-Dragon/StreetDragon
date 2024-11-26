@@ -28,7 +28,7 @@ public class Main {
 
 		// Instancia o controle
 		FuncionarioControle funcionarioControle = new FuncionarioControle();
-
+		
 		// Conecta as telas ao controle
 		funcionarioControle.setTelaLogin(telaLogin);
 		funcionarioControle.setTelaCadastroFuncionario(telaCadastroFuncionario);
@@ -39,12 +39,15 @@ public class Main {
 
 		// Exibe a tela de login
 		telaLogin.setVisible(true);
-
-		// Atualizando a tabela logo no começo pq ss
-		funcionarioControle.atualizarTabela();
-		produtoControle.atualizarTabela();
-		produtoControle.fillPP(telaProduto);
-		// produtoControle.listarProdutosTable();
-
-	}
+			
+        // Exibe a tela de cadastro
+        // no primeiro momento, apenas exibe sem logica
+        telaCadastroFuncionario.setVisible(true);
+        //Atualizando a tabela logo no começo pq ss
+        funcionarioControle.atualizarTabela();
+        		
+        produtoControle.listarProdutosTable();
+        
+        
+    }
 }
