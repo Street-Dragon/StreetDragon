@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -154,6 +153,8 @@ public class TelaFornecedor extends JPanel {
         btnCadastrarFor.setFont(hkGrotesk);
         btnCadastrarFor.setBackground(new Color(114, 148, 235));
         panelButtons.add(btnCadastrarFor, "cell 0 1,grow");
+        //--------------------------------------btnCadastrarFor.setIcon(Utils.carregarIcone("Add.png",30,30));
+        
 
         // Botão Editar
         btnEditarFor = new JButton("Editar Fornecedor");
@@ -162,7 +163,6 @@ public class TelaFornecedor extends JPanel {
                 int selectedRow = table.getSelectedRow();
                 if (selectedRow != -1) {
                     try {
-                        
                         int id = (int) table.getValueAt(selectedRow, 0);
 
                         Fornecedor fornecedor = capturarDadosFornecedor();
@@ -175,7 +175,7 @@ public class TelaFornecedor extends JPanel {
                         ex.printStackTrace();
                         
                     }
-                } else {
+                } else  {
                 	
                 }
             }
@@ -184,6 +184,7 @@ public class TelaFornecedor extends JPanel {
         btnEditarFor.setFont(new Font("Hanken Grotesk", Font.PLAIN, 20));
         btnEditarFor.setBackground(new Color(255, 149, 149));
         panelButtons.add(btnEditarFor, "cell 0 5,grow");
+        btnEditarFor.setIcon(Utils.carregarIcone("editar.png",30,30));
 
         // Botão Excluir
         btnDeletarFor = new JButton("Excluir");
@@ -196,20 +197,16 @@ public class TelaFornecedor extends JPanel {
                  // Chamando o método do controller
                     fornecedorController.confirmarExclusaoFornecedor(id);
                 } else {
-                	
-                    exibirMensagem("Selecione um fornecedor para excluir.");
+                	TelaMensagens Tm = new TelaMensagens("Selecione um fornecedor para excluir.", 3);
                 }
             }
         });
+        
         btnDeletarFor.setForeground(new Color(255, 255, 255));
         btnDeletarFor.setFont(hkGrotesk);
         btnDeletarFor.setBackground(new Color(255, 0, 0));
         panelButtons.add(btnDeletarFor, "cell 0 5,grow");
-
-        btnDeletarFor.setForeground(new Color(255, 255, 255));
-        btnDeletarFor.setFont(hkGrotesk);
-        btnDeletarFor.setBackground(new Color(255, 0, 0));
-        panelButtons.add(btnDeletarFor, "cell 0 5,grow");
+        btnDeletarFor.setIcon(Utils.carregarIcone("lixo.png",30,30));
 
         // Tabela de fornecedores
         JScrollPane scrollPane = new JScrollPane();
@@ -296,13 +293,7 @@ public class TelaFornecedor extends JPanel {
         }
     }
 
-    // Exibe uma mensagem para o usuário
-    public void exibirMensagem(String mensagem) {
-        JOptionPane.showMessageDialog(this, mensagem);
-    }
-    public JTable getTable() {
-        return table;
-    }
+   
 
 
     // Limpa os campos da tela

@@ -39,7 +39,7 @@ public class ProdutoControle {
 			telaCadastroProduto.getbtnCancelar().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				telaCadastroProduto.limparCampos();
+				//telaCadastroProduto.limparCampos();
 				telaCadastroProduto.getTextFieldId().setText(String.valueOf(produtoDAO.Idshow()));
 			}
 		});
@@ -83,7 +83,7 @@ public class ProdutoControle {
 	protected void cadastrarProduto() {
 		System.out.println("Cadastro");
 		telaCadastroProduto.setVisible(true);
-		telaCadastroProduto.limparCampos();
+		//telaCadastroProduto.limparCampos();
 		telaCadastroProduto.getTextFieldId().setText(String.valueOf(produtoDAO.Idshow()));
 		
 	}

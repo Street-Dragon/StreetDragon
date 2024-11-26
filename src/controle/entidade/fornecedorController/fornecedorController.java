@@ -4,13 +4,13 @@ import modelo.dao.fornecedor.FornecedorDAO;
 import modelo.entidade.pessoa.fornecedor.Fornecedor;
 import modelo.entidade.pessoa.funcionario.Funcionario;
 import visao.TelaFornecedor;
+import visao.TelaMensagens;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.util.List;
 
-import javax.swing.JOptionPane;
 
 public class fornecedorController {
 
@@ -28,7 +28,7 @@ public class fornecedorController {
             try {
                 // Verifica se o CNPJ já existe para cadastro
                 if (fornecedorDAO.cnpjExiste(fornecedor.getCnpj())) {
-                    telaFornecedor.exibirMensagem("Já existe um fornecedor cadastrado com esse CNPJ.");
+                    TelaMensagens Tm = new TelaMensagens("Já existe um fornecedor cadastrado com esse CNPJ.", 3);
                     telaFornecedor.limparCampos();
                     return;  // Se o CNPJ já existir, não continua o cadastro
                 }
@@ -37,13 +37,17 @@ public class fornecedorController {
                 fornecedorDAO.cadastrarFornecedor(fornecedor);
                 atualizarTabela();
                 telaFornecedor.limparCampos();
-                telaFornecedor.exibirMensagem("Fornecedor cadastrado com sucesso!");
+                TelaMensagens Tm = new TelaMensagens("Fornecedor Cadastrado com sucesso.", 0);
+           
 
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         } else {
-            telaFornecedor.exibirMensagem("Alguns campos não foram preenchidos de forma correta ou não foram preenchidos.");
+            TelaMensagens Tm = new TelaMensagens("Alguns campos não foram preenchidos de forma"
+            		+ " correta ou não foram preenchidos.", 3);
+            
+            
         }
     }
 
@@ -52,16 +56,12 @@ public class fornecedorController {
     
     public void confirmarExclusaoFornecedor(int id) {
         // Exibe o JOptionPane de confirmação
-        int confirm = JOptionPane.showConfirmDialog(
-            null,  // Componente pai (null para centralizar na tela)
-            "Tem certeza de que deseja excluir este fornecedor?", 
-            "Confirmar Exclusão", 
-            JOptionPane.YES_NO_OPTION,  // Opções "Sim" e "Não"
-            JOptionPane.WARNING_MESSAGE  // Ícone de alerta
-        );
+        
+    	TelaMensagens Tm = new TelaMensagens("O");
+    	
 
         // Se o usuário clicar em "Sim"
-        if (confirm == JOptionPane.YES_OPTION) {
+        if (Tm.getResposta()) {
             excluirFornecedor(id); // Chama o método para excluir
         }
     }
@@ -69,11 +69,12 @@ public class fornecedorController {
 
  // Método para editar fornecedor
     public void editarFornecedor(Fornecedor fornecedor) {
+        // Verifica se os campos obrigatórios foram preenchidos corretamente
         if (validarCampos(fornecedor)) {
             try {
                 // Verifica se o CNPJ já existe (exceto para o próprio fornecedor sendo editado)
                 if (fornecedorDAO.cnpjExiste(fornecedor.getCnpj())) {
-                    telaFornecedor.exibirMensagem("Já existe um fornecedor cadastrado com esse CNPJ.");
+                    TelaMensagens Tm = new TelaMensagens("Já existe um fornecedor cadastrado com esse CNPJ.", 3);
                     return;  // Se o CNPJ já existir, não continua o processo de edição
                 }
 
@@ -87,22 +88,20 @@ public class fornecedorController {
                 telaFornecedor.limparCampos();
 
                 // Mensagem de sucesso
-                telaFornecedor.exibirMensagem("Fornecedor atualizado com sucesso!");
+                TelaMensagens Tm = new TelaMensagens("Fornecedor atualizado com sucesso.", 0);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         } else {
-            telaFornecedor.exibirMensagem("Alguns campos não foram preenchidos de forma correta ou não foram preenchidos.");
+            // Caso algum campo não tenha sido preenchido corretamente
+            TelaMensagens Tm = new TelaMensagens("Alguns campos não foram preenchidos de forma correta ou não foram preenchidos.", 3);
         }
     }
 
-
-    
-  
     // Método para excluir fornecedor
     public void excluirFornecedor(int id) {
         if (id <= 0) {
-            telaFornecedor.exibirMensagem("Selecione um fornecedor para excluir.");
+        	TelaMensagens Tm = new TelaMensagens("Selecione um fornecedor para excluir", 3);
             return;
         }
         try {
