@@ -256,7 +256,7 @@ public class ProdutoControle {
 						telaProdutos.getTxtId().setText(String.valueOf(produto.getIdProduto()));
 						telaProdutos.getTxtNome().setText(produto.getNomeProduto());
 						telaProdutos.getTxtQnt().setText(String.valueOf(produto.getQuantEstoque()));
-						telaProdutos.getTxtValor().setText(String.valueOf(produto.getValor())); 
+						
 					} 
 			}
 		}); 

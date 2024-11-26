@@ -11,6 +11,7 @@ import java.util.List;
 import modelo.dao.genericdao.GenericDAO;
 import modelo.entidade.pessoa.fornecedor.Fornecedor;
 import modelo.entidade.pessoa.funcionario.Funcionario;
+import modelo.entidade.produto.Produto;
 
 public class FornecedorDAO extends GenericDAO {
 	
@@ -53,7 +54,34 @@ public class FornecedorDAO extends GenericDAO {
         delete(sql, id);
     }
     
-   
+    public Fornecedor buscarFornecedorPorId(int id) throws SQLException {
+        // Definindo o SQL para buscar o fornecedor pelo ID
+        String sql = "SELECT * FROM fornecedor WHERE idFornecedores = ?";
+        
+        try (Connection conn = getConnection(); 
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            
+            // Definindo o ID na query
+            stmt.setInt(1, id);
+            
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    // Criando e retornando o objeto Fornecedor a partir do resultado da consulta
+                    Fornecedor fornecedor = new Fornecedor();
+                    fornecedor.setId(rs.getInt("idFornecedores"));
+                    fornecedor.setNome(rs.getString("nome"));
+                    fornecedor.setCnpj(rs.getString("cnpj"));
+                    fornecedor.setRua(rs.getString("rua"));
+                    fornecedor.setCep(rs.getInt("endereco_CEP"));
+                    
+                    return fornecedor;
+                } else {
+                    // Retorna null caso o fornecedor não seja encontrado
+                    return null;
+                }
+            }
+        }
+    }
     
     public List<Fornecedor> listarFornecedores() throws SQLException {
         List<Fornecedor> fornecedores = new ArrayList<>();
@@ -75,6 +103,10 @@ public class FornecedorDAO extends GenericDAO {
 
         return fornecedores;
     }
+
+	public static Produto getId(Integer valueOf) {
+		return null;
+	}
     
    
     
