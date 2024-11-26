@@ -65,7 +65,7 @@ public class ConexaoBD {
                     + "cpf VARCHAR(14) NOT NULL PRIMARY KEY, "
                     + "nome VARCHAR(100) NOT NULL, "
                     + "contato_id INT NOT NULL, "
-                    + "numeroCompras INT DEFAULT NULL, "
+                    + "numero_compras INT DEFAULT NULL, "
                     + "FOREIGN KEY (contato_id) REFERENCES contato(id_contato) "
                     + "ON DELETE NO ACTION "
                     + "ON UPDATE NO ACTION) ENGINE = InnoDB;";

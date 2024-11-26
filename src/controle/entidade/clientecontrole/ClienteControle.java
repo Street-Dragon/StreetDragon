@@ -22,17 +22,13 @@ public class ClienteControle {
 	private String clienteIdStr;
 
 	public void setTelaCadastroCliente(TelaCliente cadastroCliente) {
+		
 		this.cadastroCliente = cadastroCliente;
-			System.out.println("TELA");
+			
 			atualizarTabela();
 			adicionarListeners();
-			System.out.println("TELA LISTENER");
-			System.out.println("Botão Cadastrar: " + cadastroCliente.getBtnCadastrar());
-			if (cadastroCliente.getBtnCadastrar() != null) {
-			    System.out.println("antes do listener");
-			} else {
-			    System.out.println("n achou");
-			}
+			
+			
 			
 			cadastroCliente.getBtnCadastrar().addActionListener(new ActionListener() {
 			@Override
@@ -84,6 +80,7 @@ public class ClienteControle {
         String email = cadastroCliente.getTxtEmail();
         String telefone = cadastroCliente.getTxtTelefone();
 
+        System.out.println(nome + cpf + email + telefone);
         if (nome.isBlank() || cpf.isBlank() || email.isBlank() || telefone.isBlank()) {
             JOptionPane.showMessageDialog(cadastroCliente, "Preencha todos os campos.", "Erro",
                     JOptionPane.ERROR_MESSAGE);
