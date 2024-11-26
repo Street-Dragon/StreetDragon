@@ -9,22 +9,51 @@ import visao.TelaVenda;
 
 
 public class ItemController { 
-	private TelaVenda view; 
+	private TelaVenda telaVenda; 
 	private ItemDAO itemDAO = new ItemDAO();
-	
-//	public ItemController(VendaView view) {
-//		this.view = view;
-//		this.itemDAO = new ItemDAO(); 
-//		view.addAdicionarButtonListener(new AdicionarButtonListener()); 
-//		} 
-//	
-//	class AdicionarButtonListener implements ActionListener {
-//			@Override public void actionPerformed(ActionEvent e) {
-//				Item item = new Item();
-//				item.setQuantidade(Integer.parseInt(view.getQuantidadeField())); 
-//				item.setIdItem(Integer.parseInt(view.getIdItemField()));
-//				item.setIdProduto(Integer.parseInt(view.getIdProdutoField())); 
-////				itemDAO.adicionarItem(item); view.atualizarTabela(); 
-//			}
-//		} 
+
+	public void setTelaVenda(TelaVenda telaVenda) {
+		this.telaVenda = telaVenda;
+		
+		telaVenda.getBtnAdicionarProduto().addActionListener(new ActionListener() {
+			@Override
+				public void actionPerformed(ActionEvent e) {
+				
+				adicionar();
+			}
+		});
+		
+		telaVenda.getBtnLimparCarrinho().addActionListener(new ActionListener() {
+			@Override
+				public void actionPerformed(ActionEvent e) {
+				
+				excluirTudo();
+			}
+		});
+		
+		telaVenda.getBtnRemoverProduto().addActionListener(new ActionListener() {
+			@Override
+				public void actionPerformed(ActionEvent e) {
+				
+				excluir();
+			}
+		});
+		
+		
+	}
+
+	protected void adicionar() {
+		System.out.println("Adicionado");
+		
+	}
+
+	protected void excluirTudo() {
+		System.out.println("Exclui tudo");
+		
+	}
+
+	protected void excluir() {
+		System.out.println("Excluir");
+		
+	}
 }
