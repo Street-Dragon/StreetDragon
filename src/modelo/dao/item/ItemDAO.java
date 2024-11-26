@@ -86,13 +86,13 @@ public class ItemDAO {
     }
 
     
-    public boolean excluirItem(String produtoNome) {
-        String sql = "DELETE FROM item WHERE produto_id IN (SELECT id FROM produto WHERE nome = ?)";
+    public boolean excluirItem(int idItem) {
+    	   String sql = "DELETE FROM item WHERE id_item = ?";
         
         try (Connection conn = ConexaoBD.getConexaoMySQL();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setString(1, produtoNome);
+        	stmt.setInt(1, idItem);
             int rowsAffected = stmt.executeUpdate();
             return rowsAffected > 0;
 

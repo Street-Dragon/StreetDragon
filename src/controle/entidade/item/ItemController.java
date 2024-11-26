@@ -27,6 +27,7 @@ public class ItemController {
 				public void actionPerformed(ActionEvent e) {
 				
 				adicionar();
+				atualizarTabela();
 			}
 		});
 		
@@ -35,6 +36,7 @@ public class ItemController {
 				public void actionPerformed(ActionEvent e) {
 				
 				excluirTudo();
+				atualizarTabela();
 			}
 		});
 		
@@ -43,6 +45,7 @@ public class ItemController {
 				public void actionPerformed(ActionEvent e) {
 				
 				excluir();
+				atualizarTabela();
 			}
 		});
 		
@@ -54,7 +57,7 @@ public class ItemController {
 		int quantidade = Integer.parseInt(telaVenda.getTxtQuantidade());
         int idProduto = Integer.parseInt(telaVenda.getTxtCodigo());
 
-        // Verificar se o Produto existe no banco de dados
+        
         Produto produto = produtoDAO.getId(idProduto);
 
         if (produto == null) {
@@ -71,9 +74,9 @@ public class ItemController {
 
         Item item = new Item();
         item.setQuantidade(quantidade);
-        item.setProduto(produto); // Associa o Produto existente ao Item
+        item.setProduto(produto); 
 
-        // Chama o método do DAO para cadastrar o item, associando-o ao produto existente
+        
         boolean sucesso = itemDAO.cadastrarItem(item);
 
         if (sucesso) {
@@ -84,7 +87,7 @@ public class ItemController {
 	}
 	
 	  public void atualizarTabela() {
-	        List<Item> itens = itemDAO.listarItens(); // Recupera todos os itens do banco
+	        List<Item> itens = itemDAO.listarItens(); 
 
 	        DefaultTableModel tableModel = new DefaultTableModel();
 	        tableModel.addColumn("Produto");
@@ -92,21 +95,21 @@ public class ItemController {
 	        tableModel.addColumn("Quantidade");
 	        tableModel.addColumn("Valor Total");
 
-	        // Adiciona os dados dos itens na tabela
+	        
 	        for (Item item : itens) {
-	            Produto produto = item.getProduto(); // Recupera o produto relacionado ao item
-	            double valorTotal = item.getQuantidade() * produto.getValor(); // Calcula o valor total
+	            Produto produto = item.getProduto(); 
+	            double valorTotal = item.getQuantidade() * produto.getValor(); 
 
 	            tableModel.addRow(new Object[] {
-	                produto.getNomeProduto(),     // Nome do produto
-	                produto.getIdProduto(),       // ID do produto
-	                item.getQuantidade(),  // Quantidade do item
-	                valorTotal             // Valor total do item (quantidade * preço do produto)
+	                produto.getNomeProduto(),     
+	                produto.getIdProduto(),       
+	                item.getQuantidade(),  
+	                valorTotal             
 	            });
 	        }
 
-	        // Atualiza o modelo da tabela na tela com os itens
-	        telaVenda.getTable().setModel(tableModel); // Passa o modelo de tabela atualizado para a tela
+	        
+	        telaVenda.getTable().setModel(tableModel); 
 	    }
 
 	protected void excluirTudo() {
@@ -115,7 +118,34 @@ public class ItemController {
 	}
 
 	protected void excluir() {
-		System.out.println("Excluir");
+		int selectedRow = telaVenda.getTable().getSelectedRow(); // Pega a linha selecionada na tabela
+
+	    if (selectedRow != -1) {
+	        // Pega o ID do item da tabela (assumindo que o ID do item está na primeira coluna)
+	        int idItem = (Integer) telaVenda.getTable().getValueAt(selectedRow, 1);
+
+	        int resposta = JOptionPane.showConfirmDialog(telaVenda,
+	                "Você tem certeza que deseja excluir o item com ID: " + idItem + "?", "Confirmar Exclusão",
+	                JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+
+	        if (resposta == JOptionPane.YES_OPTION) {
+
+	            // Chama o método excluirItem do itemDAO para excluir o item do banco
+	            boolean excluido = itemDAO.excluirItem(idItem);
+
+	            if (excluido) {
+	                JOptionPane.showMessageDialog(telaVenda, "Item excluído com sucesso!");
+	                atualizarTabela(); // Atualiza a tabela após a exclusão
+	            } else {
+	                JOptionPane.showMessageDialog(telaVenda, "Erro ao excluir o Item.", "Erro",
+	                        JOptionPane.ERROR_MESSAGE);
+	            }
+	        }
+	    } else {
+	        // Se nenhuma linha for selecionada
+	        JOptionPane.showMessageDialog(telaVenda, "Selecione um Item para excluir.", "Erro",
+	                JOptionPane.WARNING_MESSAGE);
+	    }
 		
 	}
 }
