@@ -12,7 +12,7 @@ public class Item {
 	public Produto getProduto() {
 		return produto;
 	}
-	public void setProduo(Produto produto) {
+	public void setProduto(Produto produto) {
 		this.produto = produto;
 	}
 	public int getQuantidade() {

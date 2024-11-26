@@ -169,4 +169,13 @@ public class TelaVenda extends JPanel { // mudado para jpanel ao invés de jfram
 	public JButton getBtnLimparCarrinho() {
 		return btnLimparCarrinho;
 	}
+
+	public String getTxtQuantidade() {
+		
+		return txtQuantidade.getText();
+	}
+
+	public String getTxtCodigo() {
+		return txtCodigo.getText();
+	}
 }
