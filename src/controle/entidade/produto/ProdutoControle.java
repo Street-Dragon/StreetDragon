@@ -39,7 +39,7 @@ public class ProdutoControle {
 			telaCadastroProduto.getbtnCancelar().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//telaCadastroProduto.limparCampos();
+				telaCadastroProduto.limparCampos();
 				telaCadastroProduto.getTextFieldId().setText(String.valueOf(produtoDAO.Idshow()));
 			}
 		});
@@ -63,6 +63,7 @@ public class ProdutoControle {
 
 			public void actionPerformed(ActionEvent e) {
 					telaCadastroProduto.setTitle("Cadastrar Produto");
+					telaCadastroProduto.getbtnCadastrarProduto().setText("Cadastrar Produto");
 					cadastrarProduto();
 
 				}
@@ -83,7 +84,7 @@ public class ProdutoControle {
 	protected void cadastrarProduto() {
 		System.out.println("Cadastro");
 		telaCadastroProduto.setVisible(true);
-		//telaCadastroProduto.limparCampos();
+		telaCadastroProduto.limparCampos();
 		telaCadastroProduto.getTextFieldId().setText(String.valueOf(produtoDAO.Idshow()));
 		
 	}
@@ -159,6 +160,7 @@ public class ProdutoControle {
 			String tamanho = cadastroProduto.getCbTamnho(); 
 			String variacao = cadastroProduto.getTextFieldVariacao();
 			int id = cadastroProduto.setTextFieldId();
+//			int ForncedorId = 
 				
 			Produto produto = new Produto();
 			
@@ -195,6 +197,7 @@ public class ProdutoControle {
 			String categoria = cadastroProduto.getCbCategoria();
 			String tamanho = cadastroProduto.getCbTamnho(); 
 			String variacao = cadastroProduto.getTextFieldVariacao();
+			int FornecedorId = Integer.parseInt(cadastroProduto.getTextFieldFornecedor());
 			
 			Produto produto = new Produto();
 			
@@ -205,7 +208,7 @@ public class ProdutoControle {
 			produto.setMaterial(material);
 			produto.setCategoria(categoria);
 			produto.setTamanho(tamanho);
-			
+			produto.setFornecedorid(FornecedorId);
 			if (produtoDAO.cadastrarProduto(produto)) {
 				TelaMensagens Tm = new TelaMensagens("Produto Cadastrado", 0);
 				atualizarTabela();
@@ -236,9 +239,11 @@ public class ProdutoControle {
 		telaCadastroProduto.setTextFieldValor().setText(Float.toString(produto.getValor()));
 		telaCadastroProduto.setTextFieldQntEstoque().setText(Integer.toString(produto.getQuantEstoque()));
 		telaCadastroProduto.setTextFieldVariacao().setText(produto.getVariacao());
-		System.out.println(produto.getCategoria());
-		System.out.println(produto.getMaterial());
-		System.out.println(produto.getTamanho());
+		telaCadastroProduto.setTextFieldFornecedor().setText(Integer.toString(produto.getFornecedorid()));
+		System.out.println(produto.getFornecedorid());
+		System.out.println(produto.getFornecedorid());
+		System.out.println(produto.getFornecedorid());
+		System.out.println(produto.getFornecedorid());
 		CheckBoxF(produto);
 	}
 	

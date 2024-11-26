@@ -153,7 +153,7 @@ public class TelaFornecedor extends JPanel {
         btnCadastrarFor.setFont(hkGrotesk);
         btnCadastrarFor.setBackground(new Color(114, 148, 235));
         panelButtons.add(btnCadastrarFor, "cell 0 1,grow");
-        //btnCadastrarFor.setIcon(Utils.carregarIcone("Add.png",30,30));
+        btnCadastrarFor.setIcon(Utils.carregarIcone("Add.png",30,30));
         
 
         // Botão Editar

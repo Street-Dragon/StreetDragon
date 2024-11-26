@@ -107,7 +107,8 @@ public class ConexaoBD {
 
          
             stmt.executeUpdate(sqlContato);
-            stmt.executeUpdate(sqlEndereco);
+            stmt.executeUpdate(sqlEndereco); 
+            stmt.executeUpdate(sqlFornecedor);
             stmt.executeUpdate(sqlProduto);
             stmt.executeUpdate(sqlPromocao);
             stmt.executeUpdate(sqlFuncionario);
@@ -115,7 +116,7 @@ public class ConexaoBD {
             stmt.executeUpdate(sqlItem);
             stmt.executeUpdate(sqlVenda);
             stmt.executeUpdate(sqlPromocaoCliente);
-            stmt.executeUpdate(sqlFornecedor);
+            
 
             String sqlVerificaFuncionario = "SELECT cpf FROM funcionario WHERE cpf = '123'";
             PreparedStatement psFuncionario = conn.prepareStatement(sqlVerificaFuncionario);
