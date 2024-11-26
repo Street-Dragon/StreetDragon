@@ -43,12 +43,28 @@ public class ConexaoBD {
             String sqlEndereco = "CREATE TABLE IF NOT EXISTS endereco (" + "cep VARCHAR(10) NOT NULL PRIMARY KEY, "
                     + "rua VARCHAR(45) NOT NULL, " + "bairro VARCHAR(45) NOT NULL, " + "complemento VARCHAR(45) NULL"
                     + ") ENGINE = InnoDB;";
-
-            String sqlProduto = "CREATE TABLE IF NOT EXISTS produto ("
-                    + "idProduto INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " + "nome VARCHAR(45) NOT NULL, "
-                    + "material VARCHAR(45) NOT NULL, " + "categoria VARCHAR(45) NOT NULL, " + "valor FLOAT NOT NULL, "
-                    + "estoque INT NOT NULL, " + "tamanho VARCHAR(45) NOT NULL, " + "variacao VARCHAR(45) NULL"
-                    + ") ENGINE = InnoDB;";
+            
+            String sqlFornecedor = "CREATE TABLE IF NOT EXISTS fornecedor (" +
+                    "idFornecedores INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
+                    "nome VARCHAR(45) NOT NULL, " +
+                    "endereco_CEP VARCHAR(10) NOT NULL, " +
+                    "Cnpj VARCHAR(45) NOT NULL, " +
+                    "rua VARCHAR(45) NOT NULL" +
+                    ") ENGINE = InnoDB;";
+            
+            
+            String sqlProduto = "CREATE TABLE IF NOT EXISTS produto (" +
+                    "idProduto INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
+                    "nome VARCHAR(45) NOT NULL, " +
+                    "material VARCHAR(45) NOT NULL, " +
+                    "categoria VARCHAR(45) NOT NULL, " +
+                    "valor FLOAT NOT NULL, " +
+                    "estoque INT NOT NULL, " +
+                    "tamanho VARCHAR(45) NOT NULL, " +
+                    "variacao VARCHAR(45) NULL, " +
+                    "idFornecedores INT NOT NULL, " +
+                    "FOREIGN KEY (idFornecedores) REFERENCES fornecedor(idFornecedores) " +
+                    ") ENGINE = InnoDB;";
 
             String sqlPromocao = "CREATE TABLE IF NOT EXISTS promocao ("
                     + "idPromocao INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " + "desconto FLOAT NOT NULL"
@@ -89,15 +105,7 @@ public class ConexaoBD {
                     + "ON UPDATE NO ACTION, " + "FOREIGN KEY (cliente_cpf) REFERENCES cliente(cpf) "
                     + "ON DELETE NO ACTION " + "ON UPDATE NO ACTION) ENGINE = InnoDB;";
 
-            String sqlFornecedor = "CREATE TABLE IF NOT EXISTS fornecedor (" +
-                    "idFornecedores INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
-                    "nome VARCHAR(45) NOT NULL, " +
-                    "endereco_CEP VARCHAR(10) NOT NULL, " +
-                    "Cnpj VARCHAR(45) NOT NULL, " +
-                    "rua VARCHAR(45) NOT NULL" +
-                    ") ENGINE = InnoDB;";
-
-
+         
             stmt.executeUpdate(sqlContato);
             stmt.executeUpdate(sqlEndereco);
             stmt.executeUpdate(sqlProduto);
@@ -128,3 +136,4 @@ public class ConexaoBD {
         }
     }
 }
+ 
