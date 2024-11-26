@@ -99,7 +99,7 @@ public class ProdutoDAO {
 		return produtos;
 	}
 
-	public boolean editarProduto(Integer id, Produto produto) {
+	public boolean editarProduto(Produto produto) {
 		String sqlP = "UPDATE produto set nome = ?, material = ?, Categoria = ?, valor = ?, estoque = ?, tamanho = ?, variacao = ? where idProduto = ?;";
 
 		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement stmtProduto = conn.prepareStatement(sqlP)) {
@@ -110,7 +110,7 @@ public class ProdutoDAO {
 			stmtProduto.setInt(5, produto.getQuantEstoque());
 			stmtProduto.setString(6, produto.getTamanho());
 			stmtProduto.setString(7, produto.getVariacao());
-			stmtProduto.setInt(8, id);
+			stmtProduto.setInt(8, produto.getIdProduto());
 			stmtProduto.executeUpdate();
 			return true;
 
