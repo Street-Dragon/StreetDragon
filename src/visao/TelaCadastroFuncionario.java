@@ -56,110 +56,6 @@ public class TelaCadastroFuncionario extends JPanel { // jpanel ao invés de jfr
 	private static DefaultTableModel tableModel;
 	private JPasswordField textSenha;
 
-	public char[] getPasswordField() {
-		return textSenha.getPassword();
-	}
-
-	public JButton getBtnCadastrarFuncionario() {
-		return btnCadastrarFuncionario;
-	}
-	
-	public JButton getBtnEditarFuncionario() {
-		return btnEditarFuncionario;
-	}
-
-	public boolean getChckbxAdm() {
-		return chckbxAdm.isSelected();
-	}
-
-	public boolean getChckbxSenha() {
-		return chckbxVerSenha.isSelected();
-	}
-
-	// limpa campos
-	public void setTextNome(String nome) {
-		textNome.setText(nome);
-	}
-
-	public void setPasswordField(String senha) {
-		textSenha.setText(senha);
-	}
-
-	public void setTextCpf(String cpf) {
-		textCpf.setText(cpf);
-	}
-
-	public JButton getBtnDeletarFuncionario() {
-		return btnDeletarFuncionario;
-	}
-
-	public void setChckbxAdm(boolean isAdm) {
-		chckbxAdm.setSelected(isAdm);
-	}
-
-	public void setChckbxSenha(boolean verSenha) {
-		chckbxVerSenha.setSelected(verSenha);
-
-	}
-
-	public void setTextEmail(String email) {
-		textEmail.setText(email);
-	}
-
-	public void setTextTelefone(String telefone) {
-		textTelefone.setText(telefone);
-	}
-	public JTable getTable() {
-		return table;
-	}
-
-	public DefaultTableModel getTableModel() {
-		return tableModel;
-	}
-
-	public JTextField getTextFieldId() {
-		return textId;
-	}
-
-	public JTextField getTextFieldNome() {
-		return textNome;
-	}
-
-	public JTextField getTextFieldCpf() {
-		return textCpf;
-	}
-
-	public JTextField getTextFieldEmail() {
-		return textEmail;
-	}
-
-	public JTextField getTextFieldTelefone() {
-		return textTelefone;
-	}
-
-	public JPasswordField getTextFieldSenha() {
-		return textSenha;
-	}
-
-	public String getTextId() {
-		return textId.getText();
-	}
-
-	public String getTextNome() {
-		return textNome.getText();
-	}
-
-	public String getTextCpf() {
-		return textCpf.getText();
-	}
-
-	public String getTextEmail() {
-		return textEmail.getText();
-	}
-
-	public String getTextTelefone() {
-		return textTelefone.getText();
-	}
 	/**
 	 * Create the frame.
 	 */
@@ -169,7 +65,6 @@ public class TelaCadastroFuncionario extends JPanel { // jpanel ao invés de jfr
 		setBackground(Cores.COR_ROSA_CLARO);
 		setBorder(new EmptyBorder(5, 5, 5, 5));
 
-		
 		Border borda = new LineBorder(Cores.COR_ROSA_CLARO, 1);
 		hkGrotesk = Utils.loadCustomFont();
 		setLayout(new MigLayout("", "[grow][grow][grow][grow]", "[grow][grow][grow][grow]"));
@@ -286,12 +181,11 @@ public class TelaCadastroFuncionario extends JPanel { // jpanel ao invés de jfr
 		// Botão Ecluir
 		btnDeletarFuncionario = new JButton("Excluir Funcionario");
 		btnDeletarFuncionario.setForeground(new Color(255, 255, 255));
-		btnDeletarFuncionario.setFont(new Font("Hanken Grotesk", Font.PLAIN, 25));	
+		btnDeletarFuncionario.setFont(new Font("Hanken Grotesk", Font.PLAIN, 25));
 
 		btnDeletarFuncionario.setBackground(new Color(255, 0, 0));
 		panel_1.add(btnDeletarFuncionario, "cell 0 2,grow");
-		
-		
+
 		// Botâo Editar
 		btnEditarFuncionario = new JButton("Editar Funcionario");
 		btnEditarFuncionario.setForeground(new Color(255, 255, 255));
@@ -311,15 +205,15 @@ public class TelaCadastroFuncionario extends JPanel { // jpanel ao invés de jfr
 		tableModel.addColumn("Administrador");
 
 		table = new JTable(tableModel) {
-		    // não deixa as células serem editadas
-		    @Override
-		    public boolean isCellEditable(int row, int column) {
-		        return false; 
-		    }
+			// não deixa as células serem editadas
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
 		};
-		
+
 		Utils.configTabela(table, scrollPane);
-		
+
 		table.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 1) {
@@ -333,7 +227,7 @@ public class TelaCadastroFuncionario extends JPanel { // jpanel ao invés de jfr
 		});
 
 	}
-	
+
 	public void limparCampos() {
 		textId.setText("");
 		textNome.setText("");
@@ -343,4 +237,109 @@ public class TelaCadastroFuncionario extends JPanel { // jpanel ao invés de jfr
 		textSenha.setText("");
 	}
 
+	public JTable getTable() {
+		return table;
+	}
+
+	public DefaultTableModel getTableModel() {
+		return tableModel;
+	}
+
+	public JTextField getTextFieldId() {
+		return textId;
+	}
+
+	public JTextField getTextFieldNome() {
+		return textNome;
+	}
+
+	public JTextField getTextFieldCpf() {
+		return textCpf;
+	}
+
+	public JTextField getTextFieldEmail() {
+		return textEmail;
+	}
+
+	public JTextField getTextFieldTelefone() {
+		return textTelefone;
+	}
+
+	public JPasswordField getTextFieldSenha() {
+		return textSenha;
+	}
+
+	public String getTextId() {
+		return textId.getText();
+	}
+
+	public String getTextNome() {
+		return textNome.getText();
+	}
+
+	public String getTextCpf() {
+		return textCpf.getText();
+	}
+
+	public String getTextEmail() {
+		return textEmail.getText();
+	}
+
+	public String getTextTelefone() {
+		return textTelefone.getText();
+	}
+
+	public char[] getPasswordField() {
+		return textSenha.getPassword();
+	}
+
+	public JButton getBtnCadastrarFuncionario() {
+		return btnCadastrarFuncionario;
+	}
+
+	public JButton getBtnEditarFuncionario() {
+		return btnEditarFuncionario;
+	}
+
+	public boolean getChckbxAdm() {
+		return chckbxAdm.isSelected();
+	}
+
+	public boolean getChckbxSenha() {
+		return chckbxVerSenha.isSelected();
+	}
+
+	// limpa campos
+	public void setTextNome(String nome) {
+		textNome.setText(nome);
+	}
+
+	public void setPasswordField(String senha) {
+		textSenha.setText(senha);
+	}
+
+	public void setTextCpf(String cpf) {
+		textCpf.setText(cpf);
+	}
+
+	public JButton getBtnDeletarFuncionario() {
+		return btnDeletarFuncionario;
+	}
+
+	public void setChckbxAdm(boolean isAdm) {
+		chckbxAdm.setSelected(isAdm);
+	}
+
+	public void setChckbxSenha(boolean verSenha) {
+		chckbxVerSenha.setSelected(verSenha);
+
+	}
+
+	public void setTextEmail(String email) {
+		textEmail.setText(email);
+	}
+
+	public void setTextTelefone(String telefone) {
+		textTelefone.setText(telefone);
+	}
 }

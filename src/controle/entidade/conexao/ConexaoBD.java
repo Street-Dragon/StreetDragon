@@ -93,12 +93,14 @@ public class ConexaoBD {
                     + "ON UPDATE NO ACTION, " + "FOREIGN KEY (cliente_cpf) REFERENCES cliente(cpf) "
                     + "ON DELETE NO ACTION " + "ON UPDATE NO ACTION) ENGINE = InnoDB;";
 
-            String sqlFornecedor = "CREATE TABLE IF NOT EXISTS fornecedor ("
-                    + "idFornecedores INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " + "nome VARCHAR(45) NOT NULL, "
-                    + "produtos_idProdutos INT NOT NULL, "
-                    + "FOREIGN KEY (produtos_idProdutos) REFERENCES produto(idProduto) "
-                    + "ON DELETE NO ACTION "
-                    + "ON UPDATE NO ACTION) ENGINE = InnoDB;";
+            String sqlFornecedor = "CREATE TABLE IF NOT EXISTS fornecedor (" +
+                    "idFornecedores INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
+                    "nome VARCHAR(45) NOT NULL, " +
+                    "endereco_CEP VARCHAR(10) NOT NULL, " +
+                    "Cnpj VARCHAR(45) NOT NULL, " +
+                    "rua VARCHAR(45) NOT NULL" +
+                    ") ENGINE = InnoDB;";
+
 
             stmt.executeUpdate(sqlContato);
             stmt.executeUpdate(sqlEndereco);
@@ -118,7 +120,7 @@ public class ConexaoBD {
             if (!rsFuncionario.next()) {
                 String sqlContatoRoot = "INSERT INTO contato (email, telefone) VALUES ('mariana@aluno.ifsc', '48 9884651')";
                 String sqlFuncionarioRoot = "INSERT INTO funcionario (cpf, senha, nome, contato_id, adm) "
-                        + "VALUES ('123', '321', 'Mari', " + 1 + ", true)";
+                        + "VALUES ('123', '321', 'Mari', " + 1 + ", 1)";
                 stmt.executeUpdate(sqlContatoRoot);
                 stmt.executeUpdate(sqlFuncionarioRoot);
             }

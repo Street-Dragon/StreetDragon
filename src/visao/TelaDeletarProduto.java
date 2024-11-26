@@ -23,6 +23,8 @@ public class TelaDeletarProduto extends JFrame {
 
 	private JPanel contentPane;
 	private Font hkGrotesk;
+	private JButton btnCancelar;
+	private JButton btnConfirmar;
 
 	/**
 	 * Launch the application.
@@ -117,18 +119,27 @@ public class TelaDeletarProduto extends JFrame {
 		lblCodigo.setFont(new Font("Hanken Grotesk", Font.PLAIN, 18));
 		panel_3.add(lblCodigo, "cell 0 1");
 		
-		JButton btnConfirmar = new JButton("Confirmar");
+		btnConfirmar = new JButton("Confirmar");
 		btnConfirmar.setForeground(new Color(255, 255, 255));
 		btnConfirmar.setBackground(new Color(114, 148, 235));
 		btnConfirmar.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		contentPane.add(btnConfirmar, "cell 0 5 2 1,growx");
 		btnConfirmar.setFont(hkGrotesk);
 		
-		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar = new JButton("Cancelar");
 		btnCancelar.setBackground(new Color(226, 61, 40));
 		btnCancelar.setForeground(new Color(255, 255, 255));
 		btnCancelar.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		contentPane.add(btnCancelar, "cell 3 5 3 1,growx");
 		btnCancelar.setFont(hkGrotesk);
 	}
+
+	public JButton getBtnCancelar() {
+		return btnCancelar;
+	}
+
+	public JButton getBtnConfirmar() {
+		return btnConfirmar;
+	}
+	
 }

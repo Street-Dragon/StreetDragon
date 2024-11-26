@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 
 import controle.entidade.clientecontrole.ClienteControle;
 import controle.entidade.funcionariocontrole.FuncionarioControle;
+import controle.entidade.produto.ProdutoControle;
 import controle.visao.principal.TelaPrincipalControle;
 import net.miginfocom.swing.MigLayout;
 import utils.Cores;
@@ -69,6 +70,7 @@ public class TelaPrincipal extends JFrame {
 		TelaFornecedor telaFornecedor = new TelaFornecedor(this);
 		TelaCliente telaCliente = new TelaCliente(this);
 		TelaPromocao telaPromocao = new TelaPromocao(this);
+        TelaPagamento telaPagamento = new TelaPagamento(this);
 
 		// Painel do menu lateral
 		JPanel menuPanel = new JPanel();
@@ -144,23 +146,38 @@ public class TelaPrincipal extends JFrame {
 			panel_logo.add(imageLabel);
 		}
 
-		new TelaPrincipalControle(this);
-
+		//new TelaPrincipalControle(this);
+		TelaPrincipalControle telaPrincipalControle = new TelaPrincipalControle(this);
 		FuncionarioControle funcionarioControle = new FuncionarioControle();
 		funcionarioControle.setTelaPrincipal(this);
 		funcionarioControle.setTelaCadastroFuncionario(telaCadastroFuncionario);
 		
+		
+		telaPrincipalControle.setTelaVenda(telaVenda);
+		
 		ClienteControle clienteControle = new ClienteControle();
 		clienteControle.setTelaCadastroCliente(telaCliente);
 
+		
+		ProdutoControle produtoControle = new ProdutoControle();
+		produtoControle.setTelaProdutos(telaProdutos);
+		produtoControle.atualizarTabela();
+		produtoControle.fillPP(telaProdutos);
+		
+		TelaCadastroProdutos telaCadastroProdutos = new TelaCadastroProdutos();
+		produtoControle.setTelaCadastrarProduto(telaCadastroProdutos);
+		
+		TelaDeletarProduto telaDeletarProduto = new TelaDeletarProduto();
+		
 		// Adiciona os painéis
 		mainPanel.add(telaVenda, "TelaVenda");
 		mainPanel.add(telaHistoricoVenda, "TelaHistoricoVenda");
 		mainPanel.add(telaCadastroFuncionario, "TelaCadastroFuncionario");
 		mainPanel.add(telaProdutos, "TelaProdutos");
-		mainPanel.add(telaFornecedor, "TelaFornecedor");
+		mainPanel.add(telaFornecedor, "TelaFornecedor");	
 		mainPanel.add(telaPromocao, "TelaPromocao");
 		mainPanel.add(telaCliente, "TelaCliente");
+		mainPanel.add(telaPagamento, "TelaPagamento");
 
 	}
 
@@ -205,6 +222,9 @@ public class TelaPrincipal extends JFrame {
 	public JButton getBtnPromocoes() {
 		return btnPromocoes;
 	}
+	public CardLayout getCardLayout() {
+        return cardLayout;
+    }
 
 	private static void config(JButton button) {
 		button.setContentAreaFilled(false); // Deixa o fundo transparente
