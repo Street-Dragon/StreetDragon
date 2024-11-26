@@ -105,6 +105,9 @@ public class TelaProdutos extends JPanel {
 		panel_1.add(btnCadastrarProd, "cell 0 0,grow");
 
 		btnEditarProd = new JButton("Editar");
+		btnEditarProd.setForeground(new Color(255, 255, 255));
+		btnEditarProd.setBackground(new Color(255, 175, 175));
+		btnEditarProd.setFont(new Font("Hanken Grotesk", Font.PLAIN, 25));
 		panel_1.add(btnEditarProd, "cell 0 1,grow");
 
 		// Botão Excluir
@@ -115,7 +118,8 @@ public class TelaProdutos extends JPanel {
 		panel_1.add(btnDeletarProd, "cell 0 2,grow");
 
 		btnDeletarProd.setIcon(Utils.carregarIcone("lixo.png", 30, 30));
-		btnCadastrarProd.setIcon(Utils.carregarIcone("editar.png", 30, 30));
+		btnCadastrarProd.setIcon(Utils.carregarIcone("Add.png", 30, 30));
+		btnEditarProd.setIcon(Utils.carregarIcone("editar.png", 30, 30));
 
 		JScrollPane scrollPane = new JScrollPane();
 		add(scrollPane, "cell 0 1 4 3,grow");
