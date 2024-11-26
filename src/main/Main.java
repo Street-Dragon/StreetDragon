@@ -50,6 +50,6 @@ public class Main {
         produtoControle.listarProdutosTable();
         
         
-        clienteControle.atualizarTabela();
+        //clienteControle.atualizarTabela();
     }
 }

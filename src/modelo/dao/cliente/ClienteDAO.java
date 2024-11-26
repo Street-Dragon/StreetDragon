@@ -167,8 +167,9 @@ public class ClienteDAO extends GenericDAO{
 	}
 	
 	public boolean verificaTelefoneExistente(String telefone) {
-		String sqlClienteContatoTelefone = "SELECT c.telefone FROM contato c "
-				+ "JOIN cliente c ON c.id_contato = c.contato_id " + "WHERE c.telefone = ?";
+		String sqlClienteContatoTelefone = "SELECT co.telefone FROM contato co "
+				+ "JOIN cliente cl ON co.id_contato = cl.contato_id " + "WHERE co.telefone = ?";
+		
 		try (Connection conn = ConexaoBD.getConexaoMySQL();
 				PreparedStatement stmtContato = conn.prepareStatement(sqlClienteContatoTelefone)) {
 

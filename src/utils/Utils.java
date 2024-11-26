@@ -177,7 +177,7 @@ public class Utils {
 		table.setDefaultRenderer(Object.class, (TableCellRenderer) new DefaultTableCellRenderer() {
 			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
 					boolean hasFocus, int row, int column) {
-				
+				if(value != null) {
 				JLabel label = new JLabel(value.toString(), SwingConstants.CENTER);
 
                 int bordaEspessura = 10;  // Espessura da borda
@@ -186,7 +186,7 @@ public class Utils {
                 // Definir a borda (todas as direções)
                 label.setBorder(BorderFactory.createLineBorder(bordaCor, bordaEspessura));
 				
-				
+				}
 				Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
 				// Define o fundo branco para as células de dados

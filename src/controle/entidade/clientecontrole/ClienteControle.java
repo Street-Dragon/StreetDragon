@@ -121,22 +121,22 @@ public class ClienteControle {
        
         DefaultTableModel tableModel;
 		tableModel = new DefaultTableModel();
-        tableModel.addColumn("CPF");
-        tableModel.addColumn("Nome");
-        tableModel.addColumn("Senha");
-        tableModel.addColumn("Administrador");
-        tableModel.addColumn("Email");
-        tableModel.addColumn("Telefone");
+		tableModel.addColumn("id");
+		tableModel.addColumn("Nome");
+		tableModel.addColumn("Email");
+		tableModel.addColumn("Cpf");
+		tableModel.addColumn("N. Compras");
         
         
 
         for (Cliente cliente : clientes) {
             Contato contato = cliente.getContato();
             tableModel.addRow(new Object[]{
-            		cliente.getCpf(),
+            		cliente.getId(),
             		cliente.getNome(),
-                contato.getEmail(),
-                contato.getTelefone()
+                    contato.getEmail(),
+                    contato.getTelefone(),
+            		cliente.getNumeroCompras()
             });
         }
         
