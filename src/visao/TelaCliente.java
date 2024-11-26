@@ -187,6 +187,7 @@ public class TelaCliente extends JPanel {
 		tableModel = new DefaultTableModel();
 		tableModel.addColumn("Nome");
 		tableModel.addColumn("Email");
+		tableModel.addColumn("Número");
 		tableModel.addColumn("Cpf");
 		tableModel.addColumn("N. Compras");
 
@@ -201,15 +202,16 @@ public class TelaCliente extends JPanel {
 		Utils.configTabela(table, scrollPane);
 		
 		table.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				if (e.getClickCount() == 1) {
-					int selectedRow = table.getSelectedRow();
-					if (selectedRow != -1) {
-						int id = (int) tableModel.getValueAt(selectedRow, 0);
-
-					}
-				}
-			}
+		    @Override
+		    public void mouseClicked(MouseEvent e) {
+		        if (e.getClickCount() == 1) { // Verifica se é um clique simples
+		            int selectedRow = table.getSelectedRow(); // Obtém a linha selecionada
+		            if (selectedRow != -1 && tableModel.getRowCount() > 0) {
+		                String cpf = (String) tableModel.getValueAt(selectedRow, 3);
+		                System.out.println("CPF selecionado: " + cpf);
+		            }
+		        }
+		    }
 		});
 	}
 	

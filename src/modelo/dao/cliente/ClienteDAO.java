@@ -124,7 +124,7 @@ public class ClienteDAO extends GenericDAO{
 
 	public Cliente carregarDadosCliente(String cpf) {
 		Cliente cliente = null;
-		String sqlCliente = "SELECT nome, cpf, senha, email, telefone, numero_compras,id_contato " + "FROM cliente " //
+		String sqlCliente = "SELECT nome, cpf, email, telefone, numero_compras,id_contato " + "FROM cliente " //
 				+ "JOIN contato ON contato_id = id_contato " + "WHERE cpf = ?";
 
 		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement stmt = conn.prepareStatement(sqlCliente)) {
