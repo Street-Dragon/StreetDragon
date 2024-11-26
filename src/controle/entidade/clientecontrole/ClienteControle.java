@@ -26,13 +26,12 @@ public class ClienteControle {
 			System.out.println("TELA");
 			atualizarTabela();
 			adicionarListeners();
-			
 			System.out.println("TELA LISTENER");
 			System.out.println("Botão Cadastrar: " + cadastroCliente.getBtnCadastrar());
 			if (cadastroCliente.getBtnCadastrar() != null) {
-			    System.out.println("Botão encontrado e pronto para receber listener.");
+			    System.out.println("antes do listener");
 			} else {
-			    System.out.println("Erro: Botão não encontrado.");
+			    System.out.println("n achou");
 			}
 			
 			cadastroCliente.getBtnCadastrar().addActionListener(new ActionListener() {
@@ -54,7 +53,8 @@ public class ClienteControle {
 				
 			}
 		});
-			cadastroCliente.getBtnEditar().addActionListener(new ActionListener() {
+			/*
+			   cadastroCliente.getBtnEditar().addActionListener(new ActionListener() {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
@@ -62,6 +62,7 @@ public class ClienteControle {
 					atualizarTabela();
 				}
 			});
+			*/
 	}
 	
     private void adicionarListeners() {
@@ -82,7 +83,6 @@ public class ClienteControle {
         String cpf = cadastroCliente.getTxtCpf();
         String email = cadastroCliente.getTxtEmail();
         String telefone = cadastroCliente.getTxtTelefone();
-        String compras = cadastroCliente.getTxtNumeroCompras();
 
         if (nome.isBlank() || cpf.isBlank() || email.isBlank() || telefone.isBlank()) {
             JOptionPane.showMessageDialog(cadastroCliente, "Preencha todos os campos.", "Erro",
@@ -111,7 +111,6 @@ public class ClienteControle {
         Contato contato = new Contato();
         cliente.setNome(nome);
         cliente.setCpf(cpf);
-        cliente.setNumeroCompras(compras);
         contato.setEmail(email);
         contato.setTelefone(telefone);
         cliente.setContato(contato);
@@ -181,7 +180,6 @@ public class ClienteControle {
         String cpf = cadastroCliente.getTxtCpf();
         String email = cadastroCliente.getTxtEmail();
         String telefone = cadastroCliente.getTxtTelefone();
-        String compras = cadastroCliente.getTxtNumeroCompras();
         
         if (nome.isBlank() || cpf.isBlank() || email.isBlank() || telefone.isBlank()) {
             JOptionPane.showMessageDialog(cadastroCliente, "Preencha todos os campos.", "Erro",
@@ -192,7 +190,6 @@ public class ClienteControle {
         Cliente cliente = new Cliente();
         cliente.setNome(nome);
         cliente.setCpf(clienteAlteracao.getCpf());
-        cliente.setNumeroCompras(compras);
 
         Contato contato = new Contato();
         contato.setEmail(email);
@@ -219,7 +216,6 @@ public class ClienteControle {
     private void atualizarCampos(Cliente cliente) {
     	cadastroCliente.getTextFieldNome().setText(cliente.getNome());
     	cadastroCliente.getTextFieldCpf().setText(cliente.getCpf());
-    	cadastroCliente.getTextNumeroCompras().setText(cliente.getNumeroCompras());
     	cadastroCliente.getTextFieldEmail().setText(cliente.getContato().getEmail());
     	cadastroCliente.getTextFieldTelefone().setText(cliente.getContato().getTelefone());
     }

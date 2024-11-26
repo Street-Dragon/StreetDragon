@@ -12,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import controle.entidade.clientecontrole.ClienteControle;
 import controle.entidade.funcionariocontrole.FuncionarioControle;
 import controle.visao.principal.TelaPrincipalControle;
 import net.miginfocom.swing.MigLayout;
@@ -148,6 +149,9 @@ public class TelaPrincipal extends JFrame {
 		FuncionarioControle funcionarioControle = new FuncionarioControle();
 		funcionarioControle.setTelaPrincipal(this);
 		funcionarioControle.setTelaCadastroFuncionario(telaCadastroFuncionario);
+		
+		ClienteControle clienteControle = new ClienteControle();
+		clienteControle.setTelaCadastroCliente(telaCliente);
 
 		// Adiciona os painéis
 		mainPanel.add(telaVenda, "TelaVenda");

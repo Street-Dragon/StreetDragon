@@ -29,13 +29,12 @@ public class TelaCliente extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private JTextField txtNome;
-	private JTextField txtCompras;
 	private JTextField txtEmail;
 	private JTextField txtCpf;
 	private JTextField txtTelefone;
 	private JButton btnCadastrar;
 	private JButton btnDeletar;
-	private JButton btnEditar;
+	//private JButton btnEditar;
 	private JTable table;
 	private static DefaultTableModel tableModel;
 	
@@ -45,11 +44,11 @@ public class TelaCliente extends JPanel {
 	public void setTxtNome(JTextField txtNome) {
 		this.txtNome = txtNome;
 	}
-	public JTextField getTextNumeroCompras() {
-		return txtCompras;
+	public JTextField gettxtTelefone() {
+		return txtTelefone;
 	}
-	public void setTxtCompras(JTextField txtCompras) {
-		this.txtCompras = txtCompras;
+	public void settxtTelefone(JTextField txtTelefone) {
+		this.txtTelefone = txtTelefone;
 	}
 	public JTextField getTextFieldEmail() {
 		return txtEmail;
@@ -78,17 +77,18 @@ public class TelaCliente extends JPanel {
 		this.btnCadastrar = btnCadastrar;
 	}
 	public JButton getBtnDeletar() {
-		return btnCadastrar;
+		return btnDeletar;
 	}
 	public void setBtnDeletar(JButton btnDeletar) {
 		this.btnDeletar = btnDeletar;
 	}
+	/*
 	public JButton getBtnEditar() {
-		return btnCadastrar;
+		return btnEditar;
 	}
 	public void setBtnEditar(JButton btnEditar) {
 		this.btnEditar = btnEditar;
-	}
+	}*/
 	
 	public JTable getTable() {
 		return table;
@@ -109,9 +109,6 @@ public class TelaCliente extends JPanel {
 	public String getTxtTelefone() {
 		return txtTelefone.getText();
 	}
-	public String getTxtNumeroCompras() {
-		return txtCompras.getText();
-	}
 
 	public TelaCliente(TelaPrincipal telaPrincipal) {
 
@@ -119,7 +116,6 @@ public class TelaCliente extends JPanel {
 		setBackground(Cores.COR_ROSA_CLARO);
 		setBorder(new EmptyBorder(5, 5, 5, 5));
 
-		
 		Border borda = new LineBorder(Cores.COR_ROSA_CLARO, 1);
 		Utils.loadCustomFont();
 		setLayout(new MigLayout("", "[grow][grow][grow][grow]", "[::30%,grow][grow]"));
@@ -130,9 +126,9 @@ public class TelaCliente extends JPanel {
 		add(panel, "cell 0 0 3 1,grow");
 		panel.setLayout(new MigLayout("", "[grow][grow][grow][grow][grow][grow]", "[grow][grow]"));
 		
-				JLabel lblnome = new JLabel("Nome");
-				lblnome.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
-				panel.add(lblnome, "cell 0 0,alignx center,aligny center");
+		JLabel lblnome = new JLabel("Nome");
+		lblnome.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
+		panel.add(lblnome, "cell 0 0,alignx center,aligny center");
 
 		txtNome = new JTextField();
 		txtNome.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
@@ -148,18 +144,18 @@ public class TelaCliente extends JPanel {
 		panel.add(txtEmail, "cell 4 0,growx");
 		txtEmail.setColumns(10);
 		
-				JLabel lblNCompras = new JLabel("N. Compras");
-				lblNCompras.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
-				panel.add(lblNCompras, "cell 0 1,alignx left");
+		JLabel lblTelefone = new JLabel("Telefone");
+		lblTelefone.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
+		panel.add(lblTelefone, "cell 0 1,alignx left");
 
-		txtCompras = new JTextField();
-		txtCompras.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
-		txtCompras.setColumns(10);
-		panel.add(txtCompras, "cell 1 1,growx,aligny center");
+		txtTelefone = new JTextField();
+		txtTelefone.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
+		txtTelefone.setColumns(10);
+		panel.add(txtTelefone, "cell 1 1,growx,aligny center");
 		
-				JLabel lblcpf = new JLabel("Cpf");
-				lblcpf.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
-				panel.add(lblcpf, "cell 3 1,alignx center,aligny center");
+		JLabel lblcpf = new JLabel("Cpf");
+		lblcpf.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
+		panel.add(lblcpf, "cell 3 1,alignx center,aligny center");
 
 		txtCpf = new JTextField();
 		txtCpf.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
@@ -181,13 +177,10 @@ public class TelaCliente extends JPanel {
 		btnDeletar = new JButton("Excluir Funcionario");
 		btnDeletar.setForeground(new Color(255, 255, 255));
 		btnDeletar.setFont(new Font("Hanken Grotesk", Font.PLAIN, 25));	
-		
-		
+
 		btnDeletar.setBackground(new Color(255, 0, 0));
 		panel_1.add(btnDeletar, "cell 0 1,grow");
 
-		
-		
 		JScrollPane scrollPane = new JScrollPane();
 		add(scrollPane, "cell 0 1 4 1,grow");
 
@@ -204,7 +197,7 @@ public class TelaCliente extends JPanel {
 		        return false; 
 		    }
 		};
-		
+
 		Utils.configTabela(table, scrollPane);
 		
 		table.addMouseListener(new MouseAdapter() {
@@ -225,7 +218,6 @@ public class TelaCliente extends JPanel {
 		txtCpf.setText("");
 		txtEmail.setText("");
 		txtTelefone.setText("");
-		txtCompras.setText("");
 	}
 	
 }
