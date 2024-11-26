@@ -124,7 +124,7 @@ public class TelaCadastroProdutos extends JFrame {
 
 		cbCategoria = new JComboBox();
 		cbCategoria.setBackground(new Color(246, 233, 233));
-		cbCategoria.setModel(new DefaultComboBoxModel(new String[] {"", "Calsa", "Camisa", "Camiseta", "Moleton", "Boné", "Toca", "Tênis", "Acessórios", "Outro"}));
+		cbCategoria.setModel(new DefaultComboBoxModel(new String[] {"", "Calça", "Camisa", "Camiseta", "Moleton", "Boné", "Toca", "Tênis", "Acessórios", "Outro"}));
 		cbCategoria.setSelectedIndex(0);
 		contentPane.add(cbCategoria, "cell 1 3,growx");
 		cbCategoria.setFont(new Font("Dialog", Font.PLAIN, 15));
@@ -170,7 +170,7 @@ public class TelaCadastroProdutos extends JFrame {
 		cbTamanho = new JComboBox();
 		cbTamanho.setBackground(new Color(246, 233, 233));
 		cbTamanho.setModel(
-				new DefaultComboBoxModel(new String[] { "", "PP", "P", "M", "G", "GG", "XG", "XGG", "EG", "EGG" }));
+				new DefaultComboBoxModel(new String[] {"", "PP", "P", "M", "G", "GG", "XG", "XGG", "EG", "EGG"}));
 		cbTamanho.setSelectedIndex(0);
 		contentPane.add(cbTamanho, "cell 1 6,growx");
 		cbTamanho.setFont(new Font("Dialog", Font.PLAIN, 15));
@@ -241,17 +241,20 @@ public class TelaCadastroProdutos extends JFrame {
 		return textFieldFornecedor.getText();
 	}
 
+//	--------------------------
 	public String getCbMaterial() {
-		return String.valueOf(cbMaterial.getSelectedObjects());
+		return String.valueOf(cbMaterial.getSelectedItem());
 	}
 
 	public String getCbCategoria() {
-		return String.valueOf(cbCategoria.getSelectedObjects());
+		return String.valueOf(cbCategoria.getSelectedItem());
 	}
 
 	public String getCbTamnho() {
-		return String.valueOf(cbTamanho.getSelectedObjects());
+		return String.valueOf(cbTamanho.getSelectedItem());
 	}
+	
+//	-------------------------
 	public int setTextFieldId() {
 		return Integer.parseInt(textFieldId.getText());
 	}
@@ -270,7 +273,7 @@ public class TelaCadastroProdutos extends JFrame {
 	public JTextField setTextFieldFornecedor() {
 		return textFieldFornecedor;
 	}
-	public JComboBox setCbMaretial() {
+	public JComboBox setCbMaterial() {
 		return cbMaterial;
 	}
 	public JComboBox setCbCategoria() {
