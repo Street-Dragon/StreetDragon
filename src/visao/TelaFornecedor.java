@@ -315,7 +315,7 @@ public class TelaFornecedor extends JPanel {
     public void preencherCampos(Fornecedor fornecedor) {
     	textNome.setText(fornecedor.getNome());
     	txtCnpj.setText(fornecedor.getCnpj());
-    	txtCep.setText(fornecedor.getRua());
-    	txtRua.setText(String.valueOf(fornecedor.getCep()));
+    	txtRua.setText(fornecedor.getRua());
+    	txtCep.setText(String.valueOf(fornecedor.getCep()));
     }
 }
