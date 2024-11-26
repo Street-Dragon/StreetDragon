@@ -2,8 +2,10 @@ package controle.entidade.item;
 
 import java.awt.event.ActionEvent; 
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 import modelo.dao.item.ItemDAO;
 import modelo.dao.produto.ProdutoDAO;
@@ -52,7 +54,7 @@ public class ItemController {
 		int quantidade = Integer.parseInt(telaVenda.getTxtQuantidade());
         int idProduto = Integer.parseInt(telaVenda.getTxtCodigo());
 
-        // Verificar se o Produto existe no banco de dados pelo nome
+        // Verificar se o Produto existe no banco de dados
         Produto produto = produtoDAO.getId(idProduto);
 
         if (produto == null) {
@@ -81,6 +83,31 @@ public class ItemController {
         }
 	}
 	
+	  public void atualizarTabela() {
+	        List<Item> itens = itemDAO.listarItens(); // Recupera todos os itens do banco
+
+	        DefaultTableModel tableModel = new DefaultTableModel();
+	        tableModel.addColumn("Produto");
+	        tableModel.addColumn("ID Produto");
+	        tableModel.addColumn("Quantidade");
+	        tableModel.addColumn("Valor Total");
+
+	        // Adiciona os dados dos itens na tabela
+	        for (Item item : itens) {
+	            Produto produto = item.getProduto(); // Recupera o produto relacionado ao item
+	            double valorTotal = item.getQuantidade() * produto.getValor(); // Calcula o valor total
+
+	            tableModel.addRow(new Object[] {
+	                produto.getNomeProduto(),     // Nome do produto
+	                produto.getIdProduto(),       // ID do produto
+	                item.getQuantidade(),  // Quantidade do item
+	                valorTotal             // Valor total do item (quantidade * preço do produto)
+	            });
+	        }
+
+	        // Atualiza o modelo da tabela na tela com os itens
+	        telaVenda.getTable().setModel(tableModel); // Passa o modelo de tabela atualizado para a tela
+	    }
 
 	protected void excluirTudo() {
 		System.out.println("Exclui tudo");
