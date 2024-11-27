@@ -45,34 +45,29 @@ public class ClienteDAO extends GenericDAO {
 	}
 
 	public boolean editarCliente(Cliente cliente) {
-		String sqlCliente = "UPDATE cliente SET nome = ? WHERE cpf = ?";
-		String sqlContato = "UPDATE contato SET email = ?, telefone = ? WHERE id_contato = ?";
+	    String sqlCliente = "UPDATE cliente SET nome = ? WHERE cpf = ?";
+	    String sqlContato = "UPDATE contato SET email = ?, telefone = ? WHERE id_contato = ?";
 
-		try (Connection conn = ConexaoBD.getConexaoMySQL();
-				PreparedStatement stmtContato = conn.prepareStatement(sqlContato, Statement.RETURN_GENERATED_KEYS);
-				PreparedStatement stmtCliente = conn.prepareStatement(sqlCliente)) {
+	    try (Connection conn = ConexaoBD.getConexaoMySQL();
+	            PreparedStatement stmtContato = conn.prepareStatement(sqlContato);
+	            PreparedStatement stmtCliente = conn.prepareStatement(sqlCliente)) {
 
-			stmtCliente.setString(1, cliente.getNome());
-			stmtCliente.setString(2, cliente.getCpf());
-			stmtCliente.executeUpdate();
-			int rowsAffectedCliente = stmtCliente.executeUpdate();
+	        stmtCliente.setString(1, cliente.getNome());
+	        stmtCliente.setString(2, cliente.getCpf());
+	        int rowsAffectedCliente = stmtCliente.executeUpdate();
 
-			stmtContato.setString(1, cliente.getContato().getEmail());
-			stmtContato.setString(2, cliente.getContato().getTelefone());
-			stmtContato.setInt(3, cliente.getContato().getId());
-			stmtContato.executeUpdate();
-			int rowsAffectedContato = stmtContato.executeUpdate();
+	        stmtContato.setString(1, cliente.getContato().getEmail());
+	        stmtContato.setString(2, cliente.getContato().getTelefone());
+	        stmtContato.setInt(3, cliente.getContato().getId());
+	        int rowsAffectedContato = stmtContato.executeUpdate();
 
-			// Verifica se as atualizações foram bem-sucedidas
-			return rowsAffectedCliente > 0 || rowsAffectedContato > 0;
-
-		} catch (SQLException e) {
-
-			e.printStackTrace();
-			return false;
-		}
-
+	        return rowsAffectedCliente > 0 || rowsAffectedContato > 0;
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        return false;
+	    }
 	}
+
 
 	public boolean excluirCliente(String cpf) {
 		String sqlExcluir = "DELETE FROM cliente WHERE cpf = ?";

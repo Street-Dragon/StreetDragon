@@ -16,6 +16,7 @@ import modelo.entidade.contato.Contato;
 import modelo.entidade.pessoa.cliente.Cliente;
 import utils.Utils;
 import visao.TelaCliente;
+import visao.TelaMensagens;
 
 public class ClienteControle {
 
@@ -55,12 +56,6 @@ public class ClienteControle {
 
 			}
 		});
-		/*
-		 * cadastroCliente.getBtnEditar().addActionListener(new ActionListener() {
-		 * 
-		 * @Override public void actionPerformed(ActionEvent e) {
-		 * editarClienteDAO(clienteIdStr); atualizarTabela(); } });
-		 */
 	}
 
 	private void adicionarListeners() {
@@ -78,8 +73,6 @@ public class ClienteControle {
 				}
 			}
 		});
-		
-		
 
 		cadastroCliente.getTable().getSelectionModel()
 				.addListSelectionListener((ListSelectionListener) new ListSelectionListener() {
@@ -88,7 +81,6 @@ public class ClienteControle {
 						if (!e.getValueIsAdjusting()) {
 							// Se não houver nenhuma linha selecionada:
 							if (cadastroCliente.getTable().getSelectedRowCount() == 0) {
-
 								cadastroCliente.getBtnCadastrar().setText("Cadastrar");
 								cadastroCliente.getBtnCadastrar().setIcon(Utils.carregarIcone("Check.png", 30, 30));
 								selecionado = false;
@@ -190,10 +182,6 @@ public class ClienteControle {
 					JOptionPane.WARNING_MESSAGE);
 		}
 	}
-
-	
-	
-	
 	
 	private void editarClienteDAO(String clienteIdStr) {
 		Cliente clienteAlteracao = clienteDAO.carregarDadosCliente(clienteIdStr);
@@ -214,21 +202,19 @@ public class ClienteControle {
 		cliente.setCpf(clienteAlteracao.getCpf());
 
 		Contato contato = new Contato();
+		contato.setId(clienteAlteracao.getContato().getId());
 		contato.setEmail(email);
 		contato.setTelefone(telefone);
 		cliente.setContato(contato);
 
 		boolean resultado = clienteDAO.editarCliente(cliente);
 
-		if (resultado) {
-			JOptionPane.showMessageDialog(cadastroCliente, "Funcionário atualizado com sucesso!", "Sucesso",
-					JOptionPane.INFORMATION_MESSAGE);
-
-			atualizarTabela();
-		} else {
-			JOptionPane.showMessageDialog(cadastroCliente, "Erro ao atualizar funcionário.", "Erro",
-					JOptionPane.ERROR_MESSAGE);
-		}
+        if (resultado) {
+        	TelaMensagens TM = new TelaMensagens("Cliente atualizado com sucesso!", 0);
+            atualizarTabela();
+        } else {
+        	TelaMensagens TM = new TelaMensagens("Erro ao atualizar cliente.", 0);
+        }
 			atualizarTabela();
 	}
 
