@@ -73,11 +73,13 @@ public class ClienteControle {
 
 				int selectedRow = cadastroCliente.getTable().getSelectedRow();
 				if (selectedRow != -1) {
-					clienteIdStr = (String) cadastroCliente.getTable().getValueAt(selectedRow, 0);
+					clienteIdStr = (String) cadastroCliente.getTable().getValueAt(selectedRow, 3);
 					carregarDadosCliente(clienteIdStr);
 				}
 			}
 		});
+		
+		
 
 		cadastroCliente.getTable().getSelectionModel()
 				.addListSelectionListener((ListSelectionListener) new ListSelectionListener() {
@@ -165,7 +167,7 @@ public class ClienteControle {
 		int selectedRow = cadastroCliente.getTable().getSelectedRow();
 
 		if (selectedRow != -1) {
-			String cpfCliente = (String) cadastroCliente.getTable().getValueAt(selectedRow, 0);
+			String cpfCliente = (String) cadastroCliente.getTable().getValueAt(selectedRow, 3);
 
 			int resposta = JOptionPane.showConfirmDialog(cadastroCliente,
 					"Você tem certeza que deseja excluir o cliente com CPF: " + cpfCliente + "?", "Confirmar Exclusão",
@@ -189,6 +191,10 @@ public class ClienteControle {
 		}
 	}
 
+	
+	
+	
+	
 	private void editarClienteDAO(String clienteIdStr) {
 		Cliente clienteAlteracao = clienteDAO.carregarDadosCliente(clienteIdStr);
 
@@ -223,7 +229,7 @@ public class ClienteControle {
 			JOptionPane.showMessageDialog(cadastroCliente, "Erro ao atualizar funcionário.", "Erro",
 					JOptionPane.ERROR_MESSAGE);
 		}
-
+			atualizarTabela();
 	}
 
 	private void carregarDadosCliente(String clienteIdStr) {

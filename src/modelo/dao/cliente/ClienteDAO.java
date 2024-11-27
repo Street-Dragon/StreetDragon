@@ -14,8 +14,8 @@ import modelo.entidade.contato.Contato;
 import modelo.entidade.pessoa.cliente.Cliente;
 import modelo.entidade.pessoa.funcionario.Funcionario;
 
-public class ClienteDAO extends GenericDAO{
-	
+public class ClienteDAO extends GenericDAO {
+
 	public boolean cadastrarCliente(Cliente cliente) {
 		String sqlContato = "INSERT INTO contato (email, telefone) VALUES (?, ?)";
 		String sqlCliente = "INSERT INTO cliente (cpf,nome, contato_id) VALUES (?, ?, ?)";
@@ -43,9 +43,9 @@ public class ClienteDAO extends GenericDAO{
 			return false;
 		}
 	}
-	
+
 	public boolean editarCliente(Cliente cliente) {
-		String sqlCliente = "UPDATE cliente SET nome = ?, senha = ?, numero_compras = ? WHERE cpf = ?";
+		String sqlCliente = "UPDATE cliente SET nome = ? WHERE cpf = ?";
 		String sqlContato = "UPDATE contato SET email = ?, telefone = ? WHERE id_contato = ?";
 
 		try (Connection conn = ConexaoBD.getConexaoMySQL();
@@ -54,7 +54,6 @@ public class ClienteDAO extends GenericDAO{
 
 			stmtCliente.setString(1, cliente.getNome());
 			stmtCliente.setString(2, cliente.getCpf());
-			stmtCliente.setString(3, cliente.getNumeroCompras());
 			stmtCliente.executeUpdate();
 			int rowsAffectedCliente = stmtCliente.executeUpdate();
 
@@ -74,11 +73,12 @@ public class ClienteDAO extends GenericDAO{
 		}
 
 	}
-	
+
 	public boolean excluirCliente(String cpf) {
 		String sqlExcluir = "DELETE FROM cliente WHERE cpf = ?";
 
-		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement stmt = conn.prepareStatement(sqlExcluir)) {
+		try (Connection conn = ConexaoBD.getConexaoMySQL();
+				PreparedStatement stmt = conn.prepareStatement(sqlExcluir)) {
 			stmt.setString(1, cpf);
 			int rowsAffected = stmt.executeUpdate();
 			return rowsAffected > 0;
@@ -90,44 +90,43 @@ public class ClienteDAO extends GenericDAO{
 
 	public List<Cliente> listarClientes() {
 
-	    List<Cliente> clientes = new ArrayList<>();
-	    String sqlCliente = "SELECT cliente.*, contato.email, contato.telefone " + 
-	                        "FROM cliente " + 
-	                        "JOIN contato ON cliente.contato_id = contato.id_contato";
+		List<Cliente> clientes = new ArrayList<>();
+		String sqlCliente = "SELECT cliente.*, contato.email, contato.telefone " + "FROM cliente "
+				+ "JOIN contato ON cliente.contato_id = contato.id_contato";
 
-	    try (Connection conn = ConexaoBD.getConexaoMySQL();
-	         PreparedStatement stmt = conn.prepareStatement(sqlCliente);
-	         ResultSet rs = stmt.executeQuery()) {
+		try (Connection conn = ConexaoBD.getConexaoMySQL();
+				PreparedStatement stmt = conn.prepareStatement(sqlCliente);
+				ResultSet rs = stmt.executeQuery()) {
 
-	        while (rs.next()) {
-	            Cliente cliente = new Cliente();
-	            Contato contato = new Contato();
+			while (rs.next()) {
+				Cliente cliente = new Cliente();
+				Contato contato = new Contato();
 
-	            cliente.setCpf(rs.getString("cpf"));
-	            cliente.setNome(rs.getString("nome"));
-	            cliente.setNumeroCompras(rs.getString("numero_compras"));
+				cliente.setCpf(rs.getString("cpf"));
+				cliente.setNome(rs.getString("nome"));
+				cliente.setNumeroCompras(rs.getString("numero_compras"));
 
-	            contato.setId(rs.getInt("contato_id"));
-	            contato.setEmail(rs.getString("email"));
-	            contato.setTelefone(rs.getString("telefone"));
-	            cliente.setContato(contato);
+				contato.setId(rs.getInt("contato_id"));
+				contato.setEmail(rs.getString("email"));
+				contato.setTelefone(rs.getString("telefone"));
+				cliente.setContato(contato);
 
-	            clientes.add(cliente);
-	        }
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	    }
+				clientes.add(cliente);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
-	    return clientes;
+		return clientes;
 	}
-
 
 	public Cliente carregarDadosCliente(String cpf) {
 		Cliente cliente = null;
-		String sqlCliente = "SELECT nome, cpf, email, telefone, numero_compras,id_contato " + "FROM cliente " //
-				+ "JOIN contato ON contato_id = id_contato " + "WHERE cpf = ?";
+		String sqlCliente = "SELECT nome, cpf, email, telefone, numero_compras, id_contato " + "FROM cliente "
+				+ "JOIN contato ON cliente.contato_id = contato.id_contato " + "WHERE cpf = ?";
 
-		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement stmt = conn.prepareStatement(sqlCliente)) {
+		try (Connection conn = ConexaoBD.getConexaoMySQL();
+				PreparedStatement stmt = conn.prepareStatement(sqlCliente)) {
 
 			stmt.setString(1, cpf);
 			ResultSet rs = stmt.executeQuery();
@@ -136,7 +135,7 @@ public class ClienteDAO extends GenericDAO{
 				cliente = new Cliente();
 				cliente.setNome(rs.getString("nome"));
 				cliente.setCpf(rs.getString("cpf"));
-				cliente.setNumeroCompras(rs.getString("numeroCompras"));
+				cliente.setNumeroCompras(rs.getString("numero_compras"));
 
 				Contato contato = new Contato();
 				contato.setId(rs.getInt("id_contato"));
@@ -151,7 +150,7 @@ public class ClienteDAO extends GenericDAO{
 		}
 		return cliente;
 	}
-	
+
 	public boolean verificaCpfExistente(String cpf) {
 		String sqlClienteCPF = "SELECT cpf FROM cliente WHERE cpf = ?";
 		try (Connection conn = ConexaoBD.getConexaoMySQL();
@@ -165,11 +164,11 @@ public class ClienteDAO extends GenericDAO{
 			return false;
 		}
 	}
-	
+
 	public boolean verificaTelefoneExistente(String telefone) {
 		String sqlClienteContatoTelefone = "SELECT co.telefone FROM contato co "
 				+ "JOIN cliente cl ON co.id_contato = cl.contato_id " + "WHERE co.telefone = ?";
-		
+
 		try (Connection conn = ConexaoBD.getConexaoMySQL();
 				PreparedStatement stmtContato = conn.prepareStatement(sqlClienteContatoTelefone)) {
 
@@ -181,5 +180,5 @@ public class ClienteDAO extends GenericDAO{
 			return false;
 		}
 	}
-	
+
 }
