@@ -34,6 +34,15 @@ public class FornecedorDAO extends GenericDAO {
         }
     }
     
+    
+    public void excluirFornecedor(int id) throws SQLException {
+        String sql = "DELETE FROM fornecedor WHERE idFornecedores = ?";
+        delete(sql, id);
+    }
+    
+    
+    //validações:
+    
     public boolean cnpjExiste(String cnpj) throws SQLException {
     	String sql = "SELECT COUNT(*) FROM fornecedor WHERE cnpj = ?";
     	 try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/streetdragon", "root", "aluno");
@@ -49,24 +58,21 @@ public class FornecedorDAO extends GenericDAO {
     	}
     	
 
-    public void excluirFornecedor(int id) throws SQLException {
-        String sql = "DELETE FROM fornecedor WHERE idFornecedores = ?";
-        delete(sql, id);
-    }
+    
     
     public Fornecedor buscarFornecedorPorId(int id) throws SQLException {
-        // Definindo o SQL para buscar o fornecedor pelo ID
+        
         String sql = "SELECT * FROM fornecedor WHERE idFornecedores = ?";
         
         try (Connection conn = getConnection(); 
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
-            // Definindo o ID na query
+           
             stmt.setInt(1, id);
             
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    // Criando e retornando o objeto Fornecedor a partir do resultado da consulta
+                    
                     Fornecedor fornecedor = new Fornecedor();
                     fornecedor.setId(rs.getInt("idFornecedores"));
                     fornecedor.setNome(rs.getString("nome"));
@@ -76,13 +82,14 @@ public class FornecedorDAO extends GenericDAO {
                     
                     return fornecedor;
                 } else {
-                    // Retorna null caso o fornecedor não seja encontrado
+                    
                     return null;
                 }
             }
         }
     }
     
+    //15 de Novembto de 1888
     public List<Fornecedor> listarFornecedores() throws SQLException {
         List<Fornecedor> fornecedores = new ArrayList<>();
         String sql = "SELECT * FROM fornecedor";
