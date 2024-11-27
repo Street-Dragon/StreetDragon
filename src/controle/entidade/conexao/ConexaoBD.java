@@ -108,6 +108,7 @@ public class ConexaoBD {
          
             stmt.executeUpdate(sqlContato);
             stmt.executeUpdate(sqlEndereco); 
+            stmt.executeUpdate(sqlEndereco);
             stmt.executeUpdate(sqlFornecedor);
             stmt.executeUpdate(sqlProduto);
             stmt.executeUpdate(sqlPromocao);
