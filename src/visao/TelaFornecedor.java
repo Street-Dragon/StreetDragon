@@ -153,33 +153,34 @@ public class TelaFornecedor extends JPanel {
         btnCadastrarFor.setFont(hkGrotesk);
         btnCadastrarFor.setBackground(new Color(114, 148, 235));
         panelButtons.add(btnCadastrarFor, "cell 0 1,grow");
-        //btnCadastrarFor.setIcon(Utils.carregarIcone("Add.png",30,30));
+        btnCadastrarFor.setIcon(Utils.carregarIcone("Add.png",30,30));
         
 
         // Botão Editar
         btnEditarFor = new JButton("Editar Fornecedor");
         btnEditarFor.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e) {
                 int selectedRow = table.getSelectedRow();
+                
                 if (selectedRow != -1) {
+                  
+                    Fornecedor fornecedor = capturarDadosFornecedor();
+                    
                     try {
                         int id = (int) table.getValueAt(selectedRow, 0);
-
-                        Fornecedor fornecedor = capturarDadosFornecedor();
                         fornecedor.setId(id); 
 
-                        // Chamando o método do controller
                         fornecedorController.editarFornecedor(fornecedor);
-                        
+
                     } catch (NumberFormatException ex) {
-                        ex.printStackTrace();
-                        
+                        ex.printStackTrace(); 
                     }
-                } else  {
-                	
+                } else {
+                 
+                    new TelaMensagens("Selecione um fornecedor para editar.", 3);
                 }
             }
-        });
+        });        
         btnEditarFor.setForeground(new Color(255, 255, 255));
         btnEditarFor.setFont(new Font("Hanken Grotesk", Font.PLAIN, 20));
         btnEditarFor.setBackground(new Color(255, 149, 149));
@@ -208,7 +209,7 @@ public class TelaFornecedor extends JPanel {
         panelButtons.add(btnDeletarFor, "cell 0 5,grow");
         btnDeletarFor.setIcon(Utils.carregarIcone("lixo.png",30,30));
 
-        // Tabela de fornecedores
+        
         JScrollPane scrollPane = new JScrollPane();
         add(scrollPane, "cell 0 1 4 3,grow");
         
@@ -218,8 +219,7 @@ public class TelaFornecedor extends JPanel {
 		tableModel.addColumn("CNPJ");
 		tableModel.addColumn("Rua");
 
-		
-        
+	
 		table = new JTable(tableModel) {
 		    // não deixa as células serem editadas
 		    @Override
@@ -240,7 +240,7 @@ public class TelaFornecedor extends JPanel {
         
         table.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                if (evt.getClickCount() == 2) { // Verifica se foi um clique duplo
+                if (evt.getClickCount() == 1) { // Verifica se foi um clique duplo
                     int selectedRow = table.getSelectedRow();
                     if (selectedRow != -1) {
                         // Captura os dados da linha selecionada
@@ -265,7 +265,6 @@ public class TelaFornecedor extends JPanel {
         });
     
         
-        // Atualiza a tabela ao carregar a tela
         fornecedorController.atualizarTabela();
     }
 
@@ -284,18 +283,6 @@ public class TelaFornecedor extends JPanel {
     }
 
 
-    // Atualiza os dados da tabela
-    public void atualizarTabela(List<Fornecedor> fornecedores) {
-        DefaultTableModel model = (DefaultTableModel) table.getModel();
-        model.setRowCount(0); // Limpa os dados antigos
-        for (Fornecedor fornecedor : fornecedores) {
-            model.addRow(new Object[] { fornecedor.getId(), fornecedor.getNome(), fornecedor.getCnpj(), fornecedor.getRua(), fornecedor.getCep() });
-        }
-    }
-
-   
-
-
     // Limpa os campos da tela
     public void limparCampos() {
         textNome.setText("");
@@ -308,5 +295,9 @@ public class TelaFornecedor extends JPanel {
     	txtCnpj.setText(fornecedor.getCnpj());
     	txtRua.setText(fornecedor.getRua());
     	txtCep.setText(String.valueOf(fornecedor.getCep()));
+    }
+    
+    public JTable getTable() {
+        return table;
     }
 }
