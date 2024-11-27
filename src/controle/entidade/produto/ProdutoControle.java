@@ -1,4 +1,4 @@
-package controle.entidade.produto;
+	package controle.entidade.produto;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -160,7 +160,7 @@ public class ProdutoControle {
 			String tamanho = cadastroProduto.getCbTamnho(); 
 			String variacao = cadastroProduto.getTextFieldVariacao();
 			int id = cadastroProduto.setTextFieldId();
-//			int ForncedorId = 
+			int ForncedorId = Integer.parseInt(cadastroProduto.getTextFieldFornecedor()); 
 				
 			Produto produto = new Produto();
 			
@@ -169,6 +169,7 @@ public class ProdutoControle {
 			produto.setCategoria(categoria); produto.setValor(valor);
 			produto.setQuantEstoque(estoque); produto.setTamanho(tamanho);
 			produto.setVariacao(variacao);
+			produto.setFornecedorid(ForncedorId);
 			
 			
 			if (produtoDAO.editarProduto(produto)) {
@@ -240,10 +241,6 @@ public class ProdutoControle {
 		telaCadastroProduto.setTextFieldQntEstoque().setText(Integer.toString(produto.getQuantEstoque()));
 		telaCadastroProduto.setTextFieldVariacao().setText(produto.getVariacao());
 		telaCadastroProduto.setTextFieldFornecedor().setText(Integer.toString(produto.getFornecedorid()));
-		System.out.println(produto.getFornecedorid());
-		System.out.println(produto.getFornecedorid());
-		System.out.println(produto.getFornecedorid());
-		System.out.println(produto.getFornecedorid());
 		CheckBoxF(produto);
 	}
 	
@@ -298,10 +295,10 @@ public class ProdutoControle {
 			index1 = 7;
 		break;
 		case"Elastano":
-			index1 = 7;
+			index1 = 8;
 		break;
 		case"Outro":
-			index1 = 8;
+			index1 = 9;
 		break;
 		}
 		switch(Categoria) {
@@ -327,10 +324,10 @@ public class ProdutoControle {
 			index2 = 7;
 		break;
 		case"Acessórios":
-			index2 = 7;
+			index2 = 8;
 		break;
 		case"Outro":
-			index2 = 8;
+			index2 = 9;
 		break;
 		}
 		switch(Tamanho) {
@@ -356,10 +353,10 @@ public class ProdutoControle {
 			index3 = 7;
 		break;
 		case"EG":
-			index3 = 7;
+			index3 = 8;
 		break;
 		case"EGG":
-			index3 = 8;
+			index3 = 9;
 		break;
 		}
 		telaCadastroProduto.setCbMaterial().setSelectedIndex(index1);

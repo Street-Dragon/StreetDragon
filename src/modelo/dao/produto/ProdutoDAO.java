@@ -10,6 +10,7 @@ import java.util.List;
 
 import controle.entidade.conexao.ConexaoBD;
 import modelo.entidade.contato.Contato;
+import modelo.entidade.pessoa.fornecedor.Fornecedor;
 import modelo.entidade.pessoa.funcionario.Funcionario;
 import modelo.entidade.produto.Produto;
 import modelo.enumeracao.tamanho.Tamanho;
@@ -91,6 +92,7 @@ public class ProdutoDAO {
 				produto.setQuantEstoque(rs.getInt("estoque"));
 				produto.setTamanho(rs.getString("tamanho"));
 				produto.setVariacao(rs.getString("variacao"));
+				produto.setFornecedorid(rs.getInt("idFornecedores"));
 				
 				produtos.add(produto);
 			}
@@ -102,7 +104,7 @@ public class ProdutoDAO {
 	}
 
 	public boolean editarProduto(Produto produto) {
-		String sqlP = "UPDATE produto set nome = ?, material = ?, Categoria = ?, valor = ?, estoque = ?, tamanho = ?, variacao = ?, idFornecedores = ? where idProduto = ?;";
+		String sqlP = "UPDATE produto set nome = ?, material = ?, Categoria = ?, valor = ?, estoque = ?, tamanho = ?, variacao = ?, idFornecedores = ? where idProduto = ?";
 
 		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement stmtProduto = conn.prepareStatement(sqlP)) {
 			stmtProduto.setString(1, produto.getNomeProduto());
@@ -139,6 +141,7 @@ public class ProdutoDAO {
 	            produto.setValor(rs.getFloat("valor"));
 	            produto.setQuantEstoque(rs.getInt("estoque"));
 	            produto.setTamanho(rs.getString("tamanho"));
+	            produto.setFornecedorid(rs.getInt("idFornecedores"));
 	            return produto;
 	        } else {
 	            return null;
@@ -148,4 +151,59 @@ public class ProdutoDAO {
 	        return null;
 	    }
 	}
+	
+	// ----------------Funções para fazer a verifição do fornecedor------------------
+	
+	// ----------------Pega o nome do fornecedor com o id dele, isso é para mostrar o nome em vez do id pro usuario
+	public String getIdF(int id) {
+		
+		 String sqlSelect = "select nome from fornecedor where idFornecedores = ?";
+		    try (Connection conn = ConexaoBD.getConexaoMySQL();
+		         PreparedStatement stmt = conn.prepareStatement(sqlSelect)) {
+		        stmt.setInt(1, id);
+		        ResultSet rs = stmt.executeQuery();
+		        
+		        	String nome = (rs.getString("nome"));
+		            return nome;
+		            
+		    } catch (SQLException e) {
+		        System.out.println(e);
+		        return null;
+		    }
+	}
+	
+	// ----------------Verifica se um fornecedor com um certo nome existe
+	public boolean ForncedorEx(String nome) {
+		String sqlSelect = "select Count(*) from fornecedor where nome = ?";
+		try (Connection conn = ConexaoBD.getConexaoMySQL();
+		       PreparedStatement stmt = conn.prepareStatement(sqlSelect)) {
+			   stmt.setString(1, nome);
+		       ResultSet rs = stmt.executeQuery();
+		       int count = rs.getInt("Count(*)");
+		       if (!(count == 0)) 
+		       	return true;
+		       else
+		       	return false;
+		   } catch (SQLException e) {
+		       System.out.println(e);
+		       return false;
+		   }
+	}
+	
+	// ----------------pega o id do fornecedor com o nome dele
+	public int FornecedorID(String Nome) {
+		String sqlSelect = "select idFornecedores from fornecedor where nome = ?";
+	    try (Connection conn = ConexaoBD.getConexaoMySQL();
+	         PreparedStatement stmt = conn.prepareStatement(sqlSelect)) {
+	        stmt.setString(1, Nome);
+	        ResultSet rs = stmt.executeQuery();
+	        int id = (rs.getInt("idFornecedores"));
+	        return id;
+	        
+	    } catch (SQLException e) {
+	        System.out.println(e);
+	        return (Integer) null;
+	    }
+	}
+	
 }
