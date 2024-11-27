@@ -18,7 +18,7 @@ public class ProdutoDAO {
 
 	public boolean cadastrarProduto(Produto produto) {
 		String sqlFornecedor = "SELECT nome FROM Fornecedor WHERE nome = ?";
-		String sqlProduto = "INSERT INTO produto (nome, material, categoria, variacao, valor, estoque, tamanho) VALUES (?, ?, ?, ?, ?, ?, ?)";
+		String sqlProduto = "INSERT INTO produto (nome, material, categoria, variacao, valor, estoque, tamanho, idFornecedores) VALUES (?, ?, ?, ?, ?, ?, ?,?)";
 
 		try (Connection conn = ConexaoBD.getConexaoMySQL();
 
@@ -31,6 +31,8 @@ public class ProdutoDAO {
 			stmtProduto.setFloat(5, produto.getValor());
 			stmtProduto.setInt(6, produto.getQuantEstoque());
 			stmtProduto.setString(7, produto.getTamanho());
+			stmtProduto.setInt(8, produto.getFornecedorid());
+			System.out.println(produto.getFornecedorid());
 
 			stmtProduto.executeUpdate();
 			return true;
@@ -100,7 +102,7 @@ public class ProdutoDAO {
 	}
 
 	public boolean editarProduto(Produto produto) {
-		String sqlP = "UPDATE produto set nome = ?, material = ?, Categoria = ?, valor = ?, estoque = ?, tamanho = ?, variacao = ? where idProduto = ?;";
+		String sqlP = "UPDATE produto set nome = ?, material = ?, Categoria = ?, valor = ?, estoque = ?, tamanho = ?, variacao = ?, idFornecedores = ? where idProduto = ?;";
 
 		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement stmtProduto = conn.prepareStatement(sqlP)) {
 			stmtProduto.setString(1, produto.getNomeProduto());
@@ -110,7 +112,8 @@ public class ProdutoDAO {
 			stmtProduto.setInt(5, produto.getQuantEstoque());
 			stmtProduto.setString(6, produto.getTamanho());
 			stmtProduto.setString(7, produto.getVariacao());
-			stmtProduto.setInt(8, produto.getIdProduto());
+			stmtProduto.setInt(8, produto.getFornecedorid());
+			stmtProduto.setInt(9, produto.getIdProduto());
 			stmtProduto.executeUpdate();
 			return true;
 
