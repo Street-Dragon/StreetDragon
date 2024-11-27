@@ -198,25 +198,29 @@ public class ProdutoControle {
 			String categoria = cadastroProduto.getCbCategoria();
 			String tamanho = cadastroProduto.getCbTamnho(); 
 			String variacao = cadastroProduto.getTextFieldVariacao();
-			int FornecedorId = Integer.parseInt(cadastroProduto.getTextFieldFornecedor());
-			
-			Produto produto = new Produto();
-			
-			produto.setNomeProduto(nome); 
-			produto.setValor(valor);
-			produto.setQuantEstoque(estoque); 
-			produto.setVariacao(variacao);
-			produto.setMaterial(material);
-			produto.setCategoria(categoria);
-			produto.setTamanho(tamanho);
-			produto.setFornecedorid(FornecedorId);
-			if (produtoDAO.cadastrarProduto(produto)) {
-				TelaMensagens Tm = new TelaMensagens("Produto Cadastrado", 0);
-				atualizarTabela();
-				telaCadastroProduto.dispose();
+			String NomeFornecedor = cadastroProduto.getTextFieldFornecedor();
+			if (produtoDAO.ForncedorEx(NomeFornecedor)) {
+				int FornecedorId = produtoDAO.FornecedorID(NomeFornecedor);
+				Produto produto = new Produto();
+				
+				produto.setNomeProduto(nome); 
+				produto.setValor(valor);
+				produto.setQuantEstoque(estoque); 
+				produto.setVariacao(variacao);
+				produto.setMaterial(material);
+				produto.setCategoria(categoria);
+				produto.setTamanho(tamanho);
+				produto.setFornecedorid(FornecedorId);
+				if (produtoDAO.cadastrarProduto(produto)) {
+					TelaMensagens Tm = new TelaMensagens("Produto Cadastrado", 0);
+					atualizarTabela();
+					telaCadastroProduto.dispose();
+				} else {
+					TelaMensagens Tm = new TelaMensagens("Erro ao cadastrar produto", 1);
+				} 
 			} else {
-				TelaMensagens Tm = new TelaMensagens("Erro ao cadastrar produto", 1);
-			} 
+				TelaMensagens Tm = new TelaMensagens("Erro ao registrar o Fornecedor", 1);
+			}
 		} catch (Exception e) {
 			TelaMensagens Tm = new TelaMensagens("Valor ou Estoque preechidos incorreetamente", 3);
 		} 

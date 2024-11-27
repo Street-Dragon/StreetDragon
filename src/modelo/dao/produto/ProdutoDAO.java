@@ -179,7 +179,8 @@ public class ProdutoDAO {
 		       PreparedStatement stmt = conn.prepareStatement(sqlSelect)) {
 			   stmt.setString(1, nome);
 		       ResultSet rs = stmt.executeQuery();
-		       int count = rs.getInt("Count(*)");
+		       int count = rs.first();
+		       System.out.println(count);
 		       if (!(count == 0)) 
 		       	return true;
 		       else
