@@ -1,5 +1,6 @@
 package main;
 
+import controle.entidade.clientecontrole.ClienteControle;
 import controle.entidade.conexao.ConexaoBD;
 import controle.entidade.funcionariocontrole.FuncionarioControle;
 import controle.entidade.produto.ProdutoControle;
@@ -8,11 +9,12 @@ import visao.TelaPrincipal;
 import visao.TelaProdutos;
 import visao.TelaCadastroFuncionario;
 import visao.TelaCadastroProdutos;
+import visao.TelaCliente;
 
 public class Main {
-	public static void main(String[] args) {
-		// Cria o banco
-		ConexaoBD.criarBancoDeDadosETabela();
+    public static void main(String[] args) {
+        // Cria o banco
+        ConexaoBD.criarBancoDeDadosETabela();
 
 		// Inicialização as telas
 		TelaLogin telaLogin = new TelaLogin();
@@ -41,13 +43,13 @@ public class Main {
 		telaLogin.setVisible(true);
 			
         // Exibe a tela de cadastro
-        // no primeiro momento, apenas exibe sem logica
-        telaCadastroFuncionario.setVisible(true);
-        //Atualizando a tabela logo no começo pq ss
+        telaCadastroFuncionario.setVisible(true); // Exibe a tela de cadastro de funcionário
+        // Atualizando a tabela logo no começo
         funcionarioControle.atualizarTabela();
         		
         produtoControle.listarProdutosTable();
         
         
+        //clienteControle.atualizarTabela();
     }
 }

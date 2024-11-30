@@ -77,9 +77,13 @@ public class ConexaoBD {
                     + "FOREIGN KEY (contato_id) REFERENCES contato(id_contato) " + "ON DELETE NO ACTION "
                     + "ON UPDATE NO ACTION) ENGINE = InnoDB;";
 
-            String sqlCliente = "CREATE TABLE IF NOT EXISTS cliente (" + "cpf VARCHAR(14) NOT NULL PRIMARY KEY, "
-                    + "nome VARCHAR(100) NOT NULL, " + "contato_id INT NOT NULL, "
-                    + "FOREIGN KEY (contato_id) REFERENCES contato(id_contato) " + "ON DELETE NO ACTION "
+            String sqlCliente = "CREATE TABLE IF NOT EXISTS cliente ("
+                    + "cpf VARCHAR(14) NOT NULL PRIMARY KEY, "
+                    + "nome VARCHAR(100) NOT NULL, "
+                    + "contato_id INT NOT NULL, "
+                    + "numero_compras INT DEFAULT 0, "
+                    + "FOREIGN KEY (contato_id) REFERENCES contato(id_contato) "
+                    + "ON DELETE NO ACTION "
                     + "ON UPDATE NO ACTION) ENGINE = InnoDB;";
 
             String sqlItem = "CREATE TABLE IF NOT EXISTS item (" + "idItem INT NOT NULL AUTO_INCREMENT PRIMARY KEY, "
