@@ -12,7 +12,7 @@ public class Produto {
 	private String variacao;
 	private float valor;
 	private int quantEstoque;
-	private Fornecedor Fornecedor;
+	private int Fornecedorid;
 	private String tamanho;
 	
 	public int getIdProduto() {
@@ -57,17 +57,17 @@ public class Produto {
 	public void setQuantEstoque(int quantEstoque) {
 		this.quantEstoque = quantEstoque;
 	}
-	public Fornecedor getFornecedor() {
-		return Fornecedor;
-	}
-	public void setFornecedor(Fornecedor fornecedor) {
-		Fornecedor = fornecedor;
-	}
 	public String getTamanho() {
 		return tamanho;
 	}
 	public void setTamanho(String tamanho) {
 		this.tamanho = tamanho;
+	}
+	public int getFornecedorid() {
+		return Fornecedorid;
+	}
+	public void setFornecedorid(int fornecedorid) {
+		Fornecedorid = fornecedorid;
 	}
 
 }

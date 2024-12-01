@@ -29,25 +29,93 @@ public class TelaCliente extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private JTextField txtNome;
-	private JTextField txtCompras;
 	private JTextField txtEmail;
 	private JTextField txtCpf;
+	private JTextField txtTelefone;
 	private JButton btnCadastrar;
+	private JButton btnDeletar;
+	//private JButton btnEditar;
 	private JTable table;
 	private static DefaultTableModel tableModel;
-
-	/**
-	 * Create the panel.
-	 */
-	public TelaCliente(TelaPrincipal telaPrincipal) {
-
 	
+	public JTextField getTextFieldNome() {
+		return txtNome;
+	}
+	public void setTxtNome(JTextField txtNome) {
+		this.txtNome = txtNome;
+	}
+	public JTextField gettxtTelefone() {
+		return txtTelefone;
+	}
+	public void settxtTelefone(JTextField txtTelefone) {
+		this.txtTelefone = txtTelefone;
+	}
+	public JTextField getTextFieldEmail() {
+		return txtEmail;
+	}
+	public void setTxtEmail(JTextField txtEmail) {
+		this.txtEmail = txtEmail;
+	}
+	public JTextField getTextFieldCpf() {
+		return txtCpf;
+	}
+	public void setTxtCpf(JTextField txtCpf) {
+		this.txtCpf = txtCpf;
+	}
+	
+	public JTextField getTextFieldTelefone() {
+		return txtTelefone;
+	}
+	public void setTxtTelefone(JTextField txtTelefone) {
+		this.txtTelefone = txtTelefone;
+	}
+	
+	public JButton getBtnCadastrar() {
+		return btnCadastrar;
+	}
+	public void setBtnCadastrar(JButton btnCadastrar) {
+		this.btnCadastrar = btnCadastrar;
+	}
+	public JButton getBtnDeletar() {
+		return btnDeletar;
+	}
+	public void setBtnDeletar(JButton btnDeletar) {
+		this.btnDeletar = btnDeletar;
+	}
+	/*
+	public JButton getBtnEditar() {
+		return btnEditar;
+	}
+	public void setBtnEditar(JButton btnEditar) {
+		this.btnEditar = btnEditar;
+	}*/
+	
+	public JTable getTable() {
+		return table;
+	}
+	public DefaultTableModel getTableModel() {
+		return tableModel;
+	}
+	
+	public String getTxtNome() {
+		return txtNome.getText();
+	}
+	public String getTxtCpf() {
+		return txtCpf.getText();
+	}
+	public String getTxtEmail() {
+		return txtEmail.getText();
+	}
+	public String getTxtTelefone() {
+		return txtTelefone.getText();
+	}
+
+	public TelaCliente(TelaPrincipal telaPrincipal) {
 
 		setBounds(100, 100, 926, 526);
 		setBackground(Cores.COR_ROSA_CLARO);
 		setBorder(new EmptyBorder(5, 5, 5, 5));
 
-		
 		Border borda = new LineBorder(Cores.COR_ROSA_CLARO, 1);
 		Utils.loadCustomFont();
 		setLayout(new MigLayout("", "[grow][grow][grow][grow]", "[::30%,grow][grow]"));
@@ -58,9 +126,9 @@ public class TelaCliente extends JPanel {
 		add(panel, "cell 0 0 3 1,grow");
 		panel.setLayout(new MigLayout("", "[grow][grow][grow][grow][grow][grow]", "[grow][grow]"));
 		
-				JLabel lblnome = new JLabel("Nome");
-				lblnome.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
-				panel.add(lblnome, "cell 0 0,alignx center,aligny center");
+		JLabel lblnome = new JLabel("Nome");
+		lblnome.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
+		panel.add(lblnome, "cell 0 0,alignx center,aligny center");
 
 		txtNome = new JTextField();
 		txtNome.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
@@ -76,18 +144,18 @@ public class TelaCliente extends JPanel {
 		panel.add(txtEmail, "cell 4 0,growx");
 		txtEmail.setColumns(10);
 		
-				JLabel lblNCompras = new JLabel("N. Compras");
-				lblNCompras.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
-				panel.add(lblNCompras, "cell 0 1,alignx left");
+		JLabel lblTelefone = new JLabel("Telefone");
+		lblTelefone.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
+		panel.add(lblTelefone, "cell 0 1,alignx left");
 
-		txtCompras = new JTextField();
-		txtCompras.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
-		txtCompras.setColumns(10);
-		panel.add(txtCompras, "cell 1 1,growx,aligny center");
+		txtTelefone = new JTextField();
+		txtTelefone.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
+		txtTelefone.setColumns(10);
+		panel.add(txtTelefone, "cell 1 1,growx,aligny center");
 		
-				JLabel lblcpf = new JLabel("Cpf");
-				lblcpf.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
-				panel.add(lblcpf, "cell 3 1,alignx center,aligny center");
+		JLabel lblcpf = new JLabel("Cpf");
+		lblcpf.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
+		panel.add(lblcpf, "cell 3 1,alignx center,aligny center");
 
 		txtCpf = new JTextField();
 		txtCpf.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
@@ -106,24 +174,20 @@ public class TelaCliente extends JPanel {
 		btnCadastrar.setBackground(new Color(114, 148, 235));
 		panel_1.add(btnCadastrar, "cell 0 0,grow");
 		// Botão Ecluir
-		JButton btnDeletar = new JButton("Excluir Funcionario");
+		btnDeletar = new JButton("Excluir Funcionario");
 		btnDeletar.setForeground(new Color(255, 255, 255));
-		btnDeletar.setFont(new Font("Hanken Grotesk", Font.PLAIN, 25));
-		
-		
-		
-		
+		btnDeletar.setFont(new Font("Hanken Grotesk", Font.PLAIN, 25));	
+
 		btnDeletar.setBackground(new Color(255, 0, 0));
 		panel_1.add(btnDeletar, "cell 0 1,grow");
 
-		
-		
 		JScrollPane scrollPane = new JScrollPane();
 		add(scrollPane, "cell 0 1 4 1,grow");
 
 		tableModel = new DefaultTableModel();
 		tableModel.addColumn("Nome");
 		tableModel.addColumn("Email");
+		tableModel.addColumn("Número");
 		tableModel.addColumn("Cpf");
 		tableModel.addColumn("N. Compras");
 
@@ -134,19 +198,28 @@ public class TelaCliente extends JPanel {
 		        return false; 
 		    }
 		};
-		
+
 		Utils.configTabela(table, scrollPane);
 		
 		table.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				if (e.getClickCount() == 1) {
-					int selectedRow = table.getSelectedRow();
-					if (selectedRow != -1) {
-						int id = (int) tableModel.getValueAt(selectedRow, 0);
-
-					}
-				}
-			}
+		    @Override
+		    public void mouseClicked(MouseEvent e) {
+		        if (e.getClickCount() == 1) { // Verifica se é um clique simples
+		            int selectedRow = table.getSelectedRow(); // Obtém a linha selecionada
+		            if (selectedRow != -1 && tableModel.getRowCount() > 0) {
+		                String cpf = (String) tableModel.getValueAt(selectedRow, 3);
+		                System.out.println("CPF selecionado: " + cpf);
+		            }
+		        }
+		    }
 		});
 	}
+	
+	public void limparCampos() {
+		txtNome.setText("");
+		txtCpf.setText("");
+		txtEmail.setText("");
+		txtTelefone.setText("");
+	}
+	
 }

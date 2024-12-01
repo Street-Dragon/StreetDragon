@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -77,13 +76,11 @@ public class TelaFornecedor extends JPanel {
         hkGrotesk = Utils.loadCustomFont();
         setLayout(new MigLayout("", "[grow][grow][grow][grow]", "[grow][grow][grow][grow]"));
 
-        // Painel de entrada de dados
         JPanel panel = new JPanel();
         panel.setBackground(new Color(255, 255, 255));
         add(panel, "cell 0 0 3 1,grow");
         panel.setLayout(new MigLayout("", "[grow][grow][grow][grow][grow]", "[grow][grow]"));
 
-        // Componentes de entrada
         JLabel lblNome = new JLabel("Nome");
         lblNome.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
         panel.add(lblNome, "cell 0 0,alignx left,growy");
@@ -120,7 +117,6 @@ public class TelaFornecedor extends JPanel {
         txtCep.setColumns(10);
         panel.add(txtCep, "cell 4 1,growx");
 
-        // Painel para botões
         JPanel panelButtons = new JPanel();
         add(panelButtons, "cell 3 0,grow");
         panelButtons.setBackground(new Color(255, 255, 255));
@@ -154,36 +150,39 @@ public class TelaFornecedor extends JPanel {
         btnCadastrarFor.setFont(hkGrotesk);
         btnCadastrarFor.setBackground(new Color(114, 148, 235));
         panelButtons.add(btnCadastrarFor, "cell 0 1,grow");
+        btnCadastrarFor.setIcon(Utils.carregarIcone("Add.png",30,30));
+        
 
         // Botão Editar
         btnEditarFor = new JButton("Editar Fornecedor");
         btnEditarFor.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e) {
                 int selectedRow = table.getSelectedRow();
+                
                 if (selectedRow != -1) {
+                  
+                    Fornecedor fornecedor = capturarDadosFornecedor();
+                    
                     try {
-                        
                         int id = (int) table.getValueAt(selectedRow, 0);
-
-                        Fornecedor fornecedor = capturarDadosFornecedor();
                         fornecedor.setId(id); 
 
-                        // Chamando o método do controller
                         fornecedorController.editarFornecedor(fornecedor);
-                        
+
                     } catch (NumberFormatException ex) {
-                        ex.printStackTrace();
-                        
+                        ex.printStackTrace(); 
                     }
                 } else {
-                	
+                 
+                    new TelaMensagens("Selecione um fornecedor para editar.", 3);
                 }
             }
-        });
+        });        
         btnEditarFor.setForeground(new Color(255, 255, 255));
         btnEditarFor.setFont(new Font("Hanken Grotesk", Font.PLAIN, 20));
         btnEditarFor.setBackground(new Color(255, 149, 149));
         panelButtons.add(btnEditarFor, "cell 0 5,grow");
+        btnEditarFor.setIcon(Utils.carregarIcone("editar.png",30,30));
 
         // Botão Excluir
         btnDeletarFor = new JButton("Excluir");
@@ -193,25 +192,20 @@ public class TelaFornecedor extends JPanel {
                 if (selectedRow != -1) {
                    
                     int id = (int) table.getValueAt(selectedRow, 0);
-                 // Chamando o método do controller
                     fornecedorController.confirmarExclusaoFornecedor(id);
                 } else {
-                	
-                    exibirMensagem("Selecione um fornecedor para excluir.");
+                	TelaMensagens Tm = new TelaMensagens("Selecione um fornecedor para excluir.", 3);
                 }
             }
         });
+        
         btnDeletarFor.setForeground(new Color(255, 255, 255));
         btnDeletarFor.setFont(hkGrotesk);
         btnDeletarFor.setBackground(new Color(255, 0, 0));
         panelButtons.add(btnDeletarFor, "cell 0 5,grow");
+        btnDeletarFor.setIcon(Utils.carregarIcone("lixo.png",30,30));
 
-        btnDeletarFor.setForeground(new Color(255, 255, 255));
-        btnDeletarFor.setFont(hkGrotesk);
-        btnDeletarFor.setBackground(new Color(255, 0, 0));
-        panelButtons.add(btnDeletarFor, "cell 0 5,grow");
-
-        // Tabela de fornecedores
+        
         JScrollPane scrollPane = new JScrollPane();
         add(scrollPane, "cell 0 1 4 3,grow");
         
@@ -221,10 +215,9 @@ public class TelaFornecedor extends JPanel {
 		tableModel.addColumn("CNPJ");
 		tableModel.addColumn("Rua");
 
-		
-        
+	
 		table = new JTable(tableModel) {
-		    // não deixa as células serem editadas
+		    // não deixe o samba morrer
 		    @Override
 		    public boolean isCellEditable(int row, int column) {
 		        return false; 
@@ -243,17 +236,15 @@ public class TelaFornecedor extends JPanel {
         
         table.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                if (evt.getClickCount() == 2) { // Verifica se foi um clique duplo
+                if (evt.getClickCount() == 1) { 
                     int selectedRow = table.getSelectedRow();
                     if (selectedRow != -1) {
-                        // Captura os dados da linha selecionada
                         int id = (int) table.getValueAt(selectedRow, 0);
                         String nome = (String) table.getValueAt(selectedRow, 1);
                         String cnpj = (String) table.getValueAt(selectedRow, 2);
                         String rua = (String) table.getValueAt(selectedRow, 3);
                         int cep = (int) table.getValueAt(selectedRow, 4);
 
-                        // Preenche os campos com os dados selecionados
                         Fornecedor fornecedor = new Fornecedor();
                         fornecedor.setId(id);
                         fornecedor.setNome(nome);
@@ -268,11 +259,9 @@ public class TelaFornecedor extends JPanel {
         });
     
         
-        // Atualiza a tabela ao carregar a tela
         fornecedorController.atualizarTabela();
     }
 
-    // Captura os dados dos campos da tela
     public Fornecedor capturarDadosFornecedor() {
         Fornecedor fornecedor = new Fornecedor();
         fornecedor.setNome(textNome.getText());
@@ -280,32 +269,14 @@ public class TelaFornecedor extends JPanel {
         try {
             fornecedor.setCep(Integer.parseInt(txtCep.getText()));
         } catch (NumberFormatException e) {
-            fornecedor.setCep(0); // Definir um valor padrão caso o CEP não seja válido
+            fornecedor.setCep(0); 
         }
         fornecedor.setRua(txtRua.getText());
         return fornecedor;
     }
 
 
-    // Atualiza os dados da tabela
-    public void atualizarTabela(List<Fornecedor> fornecedores) {
-        DefaultTableModel model = (DefaultTableModel) table.getModel();
-        model.setRowCount(0); // Limpa os dados antigos
-        for (Fornecedor fornecedor : fornecedores) {
-            model.addRow(new Object[] { fornecedor.getId(), fornecedor.getNome(), fornecedor.getCnpj(), fornecedor.getRua(), fornecedor.getCep() });
-        }
-    }
 
-    // Exibe uma mensagem para o usuário
-    public void exibirMensagem(String mensagem) {
-        JOptionPane.showMessageDialog(this, mensagem);
-    }
-    public JTable getTable() {
-        return table;
-    }
-
-
-    // Limpa os campos da tela
     public void limparCampos() {
         textNome.setText("");
         txtCnpj.setText("");
@@ -317,5 +288,9 @@ public class TelaFornecedor extends JPanel {
     	txtCnpj.setText(fornecedor.getCnpj());
     	txtRua.setText(fornecedor.getRua());
     	txtCep.setText(String.valueOf(fornecedor.getCep()));
+    }
+    
+    public JTable getTable() {
+        return table;
     }
 }

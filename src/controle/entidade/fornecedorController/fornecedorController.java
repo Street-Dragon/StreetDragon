@@ -2,15 +2,11 @@ package controle.entidade.fornecedorController;
 
 import modelo.dao.fornecedor.FornecedorDAO;
 import modelo.entidade.pessoa.fornecedor.Fornecedor;
-import modelo.entidade.pessoa.funcionario.Funcionario;
 import visao.TelaFornecedor;
-
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import visao.TelaMensagens;
 import java.sql.SQLException;
 import java.util.List;
-
-import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 public class fornecedorController {
 
@@ -22,138 +18,133 @@ public class fornecedorController {
         this.fornecedorDAO = new FornecedorDAO();
     }
 
-    // Método para cadastrar fornecedor
+    public void atualizarTabela() {
+        try {
+            List<Fornecedor> fornecedores = fornecedorDAO.listarFornecedores();
+            
+            DefaultTableModel model = (DefaultTableModel) telaFornecedor.getTable().getModel();
+            model.setRowCount(0); 
+            for (Fornecedor fornecedor : fornecedores) {
+                model.addRow(new Object[] { fornecedor.getId(), fornecedor.getNome(), fornecedor.getCnpj(), fornecedor.getRua(), fornecedor.getCep() });
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //>:C
+
+    private void preencherCampos(Fornecedor fornecedor) {
+        telaFornecedor.getTextNome().setText(fornecedor.getNome());
+        telaFornecedor.getTxtCnpj().setText(fornecedor.getCnpj());
+        telaFornecedor.getTxtRua().setText(fornecedor.getRua());
+        telaFornecedor.getTxtCep().setText(String.valueOf(fornecedor.getCep()));
+    }
+    
+    
+
+
     public void cadastrarFornecedor(Fornecedor fornecedor) {
         if (validarCampos(fornecedor)) {
             try {
-                // Verifica se o CNPJ já existe para cadastro
+                
                 if (fornecedorDAO.cnpjExiste(fornecedor.getCnpj())) {
-                    telaFornecedor.exibirMensagem("Já existe um fornecedor cadastrado com esse CNPJ.");
+                    TelaMensagens Tm = new TelaMensagens("Já existe um fornecedor cadastrado com esse CNPJ.", 3);
                     telaFornecedor.limparCampos();
-                    return;  // Se o CNPJ já existir, não continua o cadastro
+                    return;
                 }
 
-                // Caso o CNPJ não exista, continua o processo de cadastro
+                
                 fornecedorDAO.cadastrarFornecedor(fornecedor);
-                atualizarTabela();
-                telaFornecedor.limparCampos();
-                telaFornecedor.exibirMensagem("Fornecedor cadastrado com sucesso!");
+                atualizarTabela();  
 
+         
+                telaFornecedor.limparCampos();
+                TelaMensagens Tm = new TelaMensagens("Fornecedor Cadastrado com sucesso.", 0);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         } else {
-            telaFornecedor.exibirMensagem("Alguns campos não foram preenchidos de forma correta ou não foram preenchidos.");
+            TelaMensagens Tm = new TelaMensagens("Alguns campos não foram preenchidos corretamente.", 3);
         }
     }
 
-
-    
     
     public void confirmarExclusaoFornecedor(int id) {
-        // Exibe o JOptionPane de confirmação
-        int confirm = JOptionPane.showConfirmDialog(
-            null,  // Componente pai (null para centralizar na tela)
-            "Tem certeza de que deseja excluir este fornecedor?", 
-            "Confirmar Exclusão", 
-            JOptionPane.YES_NO_OPTION,  // Opções "Sim" e "Não"
-            JOptionPane.WARNING_MESSAGE  // Ícone de alerta
-        );
-
-        // Se o usuário clicar em "Sim"
-        if (confirm == JOptionPane.YES_OPTION) {
-            excluirFornecedor(id); // Chama o método para excluir
+        TelaMensagens Tm = new TelaMensagens("Tem certeza que deseja excluir este fornecedor?");
+        if (Tm.getResposta()) {
+            excluirFornecedor(id); 
         }
     }
 
-
- // Método para editar fornecedor
+    
     public void editarFornecedor(Fornecedor fornecedor) {
         if (validarCampos(fornecedor)) {
             try {
-                // Verifica se o CNPJ já existe (exceto para o próprio fornecedor sendo editado)
-                if (fornecedorDAO.cnpjExiste(fornecedor.getCnpj())) {
-                    telaFornecedor.exibirMensagem("Já existe um fornecedor cadastrado com esse CNPJ.");
-                    return;  // Se o CNPJ já existir, não continua o processo de edição
+                
+                boolean cnpjAlterado = !fornecedor.getCnpj().equals(fornecedorDAO.buscarFornecedorPorId(fornecedor.getId()).getCnpj());
+                
+                if (cnpjAlterado && fornecedorDAO.cnpjExiste(fornecedor.getCnpj())) {
+                    TelaMensagens Tm = new TelaMensagens("Já existe um fornecedor cadastrado com esse CNPJ.", 3);
+                    return;
                 }
 
-                // Atualizando o fornecedor no banco de dados
+                
                 fornecedorDAO.atualizarFornecedor(fornecedor);
 
-                // Atualizando a tabela na tela
+                
                 atualizarTabela();
 
-                // Limpando os campos da interface
+                
                 telaFornecedor.limparCampos();
 
-                // Mensagem de sucesso
-                telaFornecedor.exibirMensagem("Fornecedor atualizado com sucesso!");
+                
+                TelaMensagens Tm = new TelaMensagens("Fornecedor atualizado com sucesso.", 0);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         } else {
-            telaFornecedor.exibirMensagem("Alguns campos não foram preenchidos de forma correta ou não foram preenchidos.");
+            TelaMensagens Tm = new TelaMensagens("Alguns campos não foram preenchidos corretamente.", 3);
         }
     }
 
-
     
-  
-    // Método para excluir fornecedor
     public void excluirFornecedor(int id) {
         if (id <= 0) {
-            telaFornecedor.exibirMensagem("Selecione um fornecedor para excluir.");
+            TelaMensagens Tm = new TelaMensagens("Selecione um fornecedor para excluir", 3);
             return;
         }
         try {
             fornecedorDAO.excluirFornecedor(id);
+            
+            
             atualizarTabela();
             telaFornecedor.limparCampos();
-            
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    
-    
 
-    // Método para atualizar a tabela na tela
-    public void atualizarTabela() {
-        try {
-            List<Fornecedor> fornecedores = fornecedorDAO.listarFornecedores();
-            telaFornecedor.atualizarTabela(fornecedores);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Erro ao atualizar tabela");
-        }
-    }
-
-    // Método para validar aqui
+    
     private boolean validarCampos(Fornecedor fornecedor) {
-       
-    	
-    	 if (fornecedor.getCep() == 0) { 
-    	        return false;  
-    	    }
-    	
-    	if (fornecedor.getRua() == null || fornecedor.getRua().trim().isEmpty() ) {
-    		return false;
-    	}
-    	
-        if (fornecedor.getNome() == null || fornecedor.getNome().trim().isEmpty()) {
-            return false;  
-        }
-        if (!fornecedor.getCnpj().matches("[0-9/]+")) {
-           
+        if (fornecedor.getCep() == 0) {
             return false;
         }
-       
-    
-     
+
+        if (fornecedor.getRua() == null || fornecedor.getRua().trim().isEmpty()) {
+            return false;
+        }
+
+        if (fornecedor.getNome() == null || fornecedor.getNome().trim().isEmpty()) {
+            return false;
+        }
+
+        if (!fornecedor.getCnpj().matches("[0-9/]+")) {
+            return false;
+        }
 
         return true;
     }
     
-   
-        
 }

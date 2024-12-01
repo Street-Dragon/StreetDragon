@@ -12,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import controle.entidade.clientecontrole.ClienteControle;
 import controle.entidade.funcionariocontrole.FuncionarioControle;
 import controle.entidade.item.ItemController;
 import controle.entidade.produto.ProdutoControle;
@@ -154,6 +155,9 @@ public class TelaPrincipal extends JFrame {
 		
 		
 		telaPrincipalControle.setTelaVenda(telaVenda);
+		
+		ClienteControle clienteControle = new ClienteControle();
+		clienteControle.setTelaCadastroCliente(telaCliente);
 
 		
 		ProdutoControle produtoControle = new ProdutoControle();
@@ -164,14 +168,13 @@ public class TelaPrincipal extends JFrame {
 		TelaCadastroProdutos telaCadastroProdutos = new TelaCadastroProdutos();
 		produtoControle.setTelaCadastrarProduto(telaCadastroProdutos);
 		
+
 		TelaDeletarProduto telaDeletarProduto = new TelaDeletarProduto();
 		
 		
 		ItemController itemControle = new ItemController();
 		itemControle.setTelaVenda(telaVenda);
-		
-		
-		
+	
 		// Adiciona os painéis
 		mainPanel.add(telaVenda, "TelaVenda");
 		mainPanel.add(telaHistoricoVenda, "TelaHistoricoVenda");

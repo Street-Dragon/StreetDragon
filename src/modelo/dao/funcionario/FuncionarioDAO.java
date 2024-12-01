@@ -223,39 +223,32 @@ public class FuncionarioDAO {
 	}
 
 	public boolean editarFuncionario(Funcionario f) {
-		String sqlFuncionario = "UPDATE funcionario SET nome = ?, senha = ?, adm = ? WHERE cpf = ?";
-		String sqlContato = "UPDATE contato SET email = ?, telefone = ? WHERE id_contato = ?";
+	    String sqlFuncionario = "UPDATE funcionario SET nome = ?, senha = ?, adm = ? WHERE cpf = ?";
+	    String sqlContato = "UPDATE contato SET email = ?, telefone = ? WHERE id_contato = ?";
 
-		try (Connection conn = ConexaoBD.getConexaoMySQL();
-				PreparedStatement stmtContato = conn.prepareStatement(sqlContato, Statement.RETURN_GENERATED_KEYS);
-				PreparedStatement stmtFuncionario = conn.prepareStatement(sqlFuncionario)) {
+	    try (Connection conn = ConexaoBD.getConexaoMySQL();
+	         PreparedStatement stmtContato = conn.prepareStatement(sqlContato);
+	         PreparedStatement stmtFuncionario = conn.prepareStatement(sqlFuncionario)) {
 
-			stmtFuncionario.setString(1, f.getNome());
-			stmtFuncionario.setString(2, f.getSenhaFuncionario());
-			stmtFuncionario.setBoolean(3, f.isAdm());
-			stmtFuncionario.setString(4, f.getCpf());
-			stmtFuncionario.executeUpdate();
-			int rowsAffectedFuncionario = stmtFuncionario.executeUpdate();
+	        stmtFuncionario.setString(1, f.getNome());
+	        stmtFuncionario.setString(2, f.getSenhaFuncionario());
+	        stmtFuncionario.setBoolean(3, f.isAdm());
+	        stmtFuncionario.setString(4, f.getCpf());
+	        int rowsAffectedFuncionario = stmtFuncionario.executeUpdate();
 
-			stmtContato.setString(1, f.getContato().getEmail());
-			stmtContato.setString(2, f.getContato().getTelefone());
-			stmtContato.setInt(3, f.getContato().getId());
-			stmtContato.executeUpdate();
-			int rowsAffectedContato = stmtContato.executeUpdate();
+	        stmtContato.setString(1, f.getContato().getEmail());
+	        stmtContato.setString(2, f.getContato().getTelefone());
+	        stmtContato.setInt(3, f.getContato().getId());
+	        int rowsAffectedContato = stmtContato.executeUpdate();
 
-			// Verifica se as atualizações foram bem-sucedidas
-			return rowsAffectedFuncionario > 0 || rowsAffectedContato > 0;
+	        // Verifica se qualquer uma das atualizações foi bem-sucedida
+	        return rowsAffectedFuncionario > 0 || rowsAffectedContato > 0;
 
-		} catch (SQLException e) {
-
-			e.printStackTrace();
-			return false;
-		}
-
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        return false;
+	    }
 	}
 
-	public void deletarFuncionario(int id) {
-		String delFuncionario = "DELETE * FROM funcionario WHERE cpf = ?";
-	}
 
 }

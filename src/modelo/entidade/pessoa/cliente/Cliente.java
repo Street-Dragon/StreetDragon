@@ -3,14 +3,14 @@ package modelo.entidade.pessoa.cliente;
 import modelo.entidade.pessoa.Pessoa;
 
 public  class Cliente extends Pessoa {
-	private String cpf;
+	private String numeroCompras;
 
-	public String getCpf() {
-		return cpf;
+	public String getNumeroCompras() {
+		return numeroCompras;
 	}
 
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
+	public void setNumeroCompras(String numeroCompras) {
+		this.numeroCompras = numeroCompras;
 	}
 
 }

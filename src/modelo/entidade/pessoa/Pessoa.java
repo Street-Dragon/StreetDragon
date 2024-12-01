@@ -7,6 +7,7 @@ public abstract class Pessoa {
 	private int id;
 	private String nome;
 	private Contato contato;
+	private String cpf;
 	
     public Pessoa() {
         this.contato = new Contato();
@@ -29,6 +30,12 @@ public abstract class Pessoa {
 	}
 	public void setContato(Contato contato) {
 		this.contato = contato;
+	}
+	public String getCpf() {
+		return cpf;
+	}
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
 	}
 	
 	

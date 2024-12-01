@@ -217,8 +217,7 @@ public class FuncionarioControle {
         	TelaMensagens TM2 = new TelaMensagens("Selecione um funcionário para excluir.", 3);
         }
     }
-    
-   
+  
     public void atualizarTabela() {
             List<Funcionario> funcionarios = funcionarioDAO.listarFuncionarios();
            
