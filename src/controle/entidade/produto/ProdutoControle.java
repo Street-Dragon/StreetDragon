@@ -160,25 +160,26 @@ public class ProdutoControle {
 			String tamanho = cadastroProduto.getCbTamnho(); 
 			String variacao = cadastroProduto.getTextFieldVariacao();
 			int id = cadastroProduto.setTextFieldId();
-			int ForncedorId = Integer.parseInt(cadastroProduto.getTextFieldFornecedor()); 
+			if (produtoDAO.ForncedorEx(cadastroProduto.getTextFieldFornecedor())) {
+				Produto produto = new Produto();
 				
-			Produto produto = new Produto();
+				produto.setIdProduto(id);
+				produto.setNomeProduto(nome); produto.setMaterial(material);
+				produto.setCategoria(categoria); produto.setValor(valor);
+				produto.setQuantEstoque(estoque); produto.setTamanho(tamanho);
+				produto.setVariacao(variacao);
+				produto.setFornecedorid(produtoDAO.FornecedorID(cadastroProduto.getTextFieldFornecedor()));
+				
+				
+				if (produtoDAO.editarProduto(produto)) {
+					TelaMensagens Tm = new TelaMensagens("Produto Editado com Sucesso!", 0);
+					telaCadastroProduto.dispose();
+					atualizarTabela();
+				} else {
+					TelaMensagens Tm = new TelaMensagens("Erro ao editar produto", 1);
+				} 
+			}
 			
-			produto.setIdProduto(id);
-			produto.setNomeProduto(nome); produto.setMaterial(material);
-			produto.setCategoria(categoria); produto.setValor(valor);
-			produto.setQuantEstoque(estoque); produto.setTamanho(tamanho);
-			produto.setVariacao(variacao);
-			produto.setFornecedorid(ForncedorId);
-			
-			
-			if (produtoDAO.editarProduto(produto)) {
-				TelaMensagens Tm = new TelaMensagens("Produto Editado com Sucesso!", 0);
-				telaCadastroProduto.dispose();
-				atualizarTabela();
-			} else {
-				TelaMensagens Tm = new TelaMensagens("Erro ao editar produto", 1);
-			} 
 		} catch (Exception e) {
 			TelaMensagens Tm = new TelaMensagens("Valor ou Estoque preechidos incorretamente", 2);
 		} 
@@ -244,7 +245,7 @@ public class ProdutoControle {
 		telaCadastroProduto.setTextFieldValor().setText(Float.toString(produto.getValor()));
 		telaCadastroProduto.setTextFieldQntEstoque().setText(Integer.toString(produto.getQuantEstoque()));
 		telaCadastroProduto.setTextFieldVariacao().setText(produto.getVariacao());
-		telaCadastroProduto.setTextFieldFornecedor().setText(Integer.toString(produto.getFornecedorid()));
+		telaCadastroProduto.setTextFieldFornecedor().setText(produtoDAO.getIdF(produto.getFornecedorid()));
 		CheckBoxF(produto);
 	}
 	

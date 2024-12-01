@@ -10,7 +10,7 @@ import java.sql.Statement;
 public class ConexaoBD {
     private static final String DB_URL = "jdbc:mysql://localhost/";
     private static final String USERNAME = "root";
-    private static final String PASSWORD = "aluno";
+    private static final String PASSWORD = "dick";
 
     public static Connection getConexaoMySQL() {
         Connection connection = null;

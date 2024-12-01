@@ -65,10 +65,12 @@ public class ProdutoDAO {
 
 		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 			ResultSet rs = stmt.executeQuery();
-			rs.next();
-			int id = rs.getInt(1) + 1;
-			;
-			return id;
+			if (rs.next()) {
+				int id = rs.getInt(1) + 1;
+				return id;
+			} else {
+				return 1;
+			}
 		} catch (SQLException e) {
 			System.out.println(e);
 			return 0;
@@ -163,9 +165,12 @@ public class ProdutoDAO {
 		        stmt.setInt(1, id);
 		        ResultSet rs = stmt.executeQuery();
 		        
+		        if (rs.next()) {
 		        	String nome = (rs.getString("nome"));
-		            return nome;
-		            
+			        return nome;
+	            } else
+	            	return null;
+		        
 		    } catch (SQLException e) {
 		        System.out.println(e);
 		        return null;
@@ -174,21 +179,22 @@ public class ProdutoDAO {
 	
 	// ----------------Verifica se um fornecedor com um certo nome existe
 	public boolean ForncedorEx(String nome) {
-		String sqlSelect = "select Count(*) from fornecedor where nome = ?";
-		try (Connection conn = ConexaoBD.getConexaoMySQL();
-		       PreparedStatement stmt = conn.prepareStatement(sqlSelect)) {
-			   stmt.setString(1, nome);
-		       ResultSet rs = stmt.executeQuery();
-		       int count = rs.first();
-		       System.out.println(count);
-		       if (!(count == 0)) 
-		       	return true;
-		       else
-		       	return false;
-		   } catch (SQLException e) {
-		       System.out.println(e);
-		       return false;
-		   }
+	    String sqlSelect = "select Count(*) as total from fornecedor where nome = ?";
+	    try (Connection conn = ConexaoBD.getConexaoMySQL();
+	         PreparedStatement stmt = conn.prepareStatement(sqlSelect)) {
+	    	
+	        stmt.setString(1, nome);
+	        try (ResultSet rs = stmt.executeQuery()) {
+	            if (rs.next()) {
+	                int count = rs.getInt("total");
+	                return count > 0; 
+	            }
+	        }
+	    } catch (SQLException e) {
+	    	 System.out.println("check4");
+	        System.out.println(e);
+	    }
+	    return false;
 	}
 	
 	// ----------------pega o id do fornecedor com o nome dele
@@ -198,12 +204,14 @@ public class ProdutoDAO {
 	         PreparedStatement stmt = conn.prepareStatement(sqlSelect)) {
 	        stmt.setString(1, Nome);
 	        ResultSet rs = stmt.executeQuery();
-	        int id = (rs.getInt("idFornecedores"));
-	        return id;
-	        
+	        if (rs.next()) {
+	        	int id = (rs.getInt("idFornecedores"));
+                return id;
+            } else
+            	return 0;
 	    } catch (SQLException e) {
 	        System.out.println(e);
-	        return (Integer) null;
+	        return 0;
 	    }
 	}
 	
