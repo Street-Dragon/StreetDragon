@@ -46,7 +46,7 @@ public class Main {
         //Atualizando a tabela logo no começo pq ss
         funcionarioControle.atualizarTabela();
         		
-        produtoControle.listarProdutosTable();
+        produtoControle.atualizarTabela();
         
         
     }

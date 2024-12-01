@@ -76,6 +76,14 @@ public class ProdutoControle {
 
 			}
 		});
+		
+		telaProdutos.getBtnPesquisar().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				atualizarTabela();
+			}
+		});
 
 	}
 
@@ -108,22 +116,7 @@ public class ProdutoControle {
 			fillEdit(produto); 
 		}
 	}
-
-	public void atualizarTabela() {
-		List<Produto> produtos = produtoDAO.listarProdutos();
-		DefaultTableModel tableModel = (DefaultTableModel) telaProdutos.getTable().getModel();
-		tableModel.setRowCount(0);
-
-		for (Produto produto : produtos) {
-			tableModel.addRow(new Object[] { 
-					produto.getIdProduto(), 
-					produto.getNomeProduto(),
-					produto.getValor(), 
-					produto.getQuantEstoque(), 
-					});
-		}
-	}
-
+	
 	public Produto getProdutoById(int id) {
 		Produto produto = produtoDAO.getId(id);
 		if (produto == null) {
@@ -131,19 +124,35 @@ public class ProdutoControle {
 		}
 		return produto;
 	}
-	public void listarProdutosTable() { 
-		List<Produto> produtos = produtoDAO.listarProdutos();
-		DefaultTableModel tableModel = (DefaultTableModel) telaProdutos.getTable().getModel();
-		tableModel.setRowCount(0);
-		
-		for (Produto produto : produtos) {
-			tableModel.addRow(new Object[] {
-				produto.getIdProduto(), 
-				produto.getNomeProduto(), 
-				produto.getValor(), 
-				produto.getQuantEstoque(),
-			}); 
-		} 
+
+	public void atualizarTabela() {
+		if (telaProdutos.getTxtPesquisa().getText().isEmpty()) {
+			List<Produto> produtos = produtoDAO.listarProdutos();
+			DefaultTableModel tableModel = (DefaultTableModel) telaProdutos.getTable().getModel();
+			tableModel.setRowCount(0);
+			
+			for (Produto produto : produtos) {
+				tableModel.addRow(new Object[] {
+					produto.getIdProduto(), 
+					produto.getNomeProduto(), 
+					produto.getValor(), 
+					produto.getQuantEstoque(),
+				}); 
+			} 
+		} else {
+			List<Produto> produtos = produtoDAO.pesquisa(telaProdutos.setTxtPesquisa(), telaProdutos.getComboBox().getSelectedIndex());
+			DefaultTableModel tableModel = (DefaultTableModel) telaProdutos.getTable().getModel();
+			tableModel.setRowCount(0);
+			
+			for (Produto produto : produtos) {
+				tableModel.addRow(new Object[] {
+					produto.getIdProduto(), 
+					produto.getNomeProduto(), 
+					produto.getValor(), 
+					produto.getQuantEstoque(),
+				}); 
+			} 
+		}
 	}
   
 	public void EditProduto(TelaCadastroProdutos cadastroProduto) { 
@@ -235,7 +244,7 @@ public class ProdutoControle {
 		} else {
 			String firstColumnValue = table.getValueAt(selectedRowIndex, 0).toString();
 			produtoDAO.deletarProduto(Integer.valueOf(firstColumnValue));
-			listarProdutosTable(); 
+			atualizarTabela(); 
 		} 
 	}
 	  

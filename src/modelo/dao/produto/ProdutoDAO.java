@@ -104,6 +104,75 @@ public class ProdutoDAO {
 
 		return produtos;
 	}
+	public List<Produto> pesquisa(String pesquisa, int num){
+		List<Produto> produtos = new ArrayList<>();
+		String sqlSelect = null;
+		int tipo = 0;
+		switch(num) {
+		case 0:
+			sqlSelect = "SELECT * FROM produto where nome = ?";
+			tipo = 3;
+			break;
+		case 1:
+			sqlSelect = "SELECT * FROM produto where idProduto = ?";
+			tipo = 1;
+			break;
+		case 2:
+			sqlSelect = "SELECT * FROM produto where valor = ?";
+			tipo = 2;
+			break;
+		case 3:
+			sqlSelect = "SELECT * FROM produto where IdFornecedores = ?";
+			tipo = 4;
+			break;
+		case 4:
+			sqlSelect = "SELECT * FROM produto where material = ?";
+			tipo = 3;
+			break;
+		case 5:
+			sqlSelect = "SELECT * FROM produto where categoria = ?";
+			tipo = 3;
+			break;
+		}
+		try (Connection conn = ConexaoBD.getConexaoMySQL();
+				PreparedStatement stmt = conn.prepareStatement(sqlSelect)){
+				switch(tipo) {
+				case 1:
+					stmt.setInt(1, Integer.valueOf(pesquisa));
+					break;
+				case 2:
+					stmt.setFloat(1, Float.valueOf(pesquisa));
+					break;
+				case 3:
+					stmt.setString(1, pesquisa);
+					break;
+				case 4:
+					int F = FornecedorID(pesquisa);
+					stmt.setInt(1, F);
+					break;
+				}
+				ResultSet rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				Produto produto = new Produto();
+				produto.setIdProduto(rs.getInt("idProduto"));
+				produto.setNomeProduto(rs.getString("nome"));
+				produto.setMaterial(rs.getString("material"));
+				produto.setCategoria(rs.getString("categoria"));
+				produto.setValor(Float.parseFloat(rs.getString("valor")));
+				produto.setQuantEstoque(rs.getInt("estoque"));
+				produto.setTamanho(rs.getString("tamanho"));
+				produto.setVariacao(rs.getString("variacao"));
+				produto.setFornecedorid(rs.getInt("idFornecedores"));
+				
+				produtos.add(produto);
+			}
+			return produtos;
+		} catch (SQLException e) {
+			System.out.println(e);
+		}
+		return produtos;
+	}
 
 	public boolean editarProduto(Produto produto) {
 		String sqlP = "UPDATE produto set nome = ?, material = ?, Categoria = ?, valor = ?, estoque = ?, tamanho = ?, variacao = ?, idFornecedores = ? where idProduto = ?";
@@ -214,5 +283,6 @@ public class ProdutoDAO {
 	        return 0;
 	    }
 	}
+//	--------------------------------------------------------------------------------------
 	
 }
