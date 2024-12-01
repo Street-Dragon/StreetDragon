@@ -19,8 +19,9 @@ public class ItemDAO {
 		int produtoId = verificarProdutoExistente(item.getProduto().getNomeProduto());
 
 		if (produtoId == -1) {
-			return false;
-		}
+	        System.err.println("Produto não encontrado: " + item.getProduto().getNomeProduto());
+	        return false;
+	    }
 
 		String sqlItem = "INSERT INTO item (quantidade, produto_id) VALUES (?, ?)";
 
@@ -103,9 +104,14 @@ public class ItemDAO {
 
 	public List<Item> listarItens() {
 		List<Item> itens = new ArrayList<>();
-		String sql = "SELECT i.id AS item_id, i.quantidade, p.nome, p.preco, p.id AS produto_id " + "FROM item i "
-				+ "JOIN produto p ON i.produto_id = p.id";
-
+		String sql = "SELECT i.id AS item_id, " +
+	             "i.quantidade, " +
+	             "p.nome, " +
+	             "p.valor, " +
+	             "p.idProduto AS produto_id " +
+	             "FROM item i " +
+	             "JOIN produto p ON i.produto_id = p.idProduto";	
+		
 		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 
 			ResultSet rs = stmt.executeQuery();
@@ -114,7 +120,7 @@ public class ItemDAO {
 				Produto produto = new Produto();
 				produto.setIdProduto(rs.getInt("produto_id"));
 				produto.setNomeProduto(rs.getString("p.nome"));
-				produto.setValor(rs.getFloat("p.preco"));
+				produto.setValor(rs.getFloat("p.valor")*(rs.getInt("i.quantidade")));
 				produto.setMaterial(rs.getString("p.material"));
 				produto.setCategoria(rs.getString("p.categoria"));
 				produto.setVariacao(rs.getString("p.variação"));
