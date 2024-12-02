@@ -32,7 +32,7 @@ public class ConexaoBD {
 	public static void criarBancoDeDadosETabela() {
 		try (Connection conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
 				Statement stmt = conn.createStatement()) {
-
+			stmt.executeUpdate("DROP DATABASE IF EXISTS streetdragon");
 			stmt.executeUpdate("CREATE DATABASE IF NOT EXISTS streetdragon");
 			System.out.println("Banco de dados criado ou já existe!");
 			stmt.executeUpdate("USE streetdragon");
@@ -73,16 +73,17 @@ public class ConexaoBD {
 					+ "FOREIGN KEY (contato_id) REFERENCES contato(id_contato) " + "ON DELETE NO ACTION "
 					+ "ON UPDATE NO ACTION) ENGINE = InnoDB;";
 
-			String sqlItem = "CREATE TABLE IF NOT EXISTS item (" + "id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, "
-					+ "quantidade INT NOT NULL, " + "produto_id INT NOT NULL, "
-					+ "FOREIGN KEY (produto_id) REFERENCES produto(idProduto) " + "ON DELETE NO ACTION "
-					+ "ON UPDATE NO ACTION) " + "ENGINE = InnoDB;";
-
-			String sqlVenda = "CREATE TABLE IF NOT EXISTS venda (" + "idVenda INT NOT NULL AUTO_INCREMENT PRIMARY KEY, "
-					+ "funcionario_cpf VARCHAR(14) NOT NULL, " + "cliente_cpf VARCHAR(14) NOT NULL, "
-					+ "precoTotal FLOAT NOT NULL, " + "FOREIGN KEY (funcionario_cpf) REFERENCES funcionario(cpf) "
-					+ "ON DELETE NO ACTION ON UPDATE NO ACTION, " + "FOREIGN KEY (cliente_cpf) REFERENCES cliente(cpf) "
-					+ "ON DELETE NO ACTION ON UPDATE NO ACTION) " + "ENGINE = InnoDB;";
+			String sqlVenda = "CREATE TABLE IF NOT EXISTS venda (venda_id INT AUTO_INCREMENT PRIMARY KEY,"
+					+ "cliente_id VARCHAR(14)," + "funcionario_cpf VARCHAR(14) NOT NULL,"
+					+ "data_venda DATETIME DEFAULT CURRENT_TIMESTAMP, " + "total DECIMAL(10, 2) DEFAULT 0,"
+					+ "FOREIGN KEY (funcionario_cpf) REFERENCES funcionario(cpf), "
+					+ "FOREIGN KEY (cliente_id) REFERENCES cliente(cpf))" + "ENGINE = InnoDB;";
+			
+			String sqlVenda_Produto = "CREATE TABLE IF NOT EXISTS venda_produto (venda_produto_id INT AUTO_INCREMENT PRIMARY KEY,"
+					+ "venda_id INT NOT NULL," + "prod_id INT NOT NULL,"
+					+ "quantidade INT NOT NULL, " + "preco DECIMAL(10, 2) NOT NULL, "
+					+"FOREIGN KEY (venda_id) REFERENCES venda(venda_id) ON DELETE CASCADE,"
+					+"FOREIGN KEY (prod_id) REFERENCES produto(idProduto) ON DELETE CASCADE) "+ "ENGINE = InnoDB;";
 
 			String sqlPromocaoCliente = "CREATE TABLE IF NOT EXISTS promocao_cliente ("
 					+ "promocao_idPromocao INT NOT NULL, " + "cliente_cpf VARCHAR(14) NOT NULL, "
@@ -99,8 +100,8 @@ public class ConexaoBD {
 			stmt.executeUpdate(sqlPromocao);
 			stmt.executeUpdate(sqlFuncionario);
 			stmt.executeUpdate(sqlCliente);
-			stmt.executeUpdate(sqlItem);
 			stmt.executeUpdate(sqlVenda);
+			stmt.executeUpdate(sqlVenda_Produto);
 			stmt.executeUpdate(sqlPromocaoCliente);
 
 			String sqlVerificaFuncionario = "SELECT cpf FROM funcionario WHERE cpf = '123'";

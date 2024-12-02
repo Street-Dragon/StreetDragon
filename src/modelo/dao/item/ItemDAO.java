@@ -23,7 +23,9 @@ public class ItemDAO {
 	        return false;
 	    }
 
-		String sqlItem = "INSERT INTO item (quantidade, produto_id) VALUES (?, ?)";
+		
+		String sqlVenda = "INSERT INTO venda (cliente_id, data_venda, total) VALUES (NULL, NOW(), 0.00)";
+		String sqlItem = "INSERT INTO venda_item (venda_id, prod_id, quantidade, preco) VALUES(?, ?, ?, ?)";
 
 		try (Connection conn = ConexaoBD.getConexaoMySQL();
 				PreparedStatement stmtItem = conn.prepareStatement(sqlItem)) {
@@ -104,6 +106,8 @@ public class ItemDAO {
 	
 	public void excluirTodos() throws SQLException { 
 		String sql = "DELETE FROM item"; 
+		//			+ "WHERE item_id NOT IN (SELECT DISTINCT item_id FROM venda)"		
+		
 		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 		 stmt.executeUpdate(); 
 		      }
@@ -111,13 +115,13 @@ public class ItemDAO {
 
 	public List<Item> listarItens() {
 		List<Item> itens = new ArrayList<>();
-		String sql = "SELECT i.id AS item_id, " +
+		String sql = "SELECT i.venda_produto_id AS item_id, " +
 	             "i.quantidade, " +
 	             "p.nome, " +
 	             "p.valor, " +
 	             "p.idProduto AS produto_id " +
-	             "FROM item i " +
-	             "JOIN produto p ON i.produto_id = p.idProduto";	
+	             "FROM venda_produto i " +
+	             "JOIN produto p ON i.prod_id = p.idProduto";	
 		
 		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 
