@@ -21,6 +21,7 @@ public class ItemController {
 
 	public void setTelaVenda(TelaVenda telaVenda) {
 		this.telaVenda = telaVenda;
+		atualizarTabela();
 		
 		telaVenda.getBtnAdicionarProduto().addActionListener(new ActionListener() {
 			@Override
@@ -89,9 +90,10 @@ public class ItemController {
 	  public void atualizarTabela() {
 	        List<Item> itens = itemDAO.listarItens(); 
 
-	        DefaultTableModel tableModel = new DefaultTableModel();
-	        tableModel.addColumn("Produto");
-	        tableModel.addColumn("ID Produto");
+	        DefaultTableModel tableModel;
+	        tableModel = new DefaultTableModel();
+	        tableModel.addColumn("Código");
+	        tableModel.addColumn("Nome");
 	        tableModel.addColumn("Quantidade");
 	        tableModel.addColumn("Valor Total");
 
@@ -99,12 +101,15 @@ public class ItemController {
 	        for (Item item : itens) {
 	            Produto produto = item.getProduto(); 
 	            double valorTotal = item.getQuantidade() * produto.getValor(); 
-
+	            System.out.println("Produto: " + produto.getNomeProduto());
+	            System.out.println("Valor do Produto: " + produto.getValor());
+	            System.out.println("Quantidade: " + item.getQuantidade());
+	            
 	            tableModel.addRow(new Object[] {
+		            produto.getIdProduto(),       
 	                produto.getNomeProduto(),     
-	                produto.getIdProduto(),       
 	                item.getQuantidade(),  
-	                valorTotal             
+	                String.format("%.2f", valorTotal)
 	            });
 	        }
 

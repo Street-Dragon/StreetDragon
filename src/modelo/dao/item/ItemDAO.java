@@ -120,12 +120,7 @@ public class ItemDAO {
 				Produto produto = new Produto();
 				produto.setIdProduto(rs.getInt("produto_id"));
 				produto.setNomeProduto(rs.getString("p.nome"));
-				produto.setValor(rs.getFloat("p.valor")*(rs.getInt("i.quantidade")));
-				produto.setMaterial(rs.getString("p.material"));
-				produto.setCategoria(rs.getString("p.categoria"));
-				produto.setVariacao(rs.getString("p.variação"));
-				produto.setQuantEstoque(rs.getInt("p.estoque"));
-				produto.setTamanho(rs.getString("p.tamanho"));
+				produto.setValor(rs.getFloat("p.valor"));
 
 				Item item = new Item();
 				item.setQuantidade(rs.getInt("i.quantidade"));
