@@ -88,7 +88,7 @@ public class ItemDAO {
 	}
 
 	public boolean excluirItem(int idItem) {
-		String sql = "DELETE FROM item WHERE id_item = ?";
+		String sql = "DELETE FROM item WHERE id = ?";
 
 		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 
@@ -101,6 +101,13 @@ public class ItemDAO {
 			return false;
 		}
 	}
+	
+	public void excluirTodos() throws SQLException { 
+		String sql = "DELETE FROM item"; 
+		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+		 stmt.executeUpdate(); 
+		      }
+		 }
 
 	public List<Item> listarItens() {
 		List<Item> itens = new ArrayList<>();
