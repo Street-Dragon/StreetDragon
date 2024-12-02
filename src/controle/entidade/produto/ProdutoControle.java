@@ -1,4 +1,4 @@
-package controle.entidade.produto;
+	package controle.entidade.produto;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -76,6 +76,14 @@ public class ProdutoControle {
 
 			}
 		});
+		
+		telaProdutos.getBtnPesquisar().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				atualizarTabela();
+			}
+		});
 
 	}
 
@@ -108,22 +116,7 @@ public class ProdutoControle {
 			fillEdit(produto); 
 		}
 	}
-
-	public void atualizarTabela() {
-		List<Produto> produtos = produtoDAO.listarProdutos();
-		DefaultTableModel tableModel = (DefaultTableModel) telaProdutos.getTable().getModel();
-		tableModel.setRowCount(0);
-
-		for (Produto produto : produtos) {
-			tableModel.addRow(new Object[] { 
-					produto.getIdProduto(), 
-					produto.getNomeProduto(),
-					produto.getValor(), 
-					produto.getQuantEstoque(), 
-					});
-		}
-	}
-
+	
 	public Produto getProdutoById(int id) {
 		Produto produto = produtoDAO.getId(id);
 		if (produto == null) {
@@ -131,19 +124,35 @@ public class ProdutoControle {
 		}
 		return produto;
 	}
-	public void listarProdutosTable() { 
-		List<Produto> produtos = produtoDAO.listarProdutos();
-		DefaultTableModel tableModel = (DefaultTableModel) telaProdutos.getTable().getModel();
-		tableModel.setRowCount(0);
-		
-		for (Produto produto : produtos) {
-			tableModel.addRow(new Object[] {
-				produto.getIdProduto(), 
-				produto.getNomeProduto(), 
-				produto.getValor(), 
-				produto.getQuantEstoque(),
-			}); 
-		} 
+
+	public void atualizarTabela() {
+		if (telaProdutos.getTxtPesquisa().getText().isEmpty()) {
+			List<Produto> produtos = produtoDAO.listarProdutos();
+			DefaultTableModel tableModel = (DefaultTableModel) telaProdutos.getTable().getModel();
+			tableModel.setRowCount(0);
+			
+			for (Produto produto : produtos) {
+				tableModel.addRow(new Object[] {
+					produto.getIdProduto(), 
+					produto.getNomeProduto(), 
+					produto.getValor(), 
+					produto.getQuantEstoque(),
+				}); 
+			} 
+		} else {
+			List<Produto> produtos = produtoDAO.pesquisa(telaProdutos.setTxtPesquisa(), telaProdutos.getComboBox().getSelectedIndex());
+			DefaultTableModel tableModel = (DefaultTableModel) telaProdutos.getTable().getModel();
+			tableModel.setRowCount(0);
+			
+			for (Produto produto : produtos) {
+				tableModel.addRow(new Object[] {
+					produto.getIdProduto(), 
+					produto.getNomeProduto(), 
+					produto.getValor(), 
+					produto.getQuantEstoque(),
+				}); 
+			} 
+		}
 	}
   
 	public void EditProduto(TelaCadastroProdutos cadastroProduto) { 
@@ -160,24 +169,26 @@ public class ProdutoControle {
 			String tamanho = cadastroProduto.getCbTamnho(); 
 			String variacao = cadastroProduto.getTextFieldVariacao();
 			int id = cadastroProduto.setTextFieldId();
-//			int ForncedorId = 
+			if (produtoDAO.ForncedorEx(cadastroProduto.getTextFieldFornecedor())) {
+				Produto produto = new Produto();
 				
-			Produto produto = new Produto();
+				produto.setIdProduto(id);
+				produto.setNomeProduto(nome); produto.setMaterial(material);
+				produto.setCategoria(categoria); produto.setValor(valor);
+				produto.setQuantEstoque(estoque); produto.setTamanho(tamanho);
+				produto.setVariacao(variacao);
+				produto.setFornecedorid(produtoDAO.FornecedorID(cadastroProduto.getTextFieldFornecedor()));
+				
+				
+				if (produtoDAO.editarProduto(produto)) {
+					TelaMensagens Tm = new TelaMensagens("Produto Editado com Sucesso!", 0);
+					telaCadastroProduto.dispose();
+					atualizarTabela();
+				} else {
+					TelaMensagens Tm = new TelaMensagens("Erro ao editar produto", 1);
+				} 
+			}
 			
-			produto.setIdProduto(id);
-			produto.setNomeProduto(nome); produto.setMaterial(material);
-			produto.setCategoria(categoria); produto.setValor(valor);
-			produto.setQuantEstoque(estoque); produto.setTamanho(tamanho);
-			produto.setVariacao(variacao);
-			
-			
-			if (produtoDAO.editarProduto(produto)) {
-				TelaMensagens Tm = new TelaMensagens("Produto Editado com Sucesso!", 0);
-				telaCadastroProduto.dispose();
-				atualizarTabela();
-			} else {
-				TelaMensagens Tm = new TelaMensagens("Erro ao editar produto", 1);
-			} 
 		} catch (Exception e) {
 			TelaMensagens Tm = new TelaMensagens("Valor ou Estoque preechidos incorretamente", 2);
 		} 
@@ -197,25 +208,29 @@ public class ProdutoControle {
 			String categoria = cadastroProduto.getCbCategoria();
 			String tamanho = cadastroProduto.getCbTamnho(); 
 			String variacao = cadastroProduto.getTextFieldVariacao();
-			int FornecedorId = Integer.parseInt(cadastroProduto.getTextFieldFornecedor());
-			
-			Produto produto = new Produto();
-			
-			produto.setNomeProduto(nome); 
-			produto.setValor(valor);
-			produto.setQuantEstoque(estoque); 
-			produto.setVariacao(variacao);
-			produto.setMaterial(material);
-			produto.setCategoria(categoria);
-			produto.setTamanho(tamanho);
-			produto.setFornecedorid(FornecedorId);
-			if (produtoDAO.cadastrarProduto(produto)) {
-				TelaMensagens Tm = new TelaMensagens("Produto Cadastrado", 0);
-				atualizarTabela();
-				telaCadastroProduto.dispose();
+			String NomeFornecedor = cadastroProduto.getTextFieldFornecedor();
+			if (produtoDAO.ForncedorEx(NomeFornecedor)) {
+				int FornecedorId = produtoDAO.FornecedorID(NomeFornecedor);
+				Produto produto = new Produto();
+				
+				produto.setNomeProduto(nome); 
+				produto.setValor(valor);
+				produto.setQuantEstoque(estoque); 
+				produto.setVariacao(variacao);
+				produto.setMaterial(material);
+				produto.setCategoria(categoria);
+				produto.setTamanho(tamanho);
+				produto.setFornecedorid(FornecedorId);
+				if (produtoDAO.cadastrarProduto(produto)) {
+					TelaMensagens Tm = new TelaMensagens("Produto Cadastrado", 0);
+					atualizarTabela();
+					telaCadastroProduto.dispose();
+				} else {
+					TelaMensagens Tm = new TelaMensagens("Erro ao cadastrar produto", 1);
+				} 
 			} else {
-				TelaMensagens Tm = new TelaMensagens("Erro ao cadastrar produto", 1);
-			} 
+				TelaMensagens Tm = new TelaMensagens("Erro ao registrar o Fornecedor", 1);
+			}
 		} catch (Exception e) {
 			TelaMensagens Tm = new TelaMensagens("Valor ou Estoque preechidos incorreetamente", 3);
 		} 
@@ -229,7 +244,7 @@ public class ProdutoControle {
 		} else {
 			String firstColumnValue = table.getValueAt(selectedRowIndex, 0).toString();
 			produtoDAO.deletarProduto(Integer.valueOf(firstColumnValue));
-			listarProdutosTable(); 
+			atualizarTabela(); 
 		} 
 	}
 	  
@@ -239,11 +254,7 @@ public class ProdutoControle {
 		telaCadastroProduto.setTextFieldValor().setText(Float.toString(produto.getValor()));
 		telaCadastroProduto.setTextFieldQntEstoque().setText(Integer.toString(produto.getQuantEstoque()));
 		telaCadastroProduto.setTextFieldVariacao().setText(produto.getVariacao());
-		telaCadastroProduto.setTextFieldFornecedor().setText(Integer.toString(produto.getFornecedorid()));
-		System.out.println(produto.getFornecedorid());
-		System.out.println(produto.getFornecedorid());
-		System.out.println(produto.getFornecedorid());
-		System.out.println(produto.getFornecedorid());
+		telaCadastroProduto.setTextFieldFornecedor().setText(produtoDAO.getIdF(produto.getFornecedorid()));
 		CheckBoxF(produto);
 	}
 	
@@ -298,10 +309,10 @@ public class ProdutoControle {
 			index1 = 7;
 		break;
 		case"Elastano":
-			index1 = 7;
+			index1 = 8;
 		break;
 		case"Outro":
-			index1 = 8;
+			index1 = 9;
 		break;
 		}
 		switch(Categoria) {
@@ -327,10 +338,10 @@ public class ProdutoControle {
 			index2 = 7;
 		break;
 		case"Acessórios":
-			index2 = 7;
+			index2 = 8;
 		break;
 		case"Outro":
-			index2 = 8;
+			index2 = 9;
 		break;
 		}
 		switch(Tamanho) {
@@ -356,10 +367,10 @@ public class ProdutoControle {
 			index3 = 7;
 		break;
 		case"EG":
-			index3 = 7;
+			index3 = 8;
 		break;
 		case"EGG":
-			index3 = 8;
+			index3 = 9;
 		break;
 		}
 		telaCadastroProduto.setCbMaterial().setSelectedIndex(index1);

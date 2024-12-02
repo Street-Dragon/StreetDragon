@@ -18,6 +18,8 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 
 public class TelaProdutos extends JPanel {
 
@@ -36,6 +38,9 @@ public class TelaProdutos extends JPanel {
 	private JTextField txtFieldQntEstoque;
 	private JButton btnEditarProd;
 	private static DefaultTableModel tableModel;
+	private JTextField txtFieldPesquisa;
+	private JButton btnPesquisar;
+	private JComboBox comboBox;
 
 	/**
 	 * Create the panel.
@@ -49,7 +54,7 @@ public class TelaProdutos extends JPanel {
 		panel.setBorder(null);
 		panel.setBackground(new Color(255, 255, 255));
 		add(panel, "cell 0 0 3 1,grow");
-		panel.setLayout(new MigLayout("", "[grow][grow][grow][grow][grow][grow]", "[grow][grow][grow][grow]"));
+		panel.setLayout(new MigLayout("", "[grow][grow][grow][grow][grow][grow]", "[grow][grow][grow]"));
 
 		lblNewLabel = new JLabel("Id");
 		lblNewLabel.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
@@ -90,6 +95,23 @@ public class TelaProdutos extends JPanel {
 		txtFieldQntEstoque.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
 		panel.add(txtFieldQntEstoque, "cell 4 1,growx");
 		txtFieldQntEstoque.setColumns(10);
+		
+		txtFieldPesquisa = new JTextField();
+		txtFieldPesquisa.setFont(new Font("Dialog", Font.PLAIN, 30));
+		panel.add(txtFieldPesquisa, "cell 0 2 2 1,growx");
+		txtFieldPesquisa.setColumns(10);
+		
+		comboBox = new JComboBox();
+		comboBox.setBackground(new Color(255, 255, 255));
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Nome", "Id", "Valor", "Fornecedor", "Material", "Categoria"}));
+		comboBox.setSelectedIndex(0);
+		comboBox.setFont(new Font("Dialog", Font.PLAIN, 25));
+		panel.add(comboBox, "cell 3 2,growx");
+		
+		btnPesquisar = new JButton("Pesquisar");
+		btnPesquisar.setBackground(new Color(255, 255, 255));
+		btnPesquisar.setFont(new Font("Dialog", Font.PLAIN, 25));
+		panel.add(btnPesquisar, "cell 4 2,growx");
 
 		JPanel panel_1 = new JPanel();
 		add(panel_1, "cell 3 0,grow");
@@ -169,5 +191,17 @@ public class TelaProdutos extends JPanel {
 
 	public JButton getBtnEditProd() {
 		return btnEditarProd;
+	}
+	public JTextField getTxtPesquisa() {
+		return txtFieldPesquisa;
+	}
+	public String setTxtPesquisa() {
+		return txtFieldPesquisa.getText();
+	}
+	public JComboBox getComboBox() {
+		return comboBox;
+	}
+	public JButton getBtnPesquisar() {
+		return btnPesquisar;
 	}
 }

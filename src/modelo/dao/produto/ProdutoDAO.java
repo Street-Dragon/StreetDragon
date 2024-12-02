@@ -10,6 +10,7 @@ import java.util.List;
 
 import controle.entidade.conexao.ConexaoBD;
 import modelo.entidade.contato.Contato;
+import modelo.entidade.pessoa.fornecedor.Fornecedor;
 import modelo.entidade.pessoa.funcionario.Funcionario;
 import modelo.entidade.produto.Produto;
 import modelo.enumeracao.tamanho.Tamanho;
@@ -64,10 +65,12 @@ public class ProdutoDAO {
 
 		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 			ResultSet rs = stmt.executeQuery();
-			rs.next();
-			int id = rs.getInt(1) + 1;
-			;
-			return id;
+			if (rs.next()) {
+				int id = rs.getInt(1) + 1;
+				return id;
+			} else {
+				return 1;
+			}
 		} catch (SQLException e) {
 			System.out.println(e);
 			return 0;
@@ -91,6 +94,7 @@ public class ProdutoDAO {
 				produto.setQuantEstoque(rs.getInt("estoque"));
 				produto.setTamanho(rs.getString("tamanho"));
 				produto.setVariacao(rs.getString("variacao"));
+				produto.setFornecedorid(rs.getInt("idFornecedores"));
 				
 				produtos.add(produto);
 			}
@@ -100,9 +104,78 @@ public class ProdutoDAO {
 
 		return produtos;
 	}
+	public List<Produto> pesquisa(String pesquisa, int num){
+		List<Produto> produtos = new ArrayList<>();
+		String sqlSelect = null;
+		int tipo = 0;
+		switch(num) {
+		case 0:
+			sqlSelect = "SELECT * FROM produto where nome = ?";
+			tipo = 3;
+			break;
+		case 1:
+			sqlSelect = "SELECT * FROM produto where idProduto = ?";
+			tipo = 1;
+			break;
+		case 2:
+			sqlSelect = "SELECT * FROM produto where valor = ?";
+			tipo = 2;
+			break;
+		case 3:
+			sqlSelect = "SELECT * FROM produto where IdFornecedores = ?";
+			tipo = 4;
+			break;
+		case 4:
+			sqlSelect = "SELECT * FROM produto where material = ?";
+			tipo = 3;
+			break;
+		case 5:
+			sqlSelect = "SELECT * FROM produto where categoria = ?";
+			tipo = 3;
+			break;
+		}
+		try (Connection conn = ConexaoBD.getConexaoMySQL();
+				PreparedStatement stmt = conn.prepareStatement(sqlSelect)){
+				switch(tipo) {
+				case 1:
+					stmt.setInt(1, Integer.valueOf(pesquisa));
+					break;
+				case 2:
+					stmt.setFloat(1, Float.valueOf(pesquisa));
+					break;
+				case 3:
+					stmt.setString(1, pesquisa);
+					break;
+				case 4:
+					int F = FornecedorID(pesquisa);
+					stmt.setInt(1, F);
+					break;
+				}
+				ResultSet rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				Produto produto = new Produto();
+				produto.setIdProduto(rs.getInt("idProduto"));
+				produto.setNomeProduto(rs.getString("nome"));
+				produto.setMaterial(rs.getString("material"));
+				produto.setCategoria(rs.getString("categoria"));
+				produto.setValor(Float.parseFloat(rs.getString("valor")));
+				produto.setQuantEstoque(rs.getInt("estoque"));
+				produto.setTamanho(rs.getString("tamanho"));
+				produto.setVariacao(rs.getString("variacao"));
+				produto.setFornecedorid(rs.getInt("idFornecedores"));
+				
+				produtos.add(produto);
+			}
+			return produtos;
+		} catch (SQLException e) {
+			System.out.println(e);
+		}
+		return produtos;
+	}
 
 	public boolean editarProduto(Produto produto) {
-		String sqlP = "UPDATE produto set nome = ?, material = ?, Categoria = ?, valor = ?, estoque = ?, tamanho = ?, variacao = ?, idFornecedores = ? where idProduto = ?;";
+		String sqlP = "UPDATE produto set nome = ?, material = ?, Categoria = ?, valor = ?, estoque = ?, tamanho = ?, variacao = ?, idFornecedores = ? where idProduto = ?";
 
 		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement stmtProduto = conn.prepareStatement(sqlP)) {
 			stmtProduto.setString(1, produto.getNomeProduto());
@@ -139,6 +212,7 @@ public class ProdutoDAO {
 	            produto.setValor(rs.getFloat("valor"));
 	            produto.setQuantEstoque(rs.getInt("estoque"));
 	            produto.setTamanho(rs.getString("tamanho"));
+	            produto.setFornecedorid(rs.getInt("idFornecedores"));
 	            return produto;
 	        } else {
 	            return null;
@@ -148,4 +222,67 @@ public class ProdutoDAO {
 	        return null;
 	    }
 	}
+	
+	// ----------------Funções para fazer a verifição do fornecedor------------------
+	
+	// ----------------Pega o nome do fornecedor com o id dele, isso é para mostrar o nome em vez do id pro usuario
+	public String getIdF(int id) {
+		
+		 String sqlSelect = "select nome from fornecedor where idFornecedores = ?";
+		    try (Connection conn = ConexaoBD.getConexaoMySQL();
+		         PreparedStatement stmt = conn.prepareStatement(sqlSelect)) {
+		        stmt.setInt(1, id);
+		        ResultSet rs = stmt.executeQuery();
+		        
+		        if (rs.next()) {
+		        	String nome = (rs.getString("nome"));
+			        return nome;
+	            } else
+	            	return null;
+		        
+		    } catch (SQLException e) {
+		        System.out.println(e);
+		        return null;
+		    }
+	}
+	
+	// ----------------Verifica se um fornecedor com um certo nome existe
+	public boolean ForncedorEx(String nome) {
+	    String sqlSelect = "select Count(*) as total from fornecedor where nome = ?";
+	    try (Connection conn = ConexaoBD.getConexaoMySQL();
+	         PreparedStatement stmt = conn.prepareStatement(sqlSelect)) {
+	    	
+	        stmt.setString(1, nome);
+	        try (ResultSet rs = stmt.executeQuery()) {
+	            if (rs.next()) {
+	                int count = rs.getInt("total");
+	                return count > 0; 
+	            }
+	        }
+	    } catch (SQLException e) {
+	    	 System.out.println("check4");
+	        System.out.println(e);
+	    }
+	    return false;
+	}
+	
+	// ----------------pega o id do fornecedor com o nome dele
+	public int FornecedorID(String Nome) {
+		String sqlSelect = "select idFornecedores from fornecedor where nome = ?";
+	    try (Connection conn = ConexaoBD.getConexaoMySQL();
+	         PreparedStatement stmt = conn.prepareStatement(sqlSelect)) {
+	        stmt.setString(1, Nome);
+	        ResultSet rs = stmt.executeQuery();
+	        if (rs.next()) {
+	        	int id = (rs.getInt("idFornecedores"));
+                return id;
+            } else
+            	return 0;
+	    } catch (SQLException e) {
+	        System.out.println(e);
+	        return 0;
+	    }
+	}
+//	--------------------------------------------------------------------------------------
+	
 }
