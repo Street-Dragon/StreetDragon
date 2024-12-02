@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class ConexaoBD {
+
     private static final String DB_URL = "jdbc:mysql://localhost/";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "aluno";
@@ -86,12 +87,10 @@ public class ConexaoBD {
                     + "ON DELETE NO ACTION "
                     + "ON UPDATE NO ACTION) ENGINE = InnoDB;";
 
-            String sqlItem = "CREATE TABLE IF NOT EXISTS item (" + "idItem INT NOT NULL AUTO_INCREMENT PRIMARY KEY, "
-                    + "quantidade INT NOT NULL, " + "produto_idProduto INT NOT NULL, "
-                    + "promocao_idPromocao INT NULL, "
-                    + "FOREIGN KEY (produto_idProduto) REFERENCES produto(idProduto) " + "ON DELETE NO ACTION "
-                    + "ON UPDATE NO ACTION, " + "FOREIGN KEY (promocao_idPromocao) REFERENCES promocao(idPromocao) "
-                    + "ON DELETE NO ACTION " + "ON UPDATE NO ACTION) ENGINE = InnoDB;";
+            String sqlItem = "CREATE TABLE IF NOT EXISTS item (" + "id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, "
+					+ "quantidade INT NOT NULL, " + "produto_id INT NOT NULL, "
+					+ "FOREIGN KEY (produto_id) REFERENCES produto(idProduto) " + "ON DELETE NO ACTION "
+					+ "ON UPDATE NO ACTION) " + "ENGINE = InnoDB;";
 
             String sqlVenda = "CREATE TABLE IF NOT EXISTS venda (" + "idVenda INT NOT NULL AUTO_INCREMENT PRIMARY KEY, "
                     + "funcionario_cpf VARCHAR(14) NOT NULL, " + "cliente_cpf VARCHAR(14) NOT NULL, "
@@ -128,18 +127,25 @@ public class ConexaoBD {
             ResultSet rsFuncionario = psFuncionario.executeQuery();
 
             if (!rsFuncionario.next()) {
-                String sqlContatoRoot = "INSERT INTO contato (email, telefone) VALUES ('mariana@aluno.ifsc', '48 9884651')";
-                String sqlFuncionarioRoot = "INSERT INTO funcionario (cpf, senha, nome, contato_id, adm) "
-                        + "VALUES ('123', '321', 'Mari', " + 1 + ", 1)";
-                stmt.executeUpdate(sqlContatoRoot);
-                stmt.executeUpdate(sqlFuncionarioRoot);
-            }
+				String sqlContatoRoot = "INSERT INTO contato (email, telefone) VALUES "
+						+ "('mariana@aluno.ifsc', '48 9884651'), " + "('cadu@aluno.ifsc', '47912344321')";
 
-            System.out.println("Tabelas criadas ou já existem!");
+				String sqlFuncionarioRoot = "INSERT INTO funcionario (cpf, senha, nome, contato_id, adm) " + "VALUES "
+						+ "('123', '321', 'Mari', 1, 1), " // Mari (administrador)
+						+ "('321', '123', 'Cadu', 2, 0)"; // Cadu (não administrador)
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+				String sqlCadastraProdutos = "INSERT INTO produto (nome, material, categoria, valor, estoque, tamanho, variacao) "
+						+ "VALUES " + "('JoJo', 'Algodão', 'Camiseta', 49.99, 100, 'M', 'Azul'), "
+						+ "('Cinto punk', 'Couro', 'Acessórios', 30.90, 50, '', 'Spikes')";
+
+				stmt.executeUpdate(sqlContatoRoot);
+				stmt.executeUpdate(sqlFuncionarioRoot);
+				stmt.executeUpdate(sqlCadastraProdutos);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 }
  

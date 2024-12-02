@@ -135,12 +135,15 @@ public class TelaVenda extends JPanel { // mudado para jpanel ao invés de jfram
 
 		// Definição das colunas da tabela
 		String[] colunas = { "Nome", "Código", "Quantidade", "Valor" };
-		JTable table = new JTable(new Object[][] {}, colunas);
+		table = new JTable(new Object[][] {}, colunas);
 		table.setFont(hkGrotesk);
 
 		JScrollPane scrollPane = new JScrollPane(table);
 		panel_2.setLayout(new BoxLayout(panel_2, BoxLayout.Y_AXIS));
 		panel_2.add(scrollPane);
+		
+		Utils.configTabela(table, scrollPane);
+		
 	}
 
 	public JTable getTable() {
@@ -165,5 +168,14 @@ public class TelaVenda extends JPanel { // mudado para jpanel ao invés de jfram
 
 	public JButton getBtnLimparCarrinho() {
 		return btnLimparCarrinho;
+	}
+
+	public String getTxtQuantidade() {
+		
+		return txtQuantidade.getText();
+	}
+
+	public String getTxtCodigo() {
+		return txtCodigo.getText();
 	}
 }
