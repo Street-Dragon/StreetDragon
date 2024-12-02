@@ -21,6 +21,7 @@ public class TelaPagamento extends JPanel {
 	private JTextField txtCartao;
 	private JTextField txtOutros;
 	private JTextField textField;
+	private JButton btnConfirmar;
 
 	/**
 	 * Create the panel.
@@ -135,7 +136,7 @@ public class TelaPagamento extends JPanel {
 		comboBox_1.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
 		panel_2.add(comboBox_1, "cell 2 3 2 1,growx,aligny center");
 		
-		JButton btnConfirmar = new JButton("Confirmar");
+		btnConfirmar = new JButton("Confirmar");
 		btnConfirmar.setForeground(new Color(255, 255, 255));
 		btnConfirmar.setBackground(Cores.COR_AZUL);
 		btnConfirmar.setFont(new Font("Hanken Grotesk", Font.BOLD, 25));
@@ -144,6 +145,10 @@ public class TelaPagamento extends JPanel {
 		btnCancelar.setIcon(Utils.carregarIcone("lixo.png", 30, 30));
 		btnConfirmar.setIcon(Utils.carregarIcone("carrinho.png", 30, 30));
 
+	}
+	
+	public JButton getBtnConfirmar() {
+		return btnConfirmar;
 	}
 
 }
