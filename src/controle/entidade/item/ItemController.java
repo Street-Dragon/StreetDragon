@@ -2,6 +2,7 @@ package controle.entidade.item;
 
 import java.awt.event.ActionEvent; 
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -21,6 +22,7 @@ public class ItemController {
 
 	public void setTelaVenda(TelaVenda telaVenda) {
 		this.telaVenda = telaVenda;
+		atualizarTabela();
 		
 		telaVenda.getBtnAdicionarProduto().addActionListener(new ActionListener() {
 			@Override
@@ -89,9 +91,10 @@ public class ItemController {
 	  public void atualizarTabela() {
 	        List<Item> itens = itemDAO.listarItens(); 
 
-	        DefaultTableModel tableModel = new DefaultTableModel();
-	        tableModel.addColumn("Produto");
-	        tableModel.addColumn("ID Produto");
+	        DefaultTableModel tableModel;
+	        tableModel = new DefaultTableModel();
+	        tableModel.addColumn("Código");
+	        tableModel.addColumn("Nome");
 	        tableModel.addColumn("Quantidade");
 	        tableModel.addColumn("Valor Total");
 
@@ -99,12 +102,12 @@ public class ItemController {
 	        for (Item item : itens) {
 	            Produto produto = item.getProduto(); 
 	            double valorTotal = item.getQuantidade() * produto.getValor(); 
-
+	            
 	            tableModel.addRow(new Object[] {
+		            produto.getIdProduto(),       
 	                produto.getNomeProduto(),     
-	                produto.getIdProduto(),       
 	                item.getQuantidade(),  
-	                valorTotal             
+	                String.format("%.2f", valorTotal)
 	            });
 	        }
 
@@ -114,6 +117,12 @@ public class ItemController {
 
 	protected void excluirTudo() {
 		System.out.println("Exclui tudo");
+		try {
+			itemDAO.excluirTodos();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+        atualizarTabela();
 		
 	}
 
@@ -122,12 +131,11 @@ public class ItemController {
 
 	    if (selectedRow != -1) {
 	        // Pega o ID do item da tabela (assumindo que o ID do item está na primeira coluna)
-	        int idItem = (Integer) telaVenda.getTable().getValueAt(selectedRow, 1);
-
+	        int idItem = (Integer) telaVenda.getTable().getValueAt(selectedRow, 0);
 	        int resposta = JOptionPane.showConfirmDialog(telaVenda,
 	                "Você tem certeza que deseja excluir o item com ID: " + idItem + "?", "Confirmar Exclusão",
 	                JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-
+//funciona ate aq
 	        if (resposta == JOptionPane.YES_OPTION) {
 
 	            // Chama o método excluirItem do itemDAO para excluir o item do banco

@@ -3,6 +3,7 @@ package main;
 import controle.entidade.clientecontrole.ClienteControle;
 import controle.entidade.conexao.ConexaoBD;
 import controle.entidade.funcionariocontrole.FuncionarioControle;
+import controle.entidade.item.ItemController;
 import controle.entidade.produto.ProdutoControle;
 import visao.TelaLogin;
 import visao.TelaPrincipal;
@@ -48,7 +49,6 @@ public class Main {
         funcionarioControle.atualizarTabela();
         		
         produtoControle.atualizarTabela();
-        
         
         //clienteControle.atualizarTabela();
     }
