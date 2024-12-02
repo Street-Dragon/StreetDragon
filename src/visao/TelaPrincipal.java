@@ -168,9 +168,6 @@ public class TelaPrincipal extends JFrame {
 		TelaCadastroProdutos telaCadastroProdutos = new TelaCadastroProdutos();
 		produtoControle.setTelaCadastrarProduto(telaCadastroProdutos);
 		
-
-		TelaDeletarProduto telaDeletarProduto = new TelaDeletarProduto();
-		
 		
 		ItemController itemControle = new ItemController();
 		itemControle.setTelaVenda(telaVenda);
