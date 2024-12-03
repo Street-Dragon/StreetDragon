@@ -114,52 +114,51 @@ public class TelaCliente extends JPanel {
 
 		setBounds(100, 100, 926, 526);
 		setBackground(Cores.COR_ROSA_CLARO);
-		setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		Border borda = new LineBorder(Cores.COR_ROSA_CLARO, 1);
 		Utils.loadCustomFont();
-		setLayout(new MigLayout("", "[grow][grow][grow][grow]", "[::30%,grow][grow]"));
+		setLayout(new MigLayout("", "[grow][grow][grow][25%]", "[35%][grow]"));
 
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(255, 255, 255));
 		panel.setBorder(new CompoundBorder(new LineBorder(new Color(255, 255, 255)), null));
 		add(panel, "cell 0 0 3 1,grow");
-		panel.setLayout(new MigLayout("", "[grow][grow][grow][grow][grow][grow]", "[grow][grow]"));
+		panel.setLayout(new MigLayout("", "[25%][25%][25%][25%]", "[grow][grow]"));
 		
 		JLabel lblnome = new JLabel("Nome");
 		lblnome.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
-		panel.add(lblnome, "cell 0 0,alignx center,aligny center");
+		panel.add(lblnome, "cell 0 0,alignx left,growy");
 
 		txtNome = new JTextField();
 		txtNome.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
-		panel.add(txtNome, "cell 1 0,growx,aligny center");
+		panel.add(txtNome, "cell 1 0,growx");
 		txtNome.setColumns(10);
 
 		JLabel lblemail = new JLabel("Email");
 		lblemail.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
-		panel.add(lblemail, "cell 3 0,alignx left");
+		panel.add(lblemail, "cell 2 0,alignx left,growy");
 
 		txtEmail = new JTextField();
 		txtEmail.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
-		panel.add(txtEmail, "cell 4 0,growx");
+		panel.add(txtEmail, "cell 3 0,growx");
 		txtEmail.setColumns(10);
 		
 		JLabel lblTelefone = new JLabel("Telefone");
 		lblTelefone.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
-		panel.add(lblTelefone, "cell 0 1,alignx left");
+		panel.add(lblTelefone, "cell 0 1,alignx left,growy");
 
 		txtTelefone = new JTextField();
 		txtTelefone.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
 		txtTelefone.setColumns(10);
-		panel.add(txtTelefone, "cell 1 1,growx,aligny center");
+		panel.add(txtTelefone, "cell 1 1,growx");
 		
 		JLabel lblcpf = new JLabel("Cpf");
 		lblcpf.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
-		panel.add(lblcpf, "cell 3 1,alignx center,aligny center");
+		panel.add(lblcpf, "cell 2 1,alignx left,growy");
 
 		txtCpf = new JTextField();
 		txtCpf.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
-		panel.add(txtCpf, "cell 4 1,growx");
+		panel.add(txtCpf, "cell 3 1,growx");
 		txtCpf.setColumns(10);
 
 		JPanel panel_1 = new JPanel();
@@ -179,6 +178,13 @@ public class TelaCliente extends JPanel {
 		btnDeletar.setFont(new Font("Hanken Grotesk", Font.PLAIN, 25));	
 
 		btnDeletar.setBackground(new Color(255, 0, 0));
+		
+		
+		btnCadastrar.setIcon(Utils.carregarIcone("Add.png", 30, 30));
+		btnDeletar.setIcon(Utils.carregarIcone("lixo.png", 30, 30));
+		
+		
+		
 		panel_1.add(btnDeletar, "cell 0 1,grow");
 
 		JScrollPane scrollPane = new JScrollPane();

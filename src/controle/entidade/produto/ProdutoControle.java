@@ -72,8 +72,9 @@ public class ProdutoControle {
 		telaProdutos.getBtnDeletarProd().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				DeletProduto();
-
+				TelaMensagens Tm = new TelaMensagens("Deseja mesmo deletar este produto?");
+				if (Tm.getResposta()) 
+					DeletProduto();
 			}
 		});
 		
@@ -273,6 +274,9 @@ public class ProdutoControle {
 						telaProdutos.getTxtNome().setText(produto.getNomeProduto());
 						telaProdutos.getTxtValor().setText(String.valueOf(produto.getValor())); 
 						telaProdutos.getTxtQnt().setText(String.valueOf(produto.getQuantEstoque()));
+						telaProdutos.getTxtCategoria().setText(produto.getCategoria());
+						String fornecedor = produtoDAO.getIdF(produto.getFornecedorid());
+						telaProdutos.getTxtFornecedor().setText(fornecedor);
 						
 					} 
 			}

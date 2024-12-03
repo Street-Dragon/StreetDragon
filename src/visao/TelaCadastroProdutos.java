@@ -85,7 +85,7 @@ public class TelaCadastroProdutos extends JFrame {
 		textFieldId = new JTextField();
 		textFieldId.setEnabled(false);
 		textFieldId.setHorizontalAlignment(SwingConstants.CENTER);
-		textFieldId.setFont(new Font("Dialog", Font.PLAIN, 15));
+		textFieldId.setFont(hkGrotesk);
 		textFieldId.setEditable(false);
 		textFieldId.setBackground(new Color(246, 233, 233));
 		contentPane.add(textFieldId, "cell 1 0,growx");
@@ -100,7 +100,7 @@ public class TelaCadastroProdutos extends JFrame {
 		textFieldNome.setBackground(new Color(246, 233, 233));
 		contentPane.add(textFieldNome, "cell 1 1,growx");
 		textFieldNome.setColumns(10);
-		textFieldNome.setFont(new Font("Dialog", Font.PLAIN, 15));
+		textFieldNome.setFont(hkGrotesk);
 
 		JLabel lblMaterial = new JLabel("Material");
 		lblMaterial.setHorizontalAlignment(SwingConstants.CENTER);
@@ -112,7 +112,7 @@ public class TelaCadastroProdutos extends JFrame {
 		cbMaterial.setModel(new DefaultComboBoxModel(new String[] {"", "Algodão", "Lã", "Seda", "Viscose", "Tencel", "Linho", "Poliéster", "Elastano", "Outro"}));
 		cbMaterial.setSelectedIndex(0);
 		contentPane.add(cbMaterial, "cell 1 2,growx");
-		cbMaterial.setFont(new Font("Dialog", Font.PLAIN, 15));
+		cbMaterial.setFont(hkGrotesk);
 
 		JPanel panelimg = new JPanel();
 		contentPane.add(panelimg, "cell 3 0 2 5,grow");
@@ -127,7 +127,7 @@ public class TelaCadastroProdutos extends JFrame {
 		cbCategoria.setModel(new DefaultComboBoxModel(new String[] {"", "Calça", "Camisa", "Camiseta", "Moleton", "Boné", "Toca", "Tênis", "Acessórios", "Outro"}));
 		cbCategoria.setSelectedIndex(0);
 		contentPane.add(cbCategoria, "cell 1 3,growx");
-		cbCategoria.setFont(new Font("Dialog", Font.PLAIN, 15));
+		cbCategoria.setFont(hkGrotesk);
 
 		JLabel lblVariação = new JLabel("Variação");
 		lblVariação.setHorizontalAlignment(SwingConstants.CENTER);
@@ -138,7 +138,7 @@ public class TelaCadastroProdutos extends JFrame {
 		textFieldVariacao.setBackground(new Color(246, 233, 233));
 		contentPane.add(textFieldVariacao, "cell 1 4,growx");
 		textFieldVariacao.setColumns(10);
-		textFieldVariacao.setFont(new Font("Dialog", Font.PLAIN, 15));
+		textFieldVariacao.setFont(hkGrotesk);
 
 		JLabel lblValor = new JLabel("Valor");
 		lblValor.setHorizontalAlignment(SwingConstants.CENTER);
@@ -149,7 +149,7 @@ public class TelaCadastroProdutos extends JFrame {
 		textFieldValor.setBackground(new Color(246, 233, 233));
 		contentPane.add(textFieldValor, "cell 1 5,growx");
 		textFieldValor.setColumns(10);
-		textFieldValor.setFont(new Font("Dialog", Font.PLAIN, 15));
+		textFieldValor.setFont(hkGrotesk);
 
 		JLabel lblFornecedor = new JLabel("Fornecedor");
 		lblFornecedor.setHorizontalAlignment(SwingConstants.CENTER);
@@ -160,7 +160,7 @@ public class TelaCadastroProdutos extends JFrame {
 		textFieldFornecedor.setBackground(new Color(246, 233, 233));
 		contentPane.add(textFieldFornecedor, "cell 4 5,growx");
 		textFieldFornecedor.setColumns(10);
-		textFieldFornecedor.setFont(new Font("Dialog", Font.PLAIN, 15));
+		textFieldFornecedor.setFont(hkGrotesk);
 
 		JLabel lblTamanho = new JLabel("Tamanho");
 		lblTamanho.setHorizontalAlignment(SwingConstants.CENTER);
@@ -173,7 +173,7 @@ public class TelaCadastroProdutos extends JFrame {
 				new DefaultComboBoxModel(new String[] {"", "PP", "P", "M", "G", "GG", "XG", "XGG", "EG", "EGG"}));
 		cbTamanho.setSelectedIndex(0);
 		contentPane.add(cbTamanho, "cell 1 6,growx");
-		cbTamanho.setFont(new Font("Dialog", Font.PLAIN, 15));
+		cbTamanho.setFont(hkGrotesk);
 
 		JLabel lblQntEstoque = new JLabel("Qnt estoque");
 		lblQntEstoque.setHorizontalAlignment(SwingConstants.CENTER);
@@ -184,7 +184,7 @@ public class TelaCadastroProdutos extends JFrame {
 		textFieldQntEstoque.setBackground(new Color(246, 233, 233));
 		contentPane.add(textFieldQntEstoque, "cell 4 6,growx");
 		textFieldQntEstoque.setColumns(10);
-		textFieldQntEstoque.setFont(new Font("Dialog", Font.PLAIN, 15));
+		textFieldQntEstoque.setFont(hkGrotesk);
 
 		btnCadastrarProduto = new JButton("Cadastrar Produto");
 		btnCadastrarProduto.setForeground(new Color(255, 255, 255));
@@ -197,6 +197,9 @@ public class TelaCadastroProdutos extends JFrame {
 		btnCancelar.setBackground(new Color(226, 61, 40));
 		contentPane.add(btnCancelar, "cell 3 8 2 1,growx");
 		btnCancelar.setFont(hkGrotesk);
+		
+		btnCadastrarProduto.setIcon(Utils.carregarIcone("Add.png", 30, 30));
+		btnCancelar.setIcon(Utils.carregarIcone("X.png", 30, 30));
 
 		java.net.URL imageURL = getClass().getResource("/resources/imagens/default.png");
 		if (imageURL == null) {

@@ -72,9 +72,9 @@ public class TelaFornecedor extends JPanel {
         // Inicializa o Controller
         fornecedorController = new fornecedorController(this);
 
-        setBackground(new Color(255, 255, 255));
+        setBackground(new Color(253, 233, 235));
         hkGrotesk = Utils.loadCustomFont();
-        setLayout(new MigLayout("", "[grow][grow][grow][grow]", "[grow][grow][grow][grow]"));
+        setLayout(new MigLayout("", "[grow][grow][grow][25%]", "[35%][grow][grow][grow]"));
 
         JPanel panel = new JPanel();
         panel.setBackground(new Color(255, 255, 255));
@@ -120,7 +120,7 @@ public class TelaFornecedor extends JPanel {
         JPanel panelButtons = new JPanel();
         add(panelButtons, "cell 3 0,grow");
         panelButtons.setBackground(new Color(255, 255, 255));
-        panelButtons.setLayout(new MigLayout("", "[grow]", "[grow][grow][][grow][grow][grow]"));
+        panelButtons.setLayout(new MigLayout("", "[grow]", "[grow][grow][grow]"));
         
         tableModel = new DefaultTableModel();
 		tableModel.addColumn("Id");
@@ -149,61 +149,61 @@ public class TelaFornecedor extends JPanel {
         btnCadastrarFor.setForeground(new Color(255, 255, 255));
         btnCadastrarFor.setFont(hkGrotesk);
         btnCadastrarFor.setBackground(new Color(114, 148, 235));
-        panelButtons.add(btnCadastrarFor, "cell 0 1,grow");
+        panelButtons.add(btnCadastrarFor, "cell 0 0,grow");
         btnCadastrarFor.setIcon(Utils.carregarIcone("Add.png",30,30));
-        
-
-        // Botão Editar
-        btnEditarFor = new JButton("Editar Fornecedor");
-        btnEditarFor.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                int selectedRow = table.getSelectedRow();
                 
-                if (selectedRow != -1) {
-                  
-                    Fornecedor fornecedor = capturarDadosFornecedor();
-                    
-                    try {
-                        int id = (int) table.getValueAt(selectedRow, 0);
-                        fornecedor.setId(id); 
 
-                        fornecedorController.editarFornecedor(fornecedor);
+                // Botão Editar
+                btnEditarFor = new JButton("Editar Fornecedor");
+                panelButtons.add(btnEditarFor, "cell 0 1,grow");
+                btnEditarFor.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        int selectedRow = table.getSelectedRow();
+                        
+                        if (selectedRow != -1) {
+                          
+                            Fornecedor fornecedor = capturarDadosFornecedor();
+                            
+                            try {
+                                int id = (int) table.getValueAt(selectedRow, 0);
+                                fornecedor.setId(id); 
 
-                    } catch (NumberFormatException ex) {
-                        ex.printStackTrace(); 
+                                fornecedorController.editarFornecedor(fornecedor);
+
+                            } catch (NumberFormatException ex) {
+                                ex.printStackTrace(); 
+                            }
+                        } else {
+                         
+                            new TelaMensagens("Selecione um fornecedor para editar.", 3);
+                        }
                     }
-                } else {
-                 
-                    new TelaMensagens("Selecione um fornecedor para editar.", 3);
-                }
-            }
-        });        
-        btnEditarFor.setForeground(new Color(255, 255, 255));
-        btnEditarFor.setFont(new Font("Hanken Grotesk", Font.PLAIN, 20));
-        btnEditarFor.setBackground(new Color(255, 149, 149));
-        panelButtons.add(btnEditarFor, "cell 0 5,grow");
-        btnEditarFor.setIcon(Utils.carregarIcone("editar.png",30,30));
-
-        // Botão Excluir
-        btnDeletarFor = new JButton("Excluir");
-        btnDeletarFor.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                int selectedRow = table.getSelectedRow();
-                if (selectedRow != -1) {
-                   
-                    int id = (int) table.getValueAt(selectedRow, 0);
-                    fornecedorController.confirmarExclusaoFornecedor(id);
-                } else {
-                	TelaMensagens Tm = new TelaMensagens("Selecione um fornecedor para excluir.", 3);
-                }
-            }
-        });
-        
-        btnDeletarFor.setForeground(new Color(255, 255, 255));
-        btnDeletarFor.setFont(hkGrotesk);
-        btnDeletarFor.setBackground(new Color(255, 0, 0));
-        panelButtons.add(btnDeletarFor, "cell 0 5,grow");
-        btnDeletarFor.setIcon(Utils.carregarIcone("lixo.png",30,30));
+                });        
+                btnEditarFor.setForeground(new Color(255, 255, 255));
+                btnEditarFor.setFont(new Font("Hanken Grotesk", Font.PLAIN, 20));
+                btnEditarFor.setBackground(new Color(255, 149, 149));
+                btnEditarFor.setIcon(Utils.carregarIcone("editar.png",30,30));
+                
+                        // Botão Excluir
+                        btnDeletarFor = new JButton("Excluir");
+                        btnDeletarFor.addActionListener(new ActionListener() {
+                            public void actionPerformed(ActionEvent e) {
+                                int selectedRow = table.getSelectedRow();
+                                if (selectedRow != -1) {
+                                   
+                                    int id = (int) table.getValueAt(selectedRow, 0);
+                                    fornecedorController.confirmarExclusaoFornecedor(id);
+                                } else {
+                                	TelaMensagens Tm = new TelaMensagens("Selecione um fornecedor para excluir.", 3);
+                                }
+                            }
+                        });
+                        
+                        btnDeletarFor.setForeground(new Color(255, 255, 255));
+                        btnDeletarFor.setFont(hkGrotesk);
+                        btnDeletarFor.setBackground(new Color(255, 0, 0));
+                        panelButtons.add(btnDeletarFor, "cell 0 2,grow");
+                        btnDeletarFor.setIcon(Utils.carregarIcone("lixo.png",30,30));
 
         
         JScrollPane scrollPane = new JScrollPane();

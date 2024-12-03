@@ -38,17 +38,17 @@ public class TelaVenda extends JPanel { // mudado para jpanel ao invés de jfram
 	 * Create the frame.
 	 */
 	public TelaVenda(TelaPrincipal telaPrincipal) { // editado para poder ser chamada no menu
-		setBackground(Color.WHITE);
+		setBackground(new Color(253, 233, 235));
 		hkGrotesk = Utils.loadCustomFont();
-		setLayout(new MigLayout("", "[grow][grow][grow][grow]", "[][grow][grow]"));
+		setLayout(new MigLayout("", "[grow][grow][grow][25%]", "[35%][grow]"));
 
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(255, 255, 255));
-		add(panel, "cell 0 1 3 1,grow");
+		add(panel, "cell 0 0 3 1,grow");
 		panel.setLayout(new MigLayout("", "[grow][grow][grow]", "[grow][grow][grow][grow][grow]"));
 
 		JLabel lblNewLabel = new JLabel("Código:");
-		panel.add(lblNewLabel, "cell 0 0,alignx center,growy");
+		panel.add(lblNewLabel, "cell 0 0,alignx left,growy");
 		lblNewLabel.setFont(hkGrotesk);
 
 		txtCodigo = new JTextField();
@@ -70,11 +70,11 @@ public class TelaVenda extends JPanel { // mudado para jpanel ao invés de jfram
 		lblNewLabel_3.setFont(hkGrotesk);
 
 		JLabel lblNewLabel_5 = new JLabel("Nome: ");
-		panel.add(lblNewLabel_5, "cell 0 1,alignx center");
+		panel.add(lblNewLabel_5, "cell 0 1,alignx left,growy");
 		lblNewLabel_5.setFont(hkGrotesk);
 
 		JLabel lblNewLabel_1 = new JLabel("Quantidade:");
-		panel.add(lblNewLabel_1, "cell 0 2,alignx center");
+		panel.add(lblNewLabel_1, "cell 0 2,alignx left,growy");
 		lblNewLabel_1.setFont(hkGrotesk);
 
 		txtQuantidade = new JTextField();
@@ -83,7 +83,7 @@ public class TelaVenda extends JPanel { // mudado para jpanel ao invés de jfram
 		txtQuantidade.setFont(hkGrotesk);
 
 		JLabel lblNewLabel_2 = new JLabel("Valor:");
-		panel.add(lblNewLabel_2, "cell 0 3,alignx center");
+		panel.add(lblNewLabel_2, "cell 0 3,alignx left,growy");
 		lblNewLabel_2.setFont(hkGrotesk);
 
 		txtValor = new JTextField();
@@ -106,7 +106,7 @@ public class TelaVenda extends JPanel { // mudado para jpanel ao invés de jfram
 
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(new Color(255, 255, 255));
-		add(panel_1, "cell 3 1,grow");
+		add(panel_1, "cell 3 0,grow");
 		panel_1.setLayout(new MigLayout("", "[grow]", "[grow][::50px,grow 50][::50px,grow 50]"));
 
 		JLabel lblTotal = new JLabel("Total: 123 R$");
@@ -127,11 +127,13 @@ public class TelaVenda extends JPanel { // mudado para jpanel ao invés de jfram
 		btnRealizarCompra.setFont(new Font("Hanken Grotesk", Font.BOLD, 24));
 
 		btnRealizarCompra.setIcon(Utils.carregarIcone("carrinho.png", 30, 30));
-		btnLimparCarrinho.setIcon(Utils.carregarIcone("lixo.png", 30, 30));
-
+		btnLimparCarrinho.setIcon(Utils.carregarIcone("apagador.png", 30, 30));
+		btnAdicionarProduto.setIcon(Utils.carregarIcone("Add.png", 30, 30));
+		btnRemoverProduto.setIcon(Utils.carregarIcone("lixo.png", 30, 30));
+		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBackground(new Color(255, 255, 255));
-		add(panel_2, "cell 0 2 4 1,grow");
+		add(panel_2, "cell 0 1 4 1,grow");
 
 		// Definição das colunas da tabela
 		String[] colunas = { "Nome", "Código", "Quantidade", "Valor" };
