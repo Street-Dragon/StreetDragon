@@ -32,9 +32,38 @@ public class TelaHistoricoVenda extends JPanel {
 	private JRadioButton rdbtnnData;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 
-	/**
-	 * Create the frame.
-	 */
+	public TextField getTextFieldConsulta() {
+		return textFieldConsulta;
+	}
+
+	public void setTextFieldConsulta(TextField textFieldConsulta) {
+		this.textFieldConsulta = textFieldConsulta;
+	}
+
+	public JRadioButton getRdbtnCodigo() {
+		return rdbtnCodigo;
+	}
+
+	public void setRdbtnCodigo(JRadioButton rdbtnCodigo) {
+		this.rdbtnCodigo = rdbtnCodigo;
+	}
+
+	public JRadioButton getRdbtnNome() {
+		return rdbtnNome;
+	}
+
+	public void setRdbtnNome(JRadioButton rdbtnNome) {
+		this.rdbtnNome = rdbtnNome;
+	}
+
+	public JRadioButton getRdbtnnData() {
+		return rdbtnnData;
+	}
+
+	public void setRdbtnnData(JRadioButton rdbtnnData) {
+		this.rdbtnnData = rdbtnnData;
+	}
+
 	public TelaHistoricoVenda(TelaPrincipal telaPrincipal) {
 		setBounds(100, 100, 568, 398);
 		// contentPane = new JPanel();
@@ -107,7 +136,7 @@ public class TelaHistoricoVenda extends JPanel {
 						{ null, null, null }, { null, null, null }, { null, null, null }, { null, null, null },
 						{ null, null, null }, { null, null, null }, { null, null, null }, { null, null, null },
 						{ null, null, null }, { null, null, null }, { null, null, null }, { null, null, null }, },
-				new String[] { "New column", "New column", "New column" }));
+				new String[] { "Código", "Nome", "Data" }));
 		scrollPane.setViewportView(table);
 	}
 
