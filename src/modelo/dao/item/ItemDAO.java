@@ -13,6 +13,7 @@ import modelo.entidade.item.Item;
 import modelo.entidade.produto.Produto;
 
 public class ItemDAO {
+	private int idVendaAtual;
 
 	public boolean cadastrarItem(Item item) {
 
@@ -22,7 +23,6 @@ public class ItemDAO {
 	        System.err.println("Produto não encontrado: " + item.getProduto().getNomeProduto());
 	        return false;
 	    }
-
 		
 		String sqlVenda = "INSERT INTO venda (cliente_id, data_venda, total) VALUES (NULL, NOW(), 0.00)";
 		String sqlItem = "INSERT INTO venda_produto (venda_id, prod_id, quantidade, preco) VALUES(?, ?, ?, ?)";
@@ -38,6 +38,7 @@ public class ItemDAO {
 		    int vendaId = -1;
 		    if (rsVenda.next()) {
 		        vendaId = rsVenda.getInt(1); // Recupera o ID da venda inserida
+		        idVendaAtual = vendaId;
 		    }
 
 		    // pega o preço atual do produto
@@ -56,6 +57,10 @@ public class ItemDAO {
 		        stmtItem.setDouble(4, precoProduto); 
 		        stmtItem.executeUpdate();
 		    }
+		    
+		    String sqlUpdate = "UPDATE venda SET total = (SELECT SUM(vp.quantidade * vp.preco) FROM venda_produto vp WHERE vp.venda_id = ?) WHERE venda_id = ?;";
+		    
+		    
 
 		    return true;
 
@@ -63,6 +68,10 @@ public class ItemDAO {
 		    e.printStackTrace();
 		    return false;
 		}
+	}
+	
+	public int GetVendaId() {
+		return idVendaAtual;
 	}
 
 //    public Produto buscarProdutoPorNome(String nomeProduto) {
@@ -113,14 +122,27 @@ public class ItemDAO {
 		return -1;
 	}
 
-	public boolean excluirItem(int idItem) {
-		String sql = "DELETE FROM item WHERE id = ?";
-
+	public boolean excluirItem(int idProduto) {
+		
+		String sql = "DELETE FROM venda_produto WHERE venda_id = ? AND prod_id = ?";
+		String update = "UPDATE venda SET total = (SELECT SUM(vp.quantidade * vp.preco) FROM venda_produto vp WHERE vp.venda_id = ? ) WHERE venda_id = ?";
+		
 		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-			stmt.setInt(1, idItem);
+			stmt.setInt(1, idVendaAtual);
+			stmt.setInt(2, idProduto);
 			int rowsAffected = stmt.executeUpdate();
-			return rowsAffected > 0;
+            if (rowsAffected > 0) {
+            	try (PreparedStatement stmtAtualizarTotal = conn.prepareStatement(update)) {
+                    stmtAtualizarTotal.setInt(1, idVendaAtual);
+                    stmtAtualizarTotal.setInt(2, idVendaAtual);
+                    
+                    // Executando a atualização do total
+                    stmtAtualizarTotal.executeUpdate();
+                    return true;
+                }
+            	
+            } else return false;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -129,11 +151,13 @@ public class ItemDAO {
 	}
 	
 	public void excluirTodos() throws SQLException { 
-		String sql = "DELETE FROM item"; 
-		//			+ "WHERE item_id NOT IN (SELECT DISTINCT item_id FROM venda)"		
+		
+		String sql = "DELETE FROM venda_produto WHERE venda_id = ?"; // id da venda vai ter q ser a venda atual
 		
 		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement stmt = conn.prepareStatement(sql)) {
-		 stmt.executeUpdate(); 
+			
+			stmt.setInt(1, idVendaAtual);
+			stmt.executeUpdate(); 
 		      }
 		 }
 
