@@ -242,6 +242,7 @@ public class ItemDAO {
 				Item item = new Item();
 				item.setQuantidade(rs.getInt("i.quantidade"));
 				item.setProduto(produto);
+				item.setId(rs.getInt("item_id"));
 
 				itens.add(item);
 			}

@@ -58,7 +58,6 @@ public class ItemController {
 
 		int quantidade = Integer.parseInt(telaVenda.getTxtQuantidade());
 		int idProduto = Integer.parseInt(telaVenda.getTxtCodigo());
-		int idItem = itemDAO.getId();
 		Produto produto = produtoDAO.getId(idProduto);
 
 		if (produto == null) {
@@ -76,7 +75,8 @@ public class ItemController {
 		Item item = new Item();
 		item.setQuantidade(quantidade);
 		item.setProduto(produto);
-		item.setId(idItem);
+		item.setId(itemDAO.getId());
+		System.out.println("ID CERTO:"+item.getId());
 
 		boolean sucesso;
 		try {
@@ -95,6 +95,9 @@ public class ItemController {
 	}
 
 	public void atualizarTabela() {
+		
+		
+		
 		List<Item> itens = itemDAO.listarItens();
 
 		DefaultTableModel tableModel;
@@ -108,6 +111,7 @@ public class ItemController {
 			Produto produto = item.getProduto();
 			double valorTotal = item.getQuantidade() * produto.getValor();
 
+			System.out.println("Número do item: "+item.getId());
 			tableModel.addRow(new Object[] { item.getId(), produto.getNomeProduto(), item.getQuantidade(),
 					String.format("%.2f", valorTotal) });
 		}
