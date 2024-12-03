@@ -53,6 +53,7 @@ public class TelaPagamento extends JPanel {
 		panel.add(lblNewLabel_1, "cell 0 1,alignx left");
 		
 		txtTotal = new JTextField();
+		txtTotal.setText(telaVenda.getTxtTotal());
 		txtTotal.setEnabled(false);
 		txtTotal.setEditable(false);
 		txtTotal.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));

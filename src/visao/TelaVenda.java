@@ -112,7 +112,7 @@ public class TelaVenda extends JPanel { // mudado para jpanel ao invés de jfram
 		panel_1.setLayout(new MigLayout("", "[grow]", "[grow][::50px,grow 50][::50px,grow 50]"));
 		
 		//aqui
-		lblTotal = new JLabel("Total: 122 R$");
+		lblTotal = new JLabel("Total: 121 R$");
 		lblTotal.setFont(new Font("Hanken Grotesk", Font.PLAIN, 29));
 		panel_1.add(lblTotal, "cell 0 0,alignx center,aligny center");
 
