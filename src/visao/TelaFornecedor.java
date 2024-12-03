@@ -13,7 +13,7 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
-import controle.entidade.fornecedorController.fornecedorController;
+import controle.entidade.fornecedorcontrole.fornecedorControle;
 import modelo.entidade.pessoa.fornecedor.Fornecedor;
 import net.miginfocom.swing.MigLayout;
 import utils.Utils;
@@ -66,11 +66,11 @@ public class TelaFornecedor extends JPanel {
     private JTextField textNome;
     private static DefaultTableModel tableModel;
 
-    private fornecedorController fornecedorController;
+    private fornecedorControle fornecedorControle;
 
     public TelaFornecedor(TelaPrincipal telaPrincipal) {
         // Inicializa o Controller
-        fornecedorController = new fornecedorController(this);
+        fornecedorControle = new fornecedorControle(this);
 
         setBackground(new Color(255, 255, 255));
         hkGrotesk = Utils.loadCustomFont();
@@ -143,7 +143,7 @@ public class TelaFornecedor extends JPanel {
         btnCadastrarFor.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 Fornecedor fornecedor = capturarDadosFornecedor();
-                fornecedorController.cadastrarFornecedor(fornecedor);
+                fornecedorControle.cadastrarFornecedor(fornecedor);
             }
         });
         btnCadastrarFor.setForeground(new Color(255, 255, 255));
@@ -167,7 +167,7 @@ public class TelaFornecedor extends JPanel {
                         int id = (int) table.getValueAt(selectedRow, 0);
                         fornecedor.setId(id); 
 
-                        fornecedorController.editarFornecedor(fornecedor);
+                        fornecedorControle.editarFornecedor(fornecedor);
 
                     } catch (NumberFormatException ex) {
                         ex.printStackTrace(); 
@@ -192,7 +192,7 @@ public class TelaFornecedor extends JPanel {
                 if (selectedRow != -1) {
                    
                     int id = (int) table.getValueAt(selectedRow, 0);
-                    fornecedorController.confirmarExclusaoFornecedor(id);
+                    fornecedorControle.confirmarExclusaoFornecedor(id);
                 } else {
                 	TelaMensagens Tm = new TelaMensagens("Selecione um fornecedor para excluir.", 3);
                 }
@@ -259,7 +259,7 @@ public class TelaFornecedor extends JPanel {
         });
     
         
-        fornecedorController.atualizarTabela();
+        fornecedorControle.atualizarTabela();
     }
 
     public Fornecedor capturarDadosFornecedor() {

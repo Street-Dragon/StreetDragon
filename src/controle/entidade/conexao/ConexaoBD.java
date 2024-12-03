@@ -58,8 +58,11 @@ public class ConexaoBD {
 					+ "FOREIGN KEY (idFornecedores) REFERENCES fornecedor(idFornecedores) " + ") ENGINE = InnoDB;";
 
 			String sqlPromocao = "CREATE TABLE IF NOT EXISTS promocao ("
-					+ "idPromocao INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " + "desconto FLOAT NOT NULL"
-					+ ") ENGINE = InnoDB;";
+			        + "idPromocao INT NOT NULL AUTO_INCREMENT PRIMARY KEY, "
+			        + "desconto FLOAT NOT NULL, "
+			        + "nome VARCHAR(45) NOT NULL, "
+			        + "termino VARCHAR(45) NOT NULL"
+			        + ") ENGINE = InnoDB;";
 
 			String sqlFuncionario = "CREATE TABLE IF NOT EXISTS funcionario ("
 					+ "cpf VARCHAR(14) NOT NULL PRIMARY KEY, " + "senha VARCHAR(100) NOT NULL, "
