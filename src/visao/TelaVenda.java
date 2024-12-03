@@ -33,11 +33,13 @@ public class TelaVenda extends JPanel { // mudado para jpanel ao invés de jfram
 	private JButton btnAdicionarProduto;
 	private JButton btnRealizarCompra;
 	private JButton btnLimparCarrinho;
+	private JLabel lblTotal;
 
 	/**
 	 * Create the frame.
 	 */
 	public TelaVenda(TelaPrincipal telaPrincipal) { // editado para poder ser chamada no menu
+		
 		setBackground(Color.WHITE);
 		hkGrotesk = Utils.loadCustomFont();
 		setLayout(new MigLayout("", "[grow][grow][grow][grow]", "[][grow][grow]"));
@@ -108,8 +110,9 @@ public class TelaVenda extends JPanel { // mudado para jpanel ao invés de jfram
 		panel_1.setBackground(new Color(255, 255, 255));
 		add(panel_1, "cell 3 1,grow");
 		panel_1.setLayout(new MigLayout("", "[grow]", "[grow][::50px,grow 50][::50px,grow 50]"));
-
-		JLabel lblTotal = new JLabel("Total: 123 R$");
+		
+		//aqui
+		lblTotal = new JLabel("Total: 122 R$");
 		lblTotal.setFont(new Font("Hanken Grotesk", Font.PLAIN, 29));
 		panel_1.add(lblTotal, "cell 0 0,alignx center,aligny center");
 
@@ -178,4 +181,9 @@ public class TelaVenda extends JPanel { // mudado para jpanel ao invés de jfram
 	public String getTxtCodigo() {
 		return txtCodigo.getText();
 	}
+	public String getTxtTotal() {
+		return lblTotal.getText();
+	}
+	
+	
 }

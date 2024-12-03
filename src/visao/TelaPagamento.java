@@ -22,11 +22,15 @@ public class TelaPagamento extends JPanel {
 	private JTextField txtOutros;
 	private JTextField textField;
 	private JButton btnConfirmar;
-
+	private TelaVenda telaVenda;
+	
+	
 	/**
 	 * Create the panel.
 	 */
-	public TelaPagamento(TelaPrincipal telaPrincipal) {
+	public TelaPagamento(TelaPrincipal telaPrincipal, TelaVenda telaVenda) {
+		this.telaVenda = telaVenda;
+		
 		setBackground(Cores.COR_ROSA_CLARO);
 		setLayout(new MigLayout("", "[::60%,grow][::40%,grow]", "[20%,grow][60%:n,grow]"));
 		
@@ -75,9 +79,10 @@ public class TelaPagamento extends JPanel {
 		lblNewLabel_1_2.setFont(new Font("Hanken Grotesk", Font.PLAIN, 35));
 		panel_1.add(lblNewLabel_1_2, "flowy,cell 0 0,alignx center,growy");
 		
-		JLabel lblNewLabel_1_2_1 = new JLabel("R$: 123.12");
-		lblNewLabel_1_2_1.setFont(new Font("Hanken Grotesk", Font.PLAIN, 35));
-		panel_1.add(lblNewLabel_1_2_1, "cell 0 1,alignx center,growy");
+		JLabel lblTotalDinheiro = new JLabel();
+		lblTotalDinheiro.setText(telaVenda.getTxtTotal());
+		lblTotalDinheiro.setFont(new Font("Hanken Grotesk", Font.PLAIN, 35));
+		panel_1.add(lblTotalDinheiro, "cell 0 1,alignx center,growy");
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBackground(Color.WHITE);
@@ -147,6 +152,11 @@ public class TelaPagamento extends JPanel {
 
 	}
 	
+	private void setText(String txtTotal2) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	public JButton getBtnConfirmar() {
 		return btnConfirmar;
 	}

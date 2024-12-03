@@ -71,7 +71,7 @@ public class TelaPrincipal extends JFrame {
 		TelaFornecedor telaFornecedor = new TelaFornecedor(this);
 		TelaCliente telaCliente = new TelaCliente(this);
 		TelaPromocao telaPromocao = new TelaPromocao(this);
-        TelaPagamento telaPagamento = new TelaPagamento(this);
+        TelaPagamento telaPagamento = new TelaPagamento(this, telaVenda);
 
 		// Painel do menu lateral
 		JPanel menuPanel = new JPanel();
