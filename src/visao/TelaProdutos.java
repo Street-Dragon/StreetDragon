@@ -180,6 +180,11 @@ public class TelaProdutos extends JPanel {
 	public JTable getTable() {
 		return table;
 	}
+	
+	public JTable setTable () {
+		
+		return table;
+	}
 
 	public JButton getBtnCadastrarProd() {
 		return btnCadastrarProd;

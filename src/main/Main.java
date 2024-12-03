@@ -39,7 +39,7 @@ public class Main {
 		ProdutoControle produtoControle = new ProdutoControle();
 		produtoControle.setTelaProdutos(telaProduto);
 		produtoControle.setTelaCadastrarProduto(telaCadastroProdutos);
-
+		
 		// Exibe a tela de login
 		telaLogin.setVisible(true);
 			

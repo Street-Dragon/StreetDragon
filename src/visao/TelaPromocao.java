@@ -95,13 +95,13 @@ public class TelaPromocao extends JPanel {
 		btnCadastrar.setBackground(new Color(114, 148, 235));
 		panel_1.add(btnCadastrar, "cell 0 0 1 2,grow");
 		// Botão Ecluir
-		JButton btnExcluir = new JButton("Excluir ");
+		btnExcluir = new JButton("Excluir ");
 		btnExcluir.setForeground(new Color(255, 255, 255));
 		btnExcluir.setFont(new Font("Hanken Grotesk", Font.PLAIN, 25));
 		btnExcluir.setBackground(new Color(255, 0, 0));
 		panel_1.add(btnExcluir, "cell 0 2 1 2,grow");
 		
-		JButton btnEditar = new JButton("Editar");
+		btnEditar = new JButton("Editar");
 		btnEditar.setFont(new Font("Hanken Grotesk", Font.PLAIN, 25));
 		btnEditar.setBackground(Color.PINK);
 		btnEditar.setForeground(Color.WHITE);
