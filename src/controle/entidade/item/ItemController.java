@@ -8,6 +8,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
+import controle.entidade.funcionariocontrole.FuncionarioControle;
 import modelo.dao.item.ItemDAO;
 import modelo.dao.produto.ProdutoDAO;
 import modelo.entidade.item.Item;
@@ -19,7 +20,8 @@ public class ItemController {
 	private TelaVenda telaVenda; 
 	private ItemDAO itemDAO = new ItemDAO();
 	private ProdutoDAO produtoDAO = new ProdutoDAO();
-
+	private FuncionarioControle funcionarioControle = new FuncionarioControle();
+	
 	public void setTelaVenda(TelaVenda telaVenda) {
 		this.telaVenda = telaVenda;
 		atualizarTabela();
@@ -59,7 +61,7 @@ public class ItemController {
 		int quantidade = Integer.parseInt(telaVenda.getTxtQuantidade());
         int idProduto = Integer.parseInt(telaVenda.getTxtCodigo());
 
-        
+
         Produto produto = produtoDAO.getId(idProduto);
 
         if (produto == null) {
@@ -79,7 +81,14 @@ public class ItemController {
         item.setProduto(produto); 
 
         
-        boolean sucesso = itemDAO.cadastrarItem(item);
+        boolean sucesso;
+		try {
+			sucesso = itemDAO.cadastrarItem(item, funcionarioControle.getCpfUsuarioLogado());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			sucesso = false;
+		}
 
         if (sucesso) {
             JOptionPane.showMessageDialog(telaVenda, "Item cadastrado com sucesso!");
