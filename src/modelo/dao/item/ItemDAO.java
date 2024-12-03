@@ -14,7 +14,7 @@ import modelo.entidade.item.Item;
 import modelo.entidade.produto.Produto;
 
 public class ItemDAO {
-	private int idVendaAtual;
+	private Integer idVendaAtual = null;
 
 	public boolean verificaVenda() {
 		String sqlVerificaVenda = "SELECT venda_id FROM venda WHERE data_venda IS NULL LIMIT 1";
@@ -34,16 +34,31 @@ public class ItemDAO {
 		return false;
 	}
 
+	public int getId() {
+		String sql = "SELECT venda_produto_id FROM venda_produto ORDER BY venda_produto_id DESC LIMIT 1;";
+
+		try (Connection conn = ConexaoBD.getConexaoMySQL();
+				PreparedStatement stmt = conn.prepareStatement(sql);
+				ResultSet rs = stmt.executeQuery()) {
+
+			if (rs.next()) {
+				return rs.getInt(1) ;
+			} else {
+				return 1;
+			}
+
+		} catch (SQLException e) {
+			System.err.println("Erro ao obter o ID: " + e.getMessage());
+			return 0;
+		}
+	}
+
 	public void realizaVenda(Item item, String cpf) {
 
 		String sqlVenda = "INSERT INTO venda (cliente_id, funcionario_cpf, total) VALUES (NULL, ?, 0.00)";
-		String sqlItem = "INSERT INTO venda_produto (venda_id, prod_id, quantidade, preco) VALUES(?, ?, ?, ?)";
-		String sqlProduto = "SELECT valor FROM produto WHERE idProduto = ?";
 
 		try (Connection conn = ConexaoBD.getConexaoMySQL();
-				PreparedStatement stmtVenda = conn.prepareStatement(sqlVenda, Statement.RETURN_GENERATED_KEYS);
-				PreparedStatement stmtItem = conn.prepareStatement(sqlItem);
-				PreparedStatement stmtProduto = conn.prepareStatement(sqlProduto)) {
+				PreparedStatement stmtVenda = conn.prepareStatement(sqlVenda, Statement.RETURN_GENERATED_KEYS)) {
 
 			stmtVenda.setString(1, cpf);
 			stmtVenda.executeUpdate();

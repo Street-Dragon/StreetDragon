@@ -75,7 +75,7 @@ public class ConexaoBD {
 
 			String sqlVenda = "CREATE TABLE IF NOT EXISTS venda (venda_id INT AUTO_INCREMENT PRIMARY KEY,"
 					+ "cliente_id VARCHAR(14)," + "funcionario_cpf VARCHAR(14),"
-					+ "data_venda DATETIME DEFAULT CURRENT_TIMESTAMP, " + "total DECIMAL(10, 2) DEFAULT 0,"
+					+ "data_venda DATETIME, " + "total DECIMAL(10, 2) DEFAULT 0,"
 					+ "FOREIGN KEY (funcionario_cpf) REFERENCES funcionario(cpf), "
 					+ "FOREIGN KEY (cliente_id) REFERENCES cliente(cpf))" + "ENGINE = InnoDB;";
 			
