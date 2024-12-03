@@ -5,9 +5,11 @@ import controle.entidade.conexao.ConexaoBD;
 import controle.entidade.funcionariocontrole.FuncionarioControle;
 import controle.entidade.item.ItemController;
 import controle.entidade.produto.ProdutoControle;
+import controle.entidade.promocaocontrole.PromocaoControle;
 import visao.TelaLogin;
 import visao.TelaPrincipal;
 import visao.TelaProdutos;
+import visao.TelaPromocao;
 import visao.TelaCadastroFuncionario;
 import visao.TelaCadastroProdutos;
 import visao.TelaCliente;
@@ -24,6 +26,7 @@ public class Main {
 		TelaCadastroFuncionario telaCadastroFuncionario = new TelaCadastroFuncionario(telaPrincipal);
 		TelaProdutos telaProduto = new TelaProdutos(telaPrincipal);
 		TelaCadastroProdutos telaCadastroProdutos = new TelaCadastroProdutos();
+		TelaPromocao telaPromocao = new TelaPromocao(telaPrincipal);
 
 		// acho que não precisa instanciar o controle e era tudo mentira pessoal,
 		// futuros instanciamentos devem ser na telaprincipal (visão)
@@ -39,7 +42,7 @@ public class Main {
 		ProdutoControle produtoControle = new ProdutoControle();
 		produtoControle.setTelaProdutos(telaProduto);
 		produtoControle.setTelaCadastrarProduto(telaCadastroProdutos);
-		
+		PromocaoControle promocaoControle = new PromocaoControle(telaPromocao);
 		// Exibe a tela de login
 		telaLogin.setVisible(true);
 			
@@ -50,6 +53,8 @@ public class Main {
         		
         produtoControle.atualizarTabela();
         
+        
+        promocaoControle.atualizarTabela();
         //clienteControle.atualizarTabela();
     }
 }

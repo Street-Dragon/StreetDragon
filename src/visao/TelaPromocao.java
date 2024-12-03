@@ -32,9 +32,9 @@ public class TelaPromocao extends JPanel {
 	private JButton btnCadastrar;
 	private JButton btnEditar;
 	private JButton btnExcluir;
-	private JTable table;
 	private static DefaultTableModel tableModel;
-	private JTable table_1;
+	private JTable table;
+	
 
 
 	/**
@@ -114,21 +114,19 @@ public class TelaPromocao extends JPanel {
 
 		tableModel = new DefaultTableModel();
 		tableModel.addColumn("Id");
-		tableModel.addColumn("x");
-		tableModel.addColumn("y");
-		tableModel.addColumn("z");
-
+		tableModel.addColumn("Nome");
+		tableModel.addColumn("%");
+		tableModel.addColumn("Término");
 		
-		
-	
-		
-		table_1 = new JTable();
-		table_1.setModel(new DefaultTableModel(
+		table = new JTable();
+		table.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
 			new String[] {
 				"Id", "Nome", "%","Término"
 			}
+			
+			
 		));
 		
 		table = new JTable(tableModel) {
@@ -141,24 +139,12 @@ public class TelaPromocao extends JPanel {
 		
 		Utils.configTabela(table, scrollPane);
 		
-		scrollPane.setViewportView(table_1);
+		scrollPane.setViewportView(table);
 		
-		table.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				if (e.getClickCount() == 1) {
-					int selectedRow = table.getSelectedRow();
-					if (selectedRow != -1) {
-						int id = (int) tableModel.getValueAt(selectedRow, 0);
+		
+		
 
-					}
-				}
-			}
-		});
 	}
-	
-	
-	
-	
 	public JTable getTable() {
 		return table;
 	}
@@ -175,13 +161,6 @@ public class TelaPromocao extends JPanel {
 		TelaPromocao.tableModel = tableModel;
 	}
 
-	public JTable getTable_1() {
-		return table_1;
-	}
-
-	public void setTable_1(JTable table_1) {
-		this.table_1 = table_1;
-	}
 
 	public void setTxtDesconto(JTextField txtDesconto) {
 		this.txtDesconto = txtDesconto;
@@ -230,6 +209,4 @@ public class TelaPromocao extends JPanel {
 	public void setBtnExcluir(JButton btnExcluir) {
 		this.btnExcluir = btnExcluir;
 	}
-
-
 }

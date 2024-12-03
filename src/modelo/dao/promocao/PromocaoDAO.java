@@ -14,6 +14,28 @@ public class PromocaoDAO {
     public PromocaoDAO() {
         this.connection = ConexaoBD.getConexaoMySQL();
     }
+    public Promocao getIdPromocao(int idPromocao) {
+        Promocao promocao = null;
+        String sql = "SELECT * FROM promocao WHERE idPromocao = ?";
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, idPromocao);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                promocao = new Promocao();
+                promocao.setIdPromocao(rs.getInt("idPromocao"));
+                promocao.setNome(rs.getString("nome"));
+                promocao.setDesconto(rs.getFloat("desconto"));
+                promocao.setTermino(rs.getString("termino"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Erro ao buscar promoção por ID: " + e.getMessage());
+        }
+
+        return promocao;
+    }
 
     // Método para cadastrar uma promoção
     public void cadastrarPromocao(Promocao promocao) {
@@ -55,13 +77,14 @@ public class PromocaoDAO {
         }
     }
 
-    // Método para excluir uma promoção
+ 
     public void excluirPromocao(int idPromocao) {
         String sql = "DELETE FROM promocao WHERE idPromocao = ?";
 
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, idPromocao);
             stmt.executeUpdate();
+            System.out.println("eee");
         } catch (SQLException e) {
             e.printStackTrace();  // Em caso de erro, printa a stack trace
             throw new RuntimeException("Erro ao excluir promoção: " + e.getMessage());
