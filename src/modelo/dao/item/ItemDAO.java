@@ -25,19 +25,43 @@ public class ItemDAO {
 
 		
 		String sqlVenda = "INSERT INTO venda (cliente_id, data_venda, total) VALUES (NULL, NOW(), 0.00)";
-		String sqlItem = "INSERT INTO venda_item (venda_id, prod_id, quantidade, preco) VALUES(?, ?, ?, ?)";
+		String sqlItem = "INSERT INTO venda_produto (venda_id, prod_id, quantidade, preco) VALUES(?, ?, ?, ?)";
+		String sqlProduto = "SELECT valor FROM produto WHERE idProduto = ?";
 
 		try (Connection conn = ConexaoBD.getConexaoMySQL();
-				PreparedStatement stmtItem = conn.prepareStatement(sqlItem)) {
+			PreparedStatement stmtVenda = conn.prepareStatement(sqlVenda, Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement stmtItem = conn.prepareStatement(sqlItem);
+			PreparedStatement stmtProduto = conn.prepareStatement(sqlProduto)) {
+			
+			stmtVenda.executeUpdate();
+		    ResultSet rsVenda = stmtVenda.getGeneratedKeys();
+		    int vendaId = -1;
+		    if (rsVenda.next()) {
+		        vendaId = rsVenda.getInt(1); // Recupera o ID da venda inserida
+		    }
 
-			stmtItem.setInt(1, item.getQuantidade());
-			stmtItem.setInt(2, produtoId);
-			stmtItem.executeUpdate();
-			return true;
+		    // pega o preço atual do produto
+		    stmtProduto.setInt(1, produtoId);
+		    ResultSet rsProduto = stmtProduto.executeQuery();
+		    double precoProduto = 0.0;
+		    if (rsProduto.next()) {
+		        precoProduto = rsProduto.getDouble("valor"); // Recupera o preço do produto
+		    }
+
+		    // inserindo o item na venda
+		    if (vendaId != -1 && precoProduto > 0) {
+		        stmtItem.setInt(1, vendaId);  
+		        stmtItem.setInt(2, produtoId);
+		        stmtItem.setInt(3, item.getQuantidade()); 
+		        stmtItem.setDouble(4, precoProduto); 
+		        stmtItem.executeUpdate();
+		    }
+
+		    return true;
 
 		} catch (SQLException e) {
-			e.printStackTrace();
-			return false;
+		    e.printStackTrace();
+		    return false;
 		}
 	}
 
