@@ -66,13 +66,12 @@ public class TelaCadastroFuncionario extends JPanel { // jpanel ao invés de jfr
 
 		Border borda = new LineBorder(Cores.COR_ROSA_CLARO, 1);
 		hkGrotesk = Utils.loadCustomFont();
-		setLayout(new MigLayout("", "[grow][grow][grow][25%]", "[35%][grow][grow][grow]"));
+		setLayout(new MigLayout("", "[75%][25%]", "[35%][65%]"));
 
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(255, 255, 255));
-		panel.setBorder(new CompoundBorder(new LineBorder(new Color(255, 255, 255)), null));
-		add(panel, "cell 0 0 3 1,grow");
-		panel.setLayout(new MigLayout("", "[25%][25%][25%][25%]", "[grow][grow][grow][grow]"));
+		add(panel, "cell 0 0,grow");
+		panel.setLayout(new MigLayout("", "[25%][25%][25%][25%]", "[25%][25%][25%][25%]"));
 
 		JLabel lblId = new JLabel("Id");
 		lblId.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
@@ -167,8 +166,7 @@ public class TelaCadastroFuncionario extends JPanel { // jpanel ao invés de jfr
 		panel.add(chckbxAdm, "cell 1 3,alignx left,growy");
 
 		JPanel panel_1 = new JPanel();
-		panel_1.setBorder(new CompoundBorder(null, borda));
-		add(panel_1, "cell 3 0,grow");
+		add(panel_1, "cell 1 0,grow");
 		panel_1.setBackground(new Color(255, 255, 255));
 		// Botão Cadastrar
 		btnCadastrarFuncionario = new JButton("Cadastrar");
@@ -178,7 +176,7 @@ public class TelaCadastroFuncionario extends JPanel { // jpanel ao invés de jfr
 		btnCadastrarFuncionario.setBackground(new Color(114, 148, 235));
 		panel_1.add(btnCadastrarFuncionario, "cell 0 0,grow");
 		// Botão Ecluir
-		btnDeletarFuncionario = new JButton("Excluir Funcionario");
+		btnDeletarFuncionario = new JButton("Excluir");
 		btnDeletarFuncionario.setForeground(new Color(255, 255, 255));
 		btnDeletarFuncionario.setFont(new Font("Hanken Grotesk", Font.PLAIN, 25));
 
@@ -186,7 +184,7 @@ public class TelaCadastroFuncionario extends JPanel { // jpanel ao invés de jfr
 		panel_1.add(btnDeletarFuncionario, "cell 0 2,grow");
 
 		// Botâo Editar
-		btnEditarFuncionario = new JButton("Editar Funcionario");
+		btnEditarFuncionario = new JButton("Editar");
 		btnEditarFuncionario.setForeground(new Color(255, 255, 255));
 		btnEditarFuncionario.setFont(new Font("Hanken Grotesk", Font.PLAIN, 25));
 		btnEditarFuncionario.setBackground(new Color(255, 175, 175));
@@ -199,7 +197,7 @@ public class TelaCadastroFuncionario extends JPanel { // jpanel ao invés de jfr
 	btnDeletarFuncionario.setIcon(Utils.carregarIcone("lixo.png", 30, 30));
 
 		JScrollPane scrollPane = new JScrollPane();
-		add(scrollPane, "cell 0 1 4 3,grow");
+		add(scrollPane, "cell 0 1 2 1,grow");
 
 		tableModel = new DefaultTableModel();
 		tableModel.addColumn("CPF");

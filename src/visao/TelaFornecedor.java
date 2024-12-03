@@ -74,12 +74,12 @@ public class TelaFornecedor extends JPanel {
 
         setBackground(new Color(253, 233, 235));
         hkGrotesk = Utils.loadCustomFont();
-        setLayout(new MigLayout("", "[grow][grow][grow][25%]", "[35%][grow][grow][grow]"));
+        setLayout(new MigLayout("", "[75%][25%]", "[35%][65%]"));
 
         JPanel panel = new JPanel();
         panel.setBackground(new Color(255, 255, 255));
-        add(panel, "cell 0 0 3 1,grow");
-        panel.setLayout(new MigLayout("", "[grow][grow][grow][grow][grow]", "[grow][grow]"));
+        add(panel, "cell 0 0,grow");
+        panel.setLayout(new MigLayout("", "[25%][25%][25%][25%]", "[50%][50%]"));
 
         JLabel lblNome = new JLabel("Nome");
         lblNome.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
@@ -92,12 +92,12 @@ public class TelaFornecedor extends JPanel {
 
         JLabel lblRua = new JLabel("Rua");
         lblRua.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
-        panel.add(lblRua, "cell 3 0,alignx left,growy");
+        panel.add(lblRua, "cell 2 0,alignx left,growy");
 
         txtRua = new JTextField();
         txtRua.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
         txtRua.setColumns(10);
-        panel.add(txtRua, "cell 4 0,growx");
+        panel.add(txtRua, "cell 3 0,growx");
 
         JLabel lblCnpj = new JLabel("CNPJ");
         lblCnpj.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
@@ -110,15 +110,15 @@ public class TelaFornecedor extends JPanel {
 
         JLabel lblCep = new JLabel("CEP");
         lblCep.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
-        panel.add(lblCep, "cell 3 1,alignx left,growy");
+        panel.add(lblCep, "cell 2 1,alignx left,growy");
 
         txtCep = new JTextField();
         txtCep.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
         txtCep.setColumns(10);
-        panel.add(txtCep, "cell 4 1,growx");
+        panel.add(txtCep, "cell 3 1,growx");
 
         JPanel panelButtons = new JPanel();
-        add(panelButtons, "cell 3 0,grow");
+        add(panelButtons, "cell 1 0,grow");
         panelButtons.setBackground(new Color(255, 255, 255));
         panelButtons.setLayout(new MigLayout("", "[grow]", "[grow][grow][grow]"));
         
@@ -147,14 +147,14 @@ public class TelaFornecedor extends JPanel {
             }
         });
         btnCadastrarFor.setForeground(new Color(255, 255, 255));
-        btnCadastrarFor.setFont(hkGrotesk);
+        btnCadastrarFor.setFont(new Font("Hanken Grotesk", Font.PLAIN, 25));
         btnCadastrarFor.setBackground(new Color(114, 148, 235));
         panelButtons.add(btnCadastrarFor, "cell 0 0,grow");
         btnCadastrarFor.setIcon(Utils.carregarIcone("Add.png",30,30));
                 
 
                 // Botão Editar
-                btnEditarFor = new JButton("Editar Fornecedor");
+                btnEditarFor = new JButton("Editar");
                 panelButtons.add(btnEditarFor, "cell 0 1,grow");
                 btnEditarFor.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
@@ -180,8 +180,8 @@ public class TelaFornecedor extends JPanel {
                     }
                 });        
                 btnEditarFor.setForeground(new Color(255, 255, 255));
-                btnEditarFor.setFont(new Font("Hanken Grotesk", Font.PLAIN, 20));
-                btnEditarFor.setBackground(new Color(255, 149, 149));
+                btnEditarFor.setFont(new Font("Hanken Grotesk", Font.PLAIN, 25));
+                btnEditarFor.setBackground(new Color(253, 175, 175));
                 btnEditarFor.setIcon(Utils.carregarIcone("editar.png",30,30));
                 
                         // Botão Excluir
@@ -200,14 +200,14 @@ public class TelaFornecedor extends JPanel {
                         });
                         
                         btnDeletarFor.setForeground(new Color(255, 255, 255));
-                        btnDeletarFor.setFont(hkGrotesk);
+                        btnDeletarFor.setFont(new Font("Hanken Grotesk", Font.PLAIN, 25));
                         btnDeletarFor.setBackground(new Color(255, 0, 0));
                         panelButtons.add(btnDeletarFor, "cell 0 2,grow");
                         btnDeletarFor.setIcon(Utils.carregarIcone("lixo.png",30,30));
 
         
         JScrollPane scrollPane = new JScrollPane();
-        add(scrollPane, "cell 0 1 4 3,grow");
+        add(scrollPane, "cell 0 1 2 1,grow");
         
         tableModel = new DefaultTableModel();
 		tableModel.addColumn("Id");

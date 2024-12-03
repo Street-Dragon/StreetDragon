@@ -117,13 +117,12 @@ public class TelaCliente extends JPanel {
 
 		Border borda = new LineBorder(Cores.COR_ROSA_CLARO, 1);
 		Utils.loadCustomFont();
-		setLayout(new MigLayout("", "[grow][grow][grow][25%]", "[35%][grow]"));
+		setLayout(new MigLayout("", "[75%][25%]", "[35%][65%]"));
 
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(255, 255, 255));
-		panel.setBorder(new CompoundBorder(new LineBorder(new Color(255, 255, 255)), null));
-		add(panel, "cell 0 0 3 1,grow");
-		panel.setLayout(new MigLayout("", "[25%][25%][25%][25%]", "[grow][grow]"));
+		add(panel, "cell 0 0,grow");
+		panel.setLayout(new MigLayout("", "[25%][25%][25%][25%]", "[50%][50%]"));
 		
 		JLabel lblnome = new JLabel("Nome");
 		lblnome.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
@@ -162,18 +161,17 @@ public class TelaCliente extends JPanel {
 		txtCpf.setColumns(10);
 
 		JPanel panel_1 = new JPanel();
-		panel_1.setBorder(new CompoundBorder(null, borda));
-		add(panel_1, "cell 3 0,grow");
+		add(panel_1, "cell 1 0,grow");
 		panel_1.setBackground(new Color(255, 255, 255));
 		// Botão Cadastrar
 		btnCadastrar = new JButton("Cadastrar");
 		btnCadastrar.setForeground(new Color(255, 255, 255));
 		btnCadastrar.setFont(new Font("Hanken Grotesk", Font.PLAIN, 25));
-		panel_1.setLayout(new MigLayout("", "[grow]", "[grow][grow]"));
+		panel_1.setLayout(new MigLayout("", "[grow]", "[50%][50%]"));
 		btnCadastrar.setBackground(new Color(114, 148, 235));
 		panel_1.add(btnCadastrar, "cell 0 0,grow");
 		// Botão Ecluir
-		btnDeletar = new JButton("Excluir Funcionario");
+		btnDeletar = new JButton("Excluir");
 		btnDeletar.setForeground(new Color(255, 255, 255));
 		btnDeletar.setFont(new Font("Hanken Grotesk", Font.PLAIN, 25));	
 
@@ -188,7 +186,7 @@ public class TelaCliente extends JPanel {
 		panel_1.add(btnDeletar, "cell 0 1,grow");
 
 		JScrollPane scrollPane = new JScrollPane();
-		add(scrollPane, "cell 0 1 4 1,grow");
+		add(scrollPane, "cell 0 1 2 1,grow");
 
 		tableModel = new DefaultTableModel();
 		tableModel.addColumn("Nome");

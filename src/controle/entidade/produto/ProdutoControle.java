@@ -40,7 +40,7 @@ public class ProdutoControle {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				telaCadastroProduto.limparCampos();
-				telaCadastroProduto.getTextFieldId().setText(String.valueOf(produtoDAO.Idshow()));
+				telaCadastroProduto.dispose();
 			}
 		});
 		

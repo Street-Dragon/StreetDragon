@@ -88,6 +88,7 @@ public class TelaLogin extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new MigLayout("", "[grow][grow][grow]", "[grow]"));
+		setLocationRelativeTo(this);
 
 		// Chama o método de utilidades para carregar a fonte
 		hkGrotesk = Utils.loadCustomFont();
@@ -100,7 +101,7 @@ public class TelaLogin extends JFrame {
 
 		JLabel lblLogin = new JLabel("Login");
 		lblLogin.setHorizontalAlignment(SwingConstants.CENTER);
-		lblLogin.setFont(new Font("Tahoma", Font.PLAIN, 30));
+		lblLogin.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
 		panel.add(lblLogin, "cell 1 0,alignx center,aligny center");
 
 		// Painel da imagem:
@@ -125,7 +126,7 @@ public class TelaLogin extends JFrame {
 
 		JLabel lblStreetdragon = new JLabel("StreetDragon");
 		lblStreetdragon.setHorizontalAlignment(SwingConstants.CENTER);
-		lblStreetdragon.setFont(new Font("Tahoma", Font.PLAIN, 30));
+		lblStreetdragon.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
 		panel.add(lblStreetdragon, "cell 1 2,alignx center,aligny center");
 
 		JLabel lblCpf = new JLabel("CPF");
@@ -161,7 +162,8 @@ public class TelaLogin extends JFrame {
 		panel.add(ckboxMotrarSenha, "cell 1 7,alignx left");
 
 		btnContinuar = new JButton("Continuar");
-		btnContinuar.setBackground(Cores.COR_ROSA);
+		btnContinuar.setForeground(new Color(255, 255, 255));
+		btnContinuar.setBackground(new Color(226, 60, 41));
 		btnContinuar.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
 		panel.add(btnContinuar, "cell 1 8,grow");
 	}

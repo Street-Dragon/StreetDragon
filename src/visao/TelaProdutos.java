@@ -52,13 +52,12 @@ public class TelaProdutos extends JPanel {
 	public TelaProdutos(TelaPrincipal telaPrincipal) {
 		setBackground(utils.Cores.COR_ROSA_CLARO);
 		hkGrotesk = Utils.loadCustomFont();
-		setLayout(new MigLayout("", "[grow][grow][grow][25%]", "[35%][grow][grow][grow]"));
+		setLayout(new MigLayout("", "[75%][25%]", "[35%][65%]"));
 
 		JPanel panel = new JPanel();
-		panel.setBorder(null);
 		panel.setBackground(new Color(255, 255, 255));
-		add(panel, "cell 0 0 3 1,grow");
-		panel.setLayout(new MigLayout("", "[25%][25%][25%][25%]", "[grow][grow][grow][grow]"));
+		add(panel, "cell 0 0,grow");
+		panel.setLayout(new MigLayout("", "[25%][25%][25%][25%]", "[25%][25%][25%][25%]"));
 
 		lblNewLabel = new JLabel("Id");
 		lblNewLabel.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
@@ -81,8 +80,7 @@ public class TelaProdutos extends JPanel {
 		txtFieldValor.setColumns(10);
 
 		JPanel panel_1 = new JPanel();
-		add(panel_1, "cell 3 0,grow");
-		panel_1.setBorder(new CompoundBorder(null, new LineBorder(Cores.COR_ROSA_CLARO, 1)));
+		add(panel_1, "cell 1 0,grow");
 		panel_1.setBackground(new Color(255, 255, 255));
 
 		// Botão Cadastrar
@@ -171,7 +169,7 @@ public class TelaProdutos extends JPanel {
 		btnPesquisar.setIcon(Utils.carregarIcone("lupa.png", 30, 30));
 
 		JScrollPane scrollPane = new JScrollPane();
-		add(scrollPane, "cell 0 1 4 3,grow");
+		add(scrollPane, "cell 0 1 2 1,grow");
 		scrollPane.setViewportView(table);
 
 		tableModel = new DefaultTableModel(new Object[][] {}, new String[] { "Id", "Nome", "Valor", "Qnt estoque" });
