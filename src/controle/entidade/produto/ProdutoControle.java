@@ -141,6 +141,7 @@ public class ProdutoControle {
 				}); 
 			} 
 		} else {
+
 			List<Produto> produtos = produtoDAO.pesquisa(telaProdutos.setTxtPesquisa(), telaProdutos.getComboBox().getSelectedIndex());
 			DefaultTableModel tableModel = (DefaultTableModel) telaProdutos.getTable().getModel();
 			tableModel.setRowCount(0);
@@ -191,7 +192,12 @@ public class ProdutoControle {
 			}
 			
 		} catch (Exception e) {
-			TelaMensagens Tm = new TelaMensagens("Valor ou Estoque preechidos incorretamente", 2);
+			if (!(verificarNum(telaCadastroProduto.getTextFieldValor(),2)) && !(verificarNum(telaCadastroProduto.getTextFieldQntEstoque(), 1)))
+				new TelaMensagens("Valor e Estoque prechidos incorretamente", 3);
+			else if (!verificarNum(telaCadastroProduto.getTextFieldValor(), 2))
+				new TelaMensagens("Valor prechido incorretamente", 3);	
+			else
+				new TelaMensagens("Estoque prechido incorretamente", 3);
 		} 
 	}
   
@@ -201,9 +207,8 @@ public class ProdutoControle {
 			return; 
 		} 
 		try { 
-//			------------------------------------------------------------------------------------------------------
-			float valor = Float.parseFloat(telaCadastroProduto.getTextFieldValor());
 			int estoque = Integer.parseInt(telaCadastroProduto.getTextFieldQntEstoque()); 
+			float valor = Float.parseFloat(telaCadastroProduto.getTextFieldValor());
 			String nome = cadastroProduto.getTextFieldNome(); 
 			String material = cadastroProduto.getCbMaterial(); 
 			String categoria = cadastroProduto.getCbCategoria();
@@ -233,10 +238,32 @@ public class ProdutoControle {
 				TelaMensagens Tm = new TelaMensagens("Erro ao registrar o Fornecedor", 1);
 			}
 		} catch (Exception e) {
-			TelaMensagens Tm = new TelaMensagens("Valor ou Estoque preechidos incorreetamente", 3);
+			if (!(verificarNum(telaCadastroProduto.getTextFieldValor(),2)) && !(verificarNum(telaCadastroProduto.getTextFieldQntEstoque(), 1)))
+				new TelaMensagens("Valor e Estoque prechidos incorretamente", 3);
+			else if (!verificarNum(telaCadastroProduto.getTextFieldValor(), 2))
+				new TelaMensagens("Valor prechido incorretamente", 3);	
+			else
+				new TelaMensagens("Estoque prechido incorretamente", 3);			
 		} 
 	}
   
+	public boolean verificarNum(String Num, int i) {
+		if (i == 1) {
+			try {
+				int i2 = Integer.parseInt(Num);
+				return true;
+			} catch (Exception e) {
+				return false;
+			}
+		} else {
+			try {
+				float i2 = Float.parseFloat(Num);
+				return true;
+			} catch (Exception e) {
+				return false;
+			}
+		}
+	}
 	public void DeletProduto() { 
 		JTable table = telaProdutos.getTable(); 
 		int selectedRowIndex = table.getSelectedRow(); 

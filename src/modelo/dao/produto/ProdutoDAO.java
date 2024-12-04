@@ -9,11 +9,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import controle.entidade.conexao.ConexaoBD;
+import controle.entidade.produto.ProdutoControle;
 import modelo.entidade.contato.Contato;
 import modelo.entidade.pessoa.fornecedor.Fornecedor;
 import modelo.entidade.pessoa.funcionario.Funcionario;
 import modelo.entidade.produto.Produto;
 import modelo.enumeracao.tamanho.Tamanho;
+import visao.TelaMensagens;
 
 public class ProdutoDAO {
 
@@ -114,11 +116,17 @@ public class ProdutoDAO {
 			tipo = 3;
 			break;
 		case 1:
-			sqlSelect = "SELECT * FROM produto where idProduto = ?";
+			if (new ProdutoControle().verificarNum(pesquisa,1)) 
+				sqlSelect = "SELECT * FROM produto where idProduto = ?";
+			else
+				sqlSelect = "SELECT * FROM produto";
 			tipo = 1;
 			break;
 		case 2:
-			sqlSelect = "SELECT * FROM produto where valor = ?";
+			if (new ProdutoControle().verificarNum(pesquisa,2)) 
+				sqlSelect = "SELECT * FROM produto WHERE valor BETWEEN ? AND ?";	
+			else
+				sqlSelect = "SELECT * FROM produto";
 			tipo = 2;
 			break;
 		case 3:
@@ -134,14 +142,25 @@ public class ProdutoDAO {
 			tipo = 3;
 			break;
 		}
-		try (Connection conn = ConexaoBD.getConexaoMySQL();
+		try (Connection conn = ConexaoBD.getConexaoMySQL();				
 				PreparedStatement stmt = conn.prepareStatement(sqlSelect)){
 				switch(tipo) {
 				case 1:
-					stmt.setInt(1, Integer.valueOf(pesquisa));
+					if (new ProdutoControle().verificarNum(pesquisa,1)) 
+						stmt.setInt(1, Integer.valueOf(pesquisa));		
+					else
+						new TelaMensagens("Valor preenchido incorretamente!",1);
+					
 					break;
 				case 2:
-					stmt.setFloat(1, Float.valueOf(pesquisa));
+					if (new ProdutoControle().verificarNum(pesquisa,2)) {
+						float num1 = (float) (Float.valueOf(pesquisa)-0.1);
+						float num2 = (float) (Float.valueOf(pesquisa)+0.1);
+						stmt.setFloat(1, num1);
+						stmt.setFloat(2, num2);
+					}
+					else 
+						new TelaMensagens("Valor preenchido incorretamente!",1);
 					break;
 				case 3:
 					stmt.setString(1, pesquisa);
