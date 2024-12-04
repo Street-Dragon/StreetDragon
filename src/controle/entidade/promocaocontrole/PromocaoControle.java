@@ -21,7 +21,8 @@ public class PromocaoControle {
     public PromocaoControle(TelaPromocao telaPromocao) {
         this.telaPromocao = telaPromocao;
         configurarBotoes();
-        atualizarTabela(); // Garante que a tabela seja atualizada ao iniciar a tela
+        atualizarTabela(); 
+        fillPP(telaPromocao);
     }
 
     private void configurarBotoes() {
@@ -51,7 +52,10 @@ public class PromocaoControle {
     private void cadastrarPromocao() {
         String nome = telaPromocao.getTxtNome().getText();
         String termino = telaPromocao.getTxtTermino().getText();
+        String inicio = telaPromocao.getTxtInicio().getText();
         String descontoText = telaPromocao.getTxtDesconto().getText();
+        // Captura a categoria selecionada no ComboBox
+        String categoria = (String) telaPromocao.getComboBoxCategoria().getSelectedItem(); 
 
         if (nome.isEmpty() || termino.isEmpty() || descontoText.isEmpty()) {
             new TelaMensagens("Todos os campos devem ser preenchidos!", 1);
@@ -70,21 +74,26 @@ public class PromocaoControle {
         promocao.setNome(nome);
         promocao.setDesconto(desconto);
         promocao.setTermino(termino);
+        promocao.setInicio(inicio);
+        // Aqui você pode decidir se vai ou não associar a categoria. Se não for associada, basta exibir na UI.
 
         try {
-            promocaoDAO.cadastrarPromocao(promocao);
+            promocaoDAO.cadastrarPromocao(promocao); // Apenas cadastra os dados sem categoria
             new TelaMensagens("Promoção cadastrada com sucesso!", 0);
-            
+
+            // Limpa os campos após cadastro
             telaPromocao.getTxtNome().setText("");
             telaPromocao.getTxtTermino().setText("");
             telaPromocao.getTxtDesconto().setText("");
-            
-            
+            telaPromocao.getTxtInicio().setText("");
+            telaPromocao.getComboBoxCategoria().setSelectedIndex(0);
+
             atualizarTabela();
         } catch (RuntimeException e) {
             new TelaMensagens("Erro ao cadastrar promoção: " + e.getMessage(), 1);
         }
     }
+
 
     private void editarPromocao() {
         int selectedRow = telaPromocao.getTable().getSelectedRow();
@@ -97,7 +106,10 @@ public class PromocaoControle {
         int id = (int) telaPromocao.getTable().getValueAt(selectedRow, 0);
         String nome = telaPromocao.getTxtNome().getText();
         String termino = telaPromocao.getTxtTermino().getText();
+        String inicio = telaPromocao.getTxtInicio().getText();
         String descontoText = telaPromocao.getTxtDesconto().getText();
+        
+       
 
         if (nome.isEmpty() || termino.isEmpty() || descontoText.isEmpty()) {
             new TelaMensagens("Todos os campos devem ser preenchidos!", 1);
@@ -117,6 +129,7 @@ public class PromocaoControle {
         promocao.setNome(nome);
         promocao.setDesconto(desconto);
         promocao.setTermino(termino);
+        promocao.setInicio(inicio);
 
         try {
             promocaoDAO.editarPromocao(promocao);
@@ -125,7 +138,7 @@ public class PromocaoControle {
             telaPromocao.getTxtNome().setText("");
             telaPromocao.getTxtTermino().setText("");
             telaPromocao.getTxtDesconto().setText("");
-            
+            telaPromocao.getTxtInicio().setText("");      
             
             atualizarTabela();
         } catch (RuntimeException e) {
@@ -148,6 +161,7 @@ public class PromocaoControle {
             	telaPromocao.getTxtNome().setText("");
                 telaPromocao.getTxtTermino().setText("");
                 telaPromocao.getTxtDesconto().setText("");
+                telaPromocao.getTxtInicio().setText("");
                 
                 promocaoDAO.excluirPromocao(id);
                 new TelaMensagens("Promoção excluída com sucesso!", 1);
@@ -162,33 +176,49 @@ public class PromocaoControle {
         DefaultTableModel model = (DefaultTableModel) telaPromocao.getTable().getModel();
         model.setRowCount(0); // Limpa a tabela
 
+        // Agora, ao invés de pegar a categoria do ComboBox, pegue a categoria de cada promoção (se houver).
         for (Promocao promocao : promocaoDAO.listarTodos()) {
+            String categoria = "Categoria não definida"; // Categoria padrão se não estiver associada
+
+            // Aqui você pode tratar a categoria da forma que for necessária. Caso ela não seja associada,
+            // a categoria será exibida como "Categoria não definida".
+            
             model.addRow(new Object[]{
                 promocao.getIdPromocao(), 
                 promocao.getNome(), 
                 promocao.getDesconto(), 
-                promocao.getTermino()
+                promocao.getTermino(),
+                promocao.getInicio(),
+                categoria // Categoria associada a cada promoção, se for necessário
             });
         }
     }
+
     
     public void fillPP(TelaPromocao telaPromocao) {
         telaPromocao.getTable().addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 JTable table = telaPromocao.getTable();
-                int selectedRowIndex = table.getSelectedRow();
-                if (selectedRowIndex == -1) {
-                } else {
-                    Promocao promocao = new Promocao();
+                int selectedRowIndex = table.getSelectedRow(); // Pega o índice da linha selecionada
+                
+                // Verifica se o clique foi em uma linha válida (não cabeçalho)
+                if (selectedRowIndex != -1) {
+                    // Obtém o ID da promoção na primeira coluna da linha selecionada
                     String firstColumnValue = table.getValueAt(selectedRowIndex, 0).toString();
-                    promocao = promocaoDAO.getIdPromocao(Integer.valueOf(firstColumnValue)); // Aqui você busca a promoção pelo ID
-                    telaPromocao.getTxtNome().setText(promocao.getNome()); // Preenche o campo Nome
-                    telaPromocao.getTxtDesconto().setText(String.valueOf(promocao.getDesconto())); // Preenche o campo Desconto
-                    telaPromocao.getTxtTermino().setText(promocao.getTermino()); // Preenche o campo Término
+                    
+                    // Busca a promoção no banco de dados ou repositório usando o ID
+                    Promocao promocao = promocaoDAO.getIdPromocao(Integer.valueOf(firstColumnValue)); 
+                    
+                    // Preenche os campos com os dados da promoção seleciona
+                    telaPromocao.getTxtNome().setText(promocao.getNome()); 
+                    telaPromocao.getTxtDesconto().setText(String.valueOf(promocao.getDesconto())); 
+                    telaPromocao.getTxtTermino().setText(promocao.getTermino()); 
+                    telaPromocao.getTxtInicio().setText(promocao.getInicio());
                 }
             }
         });
     }
+
 
     
     

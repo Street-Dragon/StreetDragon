@@ -5,7 +5,7 @@ import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -21,6 +21,7 @@ import javax.swing.table.DefaultTableModel;
 import net.miginfocom.swing.MigLayout;
 import utils.Cores;
 import utils.Utils;
+import javax.swing.JComboBox;
 
 
 public class TelaPromocao extends JPanel {
@@ -34,6 +35,9 @@ public class TelaPromocao extends JPanel {
 	private JButton btnExcluir;
 	private static DefaultTableModel tableModel;
 	private JTable table;
+	private JLabel lblInicio;
+	private JTextField txtInicio;
+	private JComboBox comboBoxCategoria;
 	
 
 
@@ -54,34 +58,48 @@ public class TelaPromocao extends JPanel {
 		panel.setBackground(new Color(255, 255, 255));
 		panel.setBorder(new CompoundBorder(new LineBorder(new Color(255, 255, 255)), null));
 		add(panel, "cell 0 0 3 1,grow");
-		panel.setLayout(new MigLayout("", "[grow][grow][grow][grow][grow][grow]", "[grow][grow]"));
+		panel.setLayout(new MigLayout("", "[grow][grow][grow][grow][grow][grow]", "[grow][grow][]"));
 				
-						JLabel lblemail = new JLabel("Nome da Promoção");
-						lblemail.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
-						panel.add(lblemail, "cell 0 0,alignx left");
+						JLabel lblNomePromo = new JLabel("Nome da Promoção");
+						lblNomePromo.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
+						panel.add(lblNomePromo, "cell 0 0,alignx left");
 		
 				txtNome = new JTextField();
 				txtNome.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
 				panel.add(txtNome, "cell 1 0,growx");
 				txtNome.setColumns(10);
 						
-								JLabel lblcpf = new JLabel("Término");
-								lblcpf.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
-								panel.add(lblcpf, "cell 3 0,alignx center,aligny center");
+								JLabel lblTermino = new JLabel("Término");
+								lblTermino.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
+								panel.add(lblTermino, "cell 3 0,alignx center,aligny center");
 				
 						txtTermino = new JTextField();
 						txtTermino.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
 						panel.add(txtTermino, "cell 4 0,growx");
 						txtTermino.setColumns(10);
 		
-				JLabel lblNCompras = new JLabel("% do Desconto");
-				lblNCompras.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
-				panel.add(lblNCompras, "cell 0 1,alignx left");
+				JLabel lblDesconto = new JLabel("% do Desconto");
+				lblDesconto.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
+				panel.add(lblDesconto, "cell 0 1,alignx left");
 
 		txtDesconto = new JTextField();
 		txtDesconto.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
 		txtDesconto.setColumns(10);
 		panel.add(txtDesconto, "cell 1 1,growx,aligny center");
+		
+		lblInicio = new JLabel("Inicio");
+		lblInicio.setFont(new Font("Dialog", Font.PLAIN, 30));
+		panel.add(lblInicio, "cell 3 1,alignx center,aligny center");
+		
+		txtInicio = new JTextField();
+		txtInicio.setFont(new Font("Dialog", Font.PLAIN, 30));
+		txtInicio.setColumns(10);
+		panel.add(txtInicio, "cell 4 1,growx,aligny center");
+		
+		comboBoxCategoria = new JComboBox();
+		comboBoxCategoria.setModel(new DefaultComboBoxModel(new String[] {"", "Calça", "Camisa", "Camiseta", "Moleton", "Boné", "Toca", "Tênis", "Acessórios", "Outro"}));
+		comboBoxCategoria.setToolTipText("\r\n");
+		panel.add(comboBoxCategoria, "cell 0 2,grow");
 
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new CompoundBorder(null, borda));
@@ -117,13 +135,15 @@ public class TelaPromocao extends JPanel {
 		tableModel.addColumn("Nome");
 		tableModel.addColumn("%");
 		tableModel.addColumn("Término");
+		tableModel.addColumn("Inicio");
+		tableModel.addColumn("Categoria");
 		
 		table = new JTable();
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
 			new String[] {
-				"Id", "Nome", "%","Término"
+				"Id", "Nome", "%","Término","Inicio","Categoria"
 			}
 			
 			
@@ -144,6 +164,12 @@ public class TelaPromocao extends JPanel {
 		
 		
 
+	}
+	public JTextField getTxtInicio() {
+		return txtInicio;
+	}
+	public void setTxtInicio(JTextField txtInicio) {
+		this.txtInicio = txtInicio;
 	}
 	public JTable getTable() {
 		return table;
@@ -209,4 +235,12 @@ public class TelaPromocao extends JPanel {
 	public void setBtnExcluir(JButton btnExcluir) {
 		this.btnExcluir = btnExcluir;
 	}
+	public JComboBox getComboBoxCategoria() {
+		return comboBoxCategoria;
+	}
+	public void setComboBoxCategoria(JComboBox comboBoxCategoria) {
+		this.comboBoxCategoria = comboBoxCategoria;
+	}
+	
+	
 }

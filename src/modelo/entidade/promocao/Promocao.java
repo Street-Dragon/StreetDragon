@@ -9,6 +9,8 @@ public class Promocao {
     private String Nome;
     private List<Produto> produto;
     private String Termino;
+    private String Inicio;
+    private String categoria;
 
     // Construtor sem parâmetros
     public Promocao() {
@@ -20,11 +22,31 @@ public class Promocao {
 
 
     // Getters e Setters
+    
+    
+    
+    
     public String getNome() {
         return Nome;
     }
 
-    public void setNome(String nome) {
+    public String getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(String categoria) {
+		this.categoria = categoria;
+	}
+
+	public String getInicio() {
+		return Inicio;
+	}
+
+	public void setInicio(String inicio) {
+		Inicio = inicio;
+	}
+
+	public void setNome(String nome) {
         Nome = nome;
     }
 
@@ -71,4 +93,7 @@ public class Promocao {
         Promocao other = (Promocao) obj;
         return Float.floatToIntBits(desconto) == Float.floatToIntBits(other.desconto) && idPromocao == other.idPromocao;
     }
+
+	
+	
 }
