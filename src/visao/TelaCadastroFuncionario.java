@@ -61,23 +61,21 @@ public class TelaCadastroFuncionario extends JPanel { // jpanel ao invés de jfr
 	 */
 	public TelaCadastroFuncionario(TelaPrincipal telaPrincipal) { // telaprincipal
 
-		setBounds(100, 100, 926, 526);
+		setBounds(100, 100, 1053, 623);
 		setBackground(Cores.COR_ROSA_CLARO);
-		setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		Border borda = new LineBorder(Cores.COR_ROSA_CLARO, 1);
 		hkGrotesk = Utils.loadCustomFont();
-		setLayout(new MigLayout("", "[grow][grow][grow][grow]", "[grow][grow][grow][grow]"));
+		setLayout(new MigLayout("", "[75%][25%]", "[35%][65%]"));
 
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(255, 255, 255));
-		panel.setBorder(new CompoundBorder(new LineBorder(new Color(255, 255, 255)), null));
-		add(panel, "cell 0 0 3 1,grow");
-		panel.setLayout(new MigLayout("", "[grow][grow][grow][grow][grow][grow]", "[grow][grow][grow][grow]"));
+		add(panel, "cell 0 0,grow");
+		panel.setLayout(new MigLayout("", "[25%][25%][25%][25%]", "[25%][25%][25%][25%]"));
 
 		JLabel lblId = new JLabel("Id");
 		lblId.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
-		panel.add(lblId, "cell 0 0,alignx center,growy");
+		panel.add(lblId, "cell 0 0,alignx left,growy");
 
 		textId = new JTextField();
 		textId.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
@@ -87,16 +85,16 @@ public class TelaCadastroFuncionario extends JPanel { // jpanel ao invés de jfr
 
 		JLabel lblemail = new JLabel("Email");
 		lblemail.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
-		panel.add(lblemail, "cell 3 0,alignx left");
+		panel.add(lblemail, "cell 2 0,alignx left,growy");
 
 		textEmail = new JTextField();
 		textEmail.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
-		panel.add(textEmail, "cell 4 0,growx");
+		panel.add(textEmail, "cell 3 0,growx");
 		textEmail.setColumns(10);
 
 		JLabel lblnome = new JLabel("Nome");
 		lblnome.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
-		panel.add(lblnome, "cell 0 1,alignx center,aligny center");
+		panel.add(lblnome, "cell 0 1,alignx left,growy");
 
 		textNome = new JTextField();
 		textNome.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
@@ -105,16 +103,16 @@ public class TelaCadastroFuncionario extends JPanel { // jpanel ao invés de jfr
 
 		JLabel lbltelefone = new JLabel("Telefone");
 		lbltelefone.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
-		panel.add(lbltelefone, "cell 3 1,alignx left");
+		panel.add(lbltelefone, "cell 2 1,alignx left,growy");
 
 		textTelefone = new JTextField();
 		textTelefone.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
-		panel.add(textTelefone, "cell 4 1,growx");
+		panel.add(textTelefone, "cell 3 1,growx");
 		textTelefone.setColumns(10);
 
 		JLabel lblcpf = new JLabel("Cpf");
 		lblcpf.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
-		panel.add(lblcpf, "cell 0 2,alignx center,aligny center");
+		panel.add(lblcpf, "cell 0 2,alignx left,growy");
 
 		textCpf = new JTextField();
 		textCpf.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
@@ -123,7 +121,7 @@ public class TelaCadastroFuncionario extends JPanel { // jpanel ao invés de jfr
 
 		JLabel lblsenha = new JLabel("Senha");
 		lblsenha.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
-		panel.add(lblsenha, "cell 3 2,alignx left,aligny center");
+		panel.add(lblsenha, "cell 2 2,alignx left,growy");
 
 		chckbxVerSenha = new JCheckBox("Ver senha");
 		chckbxVerSenha.addActionListener(new ActionListener() {
@@ -140,10 +138,10 @@ public class TelaCadastroFuncionario extends JPanel { // jpanel ao invés de jfr
 
 		textSenha = new JPasswordField();
 		textSenha.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
-		panel.add(textSenha, "cell 4 2,growx");
+		panel.add(textSenha, "cell 3 2,growx");
 		chckbxVerSenha.setBackground(new Color(255, 255, 255));
 		chckbxVerSenha.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
-		panel.add(chckbxVerSenha, "cell 4 3 2 1");
+		panel.add(chckbxVerSenha, "cell 3 3,alignx left,growy");
 
 		chckbxAdm = new JCheckBox("Adminstrador");
 		chckbxAdm.addActionListener(new ActionListener() {
@@ -165,11 +163,10 @@ public class TelaCadastroFuncionario extends JPanel { // jpanel ao invés de jfr
 		});
 		chckbxAdm.setBackground(new Color(255, 255, 255));
 		chckbxAdm.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
-		panel.add(chckbxAdm, "cell 1 3 2 1,alignx left");
+		panel.add(chckbxAdm, "cell 1 3,alignx left,growy");
 
 		JPanel panel_1 = new JPanel();
-		panel_1.setBorder(new CompoundBorder(null, borda));
-		add(panel_1, "cell 3 0,grow");
+		add(panel_1, "cell 1 0,grow");
 		panel_1.setBackground(new Color(255, 255, 255));
 		// Botão Cadastrar
 		btnCadastrarFuncionario = new JButton("Cadastrar");
@@ -179,7 +176,7 @@ public class TelaCadastroFuncionario extends JPanel { // jpanel ao invés de jfr
 		btnCadastrarFuncionario.setBackground(new Color(114, 148, 235));
 		panel_1.add(btnCadastrarFuncionario, "cell 0 0,grow");
 		// Botão Ecluir
-		btnDeletarFuncionario = new JButton("Excluir Funcionario");
+		btnDeletarFuncionario = new JButton("Excluir");
 		btnDeletarFuncionario.setForeground(new Color(255, 255, 255));
 		btnDeletarFuncionario.setFont(new Font("Hanken Grotesk", Font.PLAIN, 25));
 
@@ -187,14 +184,20 @@ public class TelaCadastroFuncionario extends JPanel { // jpanel ao invés de jfr
 		panel_1.add(btnDeletarFuncionario, "cell 0 2,grow");
 
 		// Botâo Editar
-		btnEditarFuncionario = new JButton("Editar Funcionario");
+		btnEditarFuncionario = new JButton("Editar");
 		btnEditarFuncionario.setForeground(new Color(255, 255, 255));
-		btnEditarFuncionario.setFont(hkGrotesk);
+		btnEditarFuncionario.setFont(new Font("Hanken Grotesk", Font.PLAIN, 25));
 		btnEditarFuncionario.setBackground(new Color(255, 175, 175));
 		panel_1.add(btnEditarFuncionario, "cell 0 1,grow");
+		
+		// Icones Botões
+		
+	btnCadastrarFuncionario.setIcon(Utils.carregarIcone("Add.png", 30, 30));
+	btnEditarFuncionario.setIcon(Utils.carregarIcone("editar.png", 30, 30));
+	btnDeletarFuncionario.setIcon(Utils.carregarIcone("lixo.png", 30, 30));
 
 		JScrollPane scrollPane = new JScrollPane();
-		add(scrollPane, "cell 0 1 4 3,grow");
+		add(scrollPane, "cell 0 1 2 1,grow");
 
 		tableModel = new DefaultTableModel();
 		tableModel.addColumn("CPF");
