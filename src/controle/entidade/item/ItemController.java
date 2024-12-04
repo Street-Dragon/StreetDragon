@@ -96,8 +96,6 @@ public class ItemController {
 
 	public void atualizarTabela() {
 		
-		
-		
 		List<Item> itens = itemDAO.listarItens();
 
 		DefaultTableModel tableModel;
@@ -111,12 +109,12 @@ public class ItemController {
 			Produto produto = item.getProduto();
 			double valorTotal = item.getQuantidade() * produto.getValor();
 
-			System.out.println("Número do item: "+item.getId());
 			tableModel.addRow(new Object[] { item.getId(), produto.getNomeProduto(), item.getQuantidade(),
 					String.format("%.2f", valorTotal) });
 		}
 
 		telaVenda.getTable().setModel(tableModel);
+		atualizaTotal();
 	}
 
 	protected void excluirTudo() {
@@ -134,13 +132,13 @@ public class ItemController {
 		int selectedRow = telaVenda.getTable().getSelectedRow(); // Pega a linha selecionada na tabela
 
 		if (selectedRow != -1) {
-			// Pega o ID do item da tabela (assumindo que o ID do item está na primeira
-			// coluna)
+			// Pega o ID do item da tabela 
 			int idItem = (Integer) telaVenda.getTable().getValueAt(selectedRow, 0);
 			int resposta = JOptionPane.showConfirmDialog(telaVenda,
 					"Você tem certeza que deseja excluir o item com ID: " + idItem + "?", "Confirmar Exclusão",
 					JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-//funciona ate aq
+			
+			//funciona ate aq
 			if (resposta == JOptionPane.YES_OPTION) {
 
 				// Chama o método excluirItem do itemDAO para excluir o item do banco
@@ -160,5 +158,10 @@ public class ItemController {
 					JOptionPane.WARNING_MESSAGE);
 		}
 
+	}
+	
+	
+	private void atualizaTotal() {
+		telaVenda.getLblTotal().setText("Total: R$ " + itemDAO.getTotal());
 	}
 }

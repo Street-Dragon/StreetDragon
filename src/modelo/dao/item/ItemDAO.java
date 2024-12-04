@@ -15,6 +15,7 @@ import modelo.entidade.produto.Produto;
 
 public class ItemDAO {
 	private Integer idVendaAtual = null;
+	private float totalVendaAtual = 0;
 
 	public boolean verificaVenda() {
 		String sqlVerificaVenda = "SELECT venda_id FROM venda WHERE data_venda IS NULL LIMIT 1";
@@ -42,7 +43,7 @@ public class ItemDAO {
 				ResultSet rs = stmt.executeQuery()) {
 
 			if (rs.next()) {
-				return rs.getInt(1) ;
+				return rs.getInt(1);
 			} else {
 				return 1;
 			}
@@ -120,16 +121,28 @@ public class ItemDAO {
 				return false;
 			}
 
-			// atualizando a venda
-			stmtUpdate.setInt(1, idVendaAtual);
-			stmtUpdate.setInt(2, idVendaAtual);
-
 			return true;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
 		}
+	}
+
+	public boolean atualizaTotal() {
+		String sqlUpdate = "UPDATE venda SET total = (SELECT SUM(vp.quantidade * vp.preco) FROM venda_produto vp WHERE vp.venda_id = ?) WHERE venda_id = ?;";
+
+		try (Connection conn = ConexaoBD.getConexaoMySQL();
+				PreparedStatement stmtUpdate = conn.prepareStatement(sqlUpdate)) {
+			stmtUpdate.setInt(1, idVendaAtual);
+			stmtUpdate.setInt(2, idVendaAtual);
+			return true;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return false;
 	}
 
 	public int GetVendaId() {
@@ -156,7 +169,7 @@ public class ItemDAO {
 //                produto.setVariacao(rs.getString("p.variação"));
 //                produto.setQuantEstoque(rs.getInt("p.estoque"));
 //                produto.setTamanho(rs.getString("p.tamanho"));
-//                
+//                USA O SHIFT + CTRL + F NA PROXIMA
 //            }
 //        } catch (SQLException e) {
 //            e.printStackTrace();
@@ -187,30 +200,41 @@ public class ItemDAO {
 	public boolean excluirItem(int idProduto) {
 
 		String sql = "DELETE FROM venda_produto WHERE venda_id = ? AND prod_id = ?";
-		String update = "UPDATE venda SET total = (SELECT SUM(vp.quantidade * vp.preco) FROM venda_produto vp WHERE vp.venda_id = ? ) WHERE venda_id = ?";
-
 		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 
 			stmt.setInt(1, idVendaAtual);
 			stmt.setInt(2, idProduto);
 			int rowsAffected = stmt.executeUpdate();
-			if (rowsAffected > 0) {
-				try (PreparedStatement stmtAtualizarTotal = conn.prepareStatement(update)) {
-					stmtAtualizarTotal.setInt(1, idVendaAtual);
-					stmtAtualizarTotal.setInt(2, idVendaAtual);
-
-					// Executando a atualização do total
-					stmtAtualizarTotal.executeUpdate();
-					return true;
-				}
-
-			} else
+			if (rowsAffected > 0)
+				return true;
+			else
 				return false;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
 		}
+	}
+
+	public float getTotal() {
+
+		String sql = "SELECT SUM(vp.quantidade * vp.preco) AS total FROM venda_produto vp WHERE vp.venda_id = ?";
+
+		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+			if (idVendaAtual != null) {
+				stmt.setInt(1, idVendaAtual);
+				ResultSet rs = stmt.executeQuery();
+
+				if (rs.next()) {
+					totalVendaAtual = rs.getFloat("total");
+				}
+			} else
+				totalVendaAtual = 0;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return totalVendaAtual;
 	}
 
 	public void excluirTodos() throws SQLException {
