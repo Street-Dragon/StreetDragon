@@ -14,17 +14,22 @@ public class VendaController {
 	private VendaDAO vendaDAO = new VendaDAO();
 
 	public void setTelaPagamento(TelaPagamento telaPagamento) {
-		this.telaPagamento= telaPagamento;
-		
-		telaPagamento.getBtnConfirmar().addActionListener(new ActionListener() {
-			@Override
-				public void actionPerformed(ActionEvent e) {
-				
-				//realizarVenda();
-				
-			}
-		});
-	}
+	    this.telaPagamento = telaPagamento;
+
+	    telaPagamento.getBtnConfirmar().addActionListener(new ActionListener() {
+	        @Override
+	        public void actionPerformed(ActionEvent e) {
+	            // realizarVenda();
+	        }
+	    });
+
+	    telaPagamento.getBtnCancelar().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                telaPagamento.setVisible(false);
+            }
+        });
+    }
 	
     public void realizarVenda(Venda venda) {
         vendaDAO.salvarVenda(venda);

@@ -23,6 +23,7 @@ public class TelaPagamento extends JPanel {
 	private JTextField textField;
 	private JButton btnConfirmar;
 	private TelaVenda telaVenda;
+	private JButton btnCancelar;
 	
 	
 	/**
@@ -128,7 +129,8 @@ public class TelaPagamento extends JPanel {
 		txtOutros.setColumns(10);
 		panel_2.add(txtOutros, "cell 4 1,growx,aligny center");
 		
-		JButton btnCancelar = new JButton("Cancelar");
+		//aqui
+		btnCancelar = new JButton("Cancelar");
 		btnCancelar.setForeground(new Color(255, 255, 255));
 		btnCancelar.setBackground(Cores.COR_VERMELHO);
 		btnCancelar.setFont(new Font("Hanken Grotesk", Font.BOLD, 25));
@@ -160,6 +162,10 @@ public class TelaPagamento extends JPanel {
 
 	public JButton getBtnConfirmar() {
 		return btnConfirmar;
+	}
+	
+	public JButton getBtnCancelar() {
+		return btnCancelar;
 	}
 
 }
