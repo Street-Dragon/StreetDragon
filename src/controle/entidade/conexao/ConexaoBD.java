@@ -127,7 +127,7 @@ public class ConexaoBD {
 						+ "('98765432', 'Avenida Paulista', 'Bela Vista', 'Andar 5')";
 
 				String sqlCadastraFornecedores = "INSERT INTO fornecedor (nome, endereco_CEP, Cnpj, rua) " + "VALUES "
-						+ "('Fornecedor A', '12345678', '12345678000190', 'Rua das flores'), "
+						+ "('Fornecedor A', '12345678', '12345678000190', 'Rua das vagabundas'), "
 						+ "('Fornecedor B', '98765432', '98765432000110', 'Avenida paulista')";
 
 				String sqlCadastraProdutos = "INSERT INTO produto (nome, material, categoria, valor, estoque, tamanho, variacao, idFornecedores) "
