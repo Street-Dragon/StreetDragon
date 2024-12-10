@@ -15,8 +15,6 @@ import modelo.entidade.pessoa.fornecedor.Fornecedor;
 
 public class FornecedorDAO extends GenericDAO {
 	
-	
-	
     public void cadastrarFornecedor(Fornecedor fornecedor) throws SQLException {
         String sql = "INSERT INTO fornecedor (nome, Cnpj, endereco_CEP, rua) VALUES (?, ?, ?, ?)";
         save(sql, fornecedor.getNome(), fornecedor.getCnpj(), fornecedor.getCep(), fornecedor.getRua());

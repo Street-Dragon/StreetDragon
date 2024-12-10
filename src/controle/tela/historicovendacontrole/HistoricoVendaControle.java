@@ -1,71 +1,62 @@
 package controle.tela.historicovendacontrole;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.DocumentEvent;
-import java.awt.event.DocumentListener;
+import modelo.dao.historicovenda.HistoricoVendaDAO;
+import modelo.entidade.venda.Venda;
 import visao.TelaHistoricoVenda;
-import modelo.VendaModel;
+import java.sql.SQLException;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
 
 public class HistoricoVendaControle {
-    private TelaHistoricoVenda historicoVenda;
-    private VendaModel vendaModel;
 
-    // Construtor
-    public HistoricoVendaControle(TelaHistoricoVenda historicoVenda, VendaModel vendaModel) {
-        this.historicoVenda = historicoVenda;
-        this.vendaModel = vendaModel;
+    private TelaHistoricoVenda telaHistoricoVenda;
+    private HistoricoVendaDAO historicoVendaDAO;
 
-        // Configurar o DocumentListener para a pesquisa dinâmica
-        configurarCampoPesquisa();
+    public HistoricoVendaControle(TelaHistoricoVenda telaHistoricoVenda) {
+        this.telaHistoricoVenda = telaHistoricoVenda;
+        this.historicoVendaDAO = new HistoricoVendaDAO();
     }
 
-    // Método para configurar o DocumentListener no campo de pesquisa
-    private void configurarCampoPesquisa() {
-        historicoVenda.getTfPesquisa().getDocument().addDocumentListener(new DocumentListener() {
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                pesquisar();
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                pesquisar();
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                pesquisar();
-            }
-        });
-    }
-
-    // Método para executar a pesquisa conforme o filtro e o texto
-    private void pesquisar() {
-        String textoPesquisa = historicoVenda.getTfPesquisa().getText().trim();  // Remove espaços extras
-        String filtroSelecionado = (String) historicoVenda.getCbFiltro().getSelectedItem();
-        
-        // Se o campo de pesquisa estiver vazio, exibe todas as vendas
-        if (textoPesquisa.isEmpty()) {
-            // Exibe todas as vendas sem filtro de pesquisa
-            historicoVenda.exibirVendas(vendaModel.buscarTodasVendas());
-        } else {
-            // Obter as vendas filtradas com base no filtro selecionado e no texto de pesquisa
-            switch (filtroSelecionado) {
-                case "Código":
-                    historicoVenda.exibirVendas(vendaModel.buscarPorCodigo(textoPesquisa));
-                    break;
-                case "Nome":
-                    historicoVenda.exibirVendas(vendaModel.buscarPorNome(textoPesquisa));
-                    break;
-                case "Data":
-                    historicoVenda.exibirVendas(vendaModel.buscarPorData(textoPesquisa));
-                    break;
-                default:
-                    historicoVenda.exibirVendas(vendaModel.buscarTodasVendas());
-                    break;
-            }
+    // Atualiza a tabela com as vendas
+    public void atualizarTabela(List<Venda> vendas) {
+        DefaultTableModel model = (DefaultTableModel) telaHistoricoVenda.getTable().getModel();
+        model.setRowCount(0);
+        for (Venda venda : vendas) {
+            model.addRow(new Object[]{venda.getCodigoVenda(), venda.getPrecoTotal(), venda.getDataVenda()});
         }
     }
 
+    // Método para buscar vendas com base no filtro
+    public void pesquisarVendas() {
+        String textoConsulta = telaHistoricoVenda.getTextFieldConsulta().getText().trim();
+        String filtroSelecionado = "";
+
+        if (telaHistoricoVenda.getRdbtnCodigo().isSelected()) {
+            filtroSelecionado = "codigo";
+        } else if (telaHistoricoVenda.getRdbtnNome().isSelected()) {
+            filtroSelecionado = "nome";
+        } else if (telaHistoricoVenda.getRdbtnnData().isSelected()) {
+            filtroSelecionado = "data";
+        }
+
+        List<Venda> vendas = null;
+        try {
+            switch (filtroSelecionado) {
+                case "codigo":
+                    vendas = historicoVendaDAO.buscarPorCodigo(textoConsulta);
+                    break;
+                case "nome":
+                    vendas = historicoVendaDAO.buscarPorNomeCliente(textoConsulta);
+                    break;
+                case "data":
+                    vendas = historicoVendaDAO.buscarPorData(textoConsulta);
+                    break;
+                default:
+                    vendas = historicoVendaDAO.listarTodasVendas();
+            }
+            atualizarTabela(vendas);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
