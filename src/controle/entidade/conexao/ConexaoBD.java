@@ -79,7 +79,7 @@ public class ConexaoBD {
 					+ "FOREIGN KEY (funcionario_cpf) REFERENCES funcionario(cpf), "
 					+ "FOREIGN KEY (cliente_id) REFERENCES cliente(cpf))" + "ENGINE = InnoDB;";
 			
-			String sqlVenda_Produto = "CREATE TABLE IF NOT EXISTS venda_produto (venda_produto_id INT AUTO_INCREMENT PRIMARY KEY,"
+			String sqlVenda_Produto = "CREATE TABLE IF NOT EXISTS venda_produto (venda_produto_id INT,"
 					+ "venda_id INT NOT NULL," + "prod_id INT NOT NULL,"
 					+ "quantidade INT NOT NULL, " + "preco DECIMAL(10, 2) NOT NULL, "
 					+"FOREIGN KEY (venda_id) REFERENCES venda(venda_id) ON DELETE CASCADE,"

@@ -76,7 +76,6 @@ public class ItemController {
 		item.setQuantidade(quantidade);
 		item.setProduto(produto);
 		item.setId(itemDAO.getId());
-		System.out.println("ID CERTO:"+item.getId());
 
 		boolean sucesso;
 		try {
@@ -95,7 +94,7 @@ public class ItemController {
 	}
 
 	public void atualizarTabela() {
-		
+		// atualizaTabela
 		List<Item> itens = itemDAO.listarItens();
 
 		DefaultTableModel tableModel;
@@ -105,14 +104,17 @@ public class ItemController {
 		tableModel.addColumn("Quantidade");
 		tableModel.addColumn("Valor Total");
 
-		for (Item item : itens) {
+		for (int i = 0; i < itens.size(); i++) {
+			Item item = itens.get(i);
 			Produto produto = item.getProduto();
 			double valorTotal = item.getQuantidade() * produto.getValor();
+			int indiceCorrespondente = i + 1;
 
-			tableModel.addRow(new Object[] { item.getId(), produto.getNomeProduto(), item.getQuantidade(),
+			tableModel.addRow(new Object[] { indiceCorrespondente, produto.getNomeProduto(), item.getQuantidade(),
 					String.format("%.2f", valorTotal) });
-		}
+			itemDAO.atualizaTabela(i, item.getId());
 
+		}
 		telaVenda.getTable().setModel(tableModel);
 		atualizaTotal();
 	}
@@ -132,13 +134,13 @@ public class ItemController {
 		int selectedRow = telaVenda.getTable().getSelectedRow(); // Pega a linha selecionada na tabela
 
 		if (selectedRow != -1) {
-			// Pega o ID do item da tabela 
+			// Pega o ID do item da tabela
 			int idItem = (Integer) telaVenda.getTable().getValueAt(selectedRow, 0);
 			int resposta = JOptionPane.showConfirmDialog(telaVenda,
 					"Você tem certeza que deseja excluir o item com ID: " + idItem + "?", "Confirmar Exclusão",
 					JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-			
-			//funciona ate aq
+
+			// funciona ate aq
 			if (resposta == JOptionPane.YES_OPTION) {
 
 				// Chama o método excluirItem do itemDAO para excluir o item do banco
@@ -159,8 +161,7 @@ public class ItemController {
 		}
 
 	}
-	
-	
+
 	private void atualizaTotal() {
 		telaVenda.getLblTotal().setText("Total: R$ " + itemDAO.getTotal());
 	}
