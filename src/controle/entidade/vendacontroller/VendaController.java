@@ -20,6 +20,7 @@ public class VendaController {
 	        @Override
 	        public void actionPerformed(ActionEvent e) {
 	            // realizarVenda();
+	        	// tem que apagar a vendas pedentes tbm;
 	        }
 	    });
 

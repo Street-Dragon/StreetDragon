@@ -9,6 +9,9 @@ import utils.Utils;
 
 import javax.swing.JTextField;
 import java.awt.Font;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 
@@ -95,6 +98,7 @@ public class TelaPagamento extends JPanel {
 		lblNewLabel_1_1_1.setFont(new Font("Hanken Grotesk", Font.PLAIN, 25));
 		panel_2.add(lblNewLabel_1_1_1, "cell 0 0,alignx left");
 		
+		//aqui 1
 		txtDinheiro = new JTextField();
 		txtDinheiro.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
 		txtDinheiro.setColumns(10);
@@ -104,15 +108,18 @@ public class TelaPagamento extends JPanel {
 		lblNewLabel_1_1_1_1.setFont(new Font("Hanken Grotesk", Font.PLAIN, 25));
 		panel_2.add(lblNewLabel_1_1_1_1, "cell 3 0,alignx left");
 		
+		//aqui 3
 		txtCartao = new JTextField();
 		txtCartao.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
 		txtCartao.setColumns(10);
 		panel_2.add(txtCartao, "cell 4 0,growx,aligny center");
 		
+		
 		JLabel lbltroco = new JLabel("Troco:");
 		lbltroco.setFont(new Font("Hanken Grotesk", Font.PLAIN, 25));
 		panel_2.add(lbltroco, "cell 0 1,alignx left");
 		
+		//aqui troco
 		textField = new JTextField();
 		textField.setEnabled(false);
 		textField.setEditable(false);
@@ -124,6 +131,7 @@ public class TelaPagamento extends JPanel {
 		lblNewLabel_1_1_1_1_1.setFont(new Font("Hanken Grotesk", Font.PLAIN, 25));
 		panel_2.add(lblNewLabel_1_1_1_1_1, "cell 3 1,alignx left");
 		
+		// aqui 5
 		txtOutros = new JTextField();
 		txtOutros.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
 		txtOutros.setColumns(10);
@@ -152,6 +160,14 @@ public class TelaPagamento extends JPanel {
 		
 		btnCancelar.setIcon(Utils.carregarIcone("lixo.png", 30, 30));
 		btnConfirmar.setIcon(Utils.carregarIcone("carrinho.png", 30, 30));
+		
+		textField.addKeyListener(new KeyAdapter() {
+	            public void keyReleased(KeyEvent e) {
+	                calcularTroco();
+	            }
+	        });
+		
+		
 
 	}
 	
@@ -167,5 +183,26 @@ public class TelaPagamento extends JPanel {
 	public JButton getBtnCancelar() {
 		return btnCancelar;
 	}
+	
+	  private void calcularTroco() {
+	        try {
+	            
+	            float total = Float.parseFloat(txtTotal.getText());
+	            float dinheiro = Float.parseFloat(txtDinheiro.getText());
+
+	            
+	            float troco = dinheiro - total;
+
+	            
+	            if (troco >= 0) {
+	            	textField.setText(String.format("R$ %.2f", troco));
+	            } else {
+	            	textField.setText("Valor insuficiente");
+	            }
+	        } catch (NumberFormatException e) {
+	            
+	        	textField.setText("");
+	        }
+	    }
 
 }
