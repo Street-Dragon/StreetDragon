@@ -17,6 +17,7 @@ public class ItemDAO {
 	private Integer idVendaAtual = null;
 	private float totalVendaAtual = 0;
 	private int indiceAtual = 0;
+
 	public boolean verificaVenda() {
 		String sqlVerificaVenda = "SELECT venda_id FROM venda WHERE data_venda IS NULL LIMIT 1";
 
@@ -82,6 +83,26 @@ public class ItemDAO {
 		}
 	}
 
+	private boolean verificaProdutoExistente(int produtoId, Connection conn) {
+		String sqlChecagem = "SELECT produto_id FROM venda_produto WHERE venda_id = ? AND produto_id = ?";
+
+		try (PreparedStatement stmtChecagem = conn.prepareStatement(sqlChecagem)) {
+			stmtChecagem.setInt(1, idVendaAtual);
+			stmtChecagem.setInt(2, produtoId);
+			ResultSet rsChecagem = stmtChecagem.executeQuery();
+
+			if (!rsChecagem.next()) {
+				System.out.println("Aviso: Produto com id " + produtoId
+						+ " ainda não foi registrado nesta venda (venda_id " + idVendaAtual + ").");
+				return false; // Produto não registrado
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return true; // Produto já está registrado
+	}
+
 	public boolean cadastrarItem(Item item, String cpf) {
 
 		int produtoId = verificarProdutoExistente(item.getProduto().getNomeProduto());
@@ -98,29 +119,41 @@ public class ItemDAO {
 		String sqlItem = "INSERT INTO venda_produto (venda_produto_id, venda_id, prod_id, quantidade, preco) VALUES(?, ?, ?, ?, ?)";
 		String sqlProduto = "SELECT valor FROM produto WHERE idProduto = ?";
 		String sqlUpdate = "UPDATE venda SET total = (SELECT SUM(vp.quantidade * vp.preco) FROM venda_produto vp WHERE vp.venda_id = ?) WHERE venda_id = ?;";
+		String sqlAdiciona = "UPDATE venda_produto SET quantidade = ? WHERE produto_id = ? AND venda_id = ?";
 
 		try (Connection conn = ConexaoBD.getConexaoMySQL();
 				PreparedStatement stmtItem = conn.prepareStatement(sqlItem);
 				PreparedStatement stmtUpdate = conn.prepareStatement(sqlUpdate);
+				PreparedStatement stmtAdiciona = conn.prepareStatement(sqlAdiciona);
 				PreparedStatement stmtProduto = conn.prepareStatement(sqlProduto)) {
 
-			// pega o preço atual do produto
-			stmtProduto.setInt(1, produtoId);
-			ResultSet rsProduto = stmtProduto.executeQuery();
-			if (rsProduto.next()) {
-				float precoProduto = rsProduto.getFloat("valor");
-				indiceAtual+=1;
-				// inserindo o item na venda
-				stmtItem.setInt(1, indiceAtual);
-				stmtItem.setInt(2, idVendaAtual);
-				stmtItem.setInt(3, produtoId);
-				stmtItem.setInt(4, item.getQuantidade());
-				stmtItem.setDouble(5, precoProduto);
-				stmtItem.executeUpdate();
+			if (!verificaProdutoExistente(produtoId, conn)) {
 
+				// pega o preço atual do produto
+				stmtProduto.setInt(1, produtoId);
+				ResultSet rsProduto = stmtProduto.executeQuery();
+				if (rsProduto.next()) {
+					float precoProduto = rsProduto.getFloat("valor");
+					indiceAtual += 1;
+					// inserindo o item na venda
+					stmtItem.setInt(1, indiceAtual);
+					stmtItem.setInt(2, idVendaAtual);
+					stmtItem.setInt(3, produtoId);
+					stmtItem.setInt(4, item.getQuantidade());
+					stmtItem.setDouble(5, precoProduto);
+					stmtItem.executeUpdate();
+
+				} else {
+					System.err.println("Produto com id " + produtoId + " não encontrado na tabela produto.");
+					return false;
+				}
 			} else {
-				System.err.println("Produto com id " + produtoId + " não encontrado na tabela produto.");
-				return false;
+
+				// código para adicionar a quantidade aqui !!!!
+				
+				
+				
+				
 			}
 
 			return true;
@@ -277,20 +310,20 @@ public class ItemDAO {
 		}
 		return itens;
 	}
-	
+
 	public void atualizaTabela(int indice, int produtoId) {
-		 String sql = "UPDATE venda_produto SET venda_produto_id = ? WHERE venda_id = ? AND produto_id = ?";
-		 try (Connection conn = ConexaoBD.getConexaoMySQL();
-		         PreparedStatement stmtUpdateItem = conn.prepareStatement(sql)) {
-			 stmtUpdateItem.setInt(1, indice);  
-			 stmtUpdateItem.setInt(2, idVendaAtual);
-			 stmtUpdateItem.setInt(3, produtoId);
-			 indiceAtual = indice;
-	
-		 } catch (SQLException e) {
+		String sql = "UPDATE venda_produto SET venda_produto_id = ? WHERE venda_id = ? AND produto_id = ?";
+		try (Connection conn = ConexaoBD.getConexaoMySQL();
+				PreparedStatement stmtUpdateItem = conn.prepareStatement(sql)) {
+			stmtUpdateItem.setInt(1, indice);
+			stmtUpdateItem.setInt(2, idVendaAtual);
+			stmtUpdateItem.setInt(3, produtoId);
+			indiceAtual = indice;
+
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-	
+
 	}
 
 }
