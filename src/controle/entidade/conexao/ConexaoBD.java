@@ -61,7 +61,8 @@ public class ConexaoBD {
                     + "idPromocao INT NOT NULL AUTO_INCREMENT PRIMARY KEY, "
                     + "desconto FLOAT NOT NULL, "
                     + "nome VARCHAR(45) NOT NULL, "
-                    + "termino VARCHAR(45) NOT NULL, "   
+                    + "termino VARCHAR(45) NOT NULL, " 
+                    + "categoria VARCHAR(45) NOT NULL,"
                     + "inicio VARCHAR(45) NOT NULL"      
                     + ") ENGINE = InnoDB;";
 

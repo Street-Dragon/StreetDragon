@@ -29,6 +29,7 @@ public class PromocaoDAO {
                 promocao.setDesconto(rs.getFloat("desconto"));
                 promocao.setTermino(rs.getString("termino"));
                 promocao.setInicio(rs.getString("inicio"));
+                promocao.setCategoria(rs.getString("categoria"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -39,13 +40,14 @@ public class PromocaoDAO {
     }
 
     public void cadastrarPromocao(Promocao promocao) {
-        String sql = "INSERT INTO promocao (nome, desconto, termino, inicio) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO promocao (nome, desconto,termino, inicio, categoria) VALUES (?, ?, ?, ?, ?)";
 
         try (PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, promocao.getNome());
             stmt.setFloat(2, promocao.getDesconto());
             stmt.setString(3, promocao.getTermino());
             stmt.setString(4, promocao.getInicio());
+            stmt.setString(5, promocao.getCategoria());
 
             int rowsAffected = stmt.executeUpdate();
 
@@ -63,14 +65,15 @@ public class PromocaoDAO {
     }
 
     public void editarPromocao(Promocao promocao) {
-        String sql = "UPDATE promocao SET nome = ?, desconto = ?, termino = ?, inicio = ? WHERE idPromocao = ?";
+        String sql = "UPDATE promocao SET nome = ?, desconto = ?, termino = ?, inicio = ?, categoria = ? WHERE idPromocao = ?";
 
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, promocao.getNome());
             stmt.setFloat(2, promocao.getDesconto());
             stmt.setString(3, promocao.getTermino());
             stmt.setString(4, promocao.getInicio());
-            stmt.setInt(5, promocao.getIdPromocao());
+            stmt.setInt(6, promocao.getIdPromocao());
+            stmt.setString(5, promocao.getCategoria());
             
             stmt.executeUpdate();
         } catch (SQLException e) {
@@ -107,6 +110,7 @@ public class PromocaoDAO {
                 promocao.setDesconto(rs.getFloat("desconto"));
                 promocao.setTermino(rs.getString("termino"));
                 promocao.setInicio(rs.getString("inicio"));
+                promocao.setCategoria(rs.getString("categoria"));
 
                 promocoes.add(promocao);
             }

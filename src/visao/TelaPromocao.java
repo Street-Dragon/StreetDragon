@@ -97,6 +97,7 @@ public class TelaPromocao extends JPanel {
 		panel.add(txtInicio, "cell 4 1,growx,aligny center");
 		
 		comboBoxCategoria = new JComboBox();
+		comboBoxCategoria.setBackground(new Color(255, 255, 255));
 		comboBoxCategoria.setModel(new DefaultComboBoxModel(new String[] {"", "Calça", "Camisa", "Camiseta", "Moleton", "Boné", "Toca", "Tênis", "Acessórios", "Outro"}));
 		comboBoxCategoria.setToolTipText("\r\n");
 		panel.add(comboBoxCategoria, "cell 0 2,grow");
@@ -235,11 +236,13 @@ public class TelaPromocao extends JPanel {
 	public void setBtnExcluir(JButton btnExcluir) {
 		this.btnExcluir = btnExcluir;
 	}
-	public JComboBox getComboBoxCategoria() {
-		return comboBoxCategoria;
+	
+	public String getcomboBoxCategoria () {
+		return String.valueOf(comboBoxCategoria.getSelectedItem());
 	}
-	public void setComboBoxCategoria(JComboBox comboBoxCategoria) {
-		this.comboBoxCategoria = comboBoxCategoria;
+	
+	public JComboBox setComboBoxCategoria() {
+		return this.comboBoxCategoria;
 	}
 	
 	
