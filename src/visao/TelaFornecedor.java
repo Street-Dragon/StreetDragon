@@ -13,7 +13,7 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
-import controle.entidade.fornecedorController.fornecedorController;
+import controle.entidade.fornecedorcontrole.fornecedorControle;
 import modelo.entidade.pessoa.fornecedor.Fornecedor;
 import net.miginfocom.swing.MigLayout;
 import utils.Utils;
@@ -66,11 +66,11 @@ public class TelaFornecedor extends JPanel {
     private JTextField textNome;
     private static DefaultTableModel tableModel;
 
-    private fornecedorController fornecedorController;
+    private fornecedorControle fornecedorControle;
 
     public TelaFornecedor(TelaPrincipal telaPrincipal) {
         // Inicializa o Controller
-        fornecedorController = new fornecedorController(this);
+        fornecedorControle = new fornecedorControle(this);
 
         setBackground(new Color(253, 233, 235));
         hkGrotesk = Utils.loadCustomFont();
@@ -143,7 +143,7 @@ public class TelaFornecedor extends JPanel {
         btnCadastrarFor.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 Fornecedor fornecedor = capturarDadosFornecedor();
-                fornecedorController.cadastrarFornecedor(fornecedor);
+                fornecedorControle.cadastrarFornecedor(fornecedor);
             }
         });
         btnCadastrarFor.setForeground(new Color(255, 255, 255));
@@ -152,7 +152,6 @@ public class TelaFornecedor extends JPanel {
         panelButtons.add(btnCadastrarFor, "cell 0 0,grow");
         btnCadastrarFor.setIcon(Utils.carregarIcone("Add.png",30,30));
                 
-
                 // Botão Editar
                 btnEditarFor = new JButton("Editar");
                 panelButtons.add(btnEditarFor, "cell 0 1,grow");
@@ -204,6 +203,7 @@ public class TelaFornecedor extends JPanel {
                         btnDeletarFor.setBackground(new Color(255, 0, 0));
                         panelButtons.add(btnDeletarFor, "cell 0 2,grow");
                         btnDeletarFor.setIcon(Utils.carregarIcone("lixo.png",30,30));
+
 
         
         JScrollPane scrollPane = new JScrollPane();
@@ -259,7 +259,7 @@ public class TelaFornecedor extends JPanel {
         });
     
         
-        fornecedorController.atualizarTabela();
+        fornecedorControle.atualizarTabela();
     }
 
     public Fornecedor capturarDadosFornecedor() {

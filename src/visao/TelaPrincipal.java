@@ -16,6 +16,7 @@ import controle.entidade.clientecontrole.ClienteControle;
 import controle.entidade.funcionariocontrole.FuncionarioControle;
 import controle.entidade.item.ItemController;
 import controle.entidade.produto.ProdutoControle;
+import controle.entidade.promocaocontrole.PromocaoControle;
 import controle.visao.principal.TelaPrincipalControle;
 import net.miginfocom.swing.MigLayout;
 import utils.Cores;
@@ -184,6 +185,8 @@ public class TelaPrincipal extends JFrame {
 		
 		ItemController itemControle = new ItemController();
 		itemControle.setTelaVenda(telaVenda);
+		
+		PromocaoControle promocaoControle = new PromocaoControle(telaPromocao);
 	
 		// Adiciona os painéis
 		mainPanel.add(telaVenda, "TelaVenda");
