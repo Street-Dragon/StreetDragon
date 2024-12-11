@@ -59,7 +59,7 @@ public class TelaProdutos extends JPanel {
 		add(panel, "cell 0 0,grow");
 		panel.setLayout(new MigLayout("", "[25%][25%][25%][25%]", "[25%][25%][25%][25%]"));
 
-		lblNewLabel = new JLabel("Id");
+		lblNewLabel = new JLabel("Código");
 		lblNewLabel.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
 		panel.add(lblNewLabel, "cell 0 0,alignx left,growy");
 

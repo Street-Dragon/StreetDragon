@@ -247,7 +247,7 @@ public class PromocaoControle {
                
                 
                 promocaoDAO.excluirPromocao(id);
-                new TelaMensagens("Promoção excluída com sucesso!", 1);
+                new TelaMensagens("Promoção excluída com sucesso!", 0);
                 atualizarTabela();
             } catch (Exception e) {
                 new TelaMensagens("Erro ao excluir promoção: " + e.getMessage(), 3);

@@ -50,27 +50,28 @@ public class TelaHistoricoVenda extends JPanel {
 		panel.setBackground(new Color(255, 255, 255));
 		add(panel, "cell 0 0,grow");
 		panel.setLayout(new MigLayout("", "[20%][60%][20%]", "[grow][grow]"));
-
-		lblNewLabel = new JLabel("Consultar");
-		lblNewLabel.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
-		panel.add(lblNewLabel, "cell 0 0,alignx left,aligny center");
-
-		textFieldConsulta = new TextField();
-		textFieldConsulta.setBackground(new Color(255, 255, 255));
-		textFieldConsulta.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
-		panel.add(textFieldConsulta, "cell 1 0,growx,aligny center");
 						
-						btnConsultar = new JButton("Consultar");
-						btnConsultar.setForeground(new Color(255, 255, 255));
-						btnConsultar.setBackground(new Color(255, 175, 175));
-						btnConsultar.setIcon(Utils.carregarIcone("lupa.png", 30, 30));
-						panel.add(btnConsultar, "cell 2 0,growx,aligny center");
+								lblNewLabel = new JLabel("Consulta");
+								lblNewLabel.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
+								panel.add(lblNewLabel, "cell 1 0,alignx center,aligny bottom");
 						
 						comboBox = new JComboBox();
 						comboBox.setBackground(new Color(255, 255, 255));
 						comboBox.setModel(new DefaultComboBoxModel(new String[] {"", "Nome", "Categoria", "Preco"}));
 						comboBox.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
-						panel.add(comboBox, "cell 0 1 2 1,growx");
+						panel.add(comboBox, "cell 0 1,growx");
+						
+								textFieldConsulta = new TextField();
+								textFieldConsulta.setBackground(new Color(255, 255, 255));
+								textFieldConsulta.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
+								panel.add(textFieldConsulta, "cell 1 1,growx,aligny center");
+								
+								btnConsultar = new JButton("Consultar");
+								btnConsultar.setForeground(new Color(255, 255, 255));
+								btnConsultar.setBackground(new Color(255, 175, 175));
+								btnConsultar.setIcon(Utils.carregarIcone("lupa.png", 30, 30));
+								btnConsultar.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
+								panel.add(btnConsultar, "cell 2 1,growx,aligny center");
 
 		scrollPane = new JScrollPane();
 		add(scrollPane, "cell 0 1,grow");
