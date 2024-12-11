@@ -84,7 +84,7 @@ public class ItemDAO {
 	}
 
 	private boolean verificaProdutoExistente(int produtoId, Connection conn) {
-		String sqlChecagem = "SELECT produto_id FROM venda_produto WHERE venda_id = ? AND produto_id = ?";
+		String sqlChecagem = "SELECT prod_id FROM venda_produto WHERE venda_id = ? AND prod_id = ?";
 
 		try (PreparedStatement stmtChecagem = conn.prepareStatement(sqlChecagem)) {
 			stmtChecagem.setInt(1, idVendaAtual);
@@ -92,15 +92,13 @@ public class ItemDAO {
 			ResultSet rsChecagem = stmtChecagem.executeQuery();
 
 			if (!rsChecagem.next()) {
-				System.out.println("Aviso: Produto com id " + produtoId
-						+ " ainda não foi registrado nesta venda (venda_id " + idVendaAtual + ").");
-				return false; // Produto não registrado
+				return false;// produto registrado
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
-		return true; // Produto já está registrado
+		System.out.println("Aviso: Produto com id " + produtoId + "já resgistrado");
+		return true; // produto ja registrado!!!!
 	}
 
 	public boolean cadastrarItem(Item item, String cpf) {
@@ -119,11 +117,13 @@ public class ItemDAO {
 		String sqlItem = "INSERT INTO venda_produto (venda_produto_id, venda_id, prod_id, quantidade, preco) VALUES(?, ?, ?, ?, ?)";
 		String sqlProduto = "SELECT valor FROM produto WHERE idProduto = ?";
 		String sqlUpdate = "UPDATE venda SET total = (SELECT SUM(vp.quantidade * vp.preco) FROM venda_produto vp WHERE vp.venda_id = ?) WHERE venda_id = ?;";
-		String sqlAdiciona = "UPDATE venda_produto SET quantidade = ? WHERE produto_id = ? AND venda_id = ?";
+		String sqlAdiciona = "UPDATE venda_produto SET quantidade = ? WHERE prod_id = ? AND venda_id = ?";
+		String sqlConsulta = "SELECT quantidade FROM venda_produto WHERE prod_id = ? AND venda_id = ?";
 
 		try (Connection conn = ConexaoBD.getConexaoMySQL();
 				PreparedStatement stmtItem = conn.prepareStatement(sqlItem);
 				PreparedStatement stmtUpdate = conn.prepareStatement(sqlUpdate);
+				PreparedStatement stmtConsulta = conn.prepareStatement(sqlConsulta);
 				PreparedStatement stmtAdiciona = conn.prepareStatement(sqlAdiciona);
 				PreparedStatement stmtProduto = conn.prepareStatement(sqlProduto)) {
 
@@ -148,12 +148,22 @@ public class ItemDAO {
 					return false;
 				}
 			} else {
+				int quant = item.getQuantidade();
+				stmtAdiciona.setInt(2, produtoId);
+				stmtAdiciona.setInt(3, idVendaAtual);
 
-				// código para adicionar a quantidade aqui !!!!
+				stmtConsulta.setInt(1, produtoId);
+				stmtConsulta.setInt(2, idVendaAtual);
+				ResultSet rs = stmtConsulta.executeQuery();
+				if (rs.next()) {
+					quant += rs.getInt("quantidade");
+					System.out.println("quantidade nova = "+ quant);
+					stmtAdiciona.setInt(1, quant);
+					stmtAdiciona.executeUpdate();
+				}
 				
-				
-				
-				
+				// terminar aqui
+
 			}
 
 			return true;
