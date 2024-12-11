@@ -187,11 +187,14 @@ public class TelaPagamento extends JPanel {
 	  private void calcularTroco() {
 	        try {
 	            
-	            float total = Float.parseFloat(txtTotal.getText());
+	            float total = Float.parseFloat(telaVenda.getTxtTotal());
 	            float dinheiro = Float.parseFloat(txtDinheiro.getText());
 
 	            
 	            float troco = dinheiro - total;
+	            
+	            textField.setEnabled(true);
+	    		textField.setEditable(true);
 
 	            
 	            if (troco >= 0) {
