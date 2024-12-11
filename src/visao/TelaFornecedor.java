@@ -151,18 +151,15 @@ public class TelaFornecedor extends JPanel {
         btnCadastrarFor.setBackground(new Color(114, 148, 235));
         panelButtons.add(btnCadastrarFor, "cell 0 1,grow");
         btnCadastrarFor.setIcon(Utils.carregarIcone("Add.png",30,30));
-        
 
         // Botão Editar
         btnEditarFor = new JButton("Editar Fornecedor");
         btnEditarFor.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 int selectedRow = table.getSelectedRow();
-                
+
                 if (selectedRow != -1) {
-                  
                     Fornecedor fornecedor = capturarDadosFornecedor();
-                    
                     try {
                         int id = (int) table.getValueAt(selectedRow, 0);
                         fornecedor.setId(id); 

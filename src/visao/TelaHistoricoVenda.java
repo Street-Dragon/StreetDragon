@@ -1,11 +1,9 @@
 package visao;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import net.miginfocom.swing.MigLayout;
+import utils.Utils;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JLabel;
@@ -16,7 +14,6 @@ import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
 import java.awt.Font;
 import java.awt.Color;
-import javax.swing.border.LineBorder;
 
 public class TelaHistoricoVenda extends JPanel {
 
@@ -30,6 +27,7 @@ public class TelaHistoricoVenda extends JPanel {
 	private JRadioButton rdbtnCodigo;
 	private JRadioButton rdbtnNome;
 	private JRadioButton rdbtnnData;
+	private static DefaultTableModel tableModel;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 
 	public TextField getTextFieldConsulta() {
@@ -62,6 +60,10 @@ public class TelaHistoricoVenda extends JPanel {
 
 	public void setRdbtnnData(JRadioButton rdbtnnData) {
 		this.rdbtnnData = rdbtnnData;
+	}
+	
+	public JTable getTable() {
+		return table;
 	}
 
 	public TelaHistoricoVenda(TelaPrincipal telaPrincipal) {
@@ -106,37 +108,18 @@ public class TelaHistoricoVenda extends JPanel {
 		scrollPane = new JScrollPane();
 		add(scrollPane, "cell 1 2,grow");
 
-		table = new JTable();
-		table.setBorder(new LineBorder(new Color(250, 187, 187), 2));
-		table.setBackground(new Color(255, 233, 233));
-		table.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		table.setModel(new DefaultTableModel(
-				new Object[][] { { null, null, null }, { null, null, null }, { null, null, null }, { null, null, null },
-						{ null, null, null }, { null, null, null }, { null, null, null }, { null, null, null },
-						{ null, null, null }, { null, null, null }, { null, null, null }, { null, null, null },
-						{ null, null, null }, { null, null, null }, { null, null, null }, { null, null, null },
-						{ null, null, null }, { null, null, null }, { null, null, null }, { null, null, null },
-						{ null, null, null }, { null, null, null }, { null, null, null }, { null, null, null },
-						{ null, null, null }, { null, null, null }, { null, null, null }, { null, null, null },
-						{ null, null, null }, { null, null, null }, { null, null, null }, { null, null, null },
-						{ null, null, null }, { null, null, null }, { null, null, null }, { null, null, null },
-						{ null, null, null }, { null, null, null }, { null, null, null }, { null, null, null },
-						{ null, null, null }, { null, null, null }, { null, null, null }, { null, null, null },
-						{ null, null, null }, { null, null, null }, { null, null, null }, { null, null, null },
-						{ null, null, null }, { null, null, null }, { null, null, null }, { null, null, null },
-						{ null, null, null }, { null, null, null }, { null, null, null }, { null, null, null },
-						{ null, null, null }, { null, null, null }, { null, null, null }, { null, null, null },
-						{ null, null, null }, { null, null, null }, { null, null, null }, { null, null, null },
-						{ null, null, null }, { null, null, null }, { null, null, null }, { null, null, null },
-						{ null, null, null }, { null, null, null }, { null, null, null }, { null, null, null },
-						{ null, null, null }, { null, null, null }, { null, null, null }, { null, null, null },
-						{ null, null, null }, { null, null, null }, { null, null, null }, { null, null, null },
-						{ null, null, null }, { null, null, null }, { null, null, null }, { null, null, null },
-						{ null, null, null }, { null, null, null }, { null, null, null }, { null, null, null },
-						{ null, null, null }, { null, null, null }, { null, null, null }, { null, null, null },
-						{ null, null, null }, { null, null, null }, { null, null, null }, { null, null, null },
-						{ null, null, null }, { null, null, null }, { null, null, null }, { null, null, null }, },
-				new String[] { "Código", "Nome", "Data" }));
+		tableModel = new DefaultTableModel();
+		tableModel.addColumn("Codigo");
+		tableModel.addColumn("Nome");
+		tableModel.addColumn("Data");
+
+		table = new JTable(tableModel) {
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
+		Utils.configTabela(table, scrollPane);
 		scrollPane.setViewportView(table);
 	}
 
