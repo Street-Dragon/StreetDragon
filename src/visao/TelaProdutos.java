@@ -150,7 +150,7 @@ public class TelaProdutos extends JPanel {
 		
 		comboBox = new JComboBox();
 		comboBox.setBackground(new Color(255, 255, 255));
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Nome", "Id", "Valor", "Fornecedor", "Material", "Categoria"}));
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Nome", "Código", "Valor", "Fornecedor", "Material", "Categoria"}));
 		comboBox.setSelectedIndex(0);
 		comboBox.setFont(new Font("Hanken Grotesk", Font.PLAIN, 25));
 		panel.add(comboBox, "cell 0 3,growx");
@@ -172,7 +172,7 @@ public class TelaProdutos extends JPanel {
 		add(scrollPane, "cell 0 1 2 1,grow");
 		scrollPane.setViewportView(table);
 
-		tableModel = new DefaultTableModel(new Object[][] {}, new String[] { "Id", "Nome", "Valor", "Qnt estoque" });
+		tableModel = new DefaultTableModel(new Object[][] {}, new String[] { "Código", "Nome", "Valor", "Qnt estoque" });
 
 		table = new JTable(tableModel) {
 			// não deixa as células serem editadas

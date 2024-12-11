@@ -210,7 +210,7 @@ public class TelaFornecedor extends JPanel {
         add(scrollPane, "cell 0 1 2 1,grow");
         
         tableModel = new DefaultTableModel();
-		tableModel.addColumn("Id");
+		tableModel.addColumn("Código");
 		tableModel.addColumn("Nome");
 		tableModel.addColumn("CNPJ");
 		tableModel.addColumn("Rua");
@@ -224,7 +224,7 @@ public class TelaFornecedor extends JPanel {
 		    }
 		};
         table.setFont(new Font("Hanken Grotesk", Font.PLAIN, 25));
-        table.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Id", "Nome", "CNPJ", "Rua", "CEP" }));
+        table.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Código", "Nome", "CNPJ", "Rua", "CEP" }));
         table.setFillsViewportHeight(true);
         table.setBackground(new Color(255, 233, 233));
         scrollPane.setViewportView(table);
