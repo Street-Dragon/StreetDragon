@@ -210,7 +210,7 @@ public class TelaFornecedor extends JPanel {
         add(scrollPane, "cell 0 1 2 1,grow");
         
         tableModel = new DefaultTableModel();
-		tableModel.addColumn("Id");
+		tableModel.addColumn("Código");
 		tableModel.addColumn("Nome");
 		tableModel.addColumn("CNPJ");
 		tableModel.addColumn("Rua");

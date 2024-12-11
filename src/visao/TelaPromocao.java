@@ -76,11 +76,12 @@ public class TelaPromocao extends JPanel {
 						panel.add(txtTermino, "cell 3 0,growx");
 						txtTermino.setColumns(10);
 		
-				JLabel lblDesconto = new JLabel("% do Desconto:");
+				JLabel lblDesconto = new JLabel("Desconto:");
 				lblDesconto.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
 				panel.add(lblDesconto, "cell 0 1,alignx left,growy");
 
 		txtDesconto = new JTextField();
+		txtDesconto.setToolTipText("em porcentagem");
 		txtDesconto.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
 		txtDesconto.setColumns(10);
 		panel.add(txtDesconto, "cell 1 1,growx,aligny center");
@@ -132,9 +133,9 @@ public class TelaPromocao extends JPanel {
 		add(scrollPane, "cell 0 1 2 1,grow");
 
 		tableModel = new DefaultTableModel();
-		tableModel.addColumn("Id");
+		tableModel.addColumn("Código");
 		tableModel.addColumn("Nome");
-		tableModel.addColumn("%");
+		tableModel.addColumn("Desconto");
 		tableModel.addColumn("Término");
 		tableModel.addColumn("Inicio");
 		tableModel.addColumn("Categoria");
