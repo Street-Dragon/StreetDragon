@@ -81,7 +81,7 @@ public class TelaPromocao extends JPanel {
 				panel.add(lblDesconto, "cell 0 1,alignx left,growy");
 
 		txtDesconto = new JTextField();
-		txtDesconto.setToolTipText("em porcentagem");
+		txtDesconto.setToolTipText("Em porcentagem");
 		txtDesconto.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
 		txtDesconto.setColumns(10);
 		panel.add(txtDesconto, "cell 1 1,growx,aligny center");

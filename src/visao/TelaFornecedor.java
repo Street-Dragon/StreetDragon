@@ -224,7 +224,7 @@ public class TelaFornecedor extends JPanel {
 		    }
 		};
         table.setFont(new Font("Hanken Grotesk", Font.PLAIN, 25));
-        table.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Id", "Nome", "CNPJ", "Rua", "CEP" }));
+        table.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Código", "Nome", "CNPJ", "Rua", "CEP" }));
         table.setFillsViewportHeight(true);
         table.setBackground(new Color(255, 233, 233));
         scrollPane.setViewportView(table);
