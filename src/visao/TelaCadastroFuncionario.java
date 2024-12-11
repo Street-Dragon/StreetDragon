@@ -73,7 +73,7 @@ public class TelaCadastroFuncionario extends JPanel { // jpanel ao invés de jfr
 		add(panel, "cell 0 0,grow");
 		panel.setLayout(new MigLayout("", "[25%][25%][25%][25%]", "[25%][25%][25%][25%]"));
 
-		JLabel lblId = new JLabel("Id");
+		JLabel lblId = new JLabel("Código");
 		lblId.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
 		panel.add(lblId, "cell 0 0,alignx left,growy");
 

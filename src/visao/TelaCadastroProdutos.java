@@ -79,7 +79,7 @@ public class TelaCadastroProdutos extends JFrame {
 		contentPane.setLayout(
 				new MigLayout("", "[20%][30%][20%][30%]", "[14%][14%][14%][14%][14%][14%][14%][16%]"));
 
-		JLabel lblId = new JLabel("Id");
+		JLabel lblId = new JLabel("Código");
 		lblId.setHorizontalAlignment(SwingConstants.CENTER);
 		contentPane.add(lblId, "cell 0 0,alignx left,growy");
 		lblId.setFont(hkGrotesk);

@@ -167,7 +167,7 @@ public class TelaFornecedor extends JPanel {
                                 int id = (int) table.getValueAt(selectedRow, 0);
                                 fornecedor.setId(id); 
 
-                                fornecedorController.editarFornecedor(fornecedor);
+                                fornecedorControle.editarFornecedor(fornecedor);
 
                             } catch (NumberFormatException ex) {
                                 ex.printStackTrace(); 
@@ -191,7 +191,7 @@ public class TelaFornecedor extends JPanel {
                                 if (selectedRow != -1) {
                                    
                                     int id = (int) table.getValueAt(selectedRow, 0);
-                                    fornecedorController.confirmarExclusaoFornecedor(id);
+                                    fornecedorControle.confirmarExclusaoFornecedor(id);
                                 } else {
                                 	TelaMensagens Tm = new TelaMensagens("Selecione um fornecedor para excluir.", 3);
                                 }

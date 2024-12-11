@@ -45,91 +45,91 @@ public class TelaPromocao extends JPanel {
 	 * Create the panel.
 	 */
 	public TelaPromocao(TelaPrincipal telaPrincipal) {
-		setBounds(100, 100, 926, 526);
+		setBounds(100, 100, 851, 457);
 		setBackground(Cores.COR_ROSA_CLARO);
-		setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		
 		Border borda = new LineBorder(Cores.COR_ROSA_CLARO, 1);
 		Utils.loadCustomFont();
-		setLayout(new MigLayout("", "[grow][grow][grow][grow]", "[::30%,grow][grow]"));
+		setLayout(new MigLayout("", "[75%][25%]", "[35%][65%]"));
 
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(255, 255, 255));
-		panel.setBorder(new CompoundBorder(new LineBorder(new Color(255, 255, 255)), null));
-		add(panel, "cell 0 0 3 1,grow");
-		panel.setLayout(new MigLayout("", "[grow][grow][grow][grow][grow][grow]", "[grow][grow][]"));
+		add(panel, "cell 0 0,grow");
+		panel.setLayout(new MigLayout("", "[25%][25%][25%][25%]", "[40%][40%][20]"));
 				
-						JLabel lblNomePromo = new JLabel("Nome da Promoção");
+						JLabel lblNomePromo = new JLabel("Nome da Promoção:");
 						lblNomePromo.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
-						panel.add(lblNomePromo, "cell 0 0,alignx left");
+						panel.add(lblNomePromo, "cell 0 0,alignx left,growy");
 		
 				txtNome = new JTextField();
 				txtNome.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
 				panel.add(txtNome, "cell 1 0,growx");
 				txtNome.setColumns(10);
 						
-								JLabel lblTermino = new JLabel("Término");
+								JLabel lblTermino = new JLabel("Término:");
 								lblTermino.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
-								panel.add(lblTermino, "cell 3 0,alignx center,aligny center");
+								panel.add(lblTermino, "cell 2 0,alignx left,growy");
 				
 						txtTermino = new JTextField();
 						txtTermino.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
-						panel.add(txtTermino, "cell 4 0,growx");
+						panel.add(txtTermino, "cell 3 0,growx");
 						txtTermino.setColumns(10);
 		
-				JLabel lblDesconto = new JLabel("% do Desconto");
+				JLabel lblDesconto = new JLabel("% do Desconto:");
 				lblDesconto.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
-				panel.add(lblDesconto, "cell 0 1,alignx left");
+				panel.add(lblDesconto, "cell 0 1,alignx left,growy");
 
 		txtDesconto = new JTextField();
 		txtDesconto.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
 		txtDesconto.setColumns(10);
 		panel.add(txtDesconto, "cell 1 1,growx,aligny center");
 		
-		lblInicio = new JLabel("Inicio");
+		lblInicio = new JLabel("Inicio:");
 		lblInicio.setFont(new Font("Dialog", Font.PLAIN, 30));
-		panel.add(lblInicio, "cell 3 1,alignx center,aligny center");
+		panel.add(lblInicio, "cell 2 1,alignx left,growy");
 		
 		txtInicio = new JTextField();
 		txtInicio.setFont(new Font("Dialog", Font.PLAIN, 30));
 		txtInicio.setColumns(10);
-		panel.add(txtInicio, "cell 4 1,growx,aligny center");
+		panel.add(txtInicio, "cell 3 1,growx,aligny center");
 		
 		comboBoxCategoria = new JComboBox();
 		comboBoxCategoria.setBackground(new Color(255, 255, 255));
 		comboBoxCategoria.setModel(new DefaultComboBoxModel(new String[] {"", "Calça", "Camisa", "Camiseta", "Moleton", "Boné", "Toca", "Tênis", "Acessórios", "Outro"}));
 		comboBoxCategoria.setToolTipText("\r\n");
-		panel.add(comboBoxCategoria, "cell 0 2,grow");
+		comboBoxCategoria.setFont(new Font("Dialog", Font.PLAIN, 30));
+		panel.add(comboBoxCategoria, "cell 0 2 2 1,grow");
 
 		JPanel panel_1 = new JPanel();
-		panel_1.setBorder(new CompoundBorder(null, borda));
-		add(panel_1, "cell 3 0,grow");
+		add(panel_1, "cell 1 0,grow");
 		panel_1.setBackground(new Color(255, 255, 255));
 		// Botão Cadastrar
 		btnCadastrar = new JButton("Cadastrar");
 		btnCadastrar.setForeground(new Color(255, 255, 255));
 		btnCadastrar.setFont(new Font("Hanken Grotesk", Font.PLAIN, 25));
-		panel_1.setLayout(new MigLayout("", "[grow]", "[grow][grow][][grow][][grow][grow]"));
+		panel_1.setLayout(new MigLayout("", "[grow]", "[grow][grow][grow]"));
 		btnCadastrar.setBackground(new Color(114, 148, 235));
-		panel_1.add(btnCadastrar, "cell 0 0 1 2,grow");
-		// Botão Ecluir
-		btnExcluir = new JButton("Excluir ");
-		btnExcluir.setForeground(new Color(255, 255, 255));
-		btnExcluir.setFont(new Font("Hanken Grotesk", Font.PLAIN, 25));
-		btnExcluir.setBackground(new Color(255, 0, 0));
-		panel_1.add(btnExcluir, "cell 0 2 1 2,grow");
+		panel_1.add(btnCadastrar, "cell 0 0,grow");
 		
 		btnEditar = new JButton("Editar");
 		btnEditar.setFont(new Font("Hanken Grotesk", Font.PLAIN, 25));
 		btnEditar.setBackground(Color.PINK);
 		btnEditar.setForeground(Color.WHITE);
-		panel_1.add(btnEditar, "cell 0 4 1 3,grow");
-
+		panel_1.add(btnEditar, "cell 0 1,grow");
+		// Botão Ecluir
+		btnExcluir = new JButton("Excluir");
+		panel_1.add(btnExcluir, "cell 0 2,grow");
+		btnExcluir.setForeground(new Color(255, 255, 255));
+		btnExcluir.setFont(new Font("Hanken Grotesk", Font.PLAIN, 25));
+		btnExcluir.setBackground(new Color(255, 0, 0));
+		btnExcluir.setIcon(Utils.carregarIcone("lixo.png",30,30));
+		btnEditar.setIcon(Utils.carregarIcone("editar.png",30,30));
+		btnCadastrar.setIcon(Utils.carregarIcone("Add.png",30,30));
 		
 		
 		JScrollPane scrollPane = new JScrollPane();
-		add(scrollPane, "cell 0 1 4 1,grow");
+		add(scrollPane, "cell 0 1 2 1,grow");
 
 		tableModel = new DefaultTableModel();
 		tableModel.addColumn("Id");
