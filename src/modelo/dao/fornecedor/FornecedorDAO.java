@@ -40,27 +40,8 @@ public class FornecedorDAO extends GenericDAO {
         delete(sql, id);
     }
     
-    
-    //validações:
-    
-    public boolean cnpjExiste(String cnpj) throws SQLException {
-    	String sql = "SELECT COUNT(*) FROM fornecedor WHERE cnpj = ?";
-    	 try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/streetdragon", "root", "aluno");
-    	         PreparedStatement stmt = conn.prepareStatement(sql)) {
-    	        stmt.setString(1, cnpj);
-    	        try (ResultSet rs = stmt.executeQuery()) {
-    	            if (rs.next()) {
-    	                return rs.getInt(1) > 0;
-    	            }
-    	        }
-    	    }
-    	    return false; 
-    	}
-    	
-
-    
-    
-    public Fornecedor buscarFornecedorPorId(int id) throws SQLException {
+   
+public Fornecedor buscarFornecedorPorId(int id) throws SQLException {
         
         String sql = "SELECT * FROM fornecedor WHERE idFornecedores = ?";
         
@@ -88,6 +69,44 @@ public class FornecedorDAO extends GenericDAO {
             }
         }
     }
+    
+    
+    
+    //validações:
+    
+    
+    public boolean possuiProdutos(int idFornecedor) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM produto WHERE idFornecedores = ?";
+        try (Connection conn = getConnection(); 
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+        	
+            stmt.setInt(1, idFornecedor);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+        }
+        return false;
+    }
+    
+    public boolean cnpjExiste(String cnpj) throws SQLException {
+    	String sql = "SELECT COUNT(*) FROM fornecedor WHERE cnpj = ?";
+    	 try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/streetdragon", "root", "aluno");
+    	         PreparedStatement stmt = conn.prepareStatement(sql)) {
+    	        stmt.setString(1, cnpj);
+    	        try (ResultSet rs = stmt.executeQuery()) {
+    	            if (rs.next()) {
+    	                return rs.getInt(1) > 0;
+    	            }
+    	        }
+    	    }
+    	    return false; 
+    	}
+    	
+
+    
+    
+    
     
     //15 de Novembto de 1888
     public List<Fornecedor> listarFornecedores() throws SQLException {

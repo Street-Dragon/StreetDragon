@@ -42,7 +42,7 @@ public class fornecedorControle {
     }
     
     
-
+//Crud
 
     public void cadastrarFornecedor(Fornecedor fornecedor) {
         if (validarCampos(fornecedor)) {
@@ -68,15 +68,6 @@ public class fornecedorControle {
             TelaMensagens Tm = new TelaMensagens("Alguns campos não foram preenchidos corretamente.", 3);
         }
     }
-
-    
-    public void confirmarExclusaoFornecedor(int id) {
-        TelaMensagens Tm = new TelaMensagens("Tem certeza que deseja excluir este fornecedor?");
-        if (Tm.getResposta()) {
-            excluirFornecedor(id); 
-        }
-    }
-
     
     public void editarFornecedor(Fornecedor fornecedor) {
         if (validarCampos(fornecedor)) {
@@ -114,19 +105,33 @@ public class fornecedorControle {
             TelaMensagens Tm = new TelaMensagens("Selecione um fornecedor para excluir", 3);
             return;
         }
+
         try {
+            boolean possuiProdutos = fornecedorDAO.possuiProdutos(id);
+
+            if (possuiProdutos) {
+                TelaMensagens Tm = new TelaMensagens("Este fornecedor possui produtos associados. Exclua os produtos antes de excluir o fornecedor.", 3);
+                return;
+            }
+
             fornecedorDAO.excluirFornecedor(id);
-            
             
             atualizarTabela();
             telaFornecedor.limparCampos();
-
+            TelaMensagens Tm = new TelaMensagens("Fornecedor excluído com sucesso.", 0);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-
     
+    public void confirmarExclusaoFornecedor(int id) {
+        TelaMensagens Tm = new TelaMensagens("Tem certeza que deseja excluir este fornecedor?");
+        if (Tm.getResposta()) {
+            excluirFornecedor(id); 
+        }
+    }
+    
+
     private boolean validarCampos(Fornecedor fornecedor) {
         if (fornecedor.getCep() == 0) {
             return false;
