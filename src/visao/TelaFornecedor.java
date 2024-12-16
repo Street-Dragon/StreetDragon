@@ -13,7 +13,7 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
-import controle.entidade.fornecedorController.fornecedorController;
+import controle.entidade.fornecedorcontrole.fornecedorControle;
 import modelo.entidade.pessoa.fornecedor.Fornecedor;
 import net.miginfocom.swing.MigLayout;
 import utils.Utils;
@@ -66,20 +66,20 @@ public class TelaFornecedor extends JPanel {
     private JTextField textNome;
     private static DefaultTableModel tableModel;
 
-    private fornecedorController fornecedorController;
+    private fornecedorControle fornecedorControle;
 
     public TelaFornecedor(TelaPrincipal telaPrincipal) {
         // Inicializa o Controller
-        fornecedorController = new fornecedorController(this);
+        fornecedorControle = new fornecedorControle(this);
 
-        setBackground(new Color(255, 255, 255));
+        setBackground(new Color(253, 233, 235));
         hkGrotesk = Utils.loadCustomFont();
-        setLayout(new MigLayout("", "[grow][grow][grow][grow]", "[grow][grow][grow][grow]"));
+        setLayout(new MigLayout("", "[75%][25%]", "[35%][65%]"));
 
         JPanel panel = new JPanel();
         panel.setBackground(new Color(255, 255, 255));
-        add(panel, "cell 0 0 3 1,grow");
-        panel.setLayout(new MigLayout("", "[grow][grow][grow][grow][grow]", "[grow][grow]"));
+        add(panel, "cell 0 0,grow");
+        panel.setLayout(new MigLayout("", "[25%][25%][25%][25%]", "[50%][50%]"));
 
         JLabel lblNome = new JLabel("Nome");
         lblNome.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
@@ -92,12 +92,12 @@ public class TelaFornecedor extends JPanel {
 
         JLabel lblRua = new JLabel("Rua");
         lblRua.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
-        panel.add(lblRua, "cell 3 0,alignx left,growy");
+        panel.add(lblRua, "cell 2 0,alignx left,growy");
 
         txtRua = new JTextField();
         txtRua.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
         txtRua.setColumns(10);
-        panel.add(txtRua, "cell 4 0,growx");
+        panel.add(txtRua, "cell 3 0,growx");
 
         JLabel lblCnpj = new JLabel("CNPJ");
         lblCnpj.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
@@ -110,17 +110,17 @@ public class TelaFornecedor extends JPanel {
 
         JLabel lblCep = new JLabel("CEP");
         lblCep.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
-        panel.add(lblCep, "cell 3 1,alignx left,growy");
+        panel.add(lblCep, "cell 2 1,alignx left,growy");
 
         txtCep = new JTextField();
         txtCep.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
         txtCep.setColumns(10);
-        panel.add(txtCep, "cell 4 1,growx");
+        panel.add(txtCep, "cell 3 1,growx");
 
         JPanel panelButtons = new JPanel();
-        add(panelButtons, "cell 3 0,grow");
+        add(panelButtons, "cell 1 0,grow");
         panelButtons.setBackground(new Color(255, 255, 255));
-        panelButtons.setLayout(new MigLayout("", "[grow]", "[grow][grow][][grow][grow][grow]"));
+        panelButtons.setLayout(new MigLayout("", "[grow]", "[grow][grow][grow]"));
         
         tableModel = new DefaultTableModel();
 		tableModel.addColumn("Id");
@@ -143,71 +143,74 @@ public class TelaFornecedor extends JPanel {
         btnCadastrarFor.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 Fornecedor fornecedor = capturarDadosFornecedor();
-                fornecedorController.cadastrarFornecedor(fornecedor);
+                fornecedorControle.cadastrarFornecedor(fornecedor);
             }
         });
         btnCadastrarFor.setForeground(new Color(255, 255, 255));
-        btnCadastrarFor.setFont(hkGrotesk);
+        btnCadastrarFor.setFont(new Font("Hanken Grotesk", Font.PLAIN, 25));
         btnCadastrarFor.setBackground(new Color(114, 148, 235));
-        panelButtons.add(btnCadastrarFor, "cell 0 1,grow");
+        panelButtons.add(btnCadastrarFor, "cell 0 0,grow");
         btnCadastrarFor.setIcon(Utils.carregarIcone("Add.png",30,30));
+                
+                // Botão Editar
+                btnEditarFor = new JButton("Editar");
+                panelButtons.add(btnEditarFor, "cell 0 1,grow");
+                btnEditarFor.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        int selectedRow = table.getSelectedRow();
+                        
+                        if (selectedRow != -1) {
+                          
+                            Fornecedor fornecedor = capturarDadosFornecedor();
+                            
+                            try {
+                                int id = (int) table.getValueAt(selectedRow, 0);
+                                fornecedor.setId(id); 
 
-        // Botão Editar
-        btnEditarFor = new JButton("Editar Fornecedor");
-        btnEditarFor.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                int selectedRow = table.getSelectedRow();
+                                fornecedorControle.editarFornecedor(fornecedor);
 
-                if (selectedRow != -1) {
-                    Fornecedor fornecedor = capturarDadosFornecedor();
-                    try {
-                        int id = (int) table.getValueAt(selectedRow, 0);
-                        fornecedor.setId(id); 
-
-                        fornecedorController.editarFornecedor(fornecedor);
-
-                    } catch (NumberFormatException ex) {
-                        ex.printStackTrace(); 
+                            } catch (NumberFormatException ex) {
+                                ex.printStackTrace(); 
+                            }
+                        } else {
+                         
+                            new TelaMensagens("Selecione um fornecedor para editar.", 3);
+                        }
                     }
-                } else {
-                 
-                    new TelaMensagens("Selecione um fornecedor para editar.", 3);
-                }
-            }
-        });        
-        btnEditarFor.setForeground(new Color(255, 255, 255));
-        btnEditarFor.setFont(new Font("Hanken Grotesk", Font.PLAIN, 20));
-        btnEditarFor.setBackground(new Color(255, 149, 149));
-        panelButtons.add(btnEditarFor, "cell 0 5,grow");
-        btnEditarFor.setIcon(Utils.carregarIcone("editar.png",30,30));
+                });        
+                btnEditarFor.setForeground(new Color(255, 255, 255));
+                btnEditarFor.setFont(new Font("Hanken Grotesk", Font.PLAIN, 25));
+                btnEditarFor.setBackground(new Color(253, 175, 175));
+                btnEditarFor.setIcon(Utils.carregarIcone("editar.png",30,30));
+                
+                        // Botão Excluir
+                        btnDeletarFor = new JButton("Excluir");
+                        btnDeletarFor.addActionListener(new ActionListener() {
+                            public void actionPerformed(ActionEvent e) {
+                                int selectedRow = table.getSelectedRow();
+                                if (selectedRow != -1) {
+                                   
+                                    int id = (int) table.getValueAt(selectedRow, 0);
+                                    fornecedorControle.confirmarExclusaoFornecedor(id);
+                                } else {
+                                	TelaMensagens Tm = new TelaMensagens("Selecione um fornecedor para excluir.", 3);
+                                }
+                            }
+                        });
+                        
+                        btnDeletarFor.setForeground(new Color(255, 255, 255));
+                        btnDeletarFor.setFont(new Font("Hanken Grotesk", Font.PLAIN, 25));
+                        btnDeletarFor.setBackground(new Color(255, 0, 0));
+                        panelButtons.add(btnDeletarFor, "cell 0 2,grow");
+                        btnDeletarFor.setIcon(Utils.carregarIcone("lixo.png",30,30));
 
-        // Botão Excluir
-        btnDeletarFor = new JButton("Excluir");
-        btnDeletarFor.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                int selectedRow = table.getSelectedRow();
-                if (selectedRow != -1) {
-                   
-                    int id = (int) table.getValueAt(selectedRow, 0);
-                    fornecedorController.confirmarExclusaoFornecedor(id);
-                } else {
-                	TelaMensagens Tm = new TelaMensagens("Selecione um fornecedor para excluir.", 3);
-                }
-            }
-        });
-        
-        btnDeletarFor.setForeground(new Color(255, 255, 255));
-        btnDeletarFor.setFont(hkGrotesk);
-        btnDeletarFor.setBackground(new Color(255, 0, 0));
-        panelButtons.add(btnDeletarFor, "cell 0 5,grow");
-        btnDeletarFor.setIcon(Utils.carregarIcone("lixo.png",30,30));
 
         
         JScrollPane scrollPane = new JScrollPane();
-        add(scrollPane, "cell 0 1 4 3,grow");
+        add(scrollPane, "cell 0 1 2 1,grow");
         
         tableModel = new DefaultTableModel();
-		tableModel.addColumn("Id");
+		tableModel.addColumn("Código");
 		tableModel.addColumn("Nome");
 		tableModel.addColumn("CNPJ");
 		tableModel.addColumn("Rua");
@@ -221,7 +224,7 @@ public class TelaFornecedor extends JPanel {
 		    }
 		};
         table.setFont(new Font("Hanken Grotesk", Font.PLAIN, 25));
-        table.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Id", "Nome", "CNPJ", "Rua", "CEP" }));
+        table.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Código", "Nome", "CNPJ", "Rua", "CEP" }));
         table.setFillsViewportHeight(true);
         table.setBackground(new Color(255, 233, 233));
         scrollPane.setViewportView(table);
@@ -256,7 +259,7 @@ public class TelaFornecedor extends JPanel {
         });
     
         
-        fornecedorController.atualizarTabela();
+        fornecedorControle.atualizarTabela();
     }
 
     public Fornecedor capturarDadosFornecedor() {

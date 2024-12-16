@@ -4,6 +4,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import net.miginfocom.swing.MigLayout;
 import utils.Utils;
+
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JLabel;
@@ -14,6 +15,10 @@ import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
 import java.awt.Font;
 import java.awt.Color;
+import javax.swing.border.LineBorder;
+import javax.swing.JComboBox;
+import javax.swing.JButton;
+import javax.swing.DefaultComboBoxModel;
 
 public class TelaHistoricoVenda extends JPanel {
 
@@ -29,6 +34,8 @@ public class TelaHistoricoVenda extends JPanel {
 	private JRadioButton rdbtnnData;
 	private static DefaultTableModel tableModel;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
+	private JComboBox comboBox;
+	private JButton btnConsultar;
 
 	public TextField getTextFieldConsulta() {
 		return textFieldConsulta;
@@ -67,46 +74,41 @@ public class TelaHistoricoVenda extends JPanel {
 	}
 
 	public TelaHistoricoVenda(TelaPrincipal telaPrincipal) {
-		setBounds(100, 100, 568, 398);
+		setBounds(100, 100, 682, 482);
 		// contentPane = new JPanel();
-		setBackground(new Color(255, 255, 255));
-		setBorder(new EmptyBorder(5, 5, 5, 5));
+		setBackground(new Color(253, 233, 235));
 
-		setLayout(new MigLayout("", "[grow 5][grow][grow 5]", "[grow 5][][grow][grow 5]"));
+		setLayout(new MigLayout("", "[grow]", "[35%][65%]"));
 
 		panel = new Panel();
 		panel.setBackground(new Color(255, 255, 255));
-		add(panel, "cell 1 1,grow");
-		panel.setLayout(new MigLayout("", "[grow 10][grow 40][grow 10]", "[][]"));
-
-		lblNewLabel = new JLabel("Consultar");
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		panel.add(lblNewLabel, "cell 0 0,alignx left,aligny center");
-
-		textFieldConsulta = new TextField();
-		textFieldConsulta.setBackground(new Color(255, 255, 255));
-		panel.add(textFieldConsulta, "cell 1 0,grow");
-
-		rdbtnCodigo = new JRadioButton("Código");
-		rdbtnCodigo.setBackground(new Color(255, 255, 255));
-		rdbtnCodigo.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		buttonGroup.add(rdbtnCodigo);
-		panel.add(rdbtnCodigo, "flowx,cell 2 0");
-
-		rdbtnNome = new JRadioButton("Nome");
-		rdbtnNome.setBackground(new Color(255, 255, 255));
-		rdbtnNome.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		buttonGroup.add(rdbtnNome);
-		panel.add(rdbtnNome, "cell 2 0");
-
-		rdbtnnData = new JRadioButton("Data");
-		rdbtnnData.setBackground(new Color(255, 255, 255));
-		rdbtnnData.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		buttonGroup.add(rdbtnnData);
-		panel.add(rdbtnnData, "cell 2 0,alignx right");
+		add(panel, "cell 0 0,grow");
+		panel.setLayout(new MigLayout("", "[20%][60%][20%]", "[grow][grow]"));
+						
+								lblNewLabel = new JLabel("Consulta");
+								lblNewLabel.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
+								panel.add(lblNewLabel, "cell 1 0,alignx center,aligny bottom");
+						
+						comboBox = new JComboBox();
+						comboBox.setBackground(new Color(255, 255, 255));
+						comboBox.setModel(new DefaultComboBoxModel(new String[] {"", "Nome", "Categoria", "Preco"}));
+						comboBox.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
+						panel.add(comboBox, "cell 0 1,growx");
+						
+								textFieldConsulta = new TextField();
+								textFieldConsulta.setBackground(new Color(255, 255, 255));
+								textFieldConsulta.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
+								panel.add(textFieldConsulta, "cell 1 1,growx,aligny center");
+								
+								btnConsultar = new JButton("Consultar");
+								btnConsultar.setForeground(new Color(255, 255, 255));
+								btnConsultar.setBackground(new Color(255, 175, 175));
+								btnConsultar.setIcon(Utils.carregarIcone("lupa.png", 30, 30));
+								btnConsultar.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
+								panel.add(btnConsultar, "cell 2 1,growx,aligny center");
 
 		scrollPane = new JScrollPane();
-		add(scrollPane, "cell 1 2,grow");
+		add(scrollPane, "cell 0 1,grow");
 
 		tableModel = new DefaultTableModel();
 		tableModel.addColumn("Codigo");
@@ -120,7 +122,8 @@ public class TelaHistoricoVenda extends JPanel {
 			}
 		};
 		Utils.configTabela(table, scrollPane);
-		scrollPane.setViewportView(table);
-	}
 
+		scrollPane.setViewportView(table);
+		Utils.configTabela(table, scrollPane);
+	}
 }

@@ -41,6 +41,10 @@ public class TelaProdutos extends JPanel {
 	private JTextField txtFieldPesquisa;
 	private JButton btnPesquisar;
 	private JComboBox comboBox;
+	private JLabel lblNewLabel_4;
+	private JLabel lblNewLabel_5;
+	private JTextField txtFieldFornecedor;
+	private JTextField txtFieldCategoria;
 
 	/**
 	 * Create the panel.
@@ -48,17 +52,16 @@ public class TelaProdutos extends JPanel {
 	public TelaProdutos(TelaPrincipal telaPrincipal) {
 		setBackground(utils.Cores.COR_ROSA_CLARO);
 		hkGrotesk = Utils.loadCustomFont();
-		setLayout(new MigLayout("", "[grow][grow][grow][grow]", "[grow][grow][grow][grow]"));
+		setLayout(new MigLayout("", "[75%][25%]", "[35%][65%]"));
 
 		JPanel panel = new JPanel();
-		panel.setBorder(null);
 		panel.setBackground(new Color(255, 255, 255));
-		add(panel, "cell 0 0 3 1,grow");
-		panel.setLayout(new MigLayout("", "[grow][grow][grow][grow][grow][grow]", "[grow][grow][grow]"));
+		add(panel, "cell 0 0,grow");
+		panel.setLayout(new MigLayout("", "[25%][25%][25%][25%]", "[25%][25%][25%][25%]"));
 
-		lblNewLabel = new JLabel("Id");
+		lblNewLabel = new JLabel("Código");
 		lblNewLabel.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
-		panel.add(lblNewLabel, "cell 0 0,alignx left");
+		panel.add(lblNewLabel, "cell 0 0,alignx left,growy");
 
 		txtFieldId = new JTextField();
 		txtFieldId.setEditable(false);
@@ -68,54 +71,16 @@ public class TelaProdutos extends JPanel {
 
 		lblNewLabel_2 = new JLabel("Valor");
 		lblNewLabel_2.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
-		panel.add(lblNewLabel_2, "cell 3 0,alignx left,growy");
+		panel.add(lblNewLabel_2, "cell 2 0,alignx left,growy");
 
 		txtFieldValor = new JTextField();
 		txtFieldValor.setEditable(false);
 		txtFieldValor.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
-		panel.add(txtFieldValor, "cell 4 0,growx");
+		panel.add(txtFieldValor, "cell 3 0,growx");
 		txtFieldValor.setColumns(10);
 
-		lblNewLabel_1 = new JLabel("Nome");
-		lblNewLabel_1.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
-		panel.add(lblNewLabel_1, "cell 0 1,alignx left");
-
-		txtFieldNome = new JTextField();
-		txtFieldNome.setEditable(false);
-		txtFieldNome.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
-		panel.add(txtFieldNome, "cell 1 1,growx");
-		txtFieldNome.setColumns(10);
-
-		lblNewLabel_3 = new JLabel("Quant. Estoque");
-		lblNewLabel_3.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
-		panel.add(lblNewLabel_3, "cell 3 1,alignx left");
-
-		txtFieldQntEstoque = new JTextField();
-		txtFieldQntEstoque.setEditable(false);
-		txtFieldQntEstoque.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
-		panel.add(txtFieldQntEstoque, "cell 4 1,growx");
-		txtFieldQntEstoque.setColumns(10);
-		
-		txtFieldPesquisa = new JTextField();
-		txtFieldPesquisa.setFont(new Font("Dialog", Font.PLAIN, 30));
-		panel.add(txtFieldPesquisa, "cell 0 2 2 1,growx");
-		txtFieldPesquisa.setColumns(10);
-		
-		comboBox = new JComboBox();
-		comboBox.setBackground(new Color(255, 255, 255));
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Nome", "Id", "Valor", "Fornecedor", "Material", "Categoria"}));
-		comboBox.setSelectedIndex(0);
-		comboBox.setFont(new Font("Dialog", Font.PLAIN, 25));
-		panel.add(comboBox, "cell 3 2,growx");
-		
-		btnPesquisar = new JButton("Pesquisar");
-		btnPesquisar.setBackground(new Color(255, 255, 255));
-		btnPesquisar.setFont(new Font("Dialog", Font.PLAIN, 25));
-		panel.add(btnPesquisar, "cell 4 2,growx");
-
 		JPanel panel_1 = new JPanel();
-		add(panel_1, "cell 3 0,grow");
-		panel_1.setBorder(new CompoundBorder(null, new LineBorder(Cores.COR_ROSA_CLARO, 1)));
+		add(panel_1, "cell 1 0,grow");
 		panel_1.setBackground(new Color(255, 255, 255));
 
 		// Botão Cadastrar
@@ -142,12 +107,72 @@ public class TelaProdutos extends JPanel {
 		btnDeletarProd.setIcon(Utils.carregarIcone("lixo.png", 30, 30));
 		btnCadastrarProd.setIcon(Utils.carregarIcone("Add.png", 30, 30));
 		btnEditarProd.setIcon(Utils.carregarIcone("editar.png", 30, 30));
+				
+						lblNewLabel_1 = new JLabel("Nome");
+						lblNewLabel_1.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
+						panel.add(lblNewLabel_1, "cell 0 1,alignx left,growy");
+				
+						txtFieldNome = new JTextField();
+						txtFieldNome.setEditable(false);
+						txtFieldNome.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
+						panel.add(txtFieldNome, "cell 1 1,growx");
+						txtFieldNome.setColumns(10);
+				
+						lblNewLabel_3 = new JLabel("Quant. Estoque");
+						lblNewLabel_3.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
+						panel.add(lblNewLabel_3, "cell 2 1,alignx left,growy");
+		
+				txtFieldQntEstoque = new JTextField();
+				txtFieldQntEstoque.setEditable(false);
+				txtFieldQntEstoque.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
+				panel.add(txtFieldQntEstoque, "cell 3 1,growx");
+				txtFieldQntEstoque.setColumns(10);
+		
+		lblNewLabel_4 = new JLabel("Fornecedor");
+		lblNewLabel_4.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
+		panel.add(lblNewLabel_4, "cell 0 2,alignx left");
+		
+		txtFieldFornecedor = new JTextField();
+		txtFieldFornecedor.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
+		txtFieldFornecedor.setEditable(false);
+		panel.add(txtFieldFornecedor, "cell 1 2,growx");
+		txtFieldFornecedor.setColumns(10);
+		
+		lblNewLabel_5 = new JLabel("Categoria");
+		lblNewLabel_5.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
+		panel.add(lblNewLabel_5, "cell 2 2,alignx left");
+		
+		txtFieldCategoria = new JTextField();
+		txtFieldCategoria.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
+		txtFieldCategoria.setEditable(false);
+		panel.add(txtFieldCategoria, "cell 3 2,growx");
+		txtFieldCategoria.setColumns(10);
+		
+		comboBox = new JComboBox();
+		comboBox.setBackground(new Color(255, 255, 255));
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Nome", "Código", "Valor", "Fornecedor", "Material", "Categoria"}));
+		comboBox.setSelectedIndex(0);
+		comboBox.setFont(new Font("Hanken Grotesk", Font.PLAIN, 25));
+		panel.add(comboBox, "cell 0 3,growx");
+		
+		txtFieldPesquisa = new JTextField();
+		txtFieldPesquisa.setFont(new Font("Hanken Grotesk", Font.PLAIN, 25));
+		panel.add(txtFieldPesquisa, "cell 1 3 2 1,growx");
+		txtFieldPesquisa.setColumns(10);
+		
+		
+		btnPesquisar = new JButton("Pesquisar");
+		btnPesquisar.setForeground(new Color(255, 255, 255));
+		btnPesquisar.setBackground(new Color(255, 175, 175));
+		btnPesquisar.setFont(new Font("Hanken Grotesk", Font.PLAIN, 25));
+		panel.add(btnPesquisar, "cell 3 3,growx");
+		btnPesquisar.setIcon(Utils.carregarIcone("lupa.png", 30, 30));
 
 		JScrollPane scrollPane = new JScrollPane();
-		add(scrollPane, "cell 0 1 4 3,grow");
+		add(scrollPane, "cell 0 1 2 1,grow");
 		scrollPane.setViewportView(table);
 
-		tableModel = new DefaultTableModel(new Object[][] {}, new String[] { "Id", "Nome", "Valor", "Qnt estoque" });
+		tableModel = new DefaultTableModel(new Object[][] {}, new String[] { "Código", "Nome", "Valor", "Qnt estoque" });
 
 		table = new JTable(tableModel) {
 			// não deixa as células serem editadas
@@ -180,6 +205,11 @@ public class TelaProdutos extends JPanel {
 	public JTable getTable() {
 		return table;
 	}
+	
+	public JTable setTable () {
+		
+		return table;
+	}
 
 	public JButton getBtnCadastrarProd() {
 		return btnCadastrarProd;
@@ -203,5 +233,11 @@ public class TelaProdutos extends JPanel {
 	}
 	public JButton getBtnPesquisar() {
 		return btnPesquisar;
+	}
+	public JTextField getTxtFornecedor() {
+		return txtFieldFornecedor;
+	}
+	public JTextField getTxtCategoria() {
+		return txtFieldCategoria;
 	}
 }
