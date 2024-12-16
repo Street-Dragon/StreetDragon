@@ -16,6 +16,7 @@ import controle.entidade.clientecontrole.ClienteControle;
 import controle.entidade.funcionariocontrole.FuncionarioControle;
 import controle.entidade.item.ItemController;
 import controle.entidade.produto.ProdutoControle;
+import controle.entidade.promocaocontrole.PromocaoControle;
 import controle.visao.principal.TelaPrincipalControle;
 import net.miginfocom.swing.MigLayout;
 import utils.Cores;
@@ -79,28 +80,41 @@ public class TelaPrincipal extends JFrame {
 		menuPanel.setLayout(new MigLayout("", "[grow]", "[grow][grow][grow][grow][grow][grow][grow][grow]"));
 
 		btnVenda = new JButton("Vendas");
-		btnVenda.setBackground(Cores.COR_ROSA);
+		btnVenda.setBackground(new Color(253, 233, 235));
+		btnVenda.setFont(new Font("Hanken Grotesk", Font.BOLD, 20));
 		menuPanel.add(btnVenda, "cell 0 0,grow");
 
 		btnHistorico = new JButton("Histórico de vendas");
+		btnHistorico.setBackground(new Color(253, 233, 235));
+		btnHistorico.setFont(new Font("Hanken Grotesk", Font.BOLD, 20));
 		menuPanel.add(btnHistorico, "cell 0 1,grow");
 
 		btnClientes = new JButton("Clientes");
+		btnClientes.setFont(new Font("Hanken Grotesk", Font.BOLD, 20));
+		btnClientes.setBackground(new Color(253, 233, 235));
 		menuPanel.add(btnClientes, "cell 0 2,grow");
 
 		btnPromocoes = new JButton("Promoções");
+		btnPromocoes.setFont(new Font("Hanken Grotesk", Font.BOLD, 20));
+		btnPromocoes.setBackground(new Color(253, 233, 235));
 		menuPanel.add(btnPromocoes, "cell 0 5,grow");
 
 		btnFornecedor = new JButton("Fornecedores");
+		btnFornecedor.setFont(new Font("Hanken Grotesk", Font.BOLD, 20));
+		btnFornecedor.setBackground(new Color(253, 233, 235));
 		menuPanel.add(btnFornecedor, "cell 0 6,grow");
 
 		btnProdutos = new JButton("Produtos");
+		btnProdutos.setFont(new Font("Hanken Grotesk", Font.BOLD, 20));
+		btnProdutos.setBackground(new Color(253, 233, 235));
 		menuPanel.add(btnProdutos, "cell 0 3,grow");
 
 		// Adicionando os painéis à janela principal
 		getContentPane().add(menuPanel, BorderLayout.WEST);
 
 		btnFuncionarios = new JButton("Funcionários");
+		btnFuncionarios.setFont(new Font("Hanken Grotesk", Font.BOLD, 20));
+		btnFuncionarios.setBackground(new Color(253, 233, 235));
 		menuPanel.add(btnFuncionarios, "cell 0 4,grow");
 
 		panel = new JPanel();
@@ -109,8 +123,8 @@ public class TelaPrincipal extends JFrame {
 		panel.setLayout(new MigLayout("", "[grow][grow][grow][grow][grow]", "[grow]"));
 
 		lblFuncionario = new JLabel("Funcionário: Nenhum");
-		lblFuncionario.setFont(hkGrotesk);
-		panel.add(lblFuncionario, "cell 1 0,alignx left,growy");
+		lblFuncionario.setFont(new Font("Hanken Grotesk", Font.PLAIN, 20));
+		panel.add(lblFuncionario, "cell 0 0 2 1,alignx left,growy");
 
 		btnDeslogar = new JButton("Deslogar");
 		btnDeslogar.setBackground(Cores.COR_ROSA_ESCURO);
@@ -171,6 +185,8 @@ public class TelaPrincipal extends JFrame {
 		
 		ItemController itemControle = new ItemController();
 		itemControle.setTelaVenda(telaVenda);
+		
+		PromocaoControle promocaoControle = new PromocaoControle(telaPromocao);
 	
 		// Adiciona os painéis
 		mainPanel.add(telaVenda, "TelaVenda");
@@ -230,8 +246,6 @@ public class TelaPrincipal extends JFrame {
     }
 
 	private static void config(JButton button) {
-		button.setContentAreaFilled(false); // Deixa o fundo transparente
-		button.setFocusPainted(false); // Remove o contorno ao focar
 		button.setFont(new Font("Hanken Grotesk", Font.BOLD, 20));
 	}
 }

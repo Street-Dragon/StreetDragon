@@ -1,4 +1,4 @@
-package controle.entidade.fornecedorController;
+package controle.entidade.fornecedorcontrole;
 
 import modelo.dao.fornecedor.FornecedorDAO;
 import modelo.entidade.pessoa.fornecedor.Fornecedor;
@@ -8,12 +8,12 @@ import java.sql.SQLException;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
-public class fornecedorController {
+public class fornecedorControle {
 
     private TelaFornecedor telaFornecedor;
     private FornecedorDAO fornecedorDAO;
 
-    public fornecedorController(TelaFornecedor telaFornecedor) {
+    public fornecedorControle(TelaFornecedor telaFornecedor) {
         this.telaFornecedor = telaFornecedor;
         this.fornecedorDAO = new FornecedorDAO();
     }

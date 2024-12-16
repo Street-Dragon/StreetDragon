@@ -32,7 +32,6 @@ public class ConexaoBD {
 	public static void criarBancoDeDadosETabela() {
 		try (Connection conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
 				Statement stmt = conn.createStatement()) {
-			//stmt.executeUpdate("DROP DATABASE IF EXISTS streetdragon");
 			stmt.executeUpdate("CREATE DATABASE IF NOT EXISTS streetdragon");
 			System.out.println("Banco de dados criado ou já existe!");
 			stmt.executeUpdate("USE streetdragon");
@@ -58,8 +57,14 @@ public class ConexaoBD {
 					+ "FOREIGN KEY (idFornecedores) REFERENCES fornecedor(idFornecedores) " + ") ENGINE = InnoDB;";
 
 			String sqlPromocao = "CREATE TABLE IF NOT EXISTS promocao ("
-					+ "idPromocao INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " + "desconto FLOAT NOT NULL"
-					+ ") ENGINE = InnoDB;";
+                    + "idPromocao INT NOT NULL AUTO_INCREMENT PRIMARY KEY, "
+                    + "desconto FLOAT NOT NULL, "
+                    + "nome VARCHAR(45) NOT NULL, "
+                    + "termino VARCHAR(45) NOT NULL, " 
+                    + "categoria VARCHAR(45) NOT NULL,"
+                    + "inicio VARCHAR(45) NOT NULL"      
+                    + ") ENGINE = InnoDB;";
+
 
 			String sqlFuncionario = "CREATE TABLE IF NOT EXISTS funcionario ("
 					+ "cpf VARCHAR(14) NOT NULL PRIMARY KEY, " + "senha VARCHAR(100) NOT NULL, "
@@ -121,7 +126,7 @@ public class ConexaoBD {
 						+ "('98765432', 'Avenida Paulista', 'Bela Vista', 'Andar 5')";
 
 				String sqlCadastraFornecedores = "INSERT INTO fornecedor (nome, endereco_CEP, Cnpj, rua) " + "VALUES "
-						+ "('Fornecedor A', '12345678', '12345678000190', 'Rua das flores'), "
+						+ "('Fornecedor A', '12345678', '12345678000190', 'Rua das vagabundas'), "
 						+ "('Fornecedor B', '98765432', '98765432000110', 'Avenida paulista')";
 
 				String sqlCadastraProdutos = "INSERT INTO produto (nome, material, categoria, valor, estoque, tamanho, variacao, idFornecedores) "
