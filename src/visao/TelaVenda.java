@@ -35,6 +35,8 @@ public class TelaVenda extends JPanel { // mudado para jpanel ao invés de jfram
 	private JButton btnAdicionarProduto;
 	private JButton btnRealizarCompra;
 	private JButton btnLimparCarrinho;
+
+	private JLabel lblTotal;
 	private static DefaultTableModel tableModel;
 
 	/**
@@ -122,8 +124,9 @@ public class TelaVenda extends JPanel { // mudado para jpanel ao invés de jfram
 		add(panel_1, "cell 1 0,grow");
 		panel_1.setLayout(new MigLayout("", "[grow]", "[60%][20%][20%]"));
 
-		JLabel lblTotal = new JLabel("Total: 123 R$");
+		lblTotal = new JLabel("Total: 123 R$");
 		lblTotal.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
+
 		panel_1.add(lblTotal, "cell 0 0,alignx center,aligny center");
 
 		btnRealizarCompra = new JButton("Realizar Compra");
@@ -175,6 +178,14 @@ public class TelaVenda extends JPanel { // mudado para jpanel ao invés de jfram
 
 	public JTable getTable() {
 		return table;
+	}
+
+	public JLabel getLblTotal() {
+		return lblTotal;
+	}
+
+	public void setLblTotal(JLabel lblTotal) {
+		this.lblTotal = lblTotal;
 	}
 
 	public void setTable(JTable table) {

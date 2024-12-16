@@ -32,7 +32,6 @@ public class ConexaoBD {
 	public static void criarBancoDeDadosETabela() {
 		try (Connection conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
 				Statement stmt = conn.createStatement()) {
-			
 			stmt.executeUpdate("CREATE DATABASE IF NOT EXISTS streetdragon");
 			System.out.println("Banco de dados criado ou já existe!");
 			stmt.executeUpdate("USE streetdragon");
@@ -80,8 +79,8 @@ public class ConexaoBD {
 					+ "ON UPDATE NO ACTION) ENGINE = InnoDB;";
 
 			String sqlVenda = "CREATE TABLE IF NOT EXISTS venda (venda_id INT AUTO_INCREMENT PRIMARY KEY,"
-					+ "cliente_id VARCHAR(14)," + "funcionario_cpf VARCHAR(14) NOT NULL,"
-					+ "data_venda DATETIME DEFAULT CURRENT_TIMESTAMP, " + "total DECIMAL(10, 2) DEFAULT 0,"
+					+ "cliente_id VARCHAR(14)," + "funcionario_cpf VARCHAR(14),"
+					+ "data_venda DATETIME, " + "total DECIMAL(10, 2) DEFAULT 0,"
 					+ "FOREIGN KEY (funcionario_cpf) REFERENCES funcionario(cpf), "
 					+ "FOREIGN KEY (cliente_id) REFERENCES cliente(cpf))" + "ENGINE = InnoDB;";
 			

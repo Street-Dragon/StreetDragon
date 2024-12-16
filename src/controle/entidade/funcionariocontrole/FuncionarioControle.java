@@ -102,6 +102,8 @@ public class FuncionarioControle {
         });
     }
 
+    
+    
 	private void realizarLogin() {
 		String cpf = telaLogin.getCampoCpf();
 		String senha = telaLogin.getCampoSenha();
@@ -302,6 +304,10 @@ public class FuncionarioControle {
     	cadastroFuncionario.getTextFieldEmail().setText(funcionario.getContato().getEmail());
     	cadastroFuncionario.getTextFieldTelefone().setText(funcionario.getContato().getTelefone());
     	
+    }
+    
+    public String getCpfUsuarioLogado() {
+    	return cpfUsuarioLogado;
     }
 
     /*
