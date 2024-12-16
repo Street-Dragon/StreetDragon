@@ -1,8 +1,5 @@
 package visao;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import net.miginfocom.swing.MigLayout;
@@ -32,13 +29,50 @@ public class TelaHistoricoVenda extends JPanel {
 	private Panel panel;
 	private JLabel lblNewLabel;
 	private TextField textFieldConsulta;
+	private JRadioButton rdbtnCodigo;
+	private JRadioButton rdbtnNome;
+	private JRadioButton rdbtnnData;
+	private static DefaultTableModel tableModel;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private JComboBox comboBox;
 	private JButton btnConsultar;
 
-	/**
-	 * Create the frame.
-	 */
+	public TextField getTextFieldConsulta() {
+		return textFieldConsulta;
+	}
+
+	public void setTextFieldConsulta(TextField textFieldConsulta) {
+		this.textFieldConsulta = textFieldConsulta;
+	}
+
+	public JRadioButton getRdbtnCodigo() {
+		return rdbtnCodigo;
+	}
+
+	public void setRdbtnCodigo(JRadioButton rdbtnCodigo) {
+		this.rdbtnCodigo = rdbtnCodigo;
+	}
+
+	public JRadioButton getRdbtnNome() {
+		return rdbtnNome;
+	}
+
+	public void setRdbtnNome(JRadioButton rdbtnNome) {
+		this.rdbtnNome = rdbtnNome;
+	}
+
+	public JRadioButton getRdbtnnData() {
+		return rdbtnnData;
+	}
+
+	public void setRdbtnnData(JRadioButton rdbtnnData) {
+		this.rdbtnnData = rdbtnnData;
+	}
+	
+	public JTable getTable() {
+		return table;
+	}
+
 	public TelaHistoricoVenda(TelaPrincipal telaPrincipal) {
 		setBounds(100, 100, 682, 482);
 		// contentPane = new JPanel();
@@ -76,13 +110,19 @@ public class TelaHistoricoVenda extends JPanel {
 		scrollPane = new JScrollPane();
 		add(scrollPane, "cell 0 1,grow");
 
-		table = new JTable();
-		table.setBorder(new LineBorder(new Color(250, 187, 187), 2));
-		table.setBackground(new Color(255, 233, 233));
-		table.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		table.setModel(new DefaultTableModel(
-				new Object[][] {},
-				new String[] { "New column", "New column", "New column" }));
+		tableModel = new DefaultTableModel();
+		tableModel.addColumn("Codigo");
+		tableModel.addColumn("Nome");
+		tableModel.addColumn("Data");
+
+		table = new JTable(tableModel) {
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
+		Utils.configTabela(table, scrollPane);
+
 		scrollPane.setViewportView(table);
 		Utils.configTabela(table, scrollPane);
 	}
