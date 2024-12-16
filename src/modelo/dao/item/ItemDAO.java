@@ -16,7 +16,6 @@ import modelo.entidade.produto.Produto;
 public class ItemDAO {
 	private Integer idVendaAtual = null;
 	private float totalVendaAtual = 0;
-	private int indiceAtual = 0;
 
 	public boolean verificaVenda() {
 		String sqlVerificaVenda = "SELECT venda_id FROM venda WHERE data_venda IS NULL LIMIT 1";
@@ -46,7 +45,7 @@ public class ItemDAO {
 			if (rs.next()) {
 				return rs.getInt(1);
 			} else {
-				return 1;
+				return -1;
 			}
 
 		} catch (SQLException e) {
@@ -68,7 +67,6 @@ public class ItemDAO {
 			// Recuperar o ID da venda gerado
 			ResultSet rsVenda = stmtVenda.getGeneratedKeys();
 			int vendaId = -1;
-			indiceAtual = 0;
 			if (rsVenda.next()) {
 				vendaId = rsVenda.getInt(1); // pega o id da venda criada
 				idVendaAtual = vendaId; // seta como venda atual
@@ -114,7 +112,7 @@ public class ItemDAO {
 			realizaVenda(item, cpf);
 		}
 
-		String sqlItem = "INSERT INTO venda_produto (venda_produto_id, venda_id, prod_id, quantidade, preco) VALUES(?, ?, ?, ?, ?)";
+		String sqlItem = "INSERT INTO venda_produto (venda_id, prod_id, quantidade, preco) VALUES(?, ?, ?, ?)";
 		String sqlProduto = "SELECT valor FROM produto WHERE idProduto = ?";
 		String sqlUpdate = "UPDATE venda SET total = (SELECT SUM(vp.quantidade * vp.preco) FROM venda_produto vp WHERE vp.venda_id = ?) WHERE venda_id = ?;";
 		String sqlAdiciona = "UPDATE venda_produto SET quantidade = ? WHERE prod_id = ? AND venda_id = ?";
@@ -134,13 +132,11 @@ public class ItemDAO {
 				ResultSet rsProduto = stmtProduto.executeQuery();
 				if (rsProduto.next()) {
 					float precoProduto = rsProduto.getFloat("valor");
-					indiceAtual += 1;
 					// inserindo o item na venda
-					stmtItem.setInt(1, indiceAtual);
-					stmtItem.setInt(2, idVendaAtual);
-					stmtItem.setInt(3, produtoId);
-					stmtItem.setInt(4, item.getQuantidade());
-					stmtItem.setDouble(5, precoProduto);
+					stmtItem.setInt(1, idVendaAtual);
+					stmtItem.setInt(2, produtoId);
+					stmtItem.setInt(3, item.getQuantidade());
+					stmtItem.setDouble(4, precoProduto);
 					stmtItem.executeUpdate();
 
 				} else {
@@ -157,11 +153,11 @@ public class ItemDAO {
 				ResultSet rs = stmtConsulta.executeQuery();
 				if (rs.next()) {
 					quant += rs.getInt("quantidade");
-					System.out.println("quantidade nova = "+ quant);
+					System.out.println("quantidade nova = " + quant);
 					stmtAdiciona.setInt(1, quant);
 					stmtAdiciona.executeUpdate();
 				}
-				
+
 				// terminar aqui
 
 			}
@@ -243,17 +239,30 @@ public class ItemDAO {
 	}
 
 	public boolean excluirItem(int idProduto) {
+		String sqlConsulta = "SELECT venda_produto_id FROM venda_produto WHERE venda_id =? ORDER BY venda_produto_id LIMIT 1 OFFSET ?";
 
-		String sql = "DELETE FROM venda_produto WHERE venda_id = ? AND venda_produto_id = ?";
-		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+		String sqlDelete = "DELETE FROM venda_produto WHERE venda_id = ? AND venda_produto_id = ?";
 
-			stmt.setInt(1, idVendaAtual);
-			stmt.setInt(2, idProduto);
-			int rowsAffected = stmt.executeUpdate();
-			if (rowsAffected > 0)
-				return true;
-			else
+		try (Connection conn = ConexaoBD.getConexaoMySQL();
+				PreparedStatement stmtConsulta = conn.prepareStatement(sqlConsulta);
+				PreparedStatement stmtDelete = conn.prepareStatement(sqlDelete)) {
+
+			stmtConsulta.setInt(1, idVendaAtual);
+			stmtConsulta.setInt(2, idProduto - 1);
+
+			ResultSet rs = stmtConsulta.executeQuery();
+			if (rs.next()) {
+				int vendaProdutoId = rs.getInt("venda_produto_id");
+
+				stmtDelete.setInt(1, idVendaAtual);
+				stmtDelete.setInt(2, vendaProdutoId);
+
+				int rowsAffected = stmtDelete.executeUpdate();
+
+				return rowsAffected > 0;
+			} else {
 				return false;
+			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -321,19 +330,17 @@ public class ItemDAO {
 		return itens;
 	}
 
-	public void atualizaTabela(int indice, int produtoId) {
-		String sql = "UPDATE venda_produto SET venda_produto_id = ? WHERE venda_id = ? AND produto_id = ?";
-		try (Connection conn = ConexaoBD.getConexaoMySQL();
-				PreparedStatement stmtUpdateItem = conn.prepareStatement(sql)) {
-			stmtUpdateItem.setInt(1, indice);
-			stmtUpdateItem.setInt(2, idVendaAtual);
-			stmtUpdateItem.setInt(3, produtoId);
-			indiceAtual = indice;
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-	}
+	/*
+	 * public void atualizaTabela(int indice, int produtoId) { String sql =
+	 * "UPDATE venda_produto SET venda_produto_id = ? WHERE venda_id = ? AND produto_id = ?"
+	 * ; try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement
+	 * stmtUpdateItem = conn.prepareStatement(sql)) { stmtUpdateItem.setInt(1,
+	 * indice); stmtUpdateItem.setInt(2, idVendaAtual); stmtUpdateItem.setInt(3,
+	 * produtoId); indiceAtual = indice;
+	 * 
+	 * } catch (SQLException e) { e.printStackTrace(); }
+	 * 
+	 * }
+	 */
 
 }

@@ -13,6 +13,7 @@ import modelo.dao.item.ItemDAO;
 import modelo.dao.produto.ProdutoDAO;
 import modelo.entidade.item.Item;
 import modelo.entidade.produto.Produto;
+import visao.TelaMensagens;
 import visao.TelaVenda;
 
 public class ItemController {
@@ -61,14 +62,12 @@ public class ItemController {
 		Produto produto = produtoDAO.getId(idProduto);
 
 		if (produto == null) {
-			JOptionPane.showMessageDialog(telaVenda, "Produto não encontrado no sistema.", "Erro",
-					JOptionPane.ERROR_MESSAGE);
+			new TelaMensagens("Produto não encontrado no sistema.", 1);
 			return;
 		}
 
 		if (quantidade <= 0) {
-			JOptionPane.showMessageDialog(telaVenda, "Quantidade deve ser maior que zero.", "Erro",
-					JOptionPane.ERROR_MESSAGE);
+			new TelaMensagens("Quantidade deve ser maior que zero.", 1);
 			return;
 		}
 
@@ -87,9 +86,9 @@ public class ItemController {
 		}
 
 		if (sucesso) {
-			JOptionPane.showMessageDialog(telaVenda, "Item cadastrado com sucesso!");
+			new TelaMensagens("Item cadastrado com sucesso!", 0);
 		} else {
-			JOptionPane.showMessageDialog(telaVenda, "Erro ao cadastrar o Item.", "Erro", JOptionPane.ERROR_MESSAGE);
+			new TelaMensagens("Erro ao cadastrar o Item.", 1);
 		}
 	}
 
@@ -112,7 +111,6 @@ public class ItemController {
 
 			tableModel.addRow(new Object[] { indiceCorrespondente, produto.getNomeProduto(), item.getQuantidade(),
 					String.format("%.2f", valorTotal) });
-			itemDAO.atualizaTabela(i, item.getId());
 
 		}
 		telaVenda.getTable().setModel(tableModel);
@@ -136,28 +134,24 @@ public class ItemController {
 		if (selectedRow != -1) {
 			// Pega o ID do item da tabela
 			int idItem = (Integer) telaVenda.getTable().getValueAt(selectedRow, 0);
-			int resposta = JOptionPane.showConfirmDialog(telaVenda,
-					"Você tem certeza que deseja excluir o item com ID: " + idItem + "?", "Confirmar Exclusão",
-					JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-
+			TelaMensagens tm = new TelaMensagens("Você tem certeza que deseja excluir o item com ID: " + idItem + "?");
 			// funciona ate aq
-			if (resposta == JOptionPane.YES_OPTION) {
-
+			if (tm.getResposta()) {
 				// Chama o método excluirItem do itemDAO para excluir o item do banco
 				boolean excluido = itemDAO.excluirItem(idItem);
 
 				if (excluido) {
-					JOptionPane.showMessageDialog(telaVenda, "Item excluído com sucesso!");
+					new TelaMensagens("Item excluído com sucesso!", 0);
 					atualizarTabela(); // Atualiza a tabela após a exclusão
 				} else {
-					JOptionPane.showMessageDialog(telaVenda, "Erro ao excluir o Item.", "Erro",
-							JOptionPane.ERROR_MESSAGE);
+					new TelaMensagens("Erro ao excluir Item.", 1);
 				}
 			}
 		} else {
 			// Se nenhuma linha for selecionada
-			JOptionPane.showMessageDialog(telaVenda, "Selecione um Item para excluir.", "Erro",
-					JOptionPane.WARNING_MESSAGE);
+			new TelaMensagens("Selecione um Item para excluir.", 3);
+			
+			
 		}
 
 	}
