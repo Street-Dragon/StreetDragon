@@ -71,7 +71,6 @@ public class ItemController {
 				} else {
 					preecherCampos();
 				}
-				
 			}
 			
 			@Override
@@ -167,6 +166,7 @@ public class ItemController {
 				if (excluido) {
 					new TelaMensagens("Item excluído com sucesso!", 0);
 					atualizarTabela(); // Atualiza a tabela após a exclusão
+					limparCampos();
 				} else {
 					new TelaMensagens("Erro ao excluir Item.", 1);
 				}
