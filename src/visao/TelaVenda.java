@@ -216,4 +216,16 @@ public class TelaVenda extends JPanel { // mudado para jpanel ao invés de jfram
 	public String getTxtCodigo() {
 		return txtCodigo.getText();
 	}
+	public JTextField setTxtNome() {
+		return txtNome;
+	}
+	public JTextField setTxtValor() {
+		return txtValor;
+	}
+	public JTextField setTxtCodigo() {
+		return txtCodigo;
+	}
+	public JTextField setTxtQuantidade() {
+		return txtQuantidade;
+	}
 }
