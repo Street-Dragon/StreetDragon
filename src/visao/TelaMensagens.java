@@ -24,6 +24,7 @@ public class TelaMensagens extends JDialog {
 
     // Construtor para mensagens simples
     public TelaMensagens(String mensagem, int tipo) {
+        setAlwaysOnTop(true);
         setTitle("Mensagem");
         setModal(true);
         setResizable(false);
