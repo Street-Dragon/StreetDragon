@@ -96,6 +96,8 @@ public class ConexaoBD {
 					+ "FOREIGN KEY (promocao_idPromocao) REFERENCES promocao(idPromocao) " + "ON DELETE NO ACTION "
 					+ "ON UPDATE NO ACTION, " + "FOREIGN KEY (cliente_cpf) REFERENCES cliente(cpf) "
 					+ "ON DELETE NO ACTION " + "ON UPDATE NO ACTION) ENGINE = InnoDB;";
+			
+			String sqlResetVendas = "DELETE FROM venda WHERE data_venda IS NULL";
 
 			stmt.executeUpdate(sqlContato);
 			stmt.executeUpdate(sqlEndereco);
@@ -108,6 +110,7 @@ public class ConexaoBD {
 			stmt.executeUpdate(sqlVenda);
 			stmt.executeUpdate(sqlVenda_Produto);
 			stmt.executeUpdate(sqlPromocaoCliente);
+			stmt.executeUpdate(sqlResetVendas);
 
 			String sqlVerificaFuncionario = "SELECT cpf FROM funcionario WHERE cpf = '123'";
 			PreparedStatement psFuncionario = conn.prepareStatement(sqlVerificaFuncionario);
