@@ -32,9 +32,13 @@ public class ItemController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				adicionar();
-				atualizarTabela();
-				limparCampos();
+				if (!telaVenda.setTxtCodigo().getText().isEmpty() && !telaVenda.setTxtQuantidade().getText().isEmpty()) {
+					adicionar();
+					atualizarTabela();
+					limparCampos();
+				} else {
+					new TelaMensagens("Preencha todos os campos!", 1);
+				}
 			}
 		});
 
