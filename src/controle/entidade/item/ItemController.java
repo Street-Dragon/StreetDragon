@@ -2,6 +2,8 @@ package controle.entidade.item;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -32,6 +34,7 @@ public class ItemController {
 
 				adicionar();
 				atualizarTabela();
+				limparCampos();
 			}
 		});
 
@@ -41,6 +44,7 @@ public class ItemController {
 
 				excluirTudo();
 				atualizarTabela();
+				limparCampos();
 			}
 		});
 
@@ -50,9 +54,29 @@ public class ItemController {
 
 				excluir();
 				atualizarTabela();
+				limparCampos();
 			}
 		});
-
+		
+		telaVenda.setTxtCodigo().addKeyListener(new KeyListener() {
+			
+			@Override
+			public void keyTyped(KeyEvent e) {}
+			@Override
+			
+			public void keyReleased(KeyEvent e) {
+				if (telaVenda.getTxtCodigo().isBlank()) {
+					telaVenda.setTxtValor().setText(null);
+					telaVenda.setTxtNome().setText(null);
+				} else {
+					preecherCampos();
+				}
+				
+			}
+			
+			@Override
+			public void keyPressed(KeyEvent e) {}
+		});
 	}
 
 	protected void adicionar() {
@@ -158,5 +182,19 @@ public class ItemController {
 
 	private void atualizaTotal() {
 		telaVenda.getLblTotal().setText("Total: R$ " + itemDAO.getTotal());
+	}
+	private void preecherCampos() {
+		int codigo = Integer.parseInt(telaVenda.getTxtCodigo());
+		Produto produto = produtoDAO.getId(codigo);
+		if (produto != null) {
+			telaVenda.setTxtNome().setText(produto.getNomeProduto());
+			telaVenda.setTxtValor().setText(String.valueOf(produto.getValor()));
+		}
+	}
+	private void limparCampos() {
+		telaVenda.setTxtCodigo().setText(null);
+		telaVenda.setTxtNome().setText(null);
+		telaVenda.setTxtValor().setText(null);
+		telaVenda.setTxtQuantidade().setText(null);
 	}
 }
