@@ -214,18 +214,6 @@ public class TelaCadastroProdutos extends JFrame {
 
 	}
 
-	public void limparCampos() {
-		textFieldId.setText(null);
-		textFieldNome.setText(null);
-		textFieldValor.setText(null);
-		textFieldVariacao.setText(null);
-		textFieldQntEstoque.setText(null);
-		textFieldFornecedor.setText(null);
-		cbTamanho.setSelectedItem(null);
-		cbMaterial.setSelectedItem(null);
-		cbCategoria.setSelectedItem(null);
-	}
-
 	public String getTextFieldNome() {
 		return textFieldNome.getText();
 	}

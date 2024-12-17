@@ -35,7 +35,6 @@ public class ProdutoDAO {
 			stmtProduto.setInt(6, produto.getQuantEstoque());
 			stmtProduto.setString(7, produto.getTamanho());
 			stmtProduto.setInt(8, produto.getFornecedorid());
-			System.out.println(produto.getFornecedorid());
 
 			stmtProduto.executeUpdate();
 			return true;
@@ -279,7 +278,6 @@ public class ProdutoDAO {
 	            }
 	        }
 	    } catch (SQLException e) {
-	    	 System.out.println("check4");
 	        System.out.println(e);
 	    }
 	    return false;

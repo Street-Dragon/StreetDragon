@@ -39,7 +39,7 @@ public class ProdutoControle {
 			telaCadastroProduto.getbtnCancelar().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				telaCadastroProduto.limparCampos();
+				limparCampos();
 				telaCadastroProduto.dispose();
 			}
 		});
@@ -91,15 +91,13 @@ public class ProdutoControle {
 	
 
 	protected void cadastrarProduto() {
-		System.out.println("Cadastro");
 		telaCadastroProduto.setVisible(true);
-		telaCadastroProduto.limparCampos();
+		limparCampos();
 		telaCadastroProduto.getTextFieldId().setText(String.valueOf(produtoDAO.Idshow()));
 		
 	}
 
 	protected void editarProduto() {
-		System.out.println("edit");
 		JTable table = telaProdutos.getTable(); int selectedRowIndex = table.getSelectedRow(); 
 		if (selectedRowIndex == -1) {
 			TelaMensagens Tm = new TelaMensagens("Nenhum produto selecionado", 3);
@@ -113,7 +111,7 @@ public class ProdutoControle {
 			Produto produto = new Produto();
 			produto = produtoDAO.getId(Integer.valueOf(firstColumnValue));
 			telaCadastroProduto.setVisible(true);
-			telaCadastroProduto.limparCampos();
+			limparCampos();
 			fillEdit(produto); 
 		}
 	}
@@ -407,5 +405,19 @@ public class ProdutoControle {
 		telaCadastroProduto.setCbMaterial().setSelectedIndex(index1);
 		telaCadastroProduto.setCbCategoria().setSelectedIndex(index2);
 		telaCadastroProduto.setCbTamanho().setSelectedIndex(index3);
+	}
+	
+	public void limparCampos() {
+		telaCadastroProduto.getTextFieldId().setText(null);
+		telaCadastroProduto.setTextFieldNome().setText(null);
+		telaCadastroProduto.setTextFieldValor().setText(null);
+		telaCadastroProduto.setTextFieldVariacao().setText(null);
+		telaCadastroProduto.setTextFieldVariacao().setText(null);
+		telaCadastroProduto.setTextFieldQntEstoque().setText(null);
+		telaCadastroProduto.setTextFieldQntEstoque().setText(null);
+		telaCadastroProduto.setCbTamanho().setSelectedItem(null);
+		telaCadastroProduto.setCbMaterial().setSelectedItem(null);
+		telaCadastroProduto.setCbCategoria().setSelectedItem(null);
+
 	}
 }
