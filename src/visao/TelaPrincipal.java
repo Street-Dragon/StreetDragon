@@ -17,6 +17,7 @@ import controle.entidade.funcionariocontrole.FuncionarioControle;
 import controle.entidade.item.ItemController;
 import controle.entidade.produto.ProdutoControle;
 import controle.entidade.promocaocontrole.PromocaoControle;
+//import controle.tela.historicovendacontrole.HistoricoVendaControle;
 import controle.visao.principal.TelaPrincipalControle;
 import net.miginfocom.swing.MigLayout;
 import utils.Cores;
@@ -187,7 +188,9 @@ public class TelaPrincipal extends JFrame {
 		itemControle.setTelaVenda(telaVenda);
 		
 		PromocaoControle promocaoControle = new PromocaoControle(telaPromocao);
-	
+		
+		//HistoricoVendaControle historicoControle = new HistoricoVendaControle(telaHistoricoVenda);
+		
 		// Adiciona os painéis
 		mainPanel.add(telaVenda, "TelaVenda");
 		mainPanel.add(telaHistoricoVenda, "TelaHistoricoVenda");

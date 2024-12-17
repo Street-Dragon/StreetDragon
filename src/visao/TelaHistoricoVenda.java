@@ -22,108 +22,115 @@ import javax.swing.DefaultComboBoxModel;
 
 public class TelaHistoricoVenda extends JPanel {
 
-	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
-	private JScrollPane scrollPane;
-	private JTable table;
-	private Panel panel;
-	private JLabel lblNewLabel;
-	private TextField textFieldConsulta;
-	private JRadioButton rdbtnCodigo;
-	private JRadioButton rdbtnNome;
-	private JRadioButton rdbtnnData;
-	private static DefaultTableModel tableModel;
-	private final ButtonGroup buttonGroup = new ButtonGroup();
-	private JComboBox comboBox;
-	private JButton btnConsultar;
+    private static final long serialVersionUID = 1L;
+    private JPanel contentPane;
+    private JScrollPane scrollPane;
+    private JTable table;
+    private Panel panel;
+    private JLabel lblNewLabel;
+    private TextField textFieldConsulta;
+    private JRadioButton rdbtnCodigo;
+    private JRadioButton rdbtnNome;
+    private JRadioButton rdbtnnData;
+    private static DefaultTableModel tableModel;
+    private final ButtonGroup buttonGroup = new ButtonGroup();
+    private JComboBox comboBox;  // A variável já existe
+    private JButton btnConsultar;
 
-	public TextField getTextFieldConsulta() {
-		return textFieldConsulta;
-	}
+    public TextField getTextFieldConsulta() {
+        return textFieldConsulta;
+    }
 
-	public void setTextFieldConsulta(TextField textFieldConsulta) {
-		this.textFieldConsulta = textFieldConsulta;
-	}
+    public void setTextFieldConsulta(TextField textFieldConsulta) {
+        this.textFieldConsulta = textFieldConsulta;
+    }
 
-	public JRadioButton getRdbtnCodigo() {
-		return rdbtnCodigo;
-	}
+    public JRadioButton getRdbtnCodigo() {
+        return rdbtnCodigo;
+    }
 
-	public void setRdbtnCodigo(JRadioButton rdbtnCodigo) {
-		this.rdbtnCodigo = rdbtnCodigo;
-	}
+    public void setRdbtnCodigo(JRadioButton rdbtnCodigo) {
+        this.rdbtnCodigo = rdbtnCodigo;
+    }
 
-	public JRadioButton getRdbtnNome() {
-		return rdbtnNome;
-	}
+    public JRadioButton getRdbtnNome() {
+        return rdbtnNome;
+    }
 
-	public void setRdbtnNome(JRadioButton rdbtnNome) {
-		this.rdbtnNome = rdbtnNome;
-	}
+    public void setRdbtnNome(JRadioButton rdbtnNome) {
+        this.rdbtnNome = rdbtnNome;
+    }
 
-	public JRadioButton getRdbtnnData() {
-		return rdbtnnData;
-	}
+    public JRadioButton getRdbtnnData() {
+        return rdbtnnData;
+    }
 
-	public void setRdbtnnData(JRadioButton rdbtnnData) {
-		this.rdbtnnData = rdbtnnData;
-	}
-	
-	public JTable getTable() {
-		return table;
-	}
+    public void setRdbtnnData(JRadioButton rdbtnnData) {
+        this.rdbtnnData = rdbtnnData;
+    }
 
-	public TelaHistoricoVenda(TelaPrincipal telaPrincipal) {
-		setBounds(100, 100, 682, 482);
-		// contentPane = new JPanel();
-		setBackground(new Color(253, 233, 235));
+    // Método para acessar o JComboBox
+    public JComboBox getComboBox() {
+        return comboBox;
+    }
 
-		setLayout(new MigLayout("", "[grow]", "[35%][65%]"));
+    public JButton getBtnConsultar() {
+        return btnConsultar;
+    }
 
-		panel = new Panel();
-		panel.setBackground(new Color(255, 255, 255));
-		add(panel, "cell 0 0,grow");
-		panel.setLayout(new MigLayout("", "[20%][60%][20%]", "[grow][grow]"));
-						
-								lblNewLabel = new JLabel("Consulta");
-								lblNewLabel.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
-								panel.add(lblNewLabel, "cell 1 0,alignx center,aligny bottom");
-						
-						comboBox = new JComboBox();
-						comboBox.setBackground(new Color(255, 255, 255));
-						comboBox.setModel(new DefaultComboBoxModel(new String[] {"", "Nome", "Categoria", "Preco"}));
-						comboBox.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
-						panel.add(comboBox, "cell 0 1,growx");
-						
-								textFieldConsulta = new TextField();
-								textFieldConsulta.setBackground(new Color(255, 255, 255));
-								textFieldConsulta.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
-								panel.add(textFieldConsulta, "cell 1 1,growx,aligny center");
-								
-								btnConsultar = new JButton("Consultar");
-								btnConsultar.setForeground(new Color(255, 255, 255));
-								btnConsultar.setBackground(new Color(255, 175, 175));
-								btnConsultar.setIcon(Utils.carregarIcone("lupa.png", 30, 30));
-								btnConsultar.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
-								panel.add(btnConsultar, "cell 2 1,growx,aligny center");
+    public void setBtnConsultar(JButton btnConsultar) {
+        this.btnConsultar = btnConsultar;
+    }
 
-		scrollPane = new JScrollPane();
-		add(scrollPane, "cell 0 1,grow");
+    public TelaHistoricoVenda(TelaPrincipal telaPrincipal) {
+        setBounds(100, 100, 682, 482);
+        setBackground(new Color(253, 233, 235));
+        setLayout(new MigLayout("", "[grow]", "[35%][65%]"));
 
-		tableModel = new DefaultTableModel();
-		tableModel.addColumn("Codigo");
-		tableModel.addColumn("Nome");
-		tableModel.addColumn("Data");
+        panel = new Panel();
+        panel.setBackground(new Color(255, 255, 255));
+        add(panel, "cell 0 0,grow");
+        panel.setLayout(new MigLayout("", "[20%][60%][20%]", "[grow][grow]"));
+                        
+        lblNewLabel = new JLabel("Consulta");
+        lblNewLabel.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
+        panel.add(lblNewLabel, "cell 1 0,alignx center,aligny bottom");
 
-		table = new JTable(tableModel) {
-			@Override
-			public boolean isCellEditable(int row, int column) {
-				return false;
-			}
-		};
-		Utils.configTabela(table, scrollPane);
+        comboBox = new JComboBox();
+        comboBox.setBackground(new Color(255, 255, 255));
+        comboBox.setModel(new DefaultComboBoxModel(new String[] {"", "Codigo", "Nome", "Data"})); // Corrigi para os filtros que você mencionou
+        comboBox.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
+        panel.add(comboBox, "cell 0 1,growx");
 
-		scrollPane.setViewportView(table);
-		Utils.configTabela(table, scrollPane);
-	}
+        textFieldConsulta = new TextField();
+        textFieldConsulta.setBackground(new Color(255, 255, 255));
+        textFieldConsulta.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
+        panel.add(textFieldConsulta, "cell 1 1,growx,aligny center");
+
+        btnConsultar = new JButton("Consultar");
+        btnConsultar.setForeground(new Color(255, 255, 255));
+        btnConsultar.setBackground(new Color(255, 175, 175));
+        btnConsultar.setIcon(Utils.carregarIcone("lupa.png", 30, 30));
+        btnConsultar.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
+        panel.add(btnConsultar, "cell 2 1,growx,aligny center");
+
+        scrollPane = new JScrollPane();
+        add(scrollPane, "cell 0 1,grow");
+
+        tableModel = new DefaultTableModel();
+        tableModel.addColumn("Codigo");
+        tableModel.addColumn("Nome");
+        tableModel.addColumn("Data");
+
+        table = new JTable(tableModel) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        Utils.configTabela(table, scrollPane);
+
+        scrollPane.setViewportView(table);
+        Utils.configTabela(table, scrollPane);
+    }
 }
