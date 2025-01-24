@@ -4,6 +4,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -71,6 +74,11 @@ public class PromocaoControle {
             new TelaMensagens("Data de término inválida! O formato correto é dd/MM/yyyy.", 1);
             return;
         }
+        
+        if (!ValidarOrdemDatas(inicio, termino)) {
+            new TelaMensagens("A data de início deve ser anterior ou igual à data de término!", 1);
+            return;
+        }
 
         float desconto;
         try {
@@ -103,8 +111,25 @@ public class PromocaoControle {
             new TelaMensagens("Erro ao cadastrar promoção: " + e.getMessage(), 1);
         }
     }
+    
+    private boolean ValidarOrdemDatas(String inicio, String termino) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        sdf.setLenient(false); // Garante que as datas inválidas sejam rejeitadas
 
-  
+        try {
+            Date dataInicio = sdf.parse(inicio);
+            Date dataTermino = sdf.parse(termino);
+
+            // Verifica se a data de início é posterior à data de término
+            return !dataInicio.after(dataTermino);
+        } catch (ParseException e) {
+            // Se ocorrer um erro ao analisar as datas, considera inválido
+            return false;
+        }
+    }
+
+
+  //--------------------------//
     private boolean ValidarData(String data) {
         if (data == null || data.length() != 10) {
             return false;
@@ -158,7 +183,7 @@ public class PromocaoControle {
         return (ano % 4 == 0 && (ano % 100 != 0 || ano % 400 == 0));
     }
 
-
+//---------------//
 
     private void editarPromocao() {
         int selectedRow = telaPromocao.getTable().getSelectedRow();
@@ -188,6 +213,11 @@ public class PromocaoControle {
 
         if (!ValidarData(termino)) {
             new TelaMensagens("Data de término inválida! O formato correto é dd/MM/yyyy.", 1);
+            return;
+        }
+        
+        if (!ValidarOrdemDatas(inicio, termino)) {
+            new TelaMensagens("A data de início deve ser anterior ou igual à data de término!", 1);
             return;
         }
         
