@@ -1,6 +1,7 @@
 package controle.visao.principal;
 
 import visao.TelaCadastroFuncionario;
+import visao.TelaMensagens;
 import visao.TelaPrincipal;
 import visao.TelaVenda;
 
@@ -10,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.table.DefaultTableModel;
 
 import controle.entidade.funcionariocontrole.FuncionarioControle;
 import modelo.dao.funcionario.FuncionarioDAO;
@@ -84,12 +86,20 @@ public class TelaPrincipalControle {
 	}
 
 	public void setTelaVenda(TelaVenda telaVenda) {
-		this.telaVenda = telaVenda;
+	    this.telaVenda = telaVenda;
 
-		
-		telaVenda.getBtnRealizarCompra().addActionListener(e -> {
-		    telaPrincipal.getCardLayout().show(telaPrincipal.getMainPanel(), "TelaPagamento"); 
-		});
+	    telaVenda.getBtnRealizarCompra().addActionListener(e -> {
+	    	System.out.println("c");
+	        // Validação do carrino vazio
+	        DefaultTableModel model = (DefaultTableModel) telaVenda.getTable().getModel();
+	        
+	        if (model.getRowCount() == 0) {
+	            new TelaMensagens("vai comprar ar imbecil?", 3);
+	            return;
+	        }
+
+	        telaPrincipal.getCardLayout().show(telaPrincipal.getMainPanel(), "TelaPagamento");
+	    });
 	}
 
 	// método para trocar o jpanel atual

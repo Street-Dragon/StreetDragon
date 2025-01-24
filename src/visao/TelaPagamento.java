@@ -22,6 +22,9 @@ public class TelaPagamento extends JPanel {
 	private JTextField txtCartao;
 	private JTextField txtOutros;
 	private JTextField textField;
+	private JButton btnConfirmar;
+	private JButton btnCancelar;
+	
 
 	/**
 	 * Create the panel.
@@ -149,4 +152,73 @@ public class TelaPagamento extends JPanel {
 
 	}
 
-}
+	public JTextField getTxtTotal() {
+		return txtTotal;
+	}
+
+	public void setTxtTotal(JTextField txtTotal) {
+		this.txtTotal = txtTotal;
+	}
+
+	public JTextField getTxtDesconto() {
+		return txtDesconto;
+	}
+
+	public void setTxtDesconto(JTextField txtDesconto) {
+		this.txtDesconto = txtDesconto;
+	}
+
+	public JTextField getTxtDinheiro() {
+		return txtDinheiro;
+	}
+
+	public void setTxtDinheiro(JTextField txtDinheiro) {
+		this.txtDinheiro = txtDinheiro;
+	}
+
+	public JTextField getTxtCartao() {
+		return txtCartao;
+	}
+
+	public void setTxtCartao(JTextField txtCartao) {
+		this.txtCartao = txtCartao;
+	}
+
+	public JTextField getTxtOutros() {
+		return txtOutros;
+	}
+
+	public void setTxtOutros(JTextField txtOutros) {
+		this.txtOutros = txtOutros;
+	}
+
+	public JTextField getTextField() {
+		return textField;
+	}
+
+	public void setTextField(JTextField textField) {
+		this.textField = textField;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public JButton getBtnConfirmar() {
+		return btnConfirmar;
+	}
+
+	
+
+	public JButton getBtnCancelar() {
+		return btnCancelar;
+	}
+
+	
+	}
+
+
+	
+	
+
+

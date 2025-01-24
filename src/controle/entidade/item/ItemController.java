@@ -43,14 +43,25 @@ public class ItemController {
 		});
 
 		telaVenda.getBtnLimparCarrinho().addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-				excluirTudo();
-				atualizarTabela();
-				limparCampos();
-			}
+		    @Override
+		    //Verificação 
+		    public void actionPerformed(ActionEvent e) {
+		        DefaultTableModel model = (DefaultTableModel) telaVenda.getTable().getModel();
+		        if (model.getRowCount() == 0) {
+		            new TelaMensagens("Não há items no carrinho para serem esvaziados", 1);
+		        } else {
+		            TelaMensagens tm = new TelaMensagens("Tem certeza que deseja esvaziar o carrinho?");
+		            
+		            if (tm.getResposta()) {
+		                excluirTudo();
+		                atualizarTabela();
+		                limparCampos();
+		            }
+		        }
+		    }
 		});
+
+
 
 		telaVenda.getBtnRemoverProduto().addActionListener(new ActionListener() {
 			@Override
