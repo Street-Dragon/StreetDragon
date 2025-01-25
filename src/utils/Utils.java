@@ -154,6 +154,11 @@ public class Utils {
 	}
 
 	public static ImageIcon carregarIcone(String caminho, int largura, int altura) {
+		if(!caminho.toLowerCase().endsWith(".png")) {
+			caminho = caminho+".png";
+		}
+		
+		
 		ImageIcon iconeOriginal = new ImageIcon(Utils.class.getResource("/resources/imagens/" + caminho));
 		Image iconeRedimensionada = iconeOriginal.getImage().getScaledInstance(largura, altura, Image.SCALE_SMOOTH);
 		return new ImageIcon(iconeRedimensionada);

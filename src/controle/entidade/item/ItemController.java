@@ -7,6 +7,7 @@ import java.awt.event.KeyListener;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -15,6 +16,7 @@ import modelo.dao.item.ItemDAO;
 import modelo.dao.produto.ProdutoDAO;
 import modelo.entidade.item.Item;
 import modelo.entidade.produto.Produto;
+import utils.Utils;
 import visao.TelaMensagens;
 import visao.TelaVenda;
 
@@ -32,7 +34,8 @@ public class ItemController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				if (!telaVenda.setTxtCodigo().getText().isEmpty() && !telaVenda.setTxtQuantidade().getText().isEmpty()) {
+				if (!telaVenda.setTxtCodigo().getText().isEmpty()
+						&& !telaVenda.setTxtQuantidade().getText().isEmpty()) {
 					adicionar();
 					atualizarTabela();
 					limparCampos();
@@ -61,13 +64,15 @@ public class ItemController {
 				limparCampos();
 			}
 		});
-		
+
 		telaVenda.setTxtCodigo().addKeyListener(new KeyListener() {
-			
+
 			@Override
-			public void keyTyped(KeyEvent e) {}
+			public void keyTyped(KeyEvent e) {
+			}
+
 			@Override
-			
+
 			public void keyReleased(KeyEvent e) {
 				if (telaVenda.getTxtCodigo().isBlank()) {
 					telaVenda.setTxtValor().setText(null);
@@ -76,9 +81,10 @@ public class ItemController {
 					preecherCampos();
 				}
 			}
-			
+
 			@Override
-			public void keyPressed(KeyEvent e) {}
+			public void keyPressed(KeyEvent e) {
+			}
 		});
 	}
 
@@ -178,8 +184,7 @@ public class ItemController {
 		} else {
 			// Se nenhuma linha for selecionada
 			new TelaMensagens("Selecione um Item para excluir.", 3);
-			
-			
+
 		}
 
 	}
@@ -187,14 +192,35 @@ public class ItemController {
 	private void atualizaTotal() {
 		telaVenda.getLblTotal().setText("Total: R$ " + itemDAO.getTotal());
 	}
+
 	private void preecherCampos() {
 		int codigo = Integer.parseInt(telaVenda.getTxtCodigo());
 		Produto produto = produtoDAO.getId(codigo);
 		if (produto != null) {
 			telaVenda.setTxtNome().setText(produto.getNomeProduto());
 			telaVenda.setTxtValor().setText(String.valueOf(produto.getValor()));
+
+			// set imagem aqui:
+			String caminho = produto.getCategoria();
+			System.out.println(caminho);
+
+			if ("Toca".equals(caminho)) {
+				caminho = "Touca";
+			} else if ("Moleton".equals(caminho)) {
+				caminho = "Moletom";
+			} else if ("Camisa".equals(caminho)) {
+				caminho = "Camiseta";
+			} else if ("Outros".equals(caminho)) {
+				caminho = "interrogacao";
+			}
+
+			ImageIcon icone = Utils.carregarIcone(caminho, 25, 25);
+
+			telaVenda.setImagem(icone);
+
 		}
 	}
+
 	private void limparCampos() {
 		telaVenda.setTxtCodigo().setText(null);
 		telaVenda.setTxtNome().setText(null);

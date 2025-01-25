@@ -35,6 +35,7 @@ public class TelaVenda extends JPanel { // mudado para jpanel ao invés de jfram
 	private JButton btnAdicionarProduto;
 	private JButton btnRealizarCompra;
 	private JButton btnLimparCarrinho;
+	private JPanel panelImagem;
 
 	private JLabel lblTotal;
 	private static DefaultTableModel tableModel;
@@ -67,9 +68,9 @@ public class TelaVenda extends JPanel { // mudado para jpanel ao invés de jfram
 		txtNome.setColumns(10);
 		txtNome.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
 
-		JPanel panelImagem = new JPanel();
-		panel.add(panelImagem, "cell 2 1 1 4,grow");
-		
+		panelImagem = new JPanel();
+		panel.add(panelImagem, "cell 2 0 1 5,grow");
+
 		java.net.URL imageURL = getClass().getResource("/resources/imagens/default.png");
 		if (imageURL == null) {
 			System.out.println("Imagem não encontrada. Verifique o caminho");
@@ -78,11 +79,6 @@ public class TelaVenda extends JPanel { // mudado para jpanel ao invés de jfram
 			JLabel imageLabel = new JLabel(imageIcon);
 			panelImagem.add(imageLabel);
 		}
-		
-
-		JLabel lblNewLabel_3 = new JLabel("Imagem:");
-		panel.add(lblNewLabel_3, "cell 2 0,alignx center");
-		lblNewLabel_3.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
 
 		JLabel lblNewLabel_5 = new JLabel("Nome: ");
 		panel.add(lblNewLabel_5, "cell 0 1,alignx left,growy");
@@ -146,7 +142,7 @@ public class TelaVenda extends JPanel { // mudado para jpanel ao invés de jfram
 		btnLimparCarrinho.setIcon(Utils.carregarIcone("apagador.png", 30, 30));
 		btnAdicionarProduto.setIcon(Utils.carregarIcone("Add.png", 30, 30));
 		btnRemoverProduto.setIcon(Utils.carregarIcone("lixo.png", 30, 30));
-		
+
 		JPanel panel_2 = new JPanel();
 		panel_2.setBackground(new Color(255, 255, 255));
 		add(panel_2, "cell 0 1 2 1,grow");
@@ -155,7 +151,7 @@ public class TelaVenda extends JPanel { // mudado para jpanel ao invés de jfram
 //		String[] colunas = { "Nome", "Código", "Quantidade", "Valor" };
 //		table = new JTable(new Object[][] {}, colunas);
 //		table.setFont(hkGrotesk);
-		
+
 		tableModel = new DefaultTableModel(new Object[][] {}, new String[] { "Nome", "Código", "Quantidade", "Valor" });
 
 		table = new JTable(tableModel) {
@@ -165,15 +161,13 @@ public class TelaVenda extends JPanel { // mudado para jpanel ao invés de jfram
 				return false;
 			}
 		};
-		
-		
 
 		JScrollPane scrollPane = new JScrollPane(table);
 		panel_2.setLayout(new BoxLayout(panel_2, BoxLayout.Y_AXIS));
 		panel_2.add(scrollPane);
-		
+
 		Utils.configTabela(table, scrollPane);
-		
+
 	}
 
 	public JTable getTable() {
@@ -186,6 +180,13 @@ public class TelaVenda extends JPanel { // mudado para jpanel ao invés de jfram
 
 	public void setLblTotal(JLabel lblTotal) {
 		this.lblTotal = lblTotal;
+	}
+
+	public void setImagem(ImageIcon img) {
+
+		JLabel imagemLabel = new JLabel(img);
+		panelImagem.add(imagemLabel);
+
 	}
 
 	public void setTable(JTable table) {
@@ -209,22 +210,26 @@ public class TelaVenda extends JPanel { // mudado para jpanel ao invés de jfram
 	}
 
 	public String getTxtQuantidade() {
-		
+
 		return txtQuantidade.getText();
 	}
 
 	public String getTxtCodigo() {
 		return txtCodigo.getText();
 	}
+
 	public JTextField setTxtNome() {
 		return txtNome;
 	}
+
 	public JTextField setTxtValor() {
 		return txtValor;
 	}
+
 	public JTextField setTxtCodigo() {
 		return txtCodigo;
 	}
+
 	public JTextField setTxtQuantidade() {
 		return txtQuantidade;
 	}
