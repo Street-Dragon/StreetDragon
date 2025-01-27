@@ -13,6 +13,8 @@ import javax.swing.JComboBox;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 
+import modelo.entidade.pessoa.cliente.Cliente;
+
 public class TelaPagamento extends JPanel {
 
 	private static final long serialVersionUID = 1L;
@@ -22,9 +24,9 @@ public class TelaPagamento extends JPanel {
 	private JTextField txtCartao;
 	private JTextField txtOutros;
 	private JTextField textField;
+	private JComboBox comboBox;
 	private JButton btnConfirmar;
 	private JButton btnCancelar;
-	
 
 	/**
 	 * Create the panel.
@@ -42,7 +44,7 @@ public class TelaPagamento extends JPanel {
 		panel.add(lblNewLabel, "cell 0 0,alignx left,growy");
 		lblNewLabel.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
 		
-		JComboBox comboBox = new JComboBox();
+		comboBox = new JComboBox();
 		comboBox.setEditable(true);
 		comboBox.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
 		panel.add(comboBox, "cell 1 0,growx,aligny center");
@@ -208,14 +210,18 @@ public class TelaPagamento extends JPanel {
 		return btnConfirmar;
 	}
 
-	
-
 	public JButton getBtnCancelar() {
 		return btnCancelar;
 	}
 
-	
+	// cpa q o problema ta aq
+
+
+	public void setComboBox(Cliente cliente) {
+		this.comboBox = cliente;
 	}
+	
+}
 
 
 	

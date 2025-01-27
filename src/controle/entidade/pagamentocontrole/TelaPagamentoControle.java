@@ -4,18 +4,39 @@ import visao.TelaPagamento;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
+
 import javax.swing.JOptionPane;
 
-public class TelaPagamentoController {
+import controle.entidade.item.ItemController;
+import controle.entidade.promocaocontrole.PromocaoControle;
+import modelo.dao.cliente.ClienteDAO;
+import modelo.entidade.pessoa.cliente.Cliente;
+
+
+public class TelaPagamentoControle {
 
     private TelaPagamento telaPagamento;
+    private ClienteDAO clienteDAO;
+    private ItemController itemControle;
+    private PromocaoControle promocaoControle;
 
-    public TelaPagamentoController(TelaPagamento telaPagamento) {
+    public TelaPagamentoControle(TelaPagamento telaPagamento) {
         this.telaPagamento = telaPagamento;
         adicionarListeners();
     }
 
     private void adicionarListeners() {
+    	
+    	// listener para pegar os clientes cadastrados
+        telaPagamento.getBtnConfirmar().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("aaaa");
+            }
+        });
+    	
+    	
         // Listener para o botão Confirmar
         telaPagamento.getBtnConfirmar().addActionListener(new ActionListener() {
             @Override
@@ -24,13 +45,22 @@ public class TelaPagamentoController {
             }
         });
 
-        
         telaPagamento.getBtnCancelar().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
             	System.out.println("bbbb");
             }
         });
+
+    }
+    
+    private void buscandoClientes() {
+        List<Cliente> clientes = clienteDAO.listarClientes();
+        for (Cliente cliente : clientes) {
+        	telaPagamento.setComboBox(cliente);
+            //comboBoxClientes.addItem(cliente);
+        }
+   
     }
 
     private void confirmarPagamento() {
