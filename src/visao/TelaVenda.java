@@ -3,6 +3,7 @@ package visao;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.MediaTracker;
 
 import javax.swing.JPanel;
 import net.miginfocom.swing.MigLayout;
@@ -30,11 +31,12 @@ public class TelaVenda extends JPanel { // mudado para jpanel ao invés de jfram
 	private JTextField txtNome;
 	private JTextField txtQuantidade;
 	private JTextField txtValor;
-	private Font hkGrotesk;
 	private JButton btnRemoverProduto;
 	private JButton btnAdicionarProduto;
 	private JButton btnRealizarCompra;
 	private JButton btnLimparCarrinho;
+	private JPanel panelImagem;
+	private JLabel imageLabel;
 
 	private JLabel lblTotal;
 	private static DefaultTableModel tableModel;
@@ -44,7 +46,7 @@ public class TelaVenda extends JPanel { // mudado para jpanel ao invés de jfram
 	 */
 	public TelaVenda(TelaPrincipal telaPrincipal) { // editado para poder ser chamada no menu
 		setBackground(new Color(253, 233, 235));
-		hkGrotesk = Utils.loadCustomFont();
+		Utils.loadCustomFont();
 		setLayout(new MigLayout("", "[75%][25%]", "[35%][65%]"));
 
 		JPanel panel = new JPanel();
@@ -67,22 +69,18 @@ public class TelaVenda extends JPanel { // mudado para jpanel ao invés de jfram
 		txtNome.setColumns(10);
 		txtNome.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
 
-		JPanel panelImagem = new JPanel();
-		panel.add(panelImagem, "cell 2 1 1 4,grow");
-		
+		panelImagem = new JPanel();
+		panelImagem.setBackground(Color.WHITE);
+		panel.add(panelImagem, "cell 2 0 1 5,alignx center,aligny center");
+
 		java.net.URL imageURL = getClass().getResource("/resources/imagens/default.png");
 		if (imageURL == null) {
 			System.out.println("Imagem não encontrada. Verifique o caminho");
 		} else {
 			ImageIcon imageIcon = new ImageIcon(imageURL);
-			JLabel imageLabel = new JLabel(imageIcon);
+			imageLabel = new JLabel(imageIcon);
 			panelImagem.add(imageLabel);
 		}
-		
-
-		JLabel lblNewLabel_3 = new JLabel("Imagem:");
-		panel.add(lblNewLabel_3, "cell 2 0,alignx center");
-		lblNewLabel_3.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
 
 		JLabel lblNewLabel_5 = new JLabel("Nome: ");
 		panel.add(lblNewLabel_5, "cell 0 1,alignx left,growy");
@@ -146,7 +144,7 @@ public class TelaVenda extends JPanel { // mudado para jpanel ao invés de jfram
 		btnLimparCarrinho.setIcon(Utils.carregarIcone("apagador.png", 30, 30));
 		btnAdicionarProduto.setIcon(Utils.carregarIcone("Add.png", 30, 30));
 		btnRemoverProduto.setIcon(Utils.carregarIcone("lixo.png", 30, 30));
-		
+
 		JPanel panel_2 = new JPanel();
 		panel_2.setBackground(new Color(255, 255, 255));
 		add(panel_2, "cell 0 1 2 1,grow");
@@ -155,7 +153,7 @@ public class TelaVenda extends JPanel { // mudado para jpanel ao invés de jfram
 //		String[] colunas = { "Nome", "Código", "Quantidade", "Valor" };
 //		table = new JTable(new Object[][] {}, colunas);
 //		table.setFont(hkGrotesk);
-		
+
 		tableModel = new DefaultTableModel(new Object[][] {}, new String[] { "Nome", "Código", "Quantidade", "Valor" });
 
 		table = new JTable(tableModel) {
@@ -165,15 +163,13 @@ public class TelaVenda extends JPanel { // mudado para jpanel ao invés de jfram
 				return false;
 			}
 		};
-		
-		
 
 		JScrollPane scrollPane = new JScrollPane(table);
 		panel_2.setLayout(new BoxLayout(panel_2, BoxLayout.Y_AXIS));
 		panel_2.add(scrollPane);
-		
+
 		Utils.configTabela(table, scrollPane);
-		
+
 	}
 
 	public JTable getTable() {
@@ -186,6 +182,29 @@ public class TelaVenda extends JPanel { // mudado para jpanel ao invés de jfram
 
 	public void setLblTotal(JLabel lblTotal) {
 		this.lblTotal = lblTotal;
+	}
+
+	public void setImagem(String imagePath) {
+
+		java.net.URL imageURL = getClass().getResource(imagePath);
+
+		if (imageURL != null) {
+			ImageIcon newImageIcon = new ImageIcon(imageURL);
+			
+			Image originalImage = newImageIcon.getImage();
+	        Image resizedImage = originalImage.getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+	        
+	        // Cria um novo ImageIcon com a imagem redimensionada
+	        ImageIcon resizedIcon = new ImageIcon(resizedImage);
+	        
+	        // Define o novo ícone na JLabel
+	        imageLabel.setIcon(resizedIcon);
+	        
+			panelImagem.revalidate();
+			panelImagem.repaint();
+		} else {
+			System.err.println("Erro ao carregar a imagem. Caminho inválido: " + imagePath);
+		}
 	}
 
 	public void setTable(JTable table) {
@@ -209,22 +228,26 @@ public class TelaVenda extends JPanel { // mudado para jpanel ao invés de jfram
 	}
 
 	public String getTxtQuantidade() {
-		
+
 		return txtQuantidade.getText();
 	}
 
 	public String getTxtCodigo() {
 		return txtCodigo.getText();
 	}
+
 	public JTextField setTxtNome() {
 		return txtNome;
 	}
+
 	public JTextField setTxtValor() {
 		return txtValor;
 	}
+
 	public JTextField setTxtCodigo() {
 		return txtCodigo;
 	}
+
 	public JTextField setTxtQuantidade() {
 		return txtQuantidade;
 	}
