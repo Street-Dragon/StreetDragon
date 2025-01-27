@@ -3,6 +3,7 @@ package visao;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.MediaTracker;
 
 import javax.swing.JPanel;
 import net.miginfocom.swing.MigLayout;
@@ -30,12 +31,12 @@ public class TelaVenda extends JPanel { // mudado para jpanel ao invés de jfram
 	private JTextField txtNome;
 	private JTextField txtQuantidade;
 	private JTextField txtValor;
-	private Font hkGrotesk;
 	private JButton btnRemoverProduto;
 	private JButton btnAdicionarProduto;
 	private JButton btnRealizarCompra;
 	private JButton btnLimparCarrinho;
 	private JPanel panelImagem;
+	private JLabel imageLabel;
 
 	private JLabel lblTotal;
 	private static DefaultTableModel tableModel;
@@ -45,7 +46,7 @@ public class TelaVenda extends JPanel { // mudado para jpanel ao invés de jfram
 	 */
 	public TelaVenda(TelaPrincipal telaPrincipal) { // editado para poder ser chamada no menu
 		setBackground(new Color(253, 233, 235));
-		hkGrotesk = Utils.loadCustomFont();
+		Utils.loadCustomFont();
 		setLayout(new MigLayout("", "[75%][25%]", "[35%][65%]"));
 
 		JPanel panel = new JPanel();
@@ -69,14 +70,15 @@ public class TelaVenda extends JPanel { // mudado para jpanel ao invés de jfram
 		txtNome.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
 
 		panelImagem = new JPanel();
-		panel.add(panelImagem, "cell 2 0 1 5,grow");
+		panelImagem.setBackground(Color.WHITE);
+		panel.add(panelImagem, "cell 2 0 1 5,alignx center,aligny center");
 
 		java.net.URL imageURL = getClass().getResource("/resources/imagens/default.png");
 		if (imageURL == null) {
 			System.out.println("Imagem não encontrada. Verifique o caminho");
 		} else {
 			ImageIcon imageIcon = new ImageIcon(imageURL);
-			JLabel imageLabel = new JLabel(imageIcon);
+			imageLabel = new JLabel(imageIcon);
 			panelImagem.add(imageLabel);
 		}
 
@@ -182,11 +184,27 @@ public class TelaVenda extends JPanel { // mudado para jpanel ao invés de jfram
 		this.lblTotal = lblTotal;
 	}
 
-	public void setImagem(ImageIcon img) {
+	public void setImagem(String imagePath) {
 
-		JLabel imagemLabel = new JLabel(img);
-		panelImagem.add(imagemLabel);
+		java.net.URL imageURL = getClass().getResource(imagePath);
 
+		if (imageURL != null) {
+			ImageIcon newImageIcon = new ImageIcon(imageURL);
+			
+			Image originalImage = newImageIcon.getImage();
+	        Image resizedImage = originalImage.getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+	        
+	        // Cria um novo ImageIcon com a imagem redimensionada
+	        ImageIcon resizedIcon = new ImageIcon(resizedImage);
+	        
+	        // Define o novo ícone na JLabel
+	        imageLabel.setIcon(resizedIcon);
+	        
+			panelImagem.revalidate();
+			panelImagem.repaint();
+		} else {
+			System.err.println("Erro ao carregar a imagem. Caminho inválido: " + imagePath);
+		}
 	}
 
 	public void setTable(JTable table) {

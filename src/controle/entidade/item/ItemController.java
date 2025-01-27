@@ -77,6 +77,7 @@ public class ItemController {
 				if (telaVenda.getTxtCodigo().isBlank()) {
 					telaVenda.setTxtValor().setText(null);
 					telaVenda.setTxtNome().setText(null);
+					telaVenda.setImagem("/resources/imagens/default.png");
 				} else {
 					preecherCampos();
 				}
@@ -202,7 +203,6 @@ public class ItemController {
 
 			// set imagem aqui:
 			String caminho = produto.getCategoria();
-			System.out.println(caminho);
 
 			if ("Toca".equals(caminho)) {
 				caminho = "Touca";
@@ -214,9 +214,8 @@ public class ItemController {
 				caminho = "interrogacao";
 			}
 
-			ImageIcon icone = Utils.carregarIcone(caminho, 25, 25);
-
-			telaVenda.setImagem(icone);
+			String url = "/resources/imagens/" + caminho + ".png";
+			telaVenda.setImagem(url);
 
 		}
 	}
