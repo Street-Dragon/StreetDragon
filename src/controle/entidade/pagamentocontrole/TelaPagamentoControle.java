@@ -23,20 +23,13 @@ public class TelaPagamentoControle {
 
     public TelaPagamentoControle(TelaPagamento telaPagamento) {
         this.telaPagamento = telaPagamento;
+        this.clienteDAO = new ClienteDAO();
+        buscarClientes();
         adicionarListeners();
     }
 
     private void adicionarListeners() {
-    	
-    	// listener para pegar os clientes cadastrados
-        telaPagamento.getBtnConfirmar().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("aaaa");
-            }
-        });
-    	
-    	
+
         // Listener para o botão Confirmar
         telaPagamento.getBtnConfirmar().addActionListener(new ActionListener() {
             @Override
@@ -54,15 +47,21 @@ public class TelaPagamentoControle {
 
     }
     
-    private void buscandoClientes() {
+    private void buscarClientes() {
+        System.out.println("Método buscarClientes() foi chamado!");
         List<Cliente> clientes = clienteDAO.listarClientes();
-        for (Cliente cliente : clientes) {
-        	telaPagamento.setComboBox(cliente);
-            //comboBoxClientes.addItem(cliente);
+        
+        if (clientes == null || clientes.isEmpty()) {
+            System.out.println("Nenhum cliente encontrado no banco!");
+        } else {
+            System.out.println("Clientes encontrados:");
+            for (Cliente c : clientes) {
+                System.out.println("- " + c.getNome());
+            }
         }
-   
+        
+        telaPagamento.setClientes(clientes); 
     }
-
     private void confirmarPagamento() {
         // Aqui você pode implementar a lógica para confirmar o pagamento
         String dinheiro = telaPagamento.getTxtDinheiro().getText();

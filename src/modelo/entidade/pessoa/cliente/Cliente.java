@@ -12,5 +12,8 @@ public  class Cliente extends Pessoa {
 	public void setNumeroCompras(String numeroCompras) {
 		this.numeroCompras = numeroCompras;
 	}
-
+	@Override
+	public String toString() {
+	    return this.getNome();
+	}
 }

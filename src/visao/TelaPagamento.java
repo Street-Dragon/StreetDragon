@@ -9,6 +9,8 @@ import utils.Utils;
 
 import javax.swing.JTextField;
 import java.awt.Font;
+import java.util.List;
+
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
@@ -137,14 +139,14 @@ public class TelaPagamento extends JPanel {
 		comboBox_1.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
 		panel_2.add(comboBox_1, "cell 1 2,growx,aligny center");
 		
-		JButton btnConfirmar = new JButton("Confirmar");
+		btnConfirmar = new JButton("Confirmar");
 		btnConfirmar.setForeground(new Color(255, 255, 255));
 		btnConfirmar.setBackground(Cores.COR_AZUL);
 		btnConfirmar.setFont(new Font("Hanken Grotesk", Font.BOLD, 30));
 		panel_2.add(btnConfirmar, "cell 0 3 2 1,grow");
 		btnConfirmar.setIcon(Utils.carregarIcone("Add.png", 30, 30));
 		
-		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar = new JButton("Cancelar");
 		btnCancelar.setForeground(new Color(255, 255, 255));
 		btnCancelar.setBackground(Cores.COR_VERMELHO);
 		btnCancelar.setFont(new Font("Hanken Grotesk", Font.BOLD, 30));
@@ -216,9 +218,17 @@ public class TelaPagamento extends JPanel {
 
 	// cpa q o problema ta aq
 
-
-	public void setComboBox(Cliente cliente) {
-		this.comboBox = cliente;
+	public void setClientes(List<Cliente> clientes) {
+	    comboBox.removeAllItems();
+	    if (clientes == null || clientes.isEmpty()) {
+	        System.out.println("NADA");
+	    } else {
+	        for (Cliente cliente : clientes) {
+	            System.out.println("foi: " + cliente.getNome());
+	            System.out.println(cliente);
+	            comboBox.addItem(cliente);
+	        }
+	    }
 	}
 	
 }

@@ -38,5 +38,9 @@ public abstract class Pessoa {
 		this.cpf = cpf;
 	}
 	
+	@Override
+	public String toString() {
+	    return this.getNome();
+	}
 	
 }
