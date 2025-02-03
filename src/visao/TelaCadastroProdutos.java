@@ -32,6 +32,7 @@ import javax.swing.SwingConstants;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.border.LineBorder;
+import java.awt.Toolkit;
 
 public class TelaCadastroProdutos extends JFrame {
 
@@ -65,6 +66,7 @@ public class TelaCadastroProdutos extends JFrame {
 	 * Create the frame.
 	 */
 	public TelaCadastroProdutos() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(TelaCadastroProdutos.class.getResource("/resources/imagens/logo.png")));
 		setTitle("Cadastrar Produto");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 672, 540);
@@ -126,7 +128,7 @@ public class TelaCadastroProdutos extends JFrame {
 
 		cbCategoria = new JComboBox();
 		cbCategoria.setBackground(new Color(246, 233, 233));
-		cbCategoria.setModel(new DefaultComboBoxModel(new String[] {"", "Calça", "Camisa", "Camiseta", "Moleton", "Boné", "Toca", "Tênis", "Acessórios", "Outro"}));
+		cbCategoria.setModel(new DefaultComboBoxModel(new String[] {"", "Calça", "Camisa", "Camiseta", "Moleton", "Boné", "Toca", "Tênis", "Acessório", "Outro"}));
 		cbCategoria.setSelectedIndex(0);
 		contentPane.add(cbCategoria, "cell 1 3,growx");
 		cbCategoria.setFont(hkGrotesk);

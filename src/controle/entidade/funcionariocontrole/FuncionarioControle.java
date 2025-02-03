@@ -6,7 +6,7 @@ import modelo.entidade.pessoa.funcionario.Funcionario;
 import utils.Utils;
 import visao.TelaPrincipal;
 import visao.TelaProdutos;
-import visao.TelaCadastroFuncionario;
+import visao.TelaFuncionario;
 import visao.TelaLogin;
 import visao.TelaMensagens;
 
@@ -20,7 +20,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class FuncionarioControle {
 	private TelaLogin telaLogin;
-	private TelaCadastroFuncionario cadastroFuncionario;
+	private TelaFuncionario cadastroFuncionario;
 	private FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
 	private String funcionarioIdStr;
 	private TelaPrincipal telaPrincipal;
@@ -55,7 +55,7 @@ public class FuncionarioControle {
 	    });
 	}
 
-	public void setTelaCadastroFuncionario(TelaCadastroFuncionario cadastroFuncionario) {
+	public void setTelaCadastroFuncionario(TelaFuncionario cadastroFuncionario) {
 		this.cadastroFuncionario = cadastroFuncionario;
 			atualizarTabela();
 			adicionarListeners();
@@ -116,7 +116,7 @@ public class FuncionarioControle {
 			}
 			cpfUsuarioLogado = cpf;
 			telaPrincipal.getLblFuncionario()
-					.setText("Funcionario: " + funcionarioDAO.nomeFuncionario(cpfUsuarioLogado));
+					.setText("Funcionário: " + funcionarioDAO.nomeFuncionario(cpfUsuarioLogado));
 			
 			
 			boolean adm = funcionarioDAO.funcionarioAdm(cpf);

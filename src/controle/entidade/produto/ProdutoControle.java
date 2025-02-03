@@ -366,7 +366,7 @@ public class ProdutoControle {
 		case"Tênis":
 			index2 = 7;
 		break;
-		case"Acessórios":
+		case"Acessório":
 			index2 = 8;
 		break;
 		case"Outro":
