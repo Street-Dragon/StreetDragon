@@ -177,7 +177,7 @@ public class TelaCadastroProdutos extends JFrame {
 		contentPane.add(cbTamanho, "cell 1 6,growx");
 		cbTamanho.setFont(hkGrotesk);
 
-		JLabel lblQntEstoque = new JLabel("Qnt estoque");
+		JLabel lblQntEstoque = new JLabel("Qnt. estoque");
 		lblQntEstoque.setHorizontalAlignment(SwingConstants.CENTER);
 		contentPane.add(lblQntEstoque, "cell 2 6,alignx left,growy");
 		lblQntEstoque.setFont(hkGrotesk);

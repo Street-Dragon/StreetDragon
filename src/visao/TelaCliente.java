@@ -112,7 +112,7 @@ public class TelaCliente extends JPanel {
 
 	public TelaCliente(TelaPrincipal telaPrincipal) {
 
-		setBounds(100, 100, 926, 526);
+		setBounds(100, 100, 1234, 651);
 		setBackground(Cores.COR_ROSA_CLARO);
 
 		Border borda = new LineBorder(Cores.COR_ROSA_CLARO, 1);
@@ -151,7 +151,7 @@ public class TelaCliente extends JPanel {
 		txtTelefone.setColumns(10);
 		panel.add(txtTelefone, "cell 1 1,growx");
 		
-		JLabel lblcpf = new JLabel("Cpf");
+		JLabel lblcpf = new JLabel("CPF");
 		lblcpf.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
 		panel.add(lblcpf, "cell 2 1,alignx left,growy");
 
@@ -192,7 +192,7 @@ public class TelaCliente extends JPanel {
 		tableModel.addColumn("Nome");
 		tableModel.addColumn("Email");
 		tableModel.addColumn("Número");
-		tableModel.addColumn("Cpf");
+		tableModel.addColumn("CPF");
 		tableModel.addColumn("N. Compras");
 
 		table = new JTable(tableModel) {

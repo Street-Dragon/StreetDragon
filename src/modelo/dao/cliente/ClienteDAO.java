@@ -12,7 +12,6 @@ import controle.entidade.conexao.ConexaoBD;
 import modelo.dao.genericdao.GenericDAO;
 import modelo.entidade.contato.Contato;
 import modelo.entidade.pessoa.cliente.Cliente;
-import modelo.entidade.pessoa.funcionario.Funcionario;
 
 public class ClienteDAO extends GenericDAO {
 
