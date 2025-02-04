@@ -11,20 +11,25 @@ import javax.swing.JOptionPane;
 import controle.entidade.item.ItemController;
 import controle.entidade.promocaocontrole.PromocaoControle;
 import modelo.dao.cliente.ClienteDAO;
+import modelo.dao.funcionario.FuncionarioDAO;
 import modelo.entidade.pessoa.cliente.Cliente;
+import modelo.entidade.pessoa.funcionario.Funcionario;
 
 
 public class TelaPagamentoControle {
 
     private TelaPagamento telaPagamento;
     private ClienteDAO clienteDAO;
+    private FuncionarioDAO funcionarioDAO;
     private ItemController itemControle;
     private PromocaoControle promocaoControle;
 
     public TelaPagamentoControle(TelaPagamento telaPagamento) {
         this.telaPagamento = telaPagamento;
         this.clienteDAO = new ClienteDAO();
+        this.funcionarioDAO = new FuncionarioDAO();
         buscarClientes();
+        buscarFuncionarios();
         adicionarListeners();
     }
 
@@ -62,6 +67,22 @@ public class TelaPagamentoControle {
         
         telaPagamento.setClientes(clientes); 
     }
+    private void buscarFuncionarios() {
+        System.out.println("Método buscarVendedores() foi chamado!");
+        List<Funcionario> funcionarios = funcionarioDAO.listarFuncionarios();
+        
+        if (funcionarios == null || funcionarios.isEmpty()) {
+            System.out.println("Nenhum cliente encontrado no banco!");
+        } else {
+            System.out.println("Clientes encontrados:");
+            for (Funcionario f : funcionarios) {
+                System.out.println("- " + f.getNome());
+            }
+        }
+        
+        telaPagamento.setFuncionarios(funcionarios); 
+    }
+    
     private void confirmarPagamento() {
         // Aqui você pode implementar a lógica para confirmar o pagamento
         String dinheiro = telaPagamento.getTxtDinheiro().getText();
@@ -89,6 +110,11 @@ public class TelaPagamentoControle {
             JOptionPane.showMessageDialog(telaPagamento, "Pagamento cancelado.", "Cancelado", JOptionPane.INFORMATION_MESSAGE);
         }
     }
+
+	public void atualizarClientes() {
+			//buscarFuncionarios();
+			buscarClientes();		
+	}
 }
 
 	

@@ -66,7 +66,6 @@ public class ItemController {
 		telaVenda.getBtnRemoverProduto().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
 				excluir();
 				atualizarTabela();
 				limparCampos();

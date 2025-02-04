@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 import controle.entidade.clientecontrole.ClienteControle;
 import controle.entidade.funcionariocontrole.FuncionarioControle;
 import controle.entidade.item.ItemController;
+import controle.entidade.pagamentocontrole.TelaPagamentoControle;
 import controle.entidade.produto.ProdutoControle;
 import controle.entidade.promocaocontrole.PromocaoControle;
 import controle.visao.principal.TelaPrincipalControle;
@@ -40,6 +41,7 @@ public class TelaPrincipal extends JFrame {
 	private JButton btnClientes;
 	private JButton btnPromocoes;
 	private JPanel panel_logo;
+	private TelaPrincipalControle telaPrincipalControle;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(() -> {
@@ -73,6 +75,9 @@ public class TelaPrincipal extends JFrame {
 		TelaCliente telaCliente = new TelaCliente(this);
 		TelaPromocao telaPromocao = new TelaPromocao(this);
         TelaPagamento telaPagamento = new TelaPagamento(this);
+        
+		TelaPagamentoControle pagamentoControle = new TelaPagamentoControle(telaPagamento);
+
 
 		// Painel do menu lateral
 		JPanel menuPanel = new JPanel();
@@ -162,14 +167,15 @@ public class TelaPrincipal extends JFrame {
 		}
 
 		//new TelaPrincipalControle(this);
-		TelaPrincipalControle telaPrincipalControle = new TelaPrincipalControle(this);
+		telaPrincipalControle = new TelaPrincipalControle(this);
 		FuncionarioControle funcionarioControle = new FuncionarioControle();
 		funcionarioControle.setTelaPrincipal(this);
 		funcionarioControle.setTelaCadastroFuncionario(telaCadastroFuncionario);
 		
 		
 		telaPrincipalControle.setTelaVenda(telaVenda);
-		
+		telaPrincipalControle.setTelaPagamentoControle(pagamentoControle);
+
 		ClienteControle clienteControle = new ClienteControle();
 		clienteControle.setTelaCadastroCliente(telaCliente);
 
@@ -248,4 +254,6 @@ public class TelaPrincipal extends JFrame {
 	private static void config(JButton button) {
 		button.setFont(new Font("Hanken Grotesk", Font.BOLD, 20));
 	}
+
+	
 }

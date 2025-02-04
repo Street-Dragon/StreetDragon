@@ -113,7 +113,7 @@ public class TelaHistoricoVenda extends JPanel {
 		tableModel = new DefaultTableModel();
 		tableModel.addColumn("Codigo");
 		tableModel.addColumn("Nome");
-		tableModel.addColumn("Data");
+		tableModel.addColumn("Valor"); // n será objt de pesquisa
 
 		table = new JTable(tableModel) {
 			@Override

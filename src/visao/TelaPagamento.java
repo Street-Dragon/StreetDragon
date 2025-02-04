@@ -16,6 +16,7 @@ import javax.swing.JButton;
 import javax.swing.SwingConstants;
 
 import modelo.entidade.pessoa.cliente.Cliente;
+import modelo.entidade.pessoa.funcionario.Funcionario;
 
 public class TelaPagamento extends JPanel {
 
@@ -26,7 +27,8 @@ public class TelaPagamento extends JPanel {
 	private JTextField txtCartao;
 	private JTextField txtOutros;
 	private JTextField textField;
-	private JComboBox comboBox;
+	private JComboBox<Cliente> comboBox;
+	private JComboBox<Funcionario> comboBox_1;
 	private JButton btnConfirmar;
 	private JButton btnCancelar;
 
@@ -46,7 +48,7 @@ public class TelaPagamento extends JPanel {
 		panel.add(lblNewLabel, "cell 0 0,alignx left,growy");
 		lblNewLabel.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
 		
-		comboBox = new JComboBox();
+		comboBox = new JComboBox<Cliente>();
 		comboBox.setEditable(true);
 		comboBox.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
 		panel.add(comboBox, "cell 1 0,growx,aligny center");
@@ -135,7 +137,7 @@ public class TelaPagamento extends JPanel {
 		lblFuncionrio.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
 		panel_2.add(lblFuncionrio, "cell 0 2,alignx left,growy");
 		
-		JComboBox comboBox_1 = new JComboBox();
+		comboBox_1 = new JComboBox();
 		comboBox_1.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
 		panel_2.add(comboBox_1, "cell 1 2,growx,aligny center");
 		
@@ -231,10 +233,18 @@ public class TelaPagamento extends JPanel {
 	    }
 	}
 	
+	public void setFuncionarios(List<Funcionario> funcionarios) {
+		comboBox_1.removeAllItems();
+	    if (funcionarios == null || funcionarios.isEmpty()) {
+	        System.out.println("NADA");
+	    } else {
+	        for (Funcionario funcionario : funcionarios) {
+	            System.out.println("foi: " + funcionario.getNome());
+	            System.out.println(funcionario);
+	            comboBox_1.addItem(funcionario);
+	        }
+	    }
+	}
+	
 }
-
-
-	
-	
-
 
