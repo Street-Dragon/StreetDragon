@@ -77,7 +77,8 @@ public class TelaPagamento extends JPanel {
 		lblNewLabel_1_2.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
 		panel_1.add(lblNewLabel_1_2, "flowy,cell 0 0,alignx center,growy");
 		
-		JLabel lblNewLabel_1_2_1 = new JLabel("R$: 123.12");
+		TelaVenda telaVenda = new TelaVenda(telaPrincipal);
+		JLabel lblNewLabel_1_2_1 = new JLabel(telaVenda.getLblTotalValue());
 		lblNewLabel_1_2_1.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
 		panel_1.add(lblNewLabel_1_2_1, "cell 0 1,alignx center,growy");
 		

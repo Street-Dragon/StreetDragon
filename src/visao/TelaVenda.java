@@ -179,6 +179,10 @@ public class TelaVenda extends JPanel { // mudado para jpanel ao invés de jfram
 	public JLabel getLblTotal() {
 		return lblTotal;
 	}
+	
+	public String getLblTotalValue() {
+		return String.valueOf(lblTotal);
+	}
 
 	public void setLblTotal(JLabel lblTotal) {
 		this.lblTotal = lblTotal;
