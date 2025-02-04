@@ -101,7 +101,7 @@ public class TelaPrincipalControle {
 	            new TelaMensagens("Adicione um item ao carrinho!", 3);
 	            return;
 	        }
-
+	        tpc.setItemDAO(telaPrincipal.itemControle);
 	        telaPrincipal.getCardLayout().show(telaPrincipal.getMainPanel(), "TelaPagamento");
 	    });
 	}

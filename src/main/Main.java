@@ -1,20 +1,17 @@
 package main;
 
-import controle.entidade.clientecontrole.ClienteControle;
 import controle.entidade.conexao.ConexaoBD;
 import controle.entidade.funcionariocontrole.FuncionarioControle;
-import controle.entidade.item.ItemController;
 import controle.entidade.pagamentocontrole.TelaPagamentoControle;
 import controle.entidade.produto.ProdutoControle;
 import controle.entidade.promocaocontrole.PromocaoControle;
+import visao.TelaCadastroFuncionario;
+import visao.TelaCadastroProdutos;
 import visao.TelaLogin;
 import visao.TelaPagamento;
 import visao.TelaPrincipal;
 import visao.TelaProdutos;
 import visao.TelaPromocao;
-import visao.TelaCadastroFuncionario;
-import visao.TelaCadastroProdutos;
-import visao.TelaCliente;
 
 public class Main {
     public static void main(String[] args) {

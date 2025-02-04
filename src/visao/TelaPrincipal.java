@@ -42,6 +42,7 @@ public class TelaPrincipal extends JFrame {
 	private JButton btnPromocoes;
 	private JPanel panel_logo;
 	private TelaPrincipalControle telaPrincipalControle;
+	public ItemController itemControle;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(() -> {
@@ -189,7 +190,7 @@ public class TelaPrincipal extends JFrame {
 		produtoControle.setTelaCadastrarProduto(telaCadastroProdutos);
 		
 		
-		ItemController itemControle = new ItemController();
+		itemControle = new ItemController();
 		itemControle.setTelaVenda(telaVenda);
 		
 		PromocaoControle promocaoControle = new PromocaoControle(telaPromocao);

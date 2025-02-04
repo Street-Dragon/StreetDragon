@@ -115,6 +115,12 @@ public class TelaPagamentoControle {
 			//buscarFuncionarios();
 			buscarClientes();		
 	}
+
+	public void setItemDAO(ItemController itemControle) {
+		this.itemControle = itemControle;		
+		float total = this.itemControle.itemDAO.getTotal();
+		telaPagamento.lblTotalPagar.setText(String.valueOf(total));
+	}
 }
 
 	

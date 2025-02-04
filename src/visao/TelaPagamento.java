@@ -31,6 +31,7 @@ public class TelaPagamento extends JPanel {
 	private JComboBox<Funcionario> comboBox_1;
 	private JButton btnConfirmar;
 	private JButton btnCancelar;
+	public JLabel lblTotalPagar;
 
 	/**
 	 * Create the panel.
@@ -86,9 +87,9 @@ public class TelaPagamento extends JPanel {
 		lblNewLabel_1_2.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
 		panel_1.add(lblNewLabel_1_2, "flowy,cell 0 0,alignx center,growy");
 		
-		JLabel lblNewLabel_1_2_1 = new JLabel("R$: 123.12");
-		lblNewLabel_1_2_1.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
-		panel_1.add(lblNewLabel_1_2_1, "cell 0 1,alignx center,growy");
+		 lblTotalPagar = new JLabel("R$: 123.12");
+		lblTotalPagar.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
+		panel_1.add(lblTotalPagar, "cell 0 1,alignx center,growy");
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBackground(Color.WHITE);

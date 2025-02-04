@@ -20,7 +20,7 @@ import visao.TelaVenda;
 
 public class ItemController {
 	private TelaVenda telaVenda;
-	private ItemDAO itemDAO = new ItemDAO();
+	public ItemDAO itemDAO = new ItemDAO();
 	private ProdutoDAO produtoDAO = new ProdutoDAO();
 	private FuncionarioControle funcionarioControle = new FuncionarioControle();
 
