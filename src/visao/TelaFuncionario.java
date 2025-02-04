@@ -37,7 +37,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 import javax.swing.border.CompoundBorder;
 
-public class TelaCadastroFuncionario extends JPanel { // jpanel ao invés de jframe
+public class TelaFuncionario extends JPanel { // jpanel ao invés de jframe
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -59,9 +59,9 @@ public class TelaCadastroFuncionario extends JPanel { // jpanel ao invés de jfr
 	/**
 	 * Create the frame.
 	 */
-	public TelaCadastroFuncionario(TelaPrincipal telaPrincipal) { // telaprincipal
+	public TelaFuncionario(TelaPrincipal telaPrincipal) { // telaprincipal
 
-		setBounds(100, 100, 1053, 623);
+		setBounds(100, 100, 1110, 633);
 		setBackground(Cores.COR_ROSA_CLARO);
 
 		Border borda = new LineBorder(Cores.COR_ROSA_CLARO, 1);
@@ -110,7 +110,7 @@ public class TelaCadastroFuncionario extends JPanel { // jpanel ao invés de jfr
 		panel.add(textTelefone, "cell 3 1,growx");
 		textTelefone.setColumns(10);
 
-		JLabel lblcpf = new JLabel("Cpf");
+		JLabel lblcpf = new JLabel("CPF");
 		lblcpf.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
 		panel.add(lblcpf, "cell 0 2,alignx left,growy");
 
@@ -129,13 +129,15 @@ public class TelaCadastroFuncionario extends JPanel { // jpanel ao invés de jfr
 
 				if (chckbxVerSenha.isSelected()) {
 					textSenha.setEchoChar((char) 0);
+					chckbxVerSenha.setBackground(Color.PINK);
 				} else {
 					textSenha.setEchoChar('•');
+					chckbxVerSenha.setBackground(Color.WHITE);
 				}
 
 			}
 		});
-
+		
 		textSenha = new JPasswordField();
 		textSenha.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
 		panel.add(textSenha, "cell 3 2,growx");

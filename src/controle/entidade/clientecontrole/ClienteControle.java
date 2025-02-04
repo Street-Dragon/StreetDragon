@@ -6,7 +6,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 
-import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
@@ -98,8 +97,7 @@ public class ClienteControle {
 
 		System.out.println(nome + cpf + email + telefone);
 		if (nome.isBlank() || cpf.isBlank() || email.isBlank() || telefone.isBlank()) {
-			JOptionPane.showMessageDialog(cadastroCliente, "Preencha todos os campos.", "Erro",
-					JOptionPane.ERROR_MESSAGE);
+			TelaMensagens Tm = new TelaMensagens("Preencha todos os campos.", 1);
 			return;
 		}
 
@@ -107,19 +105,16 @@ public class ClienteControle {
 		telefone = telefone.replaceAll("[^0-9]", "");
 
 		if (clienteDAO.verificaCpfExistente(cpf)) {
-			JOptionPane.showMessageDialog(cadastroCliente, "CPF já cadastrado. Tente outro.", "Erro",
-					JOptionPane.ERROR_MESSAGE);
+			TelaMensagens Tm = new TelaMensagens("CPF já cadastrado. Tente outro.", 1);
 			return;
 		}
 
 		if (!Utils.isValidCPF(cpf)) {
-			JOptionPane.showMessageDialog(cadastroCliente, "O CPF informado é inválido.", "Erro",
-					JOptionPane.ERROR_MESSAGE);
+			TelaMensagens Tm = new TelaMensagens("O CPF informado é inválido.", 1);
 			return;
 		}
 		if (clienteDAO.verificaTelefoneExistente(telefone)) {
-			JOptionPane.showMessageDialog(cadastroCliente, "Telefone já cadastrado. Tente outro.", "Erro",
-					JOptionPane.ERROR_MESSAGE);
+			TelaMensagens Tm = new TelaMensagens("Telefone já cadastrado. Tente outro.", 1);
 			return;
 		}
 		Cliente cliente = new Cliente();
@@ -143,7 +138,7 @@ public class ClienteControle {
 		tableModel.addColumn("Nome");
 		tableModel.addColumn("Email");
 		tableModel.addColumn("Número");
-		tableModel.addColumn("Cpf");
+		tableModel.addColumn("CPF");
 		tableModel.addColumn("N. Compras");
 
 		for (Cliente cliente : clientes) {
@@ -160,26 +155,21 @@ public class ClienteControle {
 
 		if (selectedRow != -1) {
 			String cpfCliente = (String) cadastroCliente.getTable().getValueAt(selectedRow, 3);
+			TelaMensagens Tm = new TelaMensagens("Você tem certeza que deseja excluir o cliente com CPF: " + cpfCliente + "?");
 
-			int resposta = JOptionPane.showConfirmDialog(cadastroCliente,
-					"Você tem certeza que deseja excluir o cliente com CPF: " + cpfCliente + "?", "Confirmar Exclusão",
-					JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-
-			if (resposta == JOptionPane.YES_OPTION) {
+			if (Tm.getResposta()) {
 
 				boolean excluido = clienteDAO.excluirCliente(cpfCliente);
 
 				if (excluido) {
-					JOptionPane.showMessageDialog(cadastroCliente, "Cliente excluído com sucesso!");
+					TelaMensagens Tm2 = new TelaMensagens("Cliente excluído com sucesso!", 0);
 					atualizarTabela();
 				} else {
-					JOptionPane.showMessageDialog(cadastroCliente, "Erro ao excluir o Cliente.", "Erro",
-							JOptionPane.ERROR_MESSAGE);
+					TelaMensagens Tm2 = new TelaMensagens("Erro ao excluir o Cliente.", 1);
 				}
 			}
 		} else {
-			JOptionPane.showMessageDialog(cadastroCliente, "Selecione um Cliente para excluir.", "Erro",
-					JOptionPane.WARNING_MESSAGE);
+			TelaMensagens Tm = new TelaMensagens("Selecione um Cliente para excluir.", 3);
 		}
 	}
 	
@@ -192,8 +182,7 @@ public class ClienteControle {
 		String telefone = cadastroCliente.getTxtTelefone();
 
 		if (nome.isBlank() || cpf.isBlank() || email.isBlank() || telefone.isBlank()) {
-			JOptionPane.showMessageDialog(cadastroCliente, "Preencha todos os campos.", "Erro",
-					JOptionPane.ERROR_MESSAGE);
+			TelaMensagens Tm = new TelaMensagens("Preencha todos os campos.", 3);
 			return;
 		}
 

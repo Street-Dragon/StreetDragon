@@ -74,7 +74,7 @@ public class TelaHistoricoVenda extends JPanel {
 	}
 
 	public TelaHistoricoVenda(TelaPrincipal telaPrincipal) {
-		setBounds(100, 100, 682, 482);
+		setBounds(100, 100, 877, 572);
 		// contentPane = new JPanel();
 		setBackground(new Color(253, 233, 235));
 
@@ -91,7 +91,7 @@ public class TelaHistoricoVenda extends JPanel {
 						
 						comboBox = new JComboBox();
 						comboBox.setBackground(new Color(255, 255, 255));
-						comboBox.setModel(new DefaultComboBoxModel(new String[] {"", "Nome", "Categoria", "Preco"}));
+						comboBox.setModel(new DefaultComboBoxModel(new String[] {"", "Nome", "Categoria", "Preço"}));
 						comboBox.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
 						panel.add(comboBox, "cell 0 1,growx");
 						
@@ -111,7 +111,7 @@ public class TelaHistoricoVenda extends JPanel {
 		add(scrollPane, "cell 0 1,grow");
 
 		tableModel = new DefaultTableModel();
-		tableModel.addColumn("Codigo");
+		tableModel.addColumn("Código");
 		tableModel.addColumn("Nome");
 		tableModel.addColumn("Data");
 

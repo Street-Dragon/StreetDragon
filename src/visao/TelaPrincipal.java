@@ -23,6 +23,7 @@ import utils.Cores;
 import utils.Utils;
 
 import javax.swing.JLabel;
+import java.awt.Toolkit;
 
 public class TelaPrincipal extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -53,6 +54,7 @@ public class TelaPrincipal extends JFrame {
 	}
 
 	public TelaPrincipal() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(TelaPrincipal.class.getResource("/resources/imagens/logo.png")));
 		hkGrotesk = Utils.loadCustomFont();
 		setTitle("StreetDragon");
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -67,7 +69,7 @@ public class TelaPrincipal extends JFrame {
 		// Criando instâncias das telas
 		TelaVenda telaVenda = new TelaVenda(this);
 		TelaHistoricoVenda telaHistoricoVenda = new TelaHistoricoVenda(this);
-		TelaCadastroFuncionario telaCadastroFuncionario = new TelaCadastroFuncionario(this);
+		TelaFuncionario telaCadastroFuncionario = new TelaFuncionario(this);
 		TelaProdutos telaProdutos = new TelaProdutos(this);
 		TelaFornecedor telaFornecedor = new TelaFornecedor(this);
 		TelaCliente telaCliente = new TelaCliente(this);
