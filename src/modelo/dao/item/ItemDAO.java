@@ -331,10 +331,15 @@ public class ItemDAO {
 	}
 
 	public boolean efetuaVenda(int idCliente, float total, String cpf) {
-		String sqlAtualiza = "UPDATE venda SET data_venda = NOW() WHERE data_venda IS NULL OR data_venda = ''";
+		String sqlAtualiza = "UPDATE venda SET data_venda = NOW(), cliente_id = ?, funcionario_cpf = ?, total = ? "
+				+ "WHERE data_venda IS NULL OR data_venda = ''";
 
 		try (Connection conn = ConexaoBD.getConexaoMySQL();
 				PreparedStatement stmtUpdate = conn.prepareStatement(sqlAtualiza)) {
+			stmtUpdate.setInt(1, idCliente);
+			stmtUpdate.setString(2, cpf);
+			stmtUpdate.setFloat(3, total);
+
 			int rowsAffected = stmtUpdate.executeUpdate();
 			return rowsAffected > 0;
 
