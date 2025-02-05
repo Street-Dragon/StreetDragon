@@ -22,7 +22,6 @@ public class ClienteControle {
 	private TelaCliente cadastroCliente;
 	private ClienteDAO clienteDAO = new ClienteDAO();
 	private String clienteIdStr;
-	private boolean selecionado = false;
 
 	public void setTelaCadastroCliente(TelaCliente cadastroCliente) {
 
@@ -35,8 +34,11 @@ public class ClienteControle {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				if (selecionado) {
-					editarClienteDAO(clienteIdStr);
+				if (cadastroCliente.getBtnCadastrar().getText().equals("Limpar")) {
+					cadastroCliente.limparCampos();
+					cadastroCliente.getBtnCadastrar().setText("Cadastrar");
+					cadastroCliente.getBtnCadastrar().setIcon(Utils.carregarIcone("Add.png", 30, 30));
+					cadastroCliente.getTable().clearSelection();
 				} else {
 					System.out.println("Botão Cadastrar pressionado");
 					cadastrarCliente();
@@ -55,15 +57,23 @@ public class ClienteControle {
 
 			}
 		});
+		
+		cadastroCliente.getBtnEditar().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				editarClienteDAO(clienteIdStr);
+			}
+		});
 	}
 
 	private void adicionarListeners() {
 		cadastroCliente.getTable().addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				cadastroCliente.getBtnCadastrar().setText("Editar");
-				cadastroCliente.getBtnCadastrar().setIcon(Utils.carregarIcone("editar.png", 30, 30));
-				selecionado = true;
+				cadastroCliente.getBtnCadastrar().setText("Limpar");
+				cadastroCliente.getBtnCadastrar().setIcon(Utils.carregarIcone("apagador.png", 30, 30));
 
 				int selectedRow = cadastroCliente.getTable().getSelectedRow();
 				if (selectedRow != -1) {
@@ -81,8 +91,7 @@ public class ClienteControle {
 							// Se não houver nenhuma linha selecionada:
 							if (cadastroCliente.getTable().getSelectedRowCount() == 0) {
 								cadastroCliente.getBtnCadastrar().setText("Cadastrar");
-								cadastroCliente.getBtnCadastrar().setIcon(Utils.carregarIcone("Check.png", 30, 30));
-								selecionado = false;
+								cadastroCliente.getBtnCadastrar().setIcon(Utils.carregarIcone("Add.png", 30, 30));
 							}
 						}
 					}
@@ -127,6 +136,7 @@ public class ClienteControle {
 		clienteDAO.cadastrarCliente(cliente);
 		atualizarTabela();
 		cadastroCliente.limparCampos();
+		TelaMensagens Tm = new TelaMensagens("Cliente cadastrado com sucesso!", 0);
 		return;
 	}
 

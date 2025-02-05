@@ -16,7 +16,7 @@ import controle.entidade.clientecontrole.ClienteControle;
 import controle.entidade.funcionariocontrole.FuncionarioControle;
 import controle.entidade.item.ItemController;
 import controle.entidade.produto.ProdutoControle;
-import controle.entidade.promocaocontrole.PromocaoControle;
+import controle.entidade.promocao.PromocaoControle;
 import controle.visao.principal.TelaPrincipalControle;
 import net.miginfocom.swing.MigLayout;
 import utils.Cores;

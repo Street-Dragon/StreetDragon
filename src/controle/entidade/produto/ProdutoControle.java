@@ -83,6 +83,7 @@ public class ProdutoControle {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				atualizarTabela();
+				limparCampos2();
 			}
 		});
 
@@ -134,7 +135,7 @@ public class ProdutoControle {
 				tableModel.addRow(new Object[] {
 					produto.getIdProduto(), 
 					produto.getNomeProduto(), 
-					produto.getValor(), 
+					"R$"+produto.getValor(), 
 					produto.getQuantEstoque(),
 				}); 
 			} 
@@ -148,7 +149,7 @@ public class ProdutoControle {
 				tableModel.addRow(new Object[] {
 					produto.getIdProduto(), 
 					produto.getNomeProduto(), 
-					produto.getValor(), 
+					"R$"+produto.getValor(), 
 					produto.getQuantEstoque(),
 				}); 
 			} 
@@ -181,7 +182,8 @@ public class ProdutoControle {
 				
 				
 				if (produtoDAO.editarProduto(produto)) {
-					TelaMensagens Tm = new TelaMensagens("Produto Editado com Sucesso!", 0);
+					TelaMensagens Tm = new TelaMensagens("Produto editado com sucesso!", 0);
+					limparCampos2();
 					telaCadastroProduto.dispose();
 					atualizarTabela();
 				} else {
@@ -226,8 +228,9 @@ public class ProdutoControle {
 				produto.setTamanho(tamanho);
 				produto.setFornecedorid(FornecedorId);
 				if (produtoDAO.cadastrarProduto(produto)) {
-					TelaMensagens Tm = new TelaMensagens("Produto Cadastrado", 0);
+					TelaMensagens Tm = new TelaMensagens("Produto cadastrado com sucesso!", 0);
 					atualizarTabela();
+					limparCampos2();
 					telaCadastroProduto.dispose();
 				} else {
 					TelaMensagens Tm = new TelaMensagens("Erro ao cadastrar produto", 1);
@@ -271,6 +274,7 @@ public class ProdutoControle {
 			String firstColumnValue = table.getValueAt(selectedRowIndex, 0).toString();
 			produtoDAO.deletarProduto(Integer.valueOf(firstColumnValue));
 			atualizarTabela(); 
+			limparCampos2();
 		} 
 	}
 	  
@@ -417,7 +421,16 @@ public class ProdutoControle {
 		telaCadastroProduto.setTextFieldQntEstoque().setText(null);
 		telaCadastroProduto.setCbTamanho().setSelectedItem(null);
 		telaCadastroProduto.setCbMaterial().setSelectedItem(null);
-		telaCadastroProduto.setCbCategoria().setSelectedItem(null);
+		telaCadastroProduto.setCbCategoria().setSelectedItem(null);		
 
+	}
+	public void limparCampos2() {
+		telaProdutos.getTxtId().setText(null);
+		telaProdutos.getTxtValor().setText(null);
+		telaProdutos.getTxtCategoria().setText(null);
+		telaProdutos.getTxtNome().setText(null);
+		telaProdutos.getTxtFornecedor().setText(null);
+		telaProdutos.getTxtQnt().setText(null);
+		telaProdutos.getTable().clearSelection();
 	}
 }

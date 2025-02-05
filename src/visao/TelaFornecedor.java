@@ -143,7 +143,14 @@ public class TelaFornecedor extends JPanel {
         btnCadastrarFor.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 Fornecedor fornecedor = capturarDadosFornecedor();
-                fornecedorControle.cadastrarFornecedor(fornecedor);
+                if(btnCadastrarFor.getText().equals("Cadastrar")) {
+                	fornecedorControle.cadastrarFornecedor(fornecedor);
+                } else {
+                	limparCampos();
+                	table.clearSelection();
+                	btnCadastrarFor.setText("Cadastrar");
+                	btnCadastrarFor.setIcon(Utils.carregarIcone("Add.png",30,30));
+                }
             }
         });
         btnCadastrarFor.setForeground(new Color(255, 255, 255));
@@ -236,7 +243,9 @@ public class TelaFornecedor extends JPanel {
         
         table.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                if (evt.getClickCount() == 1) { 
+                if (evt.getClickCount() == 1) {
+                	btnCadastrarFor.setText("Limpar");
+                	btnCadastrarFor.setIcon(Utils.carregarIcone("apagador.png",30,30));
                     int selectedRow = table.getSelectedRow();
                     if (selectedRow != -1) {
                         int id = (int) table.getValueAt(selectedRow, 0);
