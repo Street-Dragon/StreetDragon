@@ -2,8 +2,13 @@ package controle.entidade.promocao;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.WindowFocusListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -14,6 +19,8 @@ import javax.swing.table.DefaultTableModel;
 import modelo.dao.promocao.PromocaoDAO;
 import modelo.entidade.produto.Produto;
 import modelo.entidade.promocao.Promocao;
+import utils.Utils;
+import visao.TelaCadastroProdutos;
 import visao.TelaMensagens;
 import visao.TelaPromocao;
 
@@ -27,6 +34,43 @@ public class PromocaoControle {
         configurarBotoes();
         atualizarTabela(); 
         fillPP(telaPromocao);
+        ComboboxC();
+    }
+    
+    private void ComboboxC() {
+    	telaPromocao.setComboBoxCategoria().addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				telaPromocao.getBtnCadastrar().setText("Cadastrar");
+				telaPromocao.getBtnCadastrar().setIcon(Utils.carregarIcone("Add.png",30,30));
+			}
+		});
     }
 
     private void configurarBotoes() {
@@ -47,71 +91,74 @@ public class PromocaoControle {
         telaPromocao.getBtnExcluir().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            	System.out.println("e");
                 excluirPromocao();
             }
         });
     }
 
     private void cadastrarPromocao() {
-        String nome = telaPromocao.getTxtNome().getText();
-        String termino = telaPromocao.getTxtTermino().getText();
-        String inicio = telaPromocao.getTxtInicio().getText();
-        String descontoText = telaPromocao.getTxtDesconto().getText();
-        String categoria = telaPromocao.getcomboBoxCategoria();
-        int Categoria = telaPromocao.setComboBoxCategoria().getSelectedIndex();
+    	int selectedRow = telaPromocao.getTable().getSelectedRow();
+    	if (telaPromocao.getBtnCadastrar().getText().equals("Limpar")) {
+    		limparCampos();
+    		telaPromocao.getBtnCadastrar().setText("Cadastrar");
+    		telaPromocao.getBtnCadastrar().setIcon(Utils.carregarIcone("Add.png",30,30));
+        } else {
+        	String nome = telaPromocao.getTxtNome().getText();
+            String termino = telaPromocao.getTxtTermino().getText();
+            String inicio = telaPromocao.getTxtInicio().getText();
+            String descontoText = telaPromocao.getTxtDesconto().getText();
+            String categoria = telaPromocao.getcomboBoxCategoria();
+            int Categoria = telaPromocao.setComboBoxCategoria().getSelectedIndex();
 
-        if (nome.isEmpty() || termino.isEmpty() || descontoText.isEmpty() || inicio.isEmpty() || Categoria == 0) {
-            new TelaMensagens("Todos os campos devem ser preenchidos!", 1);
-            return;
-        }
+            if (nome.isEmpty() || termino.isEmpty() || descontoText.isEmpty() || inicio.isEmpty() || Categoria == 0) {
+                new TelaMensagens("Todos os campos devem ser preenchidos!", 1);
+                return;
+            }
 
-        if (!ValidarData(inicio)) {
-            new TelaMensagens("Data de início inválida! O formato correto é dd/MM/yyyy.", 1);
-            return;
-        }
+            if (!ValidarData(inicio)) {
+                new TelaMensagens("Data de início inválida! O formato correto é dd/MM/yyyy.", 1);
+                return;
+            }
 
-        if (!ValidarData(termino)) {
-            new TelaMensagens("Data de término inválida! O formato correto é dd/MM/yyyy.", 1);
-            return;
+            if (!ValidarData(termino)) {
+                new TelaMensagens("Data de término inválida! O formato correto é dd/MM/yyyy.", 1);
+                return;
+            }
+            
+            if (!ValidarOrdemDatas(inicio, termino)) {
+                new TelaMensagens("A data de início deve ser anterior ou igual à data de término!", 1);
+                return;
+            }
+
+            float desconto;
+            try {
+                desconto = Float.parseFloat(descontoText);
+            } catch (NumberFormatException ex) {
+                new TelaMensagens("O desconto deve ser um número válido!", 1);
+                return;
+            }
+
+            Promocao promocao = new Promocao();
+            promocao.setNome(nome);
+            promocao.setDesconto(desconto);
+            promocao.setTermino(termino);
+            promocao.setInicio(inicio);
+            promocao.setCategoria(categoria);
+
+            try {
+                promocaoDAO.cadastrarPromocao(promocao); 
+                new TelaMensagens("Promoção cadastrada com sucesso!", 0);
+
+                // Limpa os campos após o cadastro
+                limparCampos();
+
+                // Atualiza a tabela
+                atualizarTabela();
+            } catch (RuntimeException e) {
+                new TelaMensagens("Erro ao cadastrar promoção: " + e.getMessage(), 1);
+            }
         }
         
-        if (!ValidarOrdemDatas(inicio, termino)) {
-            new TelaMensagens("A data de início deve ser anterior ou igual à data de término!", 1);
-            return;
-        }
-
-        float desconto;
-        try {
-            desconto = Float.parseFloat(descontoText);
-        } catch (NumberFormatException ex) {
-            new TelaMensagens("O desconto deve ser um número válido!", 1);
-            return;
-        }
-
-        Promocao promocao = new Promocao();
-        promocao.setNome(nome);
-        promocao.setDesconto(desconto);
-        promocao.setTermino(termino);
-        promocao.setInicio(inicio);
-        promocao.setCategoria(categoria);
-
-        try {
-            promocaoDAO.cadastrarPromocao(promocao); 
-            new TelaMensagens("Promoção cadastrada com sucesso!", 0);
-
-            // Limpa os campos após o cadastro
-            telaPromocao.getTxtNome().setText("");
-            telaPromocao.getTxtTermino().setText("");
-            telaPromocao.getTxtDesconto().setText("");
-            telaPromocao.getTxtInicio().setText("");
-            telaPromocao.setComboBoxCategoria().setSelectedIndex(0);
-
-            // Atualiza a tabela
-            atualizarTabela();
-        } catch (RuntimeException e) {
-            new TelaMensagens("Erro ao cadastrar promoção: " + e.getMessage(), 1);
-        }
     }
     
     private boolean ValidarOrdemDatas(String inicio, String termino) {
@@ -248,11 +295,7 @@ public class PromocaoControle {
             new TelaMensagens("Promoção editada com sucesso!", 0);
             
             // Limpa os campos após edição
-            telaPromocao.getTxtNome().setText("");
-            telaPromocao.getTxtTermino().setText("");
-            telaPromocao.getTxtDesconto().setText("");
-            telaPromocao.getTxtInicio().setText("");
-            telaPromocao.setComboBoxCategoria().setSelectedIndex(0);
+            limparCampos();
            
             
             // Atualiza a tabela após edição
@@ -274,11 +317,7 @@ public class PromocaoControle {
         TelaMensagens Tm = new TelaMensagens("Tem certeza que deseja excluir esta promoção?");
         if (Tm.getResposta()) {
             try {
-            	telaPromocao.getTxtNome().setText("");
-                telaPromocao.getTxtTermino().setText("");
-                telaPromocao.getTxtDesconto().setText("");
-                telaPromocao.getTxtInicio().setText("");
-               
+            	limparCampos();               
                 
                 promocaoDAO.excluirPromocao(id);
                 new TelaMensagens("Promoção excluída com sucesso!", 0);
@@ -299,9 +338,9 @@ public class PromocaoControle {
             model.addRow(new Object[]{
                 promocao.getIdPromocao(), 
                 promocao.getNome(), 
-                promocao.getDesconto(), 
-                promocao.getTermino(),
+                promocao.getDesconto()+"%", 
                 promocao.getInicio(),
+                promocao.getTermino(),
                 promocao.getCategoria(),
                 
             });
@@ -343,16 +382,16 @@ public class PromocaoControle {
 		}
     	telaPromocao.setComboBoxCategoria().setSelectedIndex(index2);
     }
-
     
     public void fillPP(TelaPromocao telaPromocao) {
         telaPromocao.getTable().addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 JTable table = telaPromocao.getTable();
                 int selectedRowIndex = table.getSelectedRow(); // Pega o índice da linha selecionada
-                
                 // Verifica se o clique foi em uma linha válida (não cabeçalho)
                 if (selectedRowIndex != -1) {
+                	telaPromocao.getBtnCadastrar().setText("Limpar");
+                	telaPromocao.getBtnCadastrar().setIcon(Utils.carregarIcone("apagador.png",30,30));
                     // Obtém o ID da promoção na primeira coluna da linha selecionada
                     String firstColumnValue = table.getValueAt(selectedRowIndex, 0).toString();
                     
@@ -368,6 +407,16 @@ public class PromocaoControle {
                 }
             }
         });
+    }
+    public void limparCampos() {
+    	telaPromocao.getTxtNome().setText("");
+        telaPromocao.getTxtTermino().setText("");
+        telaPromocao.getTxtDesconto().setText("");
+        telaPromocao.getTxtInicio().setText("");
+        telaPromocao.setComboBoxCategoria().setSelectedIndex(0);
+        telaPromocao.getBtnCadastrar().setText("Cadastrar");
+		telaPromocao.getBtnCadastrar().setIcon(Utils.carregarIcone("Add.png",30,30));
+        telaPromocao.getTable().clearSelection();
     }
 
 

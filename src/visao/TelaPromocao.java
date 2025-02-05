@@ -2,6 +2,7 @@ package visao;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.ScrollPane;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -42,6 +43,7 @@ public class TelaPromocao extends JPanel {
 	private JTextField txtInicio;
 	private JComboBox comboBoxCategoria;
 	private JLabel lblTipo;
+	private JScrollPane scrollPane = new JScrollPane();
 	
 
 
@@ -138,15 +140,14 @@ public class TelaPromocao extends JPanel {
 		btnCadastrar.setIcon(Utils.carregarIcone("Add.png",30,30));
 		
 		
-		JScrollPane scrollPane = new JScrollPane();
 		add(scrollPane, "cell 0 1 2 1,grow");
 
 		tableModel = new DefaultTableModel();
 		tableModel.addColumn("Código");
 		tableModel.addColumn("Nome");
 		tableModel.addColumn("Desconto");
-		tableModel.addColumn("Término");
 		tableModel.addColumn("Início");
+		tableModel.addColumn("Término");
 		tableModel.addColumn("Categoria");
 		
 		table = new JTable();
@@ -154,7 +155,7 @@ public class TelaPromocao extends JPanel {
 			new Object[][] {
 			},
 			new String[] {
-				"Código", "Nome", "Desconto","Término","Início","Categoria"
+				"Código", "Nome", "Desconto","Início","Término","Categoria"
 			}
 			
 			

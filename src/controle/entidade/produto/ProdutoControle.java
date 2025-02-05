@@ -134,7 +134,7 @@ public class ProdutoControle {
 				tableModel.addRow(new Object[] {
 					produto.getIdProduto(), 
 					produto.getNomeProduto(), 
-					produto.getValor(), 
+					"R$"+produto.getValor(), 
 					produto.getQuantEstoque(),
 				}); 
 			} 
@@ -148,7 +148,7 @@ public class ProdutoControle {
 				tableModel.addRow(new Object[] {
 					produto.getIdProduto(), 
 					produto.getNomeProduto(), 
-					produto.getValor(), 
+					"R$"+produto.getValor(), 
 					produto.getQuantEstoque(),
 				}); 
 			} 
