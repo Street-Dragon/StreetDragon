@@ -81,7 +81,7 @@ public class ClienteControle {
 							// Se não houver nenhuma linha selecionada:
 							if (cadastroCliente.getTable().getSelectedRowCount() == 0) {
 								cadastroCliente.getBtnCadastrar().setText("Cadastrar");
-								cadastroCliente.getBtnCadastrar().setIcon(Utils.carregarIcone("Check.png", 30, 30));
+								cadastroCliente.getBtnCadastrar().setIcon(Utils.carregarIcone("Add.png", 30, 30));
 								selecionado = false;
 							}
 						}
