@@ -22,6 +22,9 @@ import net.miginfocom.swing.MigLayout;
 import utils.Cores;
 import utils.Utils;
 import javax.swing.JComboBox;
+import javax.swing.SwingConstants;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 
 public class TelaPromocao extends JPanel {
@@ -38,6 +41,7 @@ public class TelaPromocao extends JPanel {
 	private JLabel lblInicio;
 	private JTextField txtInicio;
 	private JComboBox comboBoxCategoria;
+	private JLabel lblTipo;
 	
 
 
@@ -95,12 +99,17 @@ public class TelaPromocao extends JPanel {
 				panel.add(txtTermino, "cell 3 1,growx");
 				txtTermino.setColumns(10);
 		
+		lblTipo = new JLabel("Categoria:");
+		lblTipo.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblTipo.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
+		panel.add(lblTipo, "cell 0 2,alignx left");
+		
 		comboBoxCategoria = new JComboBox();
 		comboBoxCategoria.setBackground(new Color(255, 255, 255));
 		comboBoxCategoria.setModel(new DefaultComboBoxModel(new String[] {"", "Calça", "Camisa", "Camiseta", "Moleton", "Boné", "Toca", "Tênis", "Acessório", "Outro"}));
 		comboBoxCategoria.setToolTipText("Categoria");
 		comboBoxCategoria.setFont(new Font("Dialog", Font.PLAIN, 30));
-		panel.add(comboBoxCategoria, "cell 0 2 2 1,grow");
+		panel.add(comboBoxCategoria, "cell 1 2,grow");
 
 		JPanel panel_1 = new JPanel();
 		add(panel_1, "cell 1 0,grow");
@@ -245,6 +254,5 @@ public class TelaPromocao extends JPanel {
 	public JComboBox setComboBoxCategoria() {
 		return this.comboBoxCategoria;
 	}
-	
 	
 }

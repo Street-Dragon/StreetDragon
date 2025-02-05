@@ -1,4 +1,4 @@
-package controle.entidade.promocaocontrole;
+package controle.entidade.promocao;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -59,8 +59,9 @@ public class PromocaoControle {
         String inicio = telaPromocao.getTxtInicio().getText();
         String descontoText = telaPromocao.getTxtDesconto().getText();
         String categoria = telaPromocao.getcomboBoxCategoria();
+        int Categoria = telaPromocao.setComboBoxCategoria().getSelectedIndex();
 
-        if (nome.isEmpty() || termino.isEmpty() || descontoText.isEmpty() || inicio.isEmpty()) {
+        if (nome.isEmpty() || termino.isEmpty() || descontoText.isEmpty() || inicio.isEmpty() || Categoria == 0) {
             new TelaMensagens("Todos os campos devem ser preenchidos!", 1);
             return;
         }
@@ -104,6 +105,7 @@ public class PromocaoControle {
             telaPromocao.getTxtTermino().setText("");
             telaPromocao.getTxtDesconto().setText("");
             telaPromocao.getTxtInicio().setText("");
+            telaPromocao.setComboBoxCategoria().setSelectedIndex(0);
 
             // Atualiza a tabela
             atualizarTabela();
@@ -199,11 +201,12 @@ public class PromocaoControle {
         String termino = telaPromocao.getTxtTermino().getText();
         String inicio = telaPromocao.getTxtInicio().getText();
         String descontoText = telaPromocao.getTxtDesconto().getText();
+        int Categoria = telaPromocao.setComboBoxCategoria().getSelectedIndex();
         
         
         String categoria = telaPromocao.getcomboBoxCategoria();
 
-        if (nome.isEmpty() || termino.isEmpty() || descontoText.isEmpty()) {
+        if (nome.isEmpty() || termino.isEmpty() || descontoText.isEmpty() || Categoria == 0) {
             new TelaMensagens("Todos os campos devem ser preenchidos!", 1);
             return;
         } if (!ValidarData(inicio)) {
@@ -249,6 +252,7 @@ public class PromocaoControle {
             telaPromocao.getTxtTermino().setText("");
             telaPromocao.getTxtDesconto().setText("");
             telaPromocao.getTxtInicio().setText("");
+            telaPromocao.setComboBoxCategoria().setSelectedIndex(0);
            
             
             // Atualiza a tabela após edição

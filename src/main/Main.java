@@ -5,7 +5,7 @@ import controle.entidade.conexao.ConexaoBD;
 import controle.entidade.funcionariocontrole.FuncionarioControle;
 import controle.entidade.item.ItemController;
 import controle.entidade.produto.ProdutoControle;
-import controle.entidade.promocaocontrole.PromocaoControle;
+import controle.entidade.promocao.PromocaoControle;
 import visao.TelaLogin;
 import visao.TelaPrincipal;
 import visao.TelaProdutos;
