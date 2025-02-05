@@ -7,11 +7,14 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 import javax.swing.JOptionPane;
+import javax.swing.event.PopupMenuEvent;
+import javax.swing.event.PopupMenuListener;
 
 import controle.entidade.item.ItemController;
 import controle.entidade.promocaocontrole.PromocaoControle;
 import modelo.dao.cliente.ClienteDAO;
 import modelo.dao.funcionario.FuncionarioDAO;
+import modelo.dao.item.ItemDAO;
 import modelo.entidade.pessoa.cliente.Cliente;
 import modelo.entidade.pessoa.funcionario.Funcionario;
 
@@ -20,6 +23,7 @@ public class TelaPagamentoControle {
 
     private TelaPagamento telaPagamento;
     private ClienteDAO clienteDAO;
+    private ItemDAO itemDAO;
     private FuncionarioDAO funcionarioDAO;
     private ItemController itemControle;
     private PromocaoControle promocaoControle;
@@ -27,6 +31,7 @@ public class TelaPagamentoControle {
     public TelaPagamentoControle(TelaPagamento telaPagamento) {
         this.telaPagamento = telaPagamento;
         this.clienteDAO = new ClienteDAO();
+        this.itemDAO = new ItemDAO();
         this.funcionarioDAO = new FuncionarioDAO();
         buscarClientes();
         buscarFuncionarios();
@@ -39,47 +44,79 @@ public class TelaPagamentoControle {
         telaPagamento.getBtnConfirmar().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("aaaa");
+                efetuarVenda();
             }
         });
 
         telaPagamento.getBtnCancelar().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            	System.out.println("bbbb");
+            	System.out.println("Botao de cancelar clicado");
             }
+        });
+        
+        telaPagamento.getCboxCliente().addPopupMenuListener(new PopupMenuListener() {
+            @Override
+            public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
+                // O combo box está prestes a ser expandido
+            	buscarClientes();
+            }
+			@Override
+			public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
+				// TODO Auto-generated method stub
+			}
+			@Override
+			public void popupMenuCanceled(PopupMenuEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+        });
+        
+        telaPagamento.getCboxFuncionario().addPopupMenuListener(new PopupMenuListener() {
+            @Override
+            public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
+                // O combo box está prestes a ser expandido
+            	buscarFuncionarios();
+            }
+			@Override
+			public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
+				// TODO Auto-generated method stub
+			}
+			@Override
+			public void popupMenuCanceled(PopupMenuEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
         });
 
     }
     
-    private void buscarClientes() {
+    protected void efetuarVenda() {
+		// FUNÇÃO PRA TERMINAR A VENDA
+    	
+    	int idCliente = 1;
+    	float precoTotal = 1;
+    	String cpfFuncionario = "123";
+    	
+    	boolean confirma = itemDAO.efetuaVenda(idCliente, precoTotal, cpfFuncionario);
+    	
+    	
+    	if(confirma)
+    		JOptionPane.showMessageDialog(telaPagamento, "Venda Efetuada!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+    	else
+    		JOptionPane.showMessageDialog(telaPagamento, "Houve algum problema :(", "Erro", JOptionPane.INFORMATION_MESSAGE);
+		
+	}
+
+	 private void buscarClientes() {
+	 
         System.out.println("Método buscarClientes() foi chamado!");
         List<Cliente> clientes = clienteDAO.listarClientes();
-        
-        if (clientes == null || clientes.isEmpty()) {
-            System.out.println("Nenhum cliente encontrado no banco!");
-        } else {
-            System.out.println("Clientes encontrados:");
-            for (Cliente c : clientes) {
-                System.out.println("- " + c.getNome());
-            }
-        }
-        
         telaPagamento.setClientes(clientes); 
+        
     }
     private void buscarFuncionarios() {
-        System.out.println("Método buscarVendedores() foi chamado!");
         List<Funcionario> funcionarios = funcionarioDAO.listarFuncionarios();
-        
-        if (funcionarios == null || funcionarios.isEmpty()) {
-            System.out.println("Nenhum cliente encontrado no banco!");
-        } else {
-            System.out.println("Clientes encontrados:");
-            for (Funcionario f : funcionarios) {
-                System.out.println("- " + f.getNome());
-            }
-        }
-        
         telaPagamento.setFuncionarios(funcionarios); 
     }
     
@@ -97,7 +134,7 @@ public class TelaPagamentoControle {
 
         JOptionPane.showMessageDialog(telaPagamento, "Pagamento confirmado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
     }
-
+    
     private void cancelarPagamento() {
         // Confirmação de cancelamento
         int confirmacao = JOptionPane.showConfirmDialog(telaPagamento, "Tem certeza de que deseja cancelar o pagamento?", "Confirmar", JOptionPane.YES_NO_OPTION);
@@ -111,10 +148,7 @@ public class TelaPagamentoControle {
         }
     }
 
-	public void atualizarClientes() {
-			//buscarFuncionarios();
-			buscarClientes();		
-	}
+
 
 	public void setItemDAO(ItemController itemControle) {
 		this.itemControle = itemControle;		
