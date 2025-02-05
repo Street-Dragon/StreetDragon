@@ -116,7 +116,8 @@ public class TelaPagamento extends JPanel {
 		txtDinheiro.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
-				calculartroco();
+				String troco2 = String.valueOf(calculartroco());
+				textTroco.setText(troco2);
 			}
 
 		});
@@ -238,8 +239,15 @@ public class TelaPagamento extends JPanel {
 		return btnCancelar;
 	}
 	
-	private void calculartroco() {
-		// TODO Auto-generated method stub
+	private float calculartroco() {
+		float dinheiro = Float.parseFloat(txtDinheiro.getText());
+		float total = Float.parseFloat(lblTotalPagar.getText());
+		float troco;
+		
+		troco = dinheiro - total;
+		
+		return troco;
+		
 		
 	}
 
