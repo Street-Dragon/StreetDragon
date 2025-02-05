@@ -18,6 +18,7 @@ import controle.entidade.item.ItemController;
 import controle.entidade.pagamentocontrole.TelaPagamentoControle;
 import controle.entidade.produto.ProdutoControle;
 import controle.entidade.promocaocontrole.PromocaoControle;
+import controle.tela.historicovendacontrole.HistoricoVendaControle;
 import controle.visao.principal.TelaPrincipalControle;
 import net.miginfocom.swing.MigLayout;
 import utils.Cores;
@@ -78,6 +79,8 @@ public class TelaPrincipal extends JFrame {
         TelaPagamento telaPagamento = new TelaPagamento(this);
         
 		TelaPagamentoControle pagamentoControle = new TelaPagamentoControle(telaPagamento);
+		HistoricoVendaControle historico = new HistoricoVendaControle(telaHistoricoVenda);
+
 
 
 		// Painel do menu lateral

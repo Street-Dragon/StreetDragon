@@ -5,8 +5,10 @@ import controle.entidade.funcionariocontrole.FuncionarioControle;
 import controle.entidade.pagamentocontrole.TelaPagamentoControle;
 import controle.entidade.produto.ProdutoControle;
 import controle.entidade.promocaocontrole.PromocaoControle;
+import controle.tela.historicovendacontrole.HistoricoVendaControle;
 import visao.TelaCadastroFuncionario;
 import visao.TelaCadastroProdutos;
+import visao.TelaHistoricoVenda;
 import visao.TelaLogin;
 import visao.TelaPagamento;
 import visao.TelaPrincipal;
@@ -30,7 +32,10 @@ public class Main {
 		// talvz isso saia
 		TelaPagamento telaPagamento = new TelaPagamento(telaPrincipal); // Se precisar do menu principal
 		TelaPagamentoControle pagamentoControle = new TelaPagamentoControle(telaPagamento);
-
+		
+		//TelaHistoricoVenda telahistorico = new TelaHistoricoVenda(telaPrincipal);
+		//HistoricoVendaControle historico = new HistoricoVendaControle(telahistorico);
+		
 		// acho que não precisa instanciar o controle e era tudo mentira pessoal,
 		// futuros instanciamentos devem ser na telaprincipal (visão)
 		// se não for assim o código quebra.
