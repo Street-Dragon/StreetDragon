@@ -9,6 +9,8 @@ import utils.Utils;
 
 import javax.swing.JTextField;
 import java.awt.Font;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.List;
 
 import javax.swing.JComboBox;
@@ -17,6 +19,7 @@ import javax.swing.SwingConstants;
 
 import modelo.entidade.pessoa.cliente.Cliente;
 import modelo.entidade.pessoa.funcionario.Funcionario;
+import java.awt.event.KeyAdapter;
 
 public class TelaPagamento extends JPanel {
 
@@ -26,7 +29,7 @@ public class TelaPagamento extends JPanel {
 	private JTextField txtDinheiro;
 	private JTextField txtCartao;
 	private JTextField txtOutros;
-	private JTextField textField;
+	private JTextField textTroco;
 	private JComboBox<Cliente> comboBox;
 	private JComboBox<Funcionario> comboBox_1;
 	private JButton btnConfirmar;
@@ -44,6 +47,13 @@ public class TelaPagamento extends JPanel {
 		panel.setBackground(Color.WHITE);
 		add(panel, "cell 0 0,grow");
 		panel.setLayout(new MigLayout("", "[35%][65%]", "[grow][grow][grow]"));
+		
+		
+			
+	   
+
+		panel.setLayout(new MigLayout("", "[35%][65%]", "[grow][grow][grow]"));
+
 		
 		JLabel lblNewLabel = new JLabel("Cliente:");
 		panel.add(lblNewLabel, "cell 0 0,alignx left,growy");
@@ -93,6 +103,8 @@ public class TelaPagamento extends JPanel {
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBackground(Color.WHITE);
+		
+			
 		add(panel_2, "cell 0 1 2 1,grow");
 		panel_2.setLayout(new MigLayout("", "[20%][30%][20%][30%]", "[grow][grow][grow][::15%,grow]"));
 		
@@ -101,6 +113,13 @@ public class TelaPagamento extends JPanel {
 		panel_2.add(lblNewLabel_1_1_1, "cell 0 0,alignx left,growy");
 		
 		txtDinheiro = new JTextField();
+		txtDinheiro.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				calculartroco();
+			}
+
+		});
 		txtDinheiro.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
 		txtDinheiro.setColumns(10);
 		panel_2.add(txtDinheiro, "cell 1 0,growx,aligny center");
@@ -118,12 +137,12 @@ public class TelaPagamento extends JPanel {
 		lbltroco.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
 		panel_2.add(lbltroco, "cell 0 1,alignx left,growy");
 		
-		textField = new JTextField();
-		textField.setEnabled(false);
-		textField.setEditable(false);
-		textField.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
-		textField.setColumns(10);
-		panel_2.add(textField, "cell 1 1,growx,aligny center");
+		textTroco = new JTextField();
+		textTroco.setEnabled(false);
+		textTroco.setEditable(false);
+		textTroco.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
+		textTroco.setColumns(10);
+		panel_2.add(textTroco, "cell 1 1,growx,aligny center");
 		
 		JLabel lblNewLabel_1_1_1_1_1 = new JLabel("Outros:");
 		lblNewLabel_1_1_1_1_1.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
@@ -200,11 +219,11 @@ public class TelaPagamento extends JPanel {
 	}
 
 	public JTextField getTextField() {
-		return textField;
+		return textTroco;
 	}
 
 	public void setTextField(JTextField textField) {
-		this.textField = textField;
+		this.textTroco = textField;
 	}
 
 	public static long getSerialversionuid() {
@@ -217,6 +236,11 @@ public class TelaPagamento extends JPanel {
 
 	public JButton getBtnCancelar() {
 		return btnCancelar;
+	}
+	
+	private void calculartroco() {
+		// TODO Auto-generated method stub
+		
 	}
 
 	// cpa q o problema ta aq
