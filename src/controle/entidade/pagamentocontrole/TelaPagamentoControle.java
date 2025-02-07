@@ -94,16 +94,21 @@ public class TelaPagamentoControle {
 
 	}
 
-
 	// FUNÇÃO PRA TERMINAR A VENDA
 	private void efetuarVenda() {
 
-		String nomeFuncionario = (String) telaPagamento.getCboxFuncionario().getSelectedItem();
-		String cpfFuncionario = funcionarioDAO.cpfFuncionario(nomeFuncionario);
+		String cpfFuncionario = getCpfFuncionario();
+		String idCliente = getCpfCliente();
+		
+		String precoTotalString = telaPagamento.getLblTotalPagar().getText();
+		float precoTotal = Float.parseFloat(precoTotalString);
 
-		int idCliente = 1;
-		float precoTotal = 1;
-
+		
+		// colocar um IF aqui checando se a venda ta ok
+		//lembrar de mudar a label de preço total de acordo com a promoção também, se não n vai pegar 
+		
+		// caso o cliente não tenha cadastro na loja, o id vem como NULL !!!!! se for assim, a promoção não conta!!!!!
+		
 		boolean confirma = itemDAO.efetuaVenda(idCliente, precoTotal, cpfFuncionario);
 
 		if (confirma)
@@ -163,5 +168,26 @@ public class TelaPagamentoControle {
 		this.itemControle = itemControle;
 		float total = this.itemControle.itemDAO.getTotal();
 		telaPagamento.lblTotalPagar.setText(String.valueOf(total));
+	}
+
+	private String getCpfCliente() {
+		Cliente clienteSelecionado = (Cliente) telaPagamento.getCboxCliente().getSelectedItem();
+		if (clienteSelecionado != null) {
+			String id = clienteSelecionado.getCpf();
+			return id;
+		}
+		else
+		return null;
+
+	}
+	
+	private String getCpfFuncionario() {
+		Funcionario funcionarioSelecionado = (Funcionario) telaPagamento.getCboxFuncionario().getSelectedItem();
+		if (funcionarioSelecionado != null) {
+			String cpf = funcionarioSelecionado.getCpf();
+			return cpf;
+		}
+		else
+		return null;
 	}
 }

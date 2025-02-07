@@ -197,6 +197,14 @@ public class TelaPagamento extends JPanel {
 	public void setTxtOutros(JTextField txtOutros) {
 		this.txtOutros = txtOutros;
 	}
+	
+	public JLabel getLblTotalPagar() {
+		return lblTotalPagar;
+	}
+
+	public void setLblTotalPagar(JLabel lblTotalPagar) {
+		this.lblTotalPagar = lblTotalPagar;
+	}
 
 	public JTextField getTextField() {
 		return txtTroco;
