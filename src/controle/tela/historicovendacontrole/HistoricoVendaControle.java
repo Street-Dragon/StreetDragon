@@ -5,7 +5,11 @@ import modelo.entidade.pessoa.fornecedor.Fornecedor;
 import modelo.entidade.promocao.Promocao;
 import modelo.entidade.venda.Venda;
 import visao.TelaHistoricoVenda;
+import visao.TelaMensagens;
+
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
@@ -19,39 +23,50 @@ public class HistoricoVendaControle {
         this.historicoVendaDAO = new HistoricoVendaDAO();
         this.tela = tela;
         listarTodasVendas();
-    }
+        
+        tela.getBtnConsultar().addActionListener(e -> {
+            String filtroSelecionado = tela.getComboBox().getSelectedItem().toString();
+            String valorPesquisa = tela.getTextFieldConsulta().getText().trim();
 
-    public List<Venda> buscarVendasPorCodigo(String codigo) {
+            if (!valorPesquisa.isEmpty()) {
+                aplicarFiltro(filtroSelecionado, valorPesquisa);
+            } else {
+            	TelaMensagens Tm = new TelaMensagens("Você precisa inserir dados para prosseguir", 3);
+            }
+        });
+    }
+    
+    private void aplicarFiltro(String filtro, String valor) {
+        List<Venda> vendasFiltradas = null;
+       
         try {
-            List<Venda> vendas = historicoVendaDAO.buscarPorCodigo(codigo);
-            System.out.println("Vendas encontradas no dao: " + vendas.size());
-            for (Venda venda : vendas) {
+            switch (filtro) {
+                case "Codigo":
+                    vendasFiltradas = historicoVendaDAO.buscarPorCodigo(valor);
+                    break;
+              
+                case "Valor Total":
+                    vendasFiltradas = historicoVendaDAO.buscarPorValorTotal(Float.parseFloat(valor));
+                    
+                    break;
+                case "Funcionário":
+                    // Aqui, passamos o CPF como uma String
+                	System.out.println("Buscando por CPF: " + valor);
+                    vendasFiltradas = historicoVendaDAO.buscarPorFuncionario(valor);
+                    break;
             }
 
-            atualizarTabela();
-
-            return vendas;
+            if (vendasFiltradas != null) {
+                atualizarTabelaComVendas(vendasFiltradas);
+            } else {
+                System.out.println("Союз Нерушимых Свободных Республик");
+            }
         } catch (SQLException e) {
             e.printStackTrace();
-            return null;
         }
     }
 
-    public List<Venda> buscarVendasPorData(String data) {
-        try {
-            List<Venda> vendas = historicoVendaDAO.buscarPorData(data);
-
-            for (Venda venda : vendas) {
-            }
-
-            atualizarTabela();
-
-            return vendas;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
+   
 
     public List<Venda> listarTodasVendas() {
         try {
@@ -71,7 +86,7 @@ public class HistoricoVendaControle {
     }
 
     public void atualizarTabela() {
-    	System.out.println("cu");
+    	System.out.println("u");
         try {
             List<Venda> vendas = historicoVendaDAO.listarTodasVendas(); 
             
@@ -86,15 +101,35 @@ public class HistoricoVendaControle {
             	System.out.println(venda.getCodigoVenda());
             	tabela.addRow(new Object[] {
                 		venda.getCodigoVenda(), 
-                		venda.getDataVenda(), 
-                		venda.getFuncionarioCpf(), 
+                		venda.getFuncionarioCpf(),
                 		venda.getPrecoTotal(),
+                		venda.getDataVenda(), 
                 		});
             }
            tela.getTable().setModel(tabela);
         } catch (SQLException e) {
             e.printStackTrace();  
         }
+        
     }
+   
+    private void atualizarTabelaComVendas(List<Venda> vendas) {
+        DefaultTableModel tabela = new DefaultTableModel();
+        tabela.addColumn("Código");
+        tabela.addColumn("Funcionário");
+        tabela.addColumn("Valor");
+        tabela.addColumn("Data da Venda");
+
+        for (Venda venda : vendas) {
+            tabela.addRow(new Object[]{
+                venda.getCodigoVenda(),
+                venda.getFuncionarioCpf(),
+                venda.getPrecoTotal(),
+                venda.getDataVenda()
+            });
+        }
+        tela.getTable().setModel(tabela);
+    }
+
 
 }

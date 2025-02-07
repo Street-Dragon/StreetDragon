@@ -154,7 +154,7 @@ public class TelaHistoricoVenda extends JPanel {
 
 	    comboBox = new JComboBox();
 	    comboBox.setBackground(new Color(255, 255, 255));
-	    comboBox.setModel(new DefaultComboBoxModel(new String[] {"", "Nome", "Categoria", "Preco"}));
+	    comboBox.setModel(new DefaultComboBoxModel(new String[] {"Codigo", "Funcionário","Valor Total"}));
 	    comboBox.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
 	    panel.add(comboBox, "cell 0 1,growx");
 
