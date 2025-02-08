@@ -7,11 +7,12 @@ import java.util.Date;
 
 public class Venda {
 	private String funcionarioCpf;
-    private boolean cliente;
+    private String ClienteCpf;
     private float precoTotal;
     private List<Item> itens;
     private Date dataVenda; // add data da venda para histórico
     private int codigoVenda; // add código da venda para consulta
+    private String dataVendaFormatada;
  
 
     
@@ -26,15 +27,23 @@ public class Venda {
 		this.funcionarioCpf = funcionarioCpf;
 	}
 
-	public boolean isCliente() {
-        return cliente;
-    }
+	public String getDataVendaFormatada() {
+		return dataVendaFormatada;
+	}
 
-    public void setCliente(boolean cliente) {
-        this.cliente = cliente;
-    }
+	public void setDataVendaFormatada(String dataVendaFormatada) {
+		this.dataVendaFormatada = dataVendaFormatada;
+	}
 
-    public float getPrecoTotal() {
+	public String getClienteCpf() {
+		return ClienteCpf;
+	}
+
+	public void setClienteCpf(String clienteCpf) {
+		ClienteCpf = clienteCpf;
+	}
+
+	public float getPrecoTotal() {
         return precoTotal;
     }
 

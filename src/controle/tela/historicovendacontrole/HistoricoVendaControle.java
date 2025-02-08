@@ -49,17 +49,21 @@ public class HistoricoVendaControle {
                     vendasFiltradas = historicoVendaDAO.buscarPorValorTotal(Float.parseFloat(valor));
                     
                     break;
-                case "Funcionário":
-                    // Aqui, passamos o CPF como uma String
-                	System.out.println("Buscando por CPF: " + valor);
-                    vendasFiltradas = historicoVendaDAO.buscarPorFuncionario(valor);
+                case "CPF Funcionário":
+       
+                    vendasFiltradas = historicoVendaDAO.buscarPorFuncionarios(valor);
                     break;
+                case "CPF Cliente":
+                    
+                    vendasFiltradas = historicoVendaDAO.buscarPorClientes(valor);
+                    break; 
+                   
             }
 
             if (vendasFiltradas != null) {
                 atualizarTabelaComVendas(vendasFiltradas);
             } else {
-                System.out.println("Союз Нерушимых Свободных Республик");
+                System.out.println("N");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -86,46 +90,60 @@ public class HistoricoVendaControle {
     }
 
     public void atualizarTabela() {
-    	System.out.println("u");
+        System.out.println("u");
         try {
             List<Venda> vendas = historicoVendaDAO.listarTodasVendas(); 
             
-            DefaultTableModel  tabela = new DefaultTableModel();
+            DefaultTableModel tabela = new DefaultTableModel();
             tabela.addColumn("Código");
-            tabela.addColumn("Funcionario");
+            tabela.addColumn("CPF do Funcionario");
+            tabela.addColumn("CPF do Cliente");
             tabela.addColumn("Valor");
             tabela.addColumn("Data da venda");
-              
+
+            
+            SimpleDateFormat formatoBr = new SimpleDateFormat("dd/MM/yyyy");
             
             for (Venda venda : vendas) {
-            	System.out.println(venda.getCodigoVenda());
-            	tabela.addRow(new Object[] {
-                		venda.getCodigoVenda(), 
-                		venda.getFuncionarioCpf(),
-                		venda.getPrecoTotal(),
-                		venda.getDataVenda(), 
-                		});
+                System.out.println(venda.getCodigoVenda());
+                
+                String dataFormatada = formatoBr.format(venda.getDataVenda());
+
+                tabela.addRow(new Object[] {
+                    venda.getCodigoVenda(), 
+                    venda.getFuncionarioCpf(),
+                    venda.getClienteCpf(),
+                    venda.getPrecoTotal(),
+                    dataFormatada 
+                });
             }
-           tela.getTable().setModel(tabela);
+            tela.getTable().setModel(tabela);
         } catch (SQLException e) {
             e.printStackTrace();  
         }
-        
     }
    
     private void atualizarTabelaComVendas(List<Venda> vendas) {
         DefaultTableModel tabela = new DefaultTableModel();
         tabela.addColumn("Código");
-        tabela.addColumn("Funcionário");
+        tabela.addColumn("CPF do Funcionario");
+        tabela.addColumn("CPF do Cliente");
         tabela.addColumn("Valor");
         tabela.addColumn("Data da Venda");
-
+        
+        SimpleDateFormat formatoBr = new SimpleDateFormat("dd/MM/yyyy");
+        
         for (Venda venda : vendas) {
+        	
+        	String dataFormatada = formatoBr.format(venda.getDataVenda());
+        	
             tabela.addRow(new Object[]{
-                venda.getCodigoVenda(),
-                venda.getFuncionarioCpf(),
-                venda.getPrecoTotal(),
-                venda.getDataVenda()
+            		venda.getCodigoVenda(), 
+            		venda.getFuncionarioCpf(),
+            		venda.getClienteCpf(),
+            		venda.getPrecoTotal(),
+            		venda.getDataVenda(), 
+            		dataFormatada
             });
         }
         tela.getTable().setModel(tabela);

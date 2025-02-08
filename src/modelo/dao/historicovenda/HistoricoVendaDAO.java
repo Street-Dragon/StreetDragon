@@ -27,10 +27,11 @@ public class HistoricoVendaDAO {
 	        try (ResultSet rs = stmt.executeQuery()) {
 	            while (rs.next()) {
 	                Venda venda = new Venda();
-	                venda.setCodigoVenda(rs.getInt("venda_id"));
-	                venda.setPrecoTotal(rs.getFloat("total"));
+	                venda.setCodigoVenda(rs.getInt("venda_id")); 
+	                venda.setFuncionarioCpf(rs.getString("funcionario_cpf")); 
+	                venda.setClienteCpf(rs.getString("cliente_id"));
+	                venda.setPrecoTotal(rs.getFloat("total")); 
 	                venda.setDataVenda(rs.getDate("data_venda"));
-	                venda.setFuncionarioCpf(rs.getString("funcionario_cpf"));
 	                vendas.add(venda);
 	            }
 	        }
@@ -48,10 +49,11 @@ public class HistoricoVendaDAO {
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
                     Venda venda = new Venda();
-                    venda.setCodigoVenda(rs.getInt("venda_id"));
-                    venda.setPrecoTotal(rs.getFloat("total"));
+                    venda.setCodigoVenda(rs.getInt("venda_id")); 
+                    venda.setFuncionarioCpf(rs.getString("funcionario_cpf")); 
+                    venda.setClienteCpf(rs.getString("cliente_id"));
+                    venda.setPrecoTotal(rs.getFloat("total")); 
                     venda.setDataVenda(rs.getDate("data_venda"));
-                    venda.setFuncionarioCpf(rs.getString("funcionario_cpf"));
                     vendas.add(venda);
                 }
             }
@@ -59,19 +61,41 @@ public class HistoricoVendaDAO {
         return vendas;
     }
     
-    public List<Venda> buscarPorFuncionario(String funcionarioCpf) throws SQLException {
+    public List<Venda> buscarPorFuncionarios(String funcionarioCpf) throws SQLException {
         List<Venda> vendas = new ArrayList<>();
-        String sql = "SELECT * FROM venda WHERE funcionario_cpf = ?";  // A coluna 'funcionario_cpf' é do tipo string
+        String sql = "SELECT * FROM venda WHERE funcionario_cpf = ?"; 
 
         try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, funcionarioCpf);  // Use setString para passar o CPF como string
+            stmt.setString(1, funcionarioCpf);  
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
                     Venda venda = new Venda();
-                    venda.setCodigoVenda(rs.getInt("venda_id"));
-                    venda.setPrecoTotal(rs.getFloat("total"));
+                    venda.setCodigoVenda(rs.getInt("venda_id")); 
+                    venda.setFuncionarioCpf(rs.getString("funcionario_cpf")); 
+                    venda.setClienteCpf(rs.getString("cliente_id"));
+                    venda.setPrecoTotal(rs.getFloat("total")); 
                     venda.setDataVenda(rs.getDate("data_venda"));
-                    venda.setFuncionarioCpf(rs.getString("funcionario_cpf"));
+                    vendas.add(venda);
+                }
+            }
+        }
+        return vendas;
+    }
+    
+    public List<Venda> buscarPorClientes(String clienteCpf) throws SQLException {
+        List<Venda> vendas = new ArrayList<>();
+        String sql = "SELECT * FROM venda WHERE cliente_id = ?"; 
+
+        try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, clienteCpf);  
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    Venda venda = new Venda();
+                    venda.setCodigoVenda(rs.getInt("venda_id")); 
+                    venda.setFuncionarioCpf(rs.getString("funcionario_cpf")); 
+                    venda.setClienteCpf(rs.getString("cliente_id"));
+                    venda.setPrecoTotal(rs.getFloat("total")); 
+                    venda.setDataVenda(rs.getDate("data_venda"));
                     vendas.add(venda);
                 }
             }
@@ -80,22 +104,25 @@ public class HistoricoVendaDAO {
     }
 
     
-    
     public List<Venda> listarTodasVendas() throws SQLException {
         List<Venda> vendas = new ArrayList<>();
-        String sql = "SELECT * FROM venda WHERE data_venda IS NOT NULL"; 
+        String sql = "SELECT * FROM venda WHERE venda_id IS NOT NULL"; 
 
         try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement stmt = conn.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
                 Venda venda = new Venda();
                 venda.setCodigoVenda(rs.getInt("venda_id")); 
+                venda.setFuncionarioCpf(rs.getString("funcionario_cpf")); 
+                venda.setClienteCpf(rs.getString("cliente_id"));
                 venda.setPrecoTotal(rs.getFloat("total")); 
                 venda.setDataVenda(rs.getDate("data_venda"));
-                venda.setFuncionarioCpf(rs.getString("funcionario_cpf")); 
                 vendas.add(venda);
             }
         }
         return vendas;
     }
+
+
+	
 }

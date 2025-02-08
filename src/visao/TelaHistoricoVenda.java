@@ -149,12 +149,12 @@ public class TelaHistoricoVenda extends JPanel {
 	    panel.setLayout(new MigLayout("", "[20%][60%][20%]", "[grow][grow]"));
 	    
 	    lblNewLabel = new JLabel("Consulta");
-	    lblNewLabel.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
-	    panel.add(lblNewLabel, "cell 1 0,alignx center,aligny bottom");
+	    lblNewLabel.setFont(new Font("Dialog", Font.PLAIN, 50));
+	    panel.add(lblNewLabel, "cell 0 0 3 1,alignx center,aligny bottom");
 
 	    comboBox = new JComboBox();
 	    comboBox.setBackground(new Color(255, 255, 255));
-	    comboBox.setModel(new DefaultComboBoxModel(new String[] {"Codigo", "Funcionário","Valor Total"}));
+	    comboBox.setModel(new DefaultComboBoxModel(new String[] {"Codigo","CPF Funcionário","CPF Cliente","Valor Total"}));
 	    comboBox.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
 	    panel.add(comboBox, "cell 0 1,growx");
 
@@ -175,7 +175,8 @@ public class TelaHistoricoVenda extends JPanel {
 
 	    tableModel = new DefaultTableModel();
 	    tableModel.addColumn("Código");
-	    tableModel.addColumn("Funcionario");
+	    tableModel.addColumn("CPF do Funcionario");
+	    tableModel.addColumn("CPF do Cliente");
 	    tableModel.addColumn("Valor");
 	    tableModel.addColumn("Data da venda");
 

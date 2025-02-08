@@ -67,14 +67,14 @@ public class TelaPromocao extends JPanel {
 				panel.add(txtNome, "cell 1 0,growx");
 				txtNome.setColumns(10);
 						
-								JLabel lblTermino = new JLabel("Término:");
-								lblTermino.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
-								panel.add(lblTermino, "cell 2 0,alignx left,growy");
+						lblInicio = new JLabel("Inicio:");
+						lblInicio.setFont(new Font("Dialog", Font.PLAIN, 30));
+						panel.add(lblInicio, "cell 2 0,alignx left,growy");
 				
-						txtTermino = new JTextField();
-						txtTermino.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
-						panel.add(txtTermino, "cell 3 0,growx");
-						txtTermino.setColumns(10);
+				txtInicio = new JTextField();
+				txtInicio.setFont(new Font("Dialog", Font.PLAIN, 30));
+				txtInicio.setColumns(10);
+				panel.add(txtInicio, "cell 3 0,growx,aligny center");
 		
 				JLabel lblDesconto = new JLabel("Desconto:");
 				lblDesconto.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
@@ -86,21 +86,21 @@ public class TelaPromocao extends JPanel {
 		txtDesconto.setColumns(10);
 		panel.add(txtDesconto, "cell 1 1,growx,aligny center");
 		
-		lblInicio = new JLabel("Inicio:");
-		lblInicio.setFont(new Font("Dialog", Font.PLAIN, 30));
-		panel.add(lblInicio, "cell 2 1,alignx left,growy");
+				JLabel lblTermino = new JLabel("Término:");
+				lblTermino.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
+				panel.add(lblTermino, "cell 2 1,alignx left,growy");
 		
-		txtInicio = new JTextField();
-		txtInicio.setFont(new Font("Dialog", Font.PLAIN, 30));
-		txtInicio.setColumns(10);
-		panel.add(txtInicio, "cell 3 1,growx,aligny center");
+				txtTermino = new JTextField();
+				txtTermino.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
+				panel.add(txtTermino, "cell 3 1,growx");
+				txtTermino.setColumns(10);
 		
 		comboBoxCategoria = new JComboBox();
 		comboBoxCategoria.setBackground(new Color(255, 255, 255));
-		comboBoxCategoria.setModel(new DefaultComboBoxModel(new String[] {"", "Calça", "Camisa", "Camiseta", "Moleton", "Boné", "Toca", "Tênis", "Acessórios", "Outro"}));
+		comboBoxCategoria.setModel(new DefaultComboBoxModel(new String[] {"Calça", "Camisa", "Camiseta", "Moleton", "Boné", "Toca", "Tênis", "Acessórios", "Outro"}));
 		comboBoxCategoria.setToolTipText("\r\n");
 		comboBoxCategoria.setFont(new Font("Dialog", Font.PLAIN, 30));
-		panel.add(comboBoxCategoria, "cell 0 2 2 1,grow");
+		panel.add(comboBoxCategoria, "cell 0 2 4 1,grow");
 
 		JPanel panel_1 = new JPanel();
 		add(panel_1, "cell 1 0,grow");
