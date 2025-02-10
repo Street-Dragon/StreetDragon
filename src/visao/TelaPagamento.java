@@ -2,6 +2,8 @@ package visao;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Color;
 import net.miginfocom.swing.MigLayout;
 import utils.Cores;
@@ -17,21 +19,24 @@ import javax.swing.JComboBox;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 
+import modelo.dao.promocao.PromocaoDAO;
 import modelo.entidade.pessoa.cliente.Cliente;
 import modelo.entidade.pessoa.funcionario.Funcionario;
+import modelo.entidade.promocao.Promocao;
+
 import java.awt.event.KeyAdapter;
 
 public class TelaPagamento extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private JTextField txtTotal;
-	private JTextField txtDesconto;
 	private JTextField txtDinheiro;
 	private JTextField txtCartao;
 	private JTextField txtOutros;
 	private JTextField textTroco;
-	private JComboBox<Cliente> comboBox;
-	private JComboBox<Funcionario> comboBox_1;
+	public JComboBox<Cliente> comboBox;
+	public JComboBox<Funcionario> comboBox_1;
+	public JComboBox <Promocao>comboBox_2;
 	private JButton btnConfirmar;
 	private JButton btnCancelar;
 	public JLabel lblTotalPagar;
@@ -46,27 +51,23 @@ public class TelaPagamento extends JPanel {
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.WHITE);
 		add(panel, "cell 0 0,grow");
-		panel.setLayout(new MigLayout("", "[35%][65%]", "[grow][grow][grow]"));
+		panel.setLayout(new MigLayout("", "[35%][65%,grow]", "[grow][grow][grow]"));
 		
-		
-			
-	   
-
 		panel.setLayout(new MigLayout("", "[35%][65%]", "[grow][grow][grow]"));
 
 		
 		JLabel lblNewLabel = new JLabel("Cliente:");
-		panel.add(lblNewLabel, "cell 0 0,alignx left,growy");
+		panel.add(lblNewLabel, "cell 0 0");
 		lblNewLabel.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
 		
 		comboBox = new JComboBox<Cliente>();
 		comboBox.setEditable(true);
 		comboBox.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
-		panel.add(comboBox, "cell 1 0,growx,aligny center");
+		panel.add(comboBox, "cell 1 0,grow");
 		
 		JLabel lblNewLabel_1 = new JLabel("Preço Total:");
 		lblNewLabel_1.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
-		panel.add(lblNewLabel_1, "cell 0 1,alignx left,growy");
+		panel.add(lblNewLabel_1, "cell 0 1");
 		
 		txtTotal = new JTextField();
 		txtTotal.setHorizontalAlignment(SwingConstants.CENTER);
@@ -74,19 +75,16 @@ public class TelaPagamento extends JPanel {
 		txtTotal.setEditable(false);
 		txtTotal.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
 		txtTotal.setColumns(10);
-		panel.add(txtTotal, "cell 1 1,growx,aligny center");
+		panel.add(txtTotal, "cell 1 1,grow");
 		
 		JLabel lblNewLabel_1_1 = new JLabel("Descontos:");
 		lblNewLabel_1_1.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
-		panel.add(lblNewLabel_1_1, "cell 0 2,alignx left,growy");
+		panel.add(lblNewLabel_1_1, "cell 0 2,alignx left");
 		
-		txtDesconto = new JTextField();
-		txtDesconto.setHorizontalAlignment(SwingConstants.CENTER);
-		txtDesconto.setEnabled(false);
-		txtDesconto.setEditable(false);
-		txtDesconto.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
-		txtDesconto.setColumns(10);
-		panel.add(txtDesconto, "cell 1 2,growx,aligny center");
+		comboBox_2 = new JComboBox<>();
+		JComboBox comboBox_2 = new JComboBox();
+		comboBox_2.setForeground(new Color(255, 255, 255));
+		panel.add(comboBox_2, "cell 1 2,grow");
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(Color.WHITE);
@@ -114,13 +112,18 @@ public class TelaPagamento extends JPanel {
 		
 		txtDinheiro = new JTextField();
 		txtDinheiro.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyReleased(KeyEvent e) {
-				String troco2 = String.valueOf(calculartroco());
-				textTroco.setText(troco2);
-			}
-
+		    @Override
+		    public void keyReleased(KeyEvent e) {
+		        float troco = calcularTroco();
+		        
+		        if (troco < 0) {
+		            textTroco.setText("Quantidade insuficiente");
+		        } else {
+		            textTroco.setText(String.format("%.2f", troco));
+		        }
+		    }
 		});
+
 		txtDinheiro.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
 		txtDinheiro.setColumns(10);
 		panel_2.add(txtDinheiro, "cell 1 0,growx,aligny center");
@@ -187,12 +190,12 @@ public class TelaPagamento extends JPanel {
 		this.txtTotal = txtTotal;
 	}
 
-	public JTextField getTxtDesconto() {
-		return txtDesconto;
+	public JComboBox getComboBox_2() {
+		return comboBox_2;
 	}
 
-	public void setTxtDesconto(JTextField txtDesconto) {
-		this.txtDesconto = txtDesconto;
+	public void setComboBox_2(JComboBox comboBox_2) {
+		this.comboBox_2 = comboBox_2;
 	}
 
 	public JTextField getTxtDinheiro() {
@@ -239,17 +242,26 @@ public class TelaPagamento extends JPanel {
 		return btnCancelar;
 	}
 	
-	private float calculartroco() {
-		float dinheiro = Float.parseFloat(txtDinheiro.getText());
-		float total = Float.parseFloat(lblTotalPagar.getText());
-		float troco;
-		
-		troco = dinheiro - total;
-		
-		return troco;
-		
-		
+	private float calcularTroco() {
+	    try {
+	        float dinheiro = Float.parseFloat(txtDinheiro.getText().isEmpty() ? "0" : txtDinheiro.getText());
+	        float total = Float.parseFloat(lblTotalPagar.getText().replace("R$:", "").trim());
+	        
+	        float troco = dinheiro - total;
+	        
+	        if (troco < 0) {
+	            return -1; 
+	        }
+	        
+	        return (float) Math.round(troco * 100) / 100; 
+	        
+	    } catch (NumberFormatException e) {
+	        return -1; 
+	    }
 	}
+	
+	
+
 
 	// cpa q o problema ta aq
 
@@ -265,6 +277,8 @@ public class TelaPagamento extends JPanel {
 	        }
 	    }
 	}
+	
+
 	
 	public void setFuncionarios(List<Funcionario> funcionarios) {
 		comboBox_1.removeAllItems();
