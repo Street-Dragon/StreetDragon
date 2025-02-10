@@ -23,6 +23,7 @@ import javax.swing.event.ChangeEvent;
 
 import utils.Cores;
 import utils.Utils;
+import java.awt.Toolkit;
 
 public class TelaLogin extends JFrame {
 
@@ -79,6 +80,7 @@ public class TelaLogin extends JFrame {
 	 * Create the frame.
 	 */
 	public TelaLogin() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(TelaLogin.class.getResource("/resources/imagens/logo.png")));
 		setAlwaysOnTop(true);
 		setTitle("Tela de Login");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

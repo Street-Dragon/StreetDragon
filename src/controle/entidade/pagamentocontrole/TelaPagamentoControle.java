@@ -9,7 +9,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import controle.entidade.item.ItemController;
-import controle.entidade.promocaocontrole.PromocaoControle;
+import controle.entidade.promocao.PromocaoControle;
 import modelo.dao.cliente.ClienteDAO;
 import modelo.dao.funcionario.FuncionarioDAO;
 import modelo.entidade.pessoa.cliente.Cliente;

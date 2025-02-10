@@ -34,7 +34,7 @@ public class TelaCliente extends JPanel {
 	private JTextField txtTelefone;
 	private JButton btnCadastrar;
 	private JButton btnDeletar;
-	//private JButton btnEditar;
+	private JButton btnEditar;
 	private JTable table;
 	private static DefaultTableModel tableModel;
 	
@@ -79,6 +79,9 @@ public class TelaCliente extends JPanel {
 	public JButton getBtnDeletar() {
 		return btnDeletar;
 	}
+	public JButton getBtnEditar() {
+		return btnEditar;
+	}
 	public void setBtnDeletar(JButton btnDeletar) {
 		this.btnDeletar = btnDeletar;
 	}
@@ -112,7 +115,7 @@ public class TelaCliente extends JPanel {
 
 	public TelaCliente(TelaPrincipal telaPrincipal) {
 
-		setBounds(100, 100, 926, 526);
+		setBounds(100, 100, 1234, 651);
 		setBackground(Cores.COR_ROSA_CLARO);
 
 		Border borda = new LineBorder(Cores.COR_ROSA_CLARO, 1);
@@ -151,7 +154,7 @@ public class TelaCliente extends JPanel {
 		txtTelefone.setColumns(10);
 		panel.add(txtTelefone, "cell 1 1,growx");
 		
-		JLabel lblcpf = new JLabel("Cpf");
+		JLabel lblcpf = new JLabel("CPF");
 		lblcpf.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
 		panel.add(lblcpf, "cell 2 1,alignx left,growy");
 
@@ -167,7 +170,7 @@ public class TelaCliente extends JPanel {
 		btnCadastrar = new JButton("Cadastrar");
 		btnCadastrar.setForeground(new Color(255, 255, 255));
 		btnCadastrar.setFont(new Font("Hanken Grotesk", Font.PLAIN, 25));
-		panel_1.setLayout(new MigLayout("", "[grow]", "[50%][50%]"));
+		panel_1.setLayout(new MigLayout("", "[grow]", "[grow][grow][grow]"));
 		btnCadastrar.setBackground(new Color(114, 148, 235));
 		panel_1.add(btnCadastrar, "cell 0 0,grow");
 		// Botão Ecluir
@@ -179,11 +182,18 @@ public class TelaCliente extends JPanel {
 		
 		
 		btnCadastrar.setIcon(Utils.carregarIcone("Add.png", 30, 30));
+		
+		btnEditar = new JButton("Editar");
+		btnEditar.setForeground(new Color(255, 255, 255));
+		btnEditar.setFont(new Font("Hanken Grotesk", Font.PLAIN, 25));
+		btnEditar.setIcon(Utils.carregarIcone("editar.png", 30, 30));
+		panel_1.add(btnEditar, "cell 0 1,grow");
 		btnDeletar.setIcon(Utils.carregarIcone("lixo.png", 30, 30));
+		btnEditar.setBackground(new Color(255, 175, 175));
 		
 		
 		
-		panel_1.add(btnDeletar, "cell 0 1,grow");
+		panel_1.add(btnDeletar, "cell 0 2,grow");
 
 		JScrollPane scrollPane = new JScrollPane();
 		add(scrollPane, "cell 0 1 2 1,grow");
@@ -192,7 +202,7 @@ public class TelaCliente extends JPanel {
 		tableModel.addColumn("Nome");
 		tableModel.addColumn("Email");
 		tableModel.addColumn("Número");
-		tableModel.addColumn("Cpf");
+		tableModel.addColumn("CPF");
 		tableModel.addColumn("N. Compras");
 
 		table = new JTable(tableModel) {

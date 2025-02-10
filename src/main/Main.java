@@ -4,16 +4,15 @@ import controle.entidade.conexao.ConexaoBD;
 import controle.entidade.funcionariocontrole.FuncionarioControle;
 import controle.entidade.pagamentocontrole.TelaPagamentoControle;
 import controle.entidade.produto.ProdutoControle;
-import controle.entidade.promocaocontrole.PromocaoControle;
-import controle.tela.historicovendacontrole.HistoricoVendaControle;
-import visao.TelaCadastroFuncionario;
-import visao.TelaCadastroProdutos;
-import visao.TelaHistoricoVenda;
+import controle.entidade.promocao.PromocaoControle;
 import visao.TelaLogin;
 import visao.TelaPagamento;
 import visao.TelaPrincipal;
 import visao.TelaProdutos;
 import visao.TelaPromocao;
+import visao.TelaFuncionario;
+import visao.TelaCadastroProdutos;
+import visao.TelaCliente;
 
 public class Main {
     public static void main(String[] args) {
@@ -24,7 +23,7 @@ public class Main {
 		TelaLogin telaLogin = new TelaLogin();
 		TelaPrincipal telaPrincipal = new TelaPrincipal();
 
-		TelaCadastroFuncionario telaCadastroFuncionario = new TelaCadastroFuncionario(telaPrincipal);
+		TelaFuncionario telaCadastroFuncionario = new TelaFuncionario(telaPrincipal);
 		TelaProdutos telaProduto = new TelaProdutos(telaPrincipal);
 		TelaCadastroProdutos telaCadastroProdutos = new TelaCadastroProdutos();
 		TelaPromocao telaPromocao = new TelaPromocao(telaPrincipal);

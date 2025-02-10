@@ -2,6 +2,7 @@ package visao;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.ScrollPane;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -22,6 +23,9 @@ import net.miginfocom.swing.MigLayout;
 import utils.Cores;
 import utils.Utils;
 import javax.swing.JComboBox;
+import javax.swing.SwingConstants;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 
 public class TelaPromocao extends JPanel {
@@ -38,6 +42,8 @@ public class TelaPromocao extends JPanel {
 	private JLabel lblInicio;
 	private JTextField txtInicio;
 	private JComboBox comboBoxCategoria;
+	private JLabel lblTipo;
+	private JScrollPane scrollPane = new JScrollPane();
 	
 
 
@@ -45,7 +51,7 @@ public class TelaPromocao extends JPanel {
 	 * Create the panel.
 	 */
 	public TelaPromocao(TelaPrincipal telaPrincipal) {
-		setBounds(100, 100, 851, 457);
+		setBounds(100, 100, 1094, 569);
 		setBackground(Cores.COR_ROSA_CLARO);
 
 		
@@ -58,7 +64,7 @@ public class TelaPromocao extends JPanel {
 		add(panel, "cell 0 0,grow");
 		panel.setLayout(new MigLayout("", "[25%][25%][25%][25%]", "[40%][40%][20]"));
 				
-						JLabel lblNomePromo = new JLabel("Nome da Promoção:");
+						JLabel lblNomePromo = new JLabel("Nome:");
 						lblNomePromo.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
 						panel.add(lblNomePromo, "cell 0 0,alignx left,growy");
 		
@@ -66,10 +72,10 @@ public class TelaPromocao extends JPanel {
 				txtNome.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
 				panel.add(txtNome, "cell 1 0,growx");
 				txtNome.setColumns(10);
-						
-						lblInicio = new JLabel("Inicio:");
-						lblInicio.setFont(new Font("Dialog", Font.PLAIN, 30));
-						panel.add(lblInicio, "cell 2 0,alignx left,growy");
+				
+				lblInicio = new JLabel("Início:");
+				lblInicio.setFont(new Font("Dialog", Font.PLAIN, 30));
+				panel.add(lblInicio, "cell 2 0,alignx left,growy");
 				
 				txtInicio = new JTextField();
 				txtInicio.setFont(new Font("Dialog", Font.PLAIN, 30));
@@ -95,12 +101,17 @@ public class TelaPromocao extends JPanel {
 				panel.add(txtTermino, "cell 3 1,growx");
 				txtTermino.setColumns(10);
 		
+		lblTipo = new JLabel("Categoria:");
+		lblTipo.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblTipo.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
+		panel.add(lblTipo, "cell 0 2,alignx left");
+		
 		comboBoxCategoria = new JComboBox();
 		comboBoxCategoria.setBackground(new Color(255, 255, 255));
-		comboBoxCategoria.setModel(new DefaultComboBoxModel(new String[] {"Calça", "Camisa", "Camiseta", "Moleton", "Boné", "Toca", "Tênis", "Acessórios", "Outro"}));
-		comboBoxCategoria.setToolTipText("\r\n");
+		comboBoxCategoria.setModel(new DefaultComboBoxModel(new String[] {"", "Calça", "Camisa", "Camiseta", "Moleton", "Boné", "Toca", "Tênis", "Acessório", "Outro"}));
+		comboBoxCategoria.setToolTipText("Categoria");
 		comboBoxCategoria.setFont(new Font("Dialog", Font.PLAIN, 30));
-		panel.add(comboBoxCategoria, "cell 0 2 4 1,grow");
+		panel.add(comboBoxCategoria, "cell 1 2,grow");
 
 		JPanel panel_1 = new JPanel();
 		add(panel_1, "cell 1 0,grow");
@@ -129,15 +140,14 @@ public class TelaPromocao extends JPanel {
 		btnCadastrar.setIcon(Utils.carregarIcone("Add.png",30,30));
 		
 		
-		JScrollPane scrollPane = new JScrollPane();
 		add(scrollPane, "cell 0 1 2 1,grow");
 
 		tableModel = new DefaultTableModel();
 		tableModel.addColumn("Código");
 		tableModel.addColumn("Nome");
 		tableModel.addColumn("Desconto");
+		tableModel.addColumn("Início");
 		tableModel.addColumn("Término");
-		tableModel.addColumn("Inicio");
 		tableModel.addColumn("Categoria");
 		
 		table = new JTable();
@@ -145,7 +155,7 @@ public class TelaPromocao extends JPanel {
 			new Object[][] {
 			},
 			new String[] {
-				"Id", "Nome", "%","Término","Inicio","Categoria"
+				"Código", "Nome", "Desconto","Início","Término","Categoria"
 			}
 			
 			
@@ -245,6 +255,5 @@ public class TelaPromocao extends JPanel {
 	public JComboBox setComboBoxCategoria() {
 		return this.comboBoxCategoria;
 	}
-	
 	
 }
