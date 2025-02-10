@@ -53,7 +53,7 @@ public class Main {
 		// Exibe a tela de login
 		telaLogin.setVisible(true);
 			
-        // Exibe a tela de cadastro
+        // Exibe a tela de cadastro oi
         telaCadastroFuncionario.setVisible(true); // Exibe a tela de cadastro de funcionário
         // Atualizando a tabela logo no começo
         funcionarioControle.atualizarTabela();
