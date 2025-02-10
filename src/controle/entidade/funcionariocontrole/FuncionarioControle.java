@@ -6,7 +6,7 @@ import modelo.entidade.pessoa.funcionario.Funcionario;
 import utils.Utils;
 import visao.TelaPrincipal;
 import visao.TelaProdutos;
-import visao.TelaCadastroFuncionario;
+import visao.TelaFuncionario;
 import visao.TelaLogin;
 import visao.TelaMensagens;
 
@@ -20,7 +20,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class FuncionarioControle {
 	private TelaLogin telaLogin;
-	private TelaCadastroFuncionario cadastroFuncionario;
+	private TelaFuncionario cadastroFuncionario;
 	private FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
 	private String funcionarioIdStr;
 	private TelaPrincipal telaPrincipal;
@@ -55,16 +55,22 @@ public class FuncionarioControle {
 	    });
 	}
 
-	public void setTelaCadastroFuncionario(TelaCadastroFuncionario cadastroFuncionario) {
+	public void setTelaCadastroFuncionario(TelaFuncionario cadastroFuncionario) {
 		this.cadastroFuncionario = cadastroFuncionario;
 			atualizarTabela();
 			adicionarListeners();
 			cadastroFuncionario.getBtnCadastrarFuncionario().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				cadastrarFuncionario();
-				atualizarTabela();
-				cadastroFuncionario.limparCampos();
+				if(cadastroFuncionario.getBtnCadastrarFuncionario().getText().equals("Cadastrar")) {
+					cadastrarFuncionario();
+					atualizarTabela();
+				} else {
+					cadastroFuncionario.getBtnCadastrarFuncionario().setText("Cadastrar");
+					cadastroFuncionario.getBtnCadastrarFuncionario().setIcon(Utils.carregarIcone("Add.png", 30, 30));
+					limparcampos();
+					cadastroFuncionario.getTable().clearSelection();
+				}
 			}
 		});
 	
@@ -95,8 +101,9 @@ public class FuncionarioControle {
                 if (selectedRow != -1) {
                 	 // |Tem que parar de converter, passa string direto e ajusta;
                     funcionarioIdStr = (String) cadastroFuncionario.getTable().getValueAt(selectedRow, 0);
-                   
                     carregarDadosFuncionarioDAO(funcionarioIdStr);
+                    cadastroFuncionario.getBtnCadastrarFuncionario().setText("Limpar");
+                    cadastroFuncionario.getBtnCadastrarFuncionario().setIcon(Utils.carregarIcone("apagador.png", 30, 30));
                 }
             }
         });
@@ -116,7 +123,7 @@ public class FuncionarioControle {
 			}
 			cpfUsuarioLogado = cpf;
 			telaPrincipal.getLblFuncionario()
-					.setText("Funcionario: " + funcionarioDAO.nomeFuncionario(cpfUsuarioLogado));
+					.setText("Funcionário: " + funcionarioDAO.nomeFuncionario(cpfUsuarioLogado));
 			
 			
 			boolean adm = funcionarioDAO.funcionarioAdm(cpf);
@@ -304,6 +311,13 @@ public class FuncionarioControle {
     	cadastroFuncionario.getTextFieldEmail().setText(funcionario.getContato().getEmail());
     	cadastroFuncionario.getTextFieldTelefone().setText(funcionario.getContato().getTelefone());
     	
+    }
+    private void limparcampos() {
+    	cadastroFuncionario.getTextFieldNome().setText(null);
+    	cadastroFuncionario.getTextFieldCpf().setText(null);
+    	cadastroFuncionario.getTextFieldSenha().setText(null);
+    	cadastroFuncionario.getTextFieldEmail().setText(null);
+    	cadastroFuncionario.getTextFieldTelefone().setText(null);
     }
     
     public String getCpfUsuarioLogado() {

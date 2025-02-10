@@ -118,7 +118,7 @@ public class TelaProdutos extends JPanel {
 						panel.add(txtFieldNome, "cell 1 1,growx");
 						txtFieldNome.setColumns(10);
 				
-						lblNewLabel_3 = new JLabel("Quant. Estoque");
+						lblNewLabel_3 = new JLabel("Quantidade estoque");
 						lblNewLabel_3.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
 						panel.add(lblNewLabel_3, "cell 2 1,alignx left,growy");
 		
@@ -161,7 +161,7 @@ public class TelaProdutos extends JPanel {
 		txtFieldPesquisa.setColumns(10);
 		
 		
-		btnPesquisar = new JButton("Pesquisar");
+		btnPesquisar = new JButton("Consultar");
 		btnPesquisar.setForeground(new Color(255, 255, 255));
 		btnPesquisar.setBackground(new Color(255, 175, 175));
 		btnPesquisar.setFont(new Font("Hanken Grotesk", Font.PLAIN, 25));
@@ -172,7 +172,7 @@ public class TelaProdutos extends JPanel {
 		add(scrollPane, "cell 0 1 2 1,grow");
 		scrollPane.setViewportView(table);
 
-		tableModel = new DefaultTableModel(new Object[][] {}, new String[] { "Código", "Nome", "Valor", "Qnt estoque" });
+		tableModel = new DefaultTableModel(new Object[][] {}, new String[] { "Código", "Nome", "Valor", "Qantidade estoque" });
 
 		table = new JTable(tableModel) {
 			// não deixa as células serem editadas

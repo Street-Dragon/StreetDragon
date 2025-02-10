@@ -32,7 +32,7 @@ public class TelaHistoricoVenda extends JPanel {
 	private JRadioButton rdbtnCodigo;
 	private JRadioButton rdbtnNome;
 	private JRadioButton rdbtnnData;
-	private static DefaultTableModel tableModel;
+	private DefaultTableModel tableModel;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private JComboBox comboBox;
 	private JButton btnConsultar;
@@ -72,58 +72,126 @@ public class TelaHistoricoVenda extends JPanel {
 	public JTable getTable() {
 		return table;
 	}
+	
+	public JPanel getContentPane() {
+		return contentPane;
+	}
+
+	public void setContentPane(JPanel contentPane) {
+		this.contentPane = contentPane;
+	}
+
+	public JScrollPane getScrollPane() {
+		return scrollPane;
+	}
+
+	public void setScrollPane(JScrollPane scrollPane) {
+		this.scrollPane = scrollPane;
+	}
+
+	public Panel getPanel() {
+		return panel;
+	}
+
+	public void setPanel(Panel panel) {
+		this.panel = panel;
+	}
+
+	public JLabel getLblNewLabel() {
+		return lblNewLabel;
+	}
+
+
+	public DefaultTableModel getTableModel() {
+		return tableModel;
+	}
+
+	public void setTableModel(DefaultTableModel tableModel) {
+		this.tableModel = tableModel;
+	}
+
+	public JComboBox getComboBox() {
+		return comboBox;
+	}
+
+	public void setComboBox(JComboBox comboBox) {
+		this.comboBox = comboBox;
+	}
+
+	public JButton getBtnConsultar() {
+		return btnConsultar;
+	}
+
+	public void setBtnConsultar(JButton btnConsultar) {
+		this.btnConsultar = btnConsultar;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public ButtonGroup getButtonGroup() {
+		return buttonGroup;
+	}
+
+	public void setTable(JTable table) {
+		this.table = table;
+	}
 
 	public TelaHistoricoVenda(TelaPrincipal telaPrincipal) {
-		setBounds(100, 100, 682, 482);
-		// contentPane = new JPanel();
-		setBackground(new Color(253, 233, 235));
+	    setBounds(100, 100, 682, 482);
+	    setBackground(new Color(253, 233, 235));
+	    setLayout(new MigLayout("", "[grow]", "[35%][65%]"));
 
-		setLayout(new MigLayout("", "[grow]", "[35%][65%]"));
+	    panel = new Panel();
+	    panel.setBackground(new Color(255, 255, 255));
+	    add(panel, "cell 0 0,grow");
+	    panel.setLayout(new MigLayout("", "[20%][60%][20%]", "[grow][grow]"));
+	    
+	    lblNewLabel = new JLabel("Consulta");
+	    lblNewLabel.setFont(new Font("Dialog", Font.PLAIN, 50));
+	    panel.add(lblNewLabel, "cell 0 0 3 1,alignx center,aligny bottom");
 
-		panel = new Panel();
-		panel.setBackground(new Color(255, 255, 255));
-		add(panel, "cell 0 0,grow");
-		panel.setLayout(new MigLayout("", "[20%][60%][20%]", "[grow][grow]"));
-						
-								lblNewLabel = new JLabel("Consulta");
-								lblNewLabel.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
-								panel.add(lblNewLabel, "cell 1 0,alignx center,aligny bottom");
-						
-						comboBox = new JComboBox();
-						comboBox.setBackground(new Color(255, 255, 255));
-						comboBox.setModel(new DefaultComboBoxModel(new String[] {"", "Nome", "Categoria", "Preco"}));
-						comboBox.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
-						panel.add(comboBox, "cell 0 1,growx");
-						
-								textFieldConsulta = new TextField();
-								textFieldConsulta.setBackground(new Color(255, 255, 255));
-								textFieldConsulta.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
-								panel.add(textFieldConsulta, "cell 1 1,growx,aligny center");
-								
-								btnConsultar = new JButton("Consultar");
-								btnConsultar.setForeground(new Color(255, 255, 255));
-								btnConsultar.setBackground(new Color(255, 175, 175));
-								btnConsultar.setIcon(Utils.carregarIcone("lupa.png", 30, 30));
-								btnConsultar.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
-								panel.add(btnConsultar, "cell 2 1,growx,aligny center");
+	    comboBox = new JComboBox();
+	    comboBox.setBackground(new Color(255, 255, 255));
+	    comboBox.setModel(new DefaultComboBoxModel(new String[] {"Codigo","CPF Funcionário","CPF Cliente","Valor Total"}));
+	    comboBox.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
+	    panel.add(comboBox, "cell 0 1,growx");
 
-		scrollPane = new JScrollPane();
-		add(scrollPane, "cell 0 1,grow");
+	    textFieldConsulta = new TextField();
+	    textFieldConsulta.setBackground(new Color(255, 255, 255));
+	    textFieldConsulta.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
+	    panel.add(textFieldConsulta, "cell 1 1,growx,aligny center");
+	    
+	    btnConsultar = new JButton("Consultar");
+	    btnConsultar.setForeground(new Color(255, 255, 255));
+	    btnConsultar.setBackground(new Color(255, 175, 175));
+	    btnConsultar.setIcon(Utils.carregarIcone("lupa.png", 30, 30));
+	    btnConsultar.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
+	    panel.add(btnConsultar, "cell 2 1,growx,aligny center");
 
-		tableModel = new DefaultTableModel();
-		tableModel.addColumn("Codigo");
-		tableModel.addColumn("Nome");
-		tableModel.addColumn("Valor"); // n será objt de pesquisa
+	    scrollPane = new JScrollPane();
+	    add(scrollPane, "cell 0 1,grow");
 
-		table = new JTable(tableModel) {
-			@Override
-			public boolean isCellEditable(int row, int column) {
-				return false;
-			}
-		};
-		Utils.configTabela(table, scrollPane);
+	    tableModel = new DefaultTableModel();
+	    tableModel.addColumn("Código");
+	    tableModel.addColumn("CPF do Funcionario");
+	    tableModel.addColumn("CPF do Cliente");
+	    tableModel.addColumn("Valor");
+	    tableModel.addColumn("Data da venda");
 
-		scrollPane.setViewportView(table);
-		Utils.configTabela(table, scrollPane);
+	    
+	    
+	    table = new JTable(tableModel) {
+	        @Override
+	        public boolean isCellEditable(int row, int column) {
+	            return false;  
+	        }
+	    };
+
+	    Utils.configTabela(table, scrollPane);  
+	    scrollPane.setViewportView(table);
+	    Utils.configTabela(table, scrollPane); 
+
 	}
 }

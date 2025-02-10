@@ -1,6 +1,6 @@
 package controle.visao.principal;
 
-import visao.TelaCadastroFuncionario;
+import visao.TelaFuncionario;
 import visao.TelaMensagens;
 import visao.TelaPrincipal;
 import visao.TelaVenda;

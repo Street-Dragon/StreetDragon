@@ -33,6 +33,7 @@ public class fornecedorControle {
     }
 
     //>:C
+    //;:]
 
     private void preencherCampos(Fornecedor fornecedor) {
         telaFornecedor.getTextNome().setText(fornecedor.getNome());

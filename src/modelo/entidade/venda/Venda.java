@@ -6,30 +6,44 @@ import java.util.List;
 import java.util.Date;
 
 public class Venda {
-    private Funcionario funcionario;
-    private boolean cliente;
+	private String funcionarioCpf;
+    private String ClienteCpf;
     private float precoTotal;
     private List<Item> itens;
     private Date dataVenda; // add data da venda para histórico
     private int codigoVenda; // add código da venda para consulta
+    private String dataVendaFormatada;
+ 
 
-    public Funcionario getFuncionario() {
-        return funcionario;
-    }
     
-    public void setFuncionario(Funcionario funcionario) {
-        this.funcionario = funcionario;
-    }
 
-    public boolean isCliente() {
-        return cliente;
-    }
+	
 
-    public void setCliente(boolean cliente) {
-        this.cliente = cliente;
-    }
+	public String getFuncionarioCpf() {
+		return funcionarioCpf;
+	}
 
-    public float getPrecoTotal() {
+	public void setFuncionarioCpf(String funcionarioCpf) {
+		this.funcionarioCpf = funcionarioCpf;
+	}
+
+	public String getDataVendaFormatada() {
+		return dataVendaFormatada;
+	}
+
+	public void setDataVendaFormatada(String dataVendaFormatada) {
+		this.dataVendaFormatada = dataVendaFormatada;
+	}
+
+	public String getClienteCpf() {
+		return ClienteCpf;
+	}
+
+	public void setClienteCpf(String clienteCpf) {
+		ClienteCpf = clienteCpf;
+	}
+
+	public float getPrecoTotal() {
         return precoTotal;
     }
 
