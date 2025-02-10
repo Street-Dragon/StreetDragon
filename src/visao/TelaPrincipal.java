@@ -15,7 +15,9 @@ import javax.swing.JPanel;
 import controle.entidade.clientecontrole.ClienteControle;
 import controle.entidade.funcionariocontrole.FuncionarioControle;
 import controle.entidade.item.ItemController;
+import controle.entidade.pagamentocontrole.TelaPagamentoControle;
 import controle.entidade.produto.ProdutoControle;
+import controle.tela.historicovendacontrole.HistoricoVendaControle;
 import controle.entidade.promocao.PromocaoControle;
 import controle.visao.principal.TelaPrincipalControle;
 import net.miginfocom.swing.MigLayout;
@@ -41,6 +43,8 @@ public class TelaPrincipal extends JFrame {
 	private JButton btnClientes;
 	private JButton btnPromocoes;
 	private JPanel panel_logo;
+	private TelaPrincipalControle telaPrincipalControle;
+	public ItemController itemControle;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(() -> {
@@ -75,6 +79,11 @@ public class TelaPrincipal extends JFrame {
 		TelaCliente telaCliente = new TelaCliente(this);
 		TelaPromocao telaPromocao = new TelaPromocao(this);
         TelaPagamento telaPagamento = new TelaPagamento(this);
+        
+		TelaPagamentoControle pagamentoControle = new TelaPagamentoControle(telaPagamento);
+		HistoricoVendaControle historico = new HistoricoVendaControle(telaHistoricoVenda);
+
+
 
 		// Painel do menu lateral
 		JPanel menuPanel = new JPanel();
@@ -164,14 +173,15 @@ public class TelaPrincipal extends JFrame {
 		}
 
 		//new TelaPrincipalControle(this);
-		TelaPrincipalControle telaPrincipalControle = new TelaPrincipalControle(this);
+		telaPrincipalControle = new TelaPrincipalControle(this);
 		FuncionarioControle funcionarioControle = new FuncionarioControle();
 		funcionarioControle.setTelaPrincipal(this);
 		funcionarioControle.setTelaCadastroFuncionario(telaCadastroFuncionario);
 		
 		
 		telaPrincipalControle.setTelaVenda(telaVenda);
-		
+		telaPrincipalControle.setTelaPagamentoControle(pagamentoControle);
+
 		ClienteControle clienteControle = new ClienteControle();
 		clienteControle.setTelaCadastroCliente(telaCliente);
 
@@ -185,7 +195,7 @@ public class TelaPrincipal extends JFrame {
 		produtoControle.setTelaCadastrarProduto(telaCadastroProdutos);
 		
 		
-		ItemController itemControle = new ItemController();
+		itemControle = new ItemController();
 		itemControle.setTelaVenda(telaVenda);
 		
 		PromocaoControle promocaoControle = new PromocaoControle(telaPromocao);
@@ -250,4 +260,6 @@ public class TelaPrincipal extends JFrame {
 	private static void config(JButton button) {
 		button.setFont(new Font("Hanken Grotesk", Font.BOLD, 20));
 	}
+
+	
 }

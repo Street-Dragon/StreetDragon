@@ -1,6 +1,7 @@
 package controle.visao.principal;
 
 import visao.TelaFuncionario;
+import visao.TelaMensagens;
 import visao.TelaPrincipal;
 import visao.TelaVenda;
 
@@ -10,8 +11,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.table.DefaultTableModel;
 
 import controle.entidade.funcionariocontrole.FuncionarioControle;
+import controle.entidade.pagamentocontrole.TelaPagamentoControle;
 import modelo.dao.funcionario.FuncionarioDAO;
 
 public class TelaPrincipalControle {
@@ -20,6 +23,8 @@ public class TelaPrincipalControle {
 	private FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
 	private FuncionarioControle funcionarioControle = new FuncionarioControle();
 	private TelaVenda telaVenda;
+	
+	private TelaPagamentoControle tpc;
 
 	public TelaPrincipalControle(TelaPrincipal telaPrincipal) {
 		this.telaPrincipal = telaPrincipal;
@@ -31,6 +36,7 @@ public class TelaPrincipalControle {
 			public void actionPerformed(ActionEvent e) {
 				trocarTela("TelaVenda");
 				mudarCorBotao(telaPrincipal.getBtnVenda());
+				
 			}
 		});
 
@@ -84,12 +90,24 @@ public class TelaPrincipalControle {
 	}
 
 	public void setTelaVenda(TelaVenda telaVenda) {
-		this.telaVenda = telaVenda;
+	    this.telaVenda = telaVenda;
 
-		
-		telaVenda.getBtnRealizarCompra().addActionListener(e -> {
-		    telaPrincipal.getCardLayout().show(telaPrincipal.getMainPanel(), "TelaPagamento"); 
-		});
+	    telaVenda.getBtnRealizarCompra().addActionListener(e -> {
+	    	System.out.println("c");
+	        // Validação do carrino vazio
+	        DefaultTableModel model = (DefaultTableModel) telaVenda.getTable().getModel();
+	        
+	        if (model.getRowCount() == 0) {
+	            new TelaMensagens("Adicione um item ao carrinho!", 3);
+	            return;
+	        }
+	        tpc.setItemDAO(telaPrincipal.itemControle);
+	        telaPrincipal.getCardLayout().show(telaPrincipal.getMainPanel(), "TelaPagamento");
+	    });
+	}
+	
+	public void setTelaPagamentoControle(TelaPagamentoControle tpc) {
+	this.tpc = tpc;
 	}
 
 	// método para trocar o jpanel atual

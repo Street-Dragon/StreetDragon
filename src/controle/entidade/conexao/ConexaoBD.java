@@ -66,12 +66,16 @@ public class ConexaoBD {
                     + ") ENGINE = InnoDB;";
 
 
-			String sqlFuncionario = "CREATE TABLE IF NOT EXISTS funcionario ("
-					+ "cpf VARCHAR(14) NOT NULL PRIMARY KEY, " + "senha VARCHAR(100) NOT NULL, "
-					+ "nome VARCHAR(100) NOT NULL, " + "contato_id INT NOT NULL, "
-					+ "adm BOOLEAN NOT NULL DEFAULT FALSE, "
-					+ "FOREIGN KEY (contato_id) REFERENCES contato(id_contato) " + "ON DELETE NO ACTION "
-					+ "ON UPDATE NO ACTION) ENGINE = InnoDB;";
+			String sqlFuncionario = "CREATE TABLE IF NOT EXISTS funcionario (\r\n"
+					+ "    cpf VARCHAR(14) NOT NULL PRIMARY KEY, \r\n"
+					+ "    senha VARCHAR(100) NOT NULL, \r\n"
+					+ "    nome VARCHAR(100) NOT NULL, \r\n"
+					+ "    contato_id INT,  -- Agora a coluna contato_id pode ser NULL\r\n"
+					+ "    adm BOOLEAN NOT NULL DEFAULT FALSE, \r\n"
+					+ "    FOREIGN KEY (contato_id) REFERENCES contato(id_contato) \r\n"
+					+ "    ON DELETE SET NULL  -- Faz com que, se o contato for excluído, o contato_id seja definido como NULL no funcionário\r\n"
+					+ "    ON UPDATE CASCADE   -- Caso o contato_id na tabela contato seja alterado, essa alteração será refletida aqui\r\n"
+					+ ") ENGINE = InnoDB;";
 
 			String sqlCliente = "CREATE TABLE IF NOT EXISTS cliente (" + "cpf VARCHAR(14) NOT NULL PRIMARY KEY, "
 					+ "nome VARCHAR(100) NOT NULL, " + "contato_id INT NOT NULL, " + "numero_compras INT DEFAULT 0, "

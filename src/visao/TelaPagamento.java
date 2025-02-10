@@ -9,9 +9,14 @@ import utils.Utils;
 
 import javax.swing.JTextField;
 import java.awt.Font;
+import java.util.List;
+
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
+
+import modelo.entidade.pessoa.cliente.Cliente;
+import modelo.entidade.pessoa.funcionario.Funcionario;
 
 public class TelaPagamento extends JPanel {
 
@@ -22,6 +27,11 @@ public class TelaPagamento extends JPanel {
 	private JTextField txtCartao;
 	private JTextField txtOutros;
 	private JTextField textField;
+	private JComboBox<Cliente> comboBox;
+	private JComboBox<Funcionario> comboBox_1;
+	private JButton btnConfirmar;
+	private JButton btnCancelar;
+	public JLabel lblTotalPagar;
 
 	/**
 	 * Create the panel.
@@ -39,7 +49,7 @@ public class TelaPagamento extends JPanel {
 		panel.add(lblNewLabel, "cell 0 0,alignx left,growy");
 		lblNewLabel.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
 		
-		JComboBox comboBox = new JComboBox();
+		comboBox = new JComboBox<Cliente>();
 		comboBox.setEditable(true);
 		comboBox.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
 		panel.add(comboBox, "cell 1 0,growx,aligny center");
@@ -77,9 +87,9 @@ public class TelaPagamento extends JPanel {
 		lblNewLabel_1_2.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
 		panel_1.add(lblNewLabel_1_2, "flowy,cell 0 0,alignx center,growy");
 		
-		JLabel lblNewLabel_1_2_1 = new JLabel("R$: 123.12");
-		lblNewLabel_1_2_1.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
-		panel_1.add(lblNewLabel_1_2_1, "cell 0 1,alignx center,growy");
+		 lblTotalPagar = new JLabel("R$: 123.12");
+		lblTotalPagar.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
+		panel_1.add(lblTotalPagar, "cell 0 1,alignx center,growy");
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBackground(Color.WHITE);
@@ -128,18 +138,18 @@ public class TelaPagamento extends JPanel {
 		lblFuncionrio.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
 		panel_2.add(lblFuncionrio, "cell 0 2,alignx left,growy");
 		
-		JComboBox comboBox_1 = new JComboBox();
+		comboBox_1 = new JComboBox();
 		comboBox_1.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
 		panel_2.add(comboBox_1, "cell 1 2,growx,aligny center");
 		
-		JButton btnConfirmar = new JButton("Confirmar");
+		btnConfirmar = new JButton("Confirmar");
 		btnConfirmar.setForeground(new Color(255, 255, 255));
 		btnConfirmar.setBackground(Cores.COR_AZUL);
 		btnConfirmar.setFont(new Font("Hanken Grotesk", Font.BOLD, 30));
 		panel_2.add(btnConfirmar, "cell 0 3 2 1,grow");
 		btnConfirmar.setIcon(Utils.carregarIcone("Add.png", 30, 30));
 		
-		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar = new JButton("Cancelar");
 		btnCancelar.setForeground(new Color(255, 255, 255));
 		btnCancelar.setBackground(Cores.COR_VERMELHO);
 		btnCancelar.setFont(new Font("Hanken Grotesk", Font.BOLD, 30));
@@ -149,4 +159,93 @@ public class TelaPagamento extends JPanel {
 
 	}
 
+	public JTextField getTxtTotal() {
+		return txtTotal;
+	}
+
+	public void setTxtTotal(JTextField txtTotal) {
+		this.txtTotal = txtTotal;
+	}
+
+	public JTextField getTxtDesconto() {
+		return txtDesconto;
+	}
+
+	public void setTxtDesconto(JTextField txtDesconto) {
+		this.txtDesconto = txtDesconto;
+	}
+
+	public JTextField getTxtDinheiro() {
+		return txtDinheiro;
+	}
+
+	public void setTxtDinheiro(JTextField txtDinheiro) {
+		this.txtDinheiro = txtDinheiro;
+	}
+
+	public JTextField getTxtCartao() {
+		return txtCartao;
+	}
+
+	public void setTxtCartao(JTextField txtCartao) {
+		this.txtCartao = txtCartao;
+	}
+
+	public JTextField getTxtOutros() {
+		return txtOutros;
+	}
+
+	public void setTxtOutros(JTextField txtOutros) {
+		this.txtOutros = txtOutros;
+	}
+
+	public JTextField getTextField() {
+		return textField;
+	}
+
+	public void setTextField(JTextField textField) {
+		this.textField = textField;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public JButton getBtnConfirmar() {
+		return btnConfirmar;
+	}
+
+	public JButton getBtnCancelar() {
+		return btnCancelar;
+	}
+
+	// cpa q o problema ta aq
+
+	public void setClientes(List<Cliente> clientes) {
+	    comboBox.removeAllItems();
+	    if (clientes == null || clientes.isEmpty()) {
+	        System.out.println("NADA");
+	    } else {
+	        for (Cliente cliente : clientes) {
+	            System.out.println("foi: " + cliente.getNome());
+	            System.out.println(cliente);
+	            comboBox.addItem(cliente);
+	        }
+	    }
+	}
+	
+	public void setFuncionarios(List<Funcionario> funcionarios) {
+		comboBox_1.removeAllItems();
+	    if (funcionarios == null || funcionarios.isEmpty()) {
+	        System.out.println("NADA");
+	    } else {
+	        for (Funcionario funcionario : funcionarios) {
+	            System.out.println("foi: " + funcionario.getNome());
+	            System.out.println(funcionario);
+	            comboBox_1.addItem(funcionario);
+	        }
+	    }
+	}
+	
 }
+

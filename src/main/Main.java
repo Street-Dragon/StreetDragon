@@ -1,12 +1,12 @@
 package main;
 
-import controle.entidade.clientecontrole.ClienteControle;
 import controle.entidade.conexao.ConexaoBD;
 import controle.entidade.funcionariocontrole.FuncionarioControle;
-import controle.entidade.item.ItemController;
+import controle.entidade.pagamentocontrole.TelaPagamentoControle;
 import controle.entidade.produto.ProdutoControle;
 import controle.entidade.promocao.PromocaoControle;
 import visao.TelaLogin;
+import visao.TelaPagamento;
 import visao.TelaPrincipal;
 import visao.TelaProdutos;
 import visao.TelaPromocao;
@@ -27,7 +27,14 @@ public class Main {
 		TelaProdutos telaProduto = new TelaProdutos(telaPrincipal);
 		TelaCadastroProdutos telaCadastroProdutos = new TelaCadastroProdutos();
 		TelaPromocao telaPromocao = new TelaPromocao(telaPrincipal);
-
+		
+		// talvz isso saia
+		TelaPagamento telaPagamento = new TelaPagamento(telaPrincipal); // Se precisar do menu principal
+		TelaPagamentoControle pagamentoControle = new TelaPagamentoControle(telaPagamento);
+		
+		//TelaHistoricoVenda telahistorico = new TelaHistoricoVenda(telaPrincipal);
+		//HistoricoVendaControle historico = new HistoricoVendaControle(telahistorico);
+		
 		// acho que não precisa instanciar o controle e era tudo mentira pessoal,
 		// futuros instanciamentos devem ser na telaprincipal (visão)
 		// se não for assim o código quebra.
