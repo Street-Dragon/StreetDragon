@@ -26,7 +26,7 @@ public class TelaPagamentoControle {
 	private ItemDAO itemDAO;
 	private FuncionarioDAO funcionarioDAO;
 	private ItemController itemControle;
-	private PromocaoControle promocaoControle;
+	
 
 	public TelaPagamentoControle(TelaPagamento telaPagamento) {
 		this.telaPagamento = telaPagamento;
@@ -51,7 +51,7 @@ public class TelaPagamentoControle {
 		telaPagamento.getBtnCancelar().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Botao de cancelar clicado");
+				cancelarPagamento();
 			}
 		});
 
@@ -160,10 +160,9 @@ public class TelaPagamentoControle {
 		boolean confirma = itemDAO.efetuaVenda(idCliente, precoTotal, cpfFuncionario);
 
 		if (confirma)
-			JOptionPane.showMessageDialog(telaPagamento, "Venda Efetuada!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+			System.out.println("e");
 		else
-			JOptionPane.showMessageDialog(telaPagamento, "Houve algum problema :(", "Erro",
-					JOptionPane.INFORMATION_MESSAGE);
+			System.out.println("a");
 
 	}
 
@@ -182,19 +181,18 @@ public class TelaPagamentoControle {
 
 
 	private void cancelarPagamento() {
-		// Confirmação de cancelamento
-		int confirmacao = JOptionPane.showConfirmDialog(telaPagamento,
-				"Tem certeza de que deseja cancelar o pagamento?", "Confirmar", JOptionPane.YES_NO_OPTION);
-		if (confirmacao == JOptionPane.YES_OPTION) {
-			// Limpar os campos de entrada
-			telaPagamento.getTxtDinheiro().setText("");
-			telaPagamento.getTxtCartao().setText("");
-			telaPagamento.getTxtOutros().setText("");
+	    // Usando a classe TelaMensagens para a confirmação
+	    TelaMensagens Tm = new TelaMensagens("Tem certeza de que deseja cancelar o pagamento?");
+	    if (Tm.getResposta()) {
+	        // Limpar os campos de entrada
+	        telaPagamento.getTxtDinheiro().setText("");
+	        telaPagamento.getTxtCartao().setText("");
+	        telaPagamento.getTxtOutros().setText("");
 
-			JOptionPane.showMessageDialog(telaPagamento, "Pagamento cancelado.", "Cancelado",
-					JOptionPane.INFORMATION_MESSAGE);
-		}
+	        
+	    }
 	}
+
 
 	public void setItemDAO(ItemController itemControle) {
 		this.itemControle = itemControle;
