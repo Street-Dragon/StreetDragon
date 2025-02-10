@@ -1,5 +1,6 @@
 package controle.entidade.pagamentocontrole;
 
+import visao.TelaMensagens;
 import visao.TelaPagamento;
 
 import java.awt.event.ActionEvent;
@@ -103,11 +104,58 @@ public class TelaPagamentoControle {
 		String precoTotalString = telaPagamento.getLblTotalPagar().getText();
 		float precoTotal = Float.parseFloat(precoTotalString);
 
-		
-		// colocar um IF aqui checando se a venda ta ok
-		//lembrar de mudar a label de preço total de acordo com a promoção também, se não n vai pegar 
-		
-		// caso o cliente não tenha cadastro na loja, o id vem como NULL !!!!! se for assim, a promoção não conta!!!!!
+		try {
+			float dinheiro = telaPagamento.getTxtDinheiro().getText().isEmpty() ? 0 : Float.parseFloat(telaPagamento.getTxtDinheiro().getText());
+	        float cartao = telaPagamento.getTxtCartao().getText().isEmpty() ? 0 : Float.parseFloat(telaPagamento.getTxtCartao().getText());
+	        float outros = telaPagamento.getTxtOutros().getText().isEmpty() ? 0 : Float.parseFloat(telaPagamento.getTxtOutros().getText());
+	        float totalPagar = Float.parseFloat(telaPagamento.lblTotalPagar.getText());
+			
+			   if (telaPagamento.comboBox.getSelectedItem() == null) {
+	               new TelaMensagens("O campo 'Cliente' é obrigatório.", 3);
+	               return;
+	           }
+
+	           if (telaPagamento.comboBox_1.getSelectedItem() == null) {
+	               new TelaMensagens("O campo 'Vendedor' é obrigatório.", 3);
+	               return;
+	           }
+
+	           // Verificar o valor total recebido
+	           float totalRecebido = dinheiro + cartao + outros;
+
+	           // Tolerância para erros de arredondamento (0.01)
+	           final float TOLERANCIA = 0.01f;
+
+	           // Caso o valor total recebido seja inferior ao total a pagar, considerando a tolerância
+	           if (totalRecebido < totalPagar - TOLERANCIA) {
+	               new TelaMensagens("Valor insuficiente para realizar a compra!", 3);
+	               telaPagamento.getTextField().setText("Valor insuficiente");
+	               return;
+	           }
+
+	           // Verificar se o valor do cartão é negativo
+	           if (cartao < 0) {
+	               new TelaMensagens("O valor do cartão não pode ser negativo.", 3);
+	               return;
+	           }
+
+	           // Verificar se o valor do cartão é maior do que o total a pagar
+	           if (cartao > totalPagar) {
+	               new TelaMensagens("O valor do cartão é superior ao total a pagar. Ajuste o valor.", 3);
+	               return;
+	           }
+
+	           // Calcular o troco
+	           float troco = totalRecebido - totalPagar;
+
+
+	           telaPagamento.getTextField().setText(String.format("%.2f", troco));
+
+
+	           new TelaMensagens("Pagamento confirmado com sucesso!", 0);
+	       } catch (NumberFormatException e) {
+	           new TelaMensagens("Por favor, insira valores válidos.", 3);
+	       }
 		
 		boolean confirma = itemDAO.efetuaVenda(idCliente, precoTotal, cpfFuncionario);
 
@@ -132,22 +180,6 @@ public class TelaPagamentoControle {
 		telaPagamento.setFuncionarios(funcionarios);
 	}
 
-	private void confirmarPagamento() {
-		// Aqui você pode implementar a lógica para confirmar o pagamento
-		String dinheiro = telaPagamento.getTxtDinheiro().getText();
-		String cartao = telaPagamento.getTxtCartao().getText();
-		String outros = telaPagamento.getTxtOutros().getText();
-
-		// Exemplo de validação básica
-		if (dinheiro.isEmpty() && cartao.isEmpty() && outros.isEmpty()) {
-			JOptionPane.showMessageDialog(telaPagamento, "Por favor, insira pelo menos uma forma de pagamento.", "Erro",
-					JOptionPane.ERROR_MESSAGE);
-			return;
-		}
-
-		JOptionPane.showMessageDialog(telaPagamento, "Pagamento confirmado com sucesso!", "Sucesso",
-				JOptionPane.INFORMATION_MESSAGE);
-	}
 
 	private void cancelarPagamento() {
 		// Confirmação de cancelamento

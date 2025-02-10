@@ -17,6 +17,8 @@ import javax.swing.SwingConstants;
 
 import modelo.entidade.pessoa.cliente.Cliente;
 import modelo.entidade.pessoa.funcionario.Funcionario;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class TelaPagamento extends JPanel {
 
@@ -27,8 +29,8 @@ public class TelaPagamento extends JPanel {
 	private JTextField txtCartao;
 	private JTextField txtOutros;
 	private JTextField txtTroco;
-	private JComboBox<Cliente> comboBox;
-	private JComboBox<Funcionario> comboBox_1;
+	public JComboBox<Cliente> comboBox;
+	public JComboBox<Funcionario> comboBox_1;
 	private JButton btnConfirmar;
 	private JButton btnCancelar;
 	public JLabel lblTotalPagar;
@@ -100,6 +102,18 @@ public class TelaPagamento extends JPanel {
 		panel_2.add(lblNewLabel_1_1_1, "cell 0 0,alignx left,growy");
 
 		txtDinheiro = new JTextField();
+		txtDinheiro.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+                float troco = calculartroco();
+
+                if (troco < 0) {
+                    txtTroco.setText("Quantidade insuficiente");
+                } else {
+                    txtTroco.setText(String.format("%.2f", troco));
+                }
+            }
+        });
 		txtDinheiro.setFont(new Font("Hanken Grotesk", Font.PLAIN, 30));
 		txtDinheiro.setColumns(10);
 		panel_2.add(txtDinheiro, "cell 1 0,growx,aligny center");
@@ -269,6 +283,16 @@ public class TelaPagamento extends JPanel {
 				comboBox_1.addItem(funcionario);
 			}
 		}
+	}
+	
+	private float calculartroco() {
+		float dinheiro = Float.parseFloat(txtDinheiro.getText());
+		float total = Float.parseFloat(lblTotalPagar.getText());
+		float troco;
+		
+		troco = dinheiro - total;
+		
+		return troco;
 	}
 
 }
