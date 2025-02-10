@@ -330,6 +330,25 @@ public class ItemDAO {
 		return itens;
 	}
 
+	public boolean efetuaVenda(String idCliente, float total, String cpf) {
+		String sqlAtualiza = "UPDATE venda SET data_venda = NOW(), cliente_id = ?, funcionario_cpf = ?, total = ? "
+				+ "WHERE data_venda IS NULL";
+
+		try (Connection conn = ConexaoBD.getConexaoMySQL();
+				PreparedStatement stmtUpdate = conn.prepareStatement(sqlAtualiza)) {
+			stmtUpdate.setString(1, idCliente);
+			stmtUpdate.setString(2, cpf);
+			stmtUpdate.setFloat(3, total);
+
+			int rowsAffected = stmtUpdate.executeUpdate();
+			return rowsAffected > 0;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
 	/*
 	 * public void atualizaTabela(int indice, int produtoId) { String sql =
 	 * "UPDATE venda_produto SET venda_produto_id = ? WHERE venda_id = ? AND produto_id = ?"

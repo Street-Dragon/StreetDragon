@@ -33,6 +33,28 @@ public class FuncionarioDAO {
 		}
 	}
 
+	public String cpfFuncionario(String nome) {
+		String sqlNome = "SELECT cpf FROM funcionario WHERE nome = ?";
+
+		try (Connection conn = ConexaoBD.getConexaoMySQL(); PreparedStatement stmt = conn.prepareStatement(sqlNome)) {
+
+			stmt.setString(1, nome);
+
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) { 
+				return rs.getString("cpf"); 
+			} else {
+				return null;
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return "Erro ao consultar";
+		}
+	}
+	
+	
+	
 	public String nomeFuncionario(String cpf) {
 		String sqlNome = "SELECT nome FROM funcionario WHERE cpf = ?";
 
